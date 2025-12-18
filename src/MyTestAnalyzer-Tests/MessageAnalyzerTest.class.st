@@ -2,24 +2,24 @@
 A MyTestAnalyzerTest is a test class for testing the behavior of MyTestAnalyzer
 "
 Class {
-	#name : 'MyTestAnalyzerTest',
+	#name : 'MessageAnalyzerTest',
 	#superclass : 'TestCase',
 	#category : 'MyTestAnalyzer-Tests',
 	#package : 'MyTestAnalyzer-Tests'
 }
 
 { #category : 'evaluating' }
-MyTestAnalyzerTest >> analyzeExpression: anExpression [
-	^ MyTestAnalyzer visit: (self parseExpression: anExpression )
+MessageAnalyzerTest >> analyzeExpression: anExpression [
+	^ MessageAnalyzer visit: (self parseExpression: anExpression )
 ]
 
 { #category : 'parsing' }
-MyTestAnalyzerTest >> parseExpression: anExpression [
+MessageAnalyzerTest >> parseExpression: anExpression [
 	^ OCParser parseExpression: anExpression 
 ]
 
 { #category : 'tests' }
-MyTestAnalyzerTest >> testCascadeMethodsAreRelated [
+MessageAnalyzerTest >> testCascadeMethodsAreRelated [
 	| result |
 	result := self analyzeExpression: '
 	someVariable x y z a b c
@@ -28,7 +28,7 @@ MyTestAnalyzerTest >> testCascadeMethodsAreRelated [
 ]
 
 { #category : 'tests' }
-MyTestAnalyzerTest >> testMethodIsRelatedWithItself [
+MessageAnalyzerTest >> testMethodIsRelatedWithItself [
 	| result |
 	result := self analyzeExpression: '
 		someVariable x.
@@ -39,7 +39,7 @@ MyTestAnalyzerTest >> testMethodIsRelatedWithItself [
 ]
 
 { #category : 'tests' }
-MyTestAnalyzerTest >> testTwoMessagesAreRelated [
+MessageAnalyzerTest >> testTwoMessagesAreRelated [
 	| result |
 	result := self analyzeExpression: '
 	someVariable x.

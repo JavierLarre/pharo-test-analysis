@@ -2,7 +2,7 @@
 I should find messages that are related
 "
 Class {
-	#name : 'MyTestAnalyzer',
+	#name : 'MessageAnalyzer',
 	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'messages'
@@ -12,18 +12,18 @@ Class {
 }
 
 { #category : 'initialization' }
-MyTestAnalyzer >> initialize [ 
+MessageAnalyzer >> initialize [ 
 	super initialize. 
 	messages := Set new .
 ]
 
 { #category : 'accessing' }
-MyTestAnalyzer >> messagesFound [
+MessageAnalyzer >> messagesFound [
 	^messages 
 ]
 
 { #category : 'visiting' }
-MyTestAnalyzer >> visitMessageNode: aMessageNode [
+MessageAnalyzer >> visitMessageNode: aMessageNode [
 	messages add: aMessageNode selector.
 	super visitMessageNode: aMessageNode 
 ]
