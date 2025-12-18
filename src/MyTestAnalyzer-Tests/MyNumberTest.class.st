@@ -6,8 +6,8 @@ Class {
 		'secondOperand',
 		'result'
 	],
-	#category : 'MyTestAnalizer-Tests',
-	#package : 'MyTestAnalizer-Tests'
+	#category : 'MyTestAnalyzer-Tests',
+	#package : 'MyTestAnalyzer-Tests'
 }
 
 { #category : 'building suites' }
