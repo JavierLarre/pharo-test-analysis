@@ -11,6 +11,12 @@ MyInteger >> + aNumber [
 	
 ]
 
+{ #category : 'comparing' }
+MyInteger >> = anObject [
+	^super = anObject 
+	and: [ self number = anObject number ]
+]
+
 { #category : 'adding' }
 MyInteger >> sumWithFloat: aFloat [
 	^ MyFloat fromNumber: (number + aFloat number)

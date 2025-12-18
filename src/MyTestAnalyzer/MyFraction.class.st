@@ -21,6 +21,12 @@ MyFraction >> + aNumber [
 	^ aNumber sumWithFraction: self
 ]
 
+{ #category : 'comparing' }
+MyFraction >> = anObject [
+	^super = anObject 
+	and: [ (self enum = anObject enum) & (self denom = anObject denom) ]
+]
+
 { #category : 'converting' }
 MyFraction >> asMyFloat [ 
 	^ MyFloat fromNumber: (enum / denom) 
@@ -48,17 +54,17 @@ MyFraction >> enum: anInteger [
 
 { #category : 'adding' }
 MyFraction >> sumWithFloat: aFloat [
-	^ MyFloat fromNumber: (aFloat number + self asFloat )
+	^ aFloat sumWithFloat: self asMyFloat 
 ]
 
 { #category : 'as yet unclassified' }
 MyFraction >> sumWithFraction: aFraction [
-	^Fraction 
+	^self class 
 		enum: (enum * aFraction denom) + (aFraction enum * denom) 
 		denom: denom * aFraction denom 
 ]
 
 { #category : 'adding' }
 MyFraction >> sumWithInteger: anInteger [
-	^ MyFraction enum: enum + (anInteger number * denom) denom: denom
+	^ self class enum: enum + (anInteger number * denom) denom: denom
 ]

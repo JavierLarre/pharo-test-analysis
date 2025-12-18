@@ -19,6 +19,11 @@ MyNumber >> + aNumber [
 	^ self subclassResponsibility 
 ]
 
+{ #category : 'comparing' }
+MyNumber >> = anObject [
+	^ self class = anObject class 
+]
+
 { #category : 'accessing' }
 MyNumber >> number [
 	^number 

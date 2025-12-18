@@ -10,6 +10,12 @@ MyFloat >> + aNumber [
 	^ aNumber sumWithFloat: self
 ]
 
+{ #category : 'comparing' }
+MyFloat >> = anObject [
+	^super = anObject 
+	and: [ self number = anObject number ]
+]
+
 { #category : 'adding' }
 MyFloat >> sumWithFloat: aFloat [
 	^ self class fromNumber: (number + aFloat number)
@@ -17,7 +23,7 @@ MyFloat >> sumWithFloat: aFloat [
 
 { #category : 'as yet unclassified' }
 MyFloat >> sumWithFraction: aFraction [
-	^MyFloat fromNumber: (number + aFraction asFloat)
+	^self class fromNumber: (number + aFraction asFloat)
 ]
 
 { #category : 'adding' }
