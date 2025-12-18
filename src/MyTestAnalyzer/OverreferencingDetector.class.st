@@ -12,6 +12,13 @@ Class {
 	#package : 'MyTestAnalyzer'
 }
 
+{ #category : 'initialization' }
+OverreferencingDetector >> initialize [ 
+	super initialize. 
+	references := 0.
+	allowedReferences := 3.
+]
+
 { #category : 'visiting' }
 OverreferencingDetector >> visitVariableNode: aVariableNode [
 	aVariableNode isClassVariable 
