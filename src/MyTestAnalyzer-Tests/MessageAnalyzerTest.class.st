@@ -39,6 +39,25 @@ MessageAnalyzerTest >> testMethodIsRelatedWithItself [
 ]
 
 { #category : 'tests' }
+MessageAnalyzerTest >> testRelatedMessagesBetweenMethods [
+	| result method1 method2 |
+	method1 := self parseExpression: '
+	someVariable x.
+	someVariable y.
+	'.
+	method2 := self parseExpression: '
+	someVariable x.
+	someVariable z.
+	'.
+	result := MessageAnalyzer new 
+	visit: method1 ; 
+	visit: method2 ;
+	getResult .
+	self
+		assert: (result message: #y isRelatedTo: #z)
+]
+
+{ #category : 'tests' }
 MessageAnalyzerTest >> testTwoMessagesAreRelated [
 	| result |
 	result := self analyzeExpression: '

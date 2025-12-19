@@ -11,6 +11,11 @@ Class {
 	#package : 'MyTestAnalyzer'
 }
 
+{ #category : 'helpers' }
+MessageAnalyzer >> getResult [
+	^AnalysisResult withMessages: messages 
+]
+
 { #category : 'initialization' }
 MessageAnalyzer >> initialize [ 
 	super initialize. 

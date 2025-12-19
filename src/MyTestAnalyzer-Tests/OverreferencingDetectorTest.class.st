@@ -18,7 +18,13 @@ OverreferencingDetectorTest >> overreferencingExample [
 { #category : 'tests' }
 OverreferencingDetectorTest >> testOverreferenceDetectsCorrectly [
 	| tree |
-	tree := ( self class >> #overreferencingExample ) ast .
+	tree := (OCParser parseExpression: '
+	OCParser new.
+	OCParser new.
+	OCParser new.
+	') 
+	doSemanticAnalysis ; 
+	yourself .
 	self
 		assert: (OverreferencingDetector hasTooManyReferences: tree)
 ]
