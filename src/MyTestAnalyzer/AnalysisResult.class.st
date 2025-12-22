@@ -5,7 +5,7 @@ Class {
 	#name : 'AnalysisResult',
 	#superclass : 'Object',
 	#instVars : [
-		'messagesFound'
+		'messages'
 	],
 	#category : 'MyTestAnalyzer',
 	#package : 'MyTestAnalyzer'
@@ -16,13 +16,23 @@ AnalysisResult class >> withMessages: aMessageCollection [
 	^ self new messages: aMessageCollection
 ]
 
+{ #category : 'comparing' }
+AnalysisResult >> includes: aSymbol [
+	^(messages at: #foo) includes: aSymbol 
+]
+
 { #category : 'testing' }
 AnalysisResult >> message: aSymbol isRelatedTo: relatedSymbol [
-	^ (messagesFound includes:aSymbol ) 
-		and: [ (messagesFound includes: relatedSymbol ) ]
+	^ (self includes: aSymbol ) 
+		and: [ self includes: relatedSymbol ]
 ]
 
 { #category : 'accessing' }
-AnalysisResult >> messages: aMessageCollection [
-	messagesFound := aMessageCollection .
+AnalysisResult >> messages: aMessageMethodDictionary [
+	messages := aMessageMethodDictionary .
+]
+
+{ #category : 'accessing' }
+AnalysisResult >> method: methodName includes: methodSymbol [ 
+	^ (messages at: methodName) includes: methodSymbol 
 ]

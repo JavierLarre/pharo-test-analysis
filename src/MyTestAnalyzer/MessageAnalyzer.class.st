@@ -5,30 +5,38 @@ Class {
 	#name : 'MessageAnalyzer',
 	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
-		'messages'
+		'methodMessages',
+		'messagesFound'
 	],
 	#category : 'MyTestAnalyzer',
 	#package : 'MyTestAnalyzer'
 }
 
-{ #category : 'helpers' }
-MessageAnalyzer >> getResult [
-	^AnalysisResult withMessages: messages 
-]
-
 { #category : 'initialization' }
 MessageAnalyzer >> initialize [ 
 	super initialize. 
-	messages := Set new .
+	messagesFound := Set new.
+	methodMessages := Dictionary new
 ]
 
 { #category : 'accessing' }
 MessageAnalyzer >> messagesFound [
-	^messages 
+	^messagesFound 
+]
+
+{ #category : 'helpers' }
+MessageAnalyzer >> result [
+	^AnalysisResult withMessages: methodMessages 
 ]
 
 { #category : 'visiting' }
 MessageAnalyzer >> visitMessageNode: aMessageNode [
-	messages add: aMessageNode selector.
+	messagesFound add: aMessageNode selector.
 	super visitMessageNode: aMessageNode 
+]
+
+{ #category : 'visiting' }
+MessageAnalyzer >> visitMethodNode: aMethodNode [
+	super visitMethodNode: aMethodNode.
+	methodMessages at: aMethodNode selector put: messagesFound 
 ]
