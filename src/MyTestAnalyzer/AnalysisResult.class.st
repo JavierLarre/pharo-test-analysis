@@ -33,6 +33,31 @@ AnalysisResult >> messages: aMessageMethodDictionary [
 ]
 
 { #category : 'accessing' }
-AnalysisResult >> method: methodName includes: methodSymbol [ 
-	^ (messages at: methodName) includes: methodSymbol 
+AnalysisResult >> method: aSymbol [ 
+	^messages at: aSymbol 
+]
+
+{ #category : 'accessing' }
+AnalysisResult >> method: methodSymbol containsMessage: messageSymbol [ 
+	^(messages at: methodSymbol ) includes: messageSymbol 
+]
+
+{ #category : 'accessing' }
+AnalysisResult >> method: method includes: subMethod [ 
+	| methodMessages subMethodMessages |
+	methodMessages := messages at: method .
+	subMethodMessages := messages at: subMethod.
+	^(subMethodMessages anySatisfy: [ :each | (methodMessages includes: each) not ]) not.
+	"I do not like double negation"
+	 
+]
+
+{ #category : 'printing' }
+AnalysisResult >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: '(' ; 
+		nextPutAll: messages asString;
+		nextPutAll: ')'
 ]

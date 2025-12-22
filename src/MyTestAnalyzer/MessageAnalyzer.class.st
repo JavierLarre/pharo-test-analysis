@@ -5,8 +5,9 @@ Class {
 	#name : 'MessageAnalyzer',
 	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
-		'methodMessages',
-		'messagesFound'
+		'messages',
+		'methods',
+		'bannedMessages'
 	],
 	#category : 'MyTestAnalyzer',
 	#package : 'MyTestAnalyzer'
@@ -15,28 +16,34 @@ Class {
 { #category : 'initialization' }
 MessageAnalyzer >> initialize [ 
 	super initialize. 
-	messagesFound := Set new.
-	methodMessages := Dictionary new
+	methods := Set new.
+	methods := Dictionary new.
+	bannedMessages := { #assert: } asSet 
 ]
 
 { #category : 'accessing' }
 MessageAnalyzer >> messagesFound [
-	^messagesFound 
+	^methods 
 ]
 
 { #category : 'helpers' }
 MessageAnalyzer >> result [
-	^AnalysisResult withMessages: methodMessages 
+	^AnalysisResult withMessages: methods
 ]
 
 { #category : 'visiting' }
 MessageAnalyzer >> visitMessageNode: aMessageNode [
-	messagesFound add: aMessageNode selector.
+	(bannedMessages includes: aMessageNode selector)
+		ifFalse: [ messages add: aMessageNode selector].
 	super visitMessageNode: aMessageNode 
 ]
 
 { #category : 'visiting' }
 MessageAnalyzer >> visitMethodNode: aMethodNode [
+	| previousMessages |
+	previousMessages := messages .
+	messages := Set new.
 	super visitMethodNode: aMethodNode.
-	methodMessages at: aMethodNode selector put: messagesFound 
+	methods at: aMethodNode selector put: messages.
+	messages := previousMessages 
 ]
