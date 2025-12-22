@@ -4,13 +4,16 @@ A MyTestAnalyzerTest is a test class for testing the behavior of MyTestAnalyzer
 Class {
 	#name : 'MessageAnalyzerTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'analyzer'
+	],
 	#category : 'MyTestAnalyzer-Tests',
 	#package : 'MyTestAnalyzer-Tests'
 }
 
 { #category : 'evaluating' }
 MessageAnalyzerTest >> analyzeMethod: aMethodExpression [
-	^ MessageAnalyzer visit: (self parseMethod: aMethodExpression )
+	^ analyzer analyzeMethod: ( self parseMethod: aMethodExpression )
 ]
 
 { #category : 'parsing' }
@@ -18,38 +21,42 @@ MessageAnalyzerTest >> parseMethod: aMethodExpression [
 	^ OCParser parseMethod: aMethodExpression 
 ]
 
+{ #category : 'accessing' }
+MessageAnalyzerTest >> result [ 
+	^ analyzer result 
+]
+
+{ #category : 'running' }
+MessageAnalyzerTest >> setUp [
+	super setUp.
+	analyzer := MessageAnalyzer new
+]
+
 { #category : 'tests' }
 MessageAnalyzerTest >> testAnalyzesMethodMessages [
-	| result | 
-	result := self analyzeMethod: 'foo
+	self analyzeMethod: 'foo
 	self x y z.
 	self a b c'.
-	self assert: (result method: #foo) equals: { #x . #y . #z . #a . #b . #c } asSet 
+	self assert: (self result method: #foo) equals: { #x . #y . #z . #a . #b . #c } asSet 
 ]
 
 { #category : 'tests' }
 MessageAnalyzerTest >> testDoesNotIncludeAssert [
-	| result |
-	result := self analyzeMethod: 'foo
+	self analyzeMethod: 'foo
 	self x.
 	var y.
 	self assert: (self z x)'.
-	self assert: (result method: #foo containsMessage: #assert:) not
+	self assert: (self result method: #foo containsMessage: #assert:) not
 ]
 
 { #category : 'tests' }
 MessageAnalyzerTest >> testMethodIsIncluded [
-	| method1 method2 result |
-	method1 := self parseMethod: 'selector1
+	self analyzeMethod: 'selector1
 	self x y foo'.
-	method2 := self parseMethod: 'selector2
+	self analyzeMethod: 'selector2
 	somevar x.
 	somevar y'.
-	result := MessageAnalyzer new 
-		visit: method1;
-		visit: method2;
-		result .
-	self assert: (result method: #selector1 includes: #selector2).
-	self assert: (result method: #selector2 includes: #selector1) not.
+	self assert: (self result method: #selector1 includes: #selector2) .
+	self assert: (self result method: #selector2 includes: #selector1) not
 	 
 ]
