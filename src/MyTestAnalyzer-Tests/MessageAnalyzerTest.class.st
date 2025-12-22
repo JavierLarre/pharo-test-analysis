@@ -9,19 +9,19 @@ Class {
 }
 
 { #category : 'evaluating' }
-MessageAnalyzerTest >> analyzeExpression: anExpression [
-	^ MessageAnalyzer visit: (self parseExpression: anExpression )
+MessageAnalyzerTest >> analyzeMethod: aMethodExpression [
+	^ MessageAnalyzer visit: (self parseMethod: aMethodExpression )
 ]
 
 { #category : 'parsing' }
-MessageAnalyzerTest >> parseExpression: anExpression [
-	^ OCParser parseExpression: anExpression 
+MessageAnalyzerTest >> parseMethod: aMethodExpression [
+	^ OCParser parseMethod: aMethodExpression 
 ]
 
 { #category : 'tests' }
 MessageAnalyzerTest >> testCascadeMethodsAreRelated [
 	| result |
-	result := self analyzeExpression: '
+	result := self analyzeMethod: 'foo
 	someVariable x y z a b c
 	'.
 	self assert: (result message: #x isRelatedTo: #c)
@@ -30,8 +30,7 @@ MessageAnalyzerTest >> testCascadeMethodsAreRelated [
 { #category : 'tests' }
 MessageAnalyzerTest >> testMethodIsRelatedWithItself [
 	| result |
-	result := self analyzeExpression: '
-		someVariable x.
+	result := self analyzeMethod: 'foo
 		someVariable x.
 	'.
 	self
@@ -39,28 +38,9 @@ MessageAnalyzerTest >> testMethodIsRelatedWithItself [
 ]
 
 { #category : 'tests' }
-MessageAnalyzerTest >> testRelatedMessagesBetweenMethods [
-	| result method1 method2 |
-	method1 := self parseExpression: '
-	someVariable x.
-	someVariable y.
-	'.
-	method2 := self parseExpression: '
-	someVariable x.
-	someVariable z.
-	'.
-	result := MessageAnalyzer new 
-	visit: method1 ; 
-	visit: method2 ;
-	getResult .
-	self
-		assert: (result message: #y isRelatedTo: #z)
-]
-
-{ #category : 'tests' }
 MessageAnalyzerTest >> testTwoMessagesAreRelated [
 	| result |
-	result := self analyzeExpression: '
+	result := self analyzeMethod: 'foo
 	someVariable x.
 	someVariable y.
 	'.
