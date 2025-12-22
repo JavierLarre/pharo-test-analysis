@@ -28,15 +28,6 @@ MessageAnalyzerTest >> testAnalyzesMethodMessages [
 ]
 
 { #category : 'tests' }
-MessageAnalyzerTest >> testCascadeMethodsAreRelated [
-	| result |
-	result := self analyzeMethod: 'foo
-	someVariable x y z a b c
-	'.
-	self assert: (result message: #x isRelatedTo: #c)
-]
-
-{ #category : 'tests' }
 MessageAnalyzerTest >> testDoesNotIncludeAssert [
 	| result |
 	result := self analyzeMethod: 'foo
@@ -61,25 +52,4 @@ MessageAnalyzerTest >> testMethodIsIncluded [
 	self assert: (result method: #selector1 includes: #selector2).
 	self assert: (result method: #selector2 includes: #selector1) not.
 	 
-]
-
-{ #category : 'tests' }
-MessageAnalyzerTest >> testMethodIsRelatedWithItself [
-	| result |
-	result := self analyzeMethod: 'foo
-		someVariable x.
-	'.
-	self
-		assert: (result message: #x isRelatedTo: #x)
-]
-
-{ #category : 'tests' }
-MessageAnalyzerTest >> testTwoMessagesAreRelated [
-	| result |
-	result := self analyzeMethod: 'foo
-	someVariable x.
-	someVariable y.
-	'.
-	self
-		assert: (result message: #x isRelatedTo: #y)
 ]

@@ -5,51 +5,40 @@ Class {
 	#name : 'AnalysisResult',
 	#superclass : 'Object',
 	#instVars : [
-		'messages'
+		'methods'
 	],
 	#category : 'MyTestAnalyzer',
 	#package : 'MyTestAnalyzer'
 }
 
 { #category : 'instance creation' }
-AnalysisResult class >> withMessages: aMessageCollection [
-	^ self new messages: aMessageCollection
-]
-
-{ #category : 'comparing' }
-AnalysisResult >> includes: aSymbol [
-	^(messages at: #foo) includes: aSymbol 
-]
-
-{ #category : 'testing' }
-AnalysisResult >> message: aSymbol isRelatedTo: relatedSymbol [
-	^ (self includes: aSymbol ) 
-		and: [ self includes: relatedSymbol ]
-]
-
-{ #category : 'accessing' }
-AnalysisResult >> messages: aMessageMethodDictionary [
-	messages := aMessageMethodDictionary .
+AnalysisResult class >> withMethods: aMethodsDictionary [
+	^ self new methods: aMethodsDictionary
 ]
 
 { #category : 'accessing' }
 AnalysisResult >> method: aSymbol [ 
-	^messages at: aSymbol 
+	^methods at: aSymbol 
 ]
 
 { #category : 'accessing' }
 AnalysisResult >> method: methodSymbol containsMessage: messageSymbol [ 
-	^(messages at: methodSymbol ) includes: messageSymbol 
+	^(methods at: methodSymbol ) includes: messageSymbol 
 ]
 
 { #category : 'accessing' }
 AnalysisResult >> method: method includes: subMethod [ 
 	| methodMessages subMethodMessages |
-	methodMessages := messages at: method .
-	subMethodMessages := messages at: subMethod.
+	methodMessages := methods at: method .
+	subMethodMessages := methods at: subMethod.
 	^(subMethodMessages anySatisfy: [ :each | (methodMessages includes: each) not ]) not.
 	"I do not like double negation"
 	 
+]
+
+{ #category : 'accessing' }
+AnalysisResult >> methods: aMethodDictionary [
+	methods := aMethodDictionary .
 ]
 
 { #category : 'printing' }
@@ -58,6 +47,6 @@ AnalysisResult >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPutAll: '(' ; 
-		nextPutAll: messages asString;
+		nextPutAll: methods asString;
 		nextPutAll: ')'
 ]

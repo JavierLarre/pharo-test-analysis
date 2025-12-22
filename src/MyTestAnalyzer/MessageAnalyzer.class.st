@@ -28,7 +28,7 @@ MessageAnalyzer >> messagesFound [
 
 { #category : 'helpers' }
 MessageAnalyzer >> result [
-	^AnalysisResult withMessages: methods
+	^AnalysisResult withMethods: methods
 ]
 
 { #category : 'visiting' }
