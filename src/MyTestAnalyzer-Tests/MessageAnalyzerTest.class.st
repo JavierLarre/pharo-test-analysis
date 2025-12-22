@@ -50,6 +50,23 @@ MessageAnalyzerTest >> testDoesNotIncludeAssert [
 ]
 
 { #category : 'tests' }
+MessageAnalyzerTest >> testInstanceIsMutable [
+
+	| result1 result2 |
+	self analyzeMethod: 'foo
+	self x .
+	self y'.
+	result1 := self result .
+	self analyzeMethod: 'bar
+	self a b c'.
+	result2 := self result .
+	self 
+		assert: result1 ~= result2 .
+	self
+		assert: result1 methods ~= result2 methods
+]
+
+{ #category : 'tests' }
 MessageAnalyzerTest >> testMethodIsIncluded [
 	self analyzeMethod: 'selector1
 	self x y foo'.

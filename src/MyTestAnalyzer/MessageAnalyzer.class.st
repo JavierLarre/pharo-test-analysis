@@ -13,6 +13,11 @@ Class {
 	#package : 'MyTestAnalyzer'
 }
 
+{ #category : 'evaluating' }
+MessageAnalyzer >> analyzeMethod: aProgramNode [
+	^ self visit: aProgramNode 
+]
+
 { #category : 'initialization' }
 MessageAnalyzer >> initialize [ 
 	super initialize. 
@@ -28,7 +33,7 @@ MessageAnalyzer >> messagesFound [
 
 { #category : 'helpers' }
 MessageAnalyzer >> result [
-	^AnalysisResult withMethods: methods
+	^AnalysisResult withMethods: methods copy 
 ]
 
 { #category : 'visiting' }

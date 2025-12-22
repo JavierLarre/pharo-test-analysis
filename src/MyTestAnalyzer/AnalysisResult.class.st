@@ -37,6 +37,11 @@ AnalysisResult >> method: method includes: subMethod [
 ]
 
 { #category : 'accessing' }
+AnalysisResult >> methods [
+	^methods keys 
+]
+
+{ #category : 'accessing' }
 AnalysisResult >> methods: aMethodDictionary [
 	methods := aMethodDictionary .
 ]
