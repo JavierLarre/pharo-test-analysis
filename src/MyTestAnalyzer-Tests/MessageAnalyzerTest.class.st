@@ -28,6 +28,16 @@ MessageAnalyzerTest >> testCascadeMethodsAreRelated [
 ]
 
 { #category : 'tests' }
+MessageAnalyzerTest >> testMethodIncludes [
+	| methodTree |
+	methodTree := self parseMethod: 'foo
+	someVariable x
+	'.
+	self
+		assert: ((MessageAnalyzer visit: methodTree) method: #foo includes: #x)
+]
+
+{ #category : 'tests' }
 MessageAnalyzerTest >> testMethodIsRelatedWithItself [
 	| result |
 	result := self analyzeMethod: 'foo
