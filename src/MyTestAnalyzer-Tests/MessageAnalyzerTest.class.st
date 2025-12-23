@@ -11,11 +11,6 @@ Class {
 	#package : 'MyTestAnalyzer-Tests'
 }
 
-{ #category : 'evaluating' }
-MessageAnalyzerTest >> analyzeMethod: aCompiledMethod [
-	^ analyzer analyzeMethod: aCompiledMethod parseTree
-]
-
 { #category : 'running' }
 MessageAnalyzerTest >> setUp [
 	super setUp.
@@ -26,10 +21,10 @@ MessageAnalyzerTest >> setUp [
 MessageAnalyzerTest >> testAnalyzesMethodMessages [
 
 	| originalMethod |
-	originalMethod := MyTestAnalyzerTestFixture >> #foo.
+	originalMethod := MyTestAnalyzerTestFixture >> #foo .
 
-	self analyzeMethod: originalMethod.
-	self assert: (analyzer result method: originalMethod parseTree) equals: { #x. #y. #z } asSet
+	analyzer analyzeMethod: originalMethod .
+	self assert: (analyzer result method: originalMethod) equals: { #x. #y. #z } asSet
 ]
 
 { #category : 'tests' }
@@ -38,8 +33,8 @@ MessageAnalyzerTest >> testDoesNotIncludeAssert [
 	| originalMethod |
 	originalMethod := MyTestAnalyzerTestFixture >> #fooWithAssert.
 
-	self analyzeMethod: originalMethod.
-	self assert: (analyzer result method: originalMethod parseTree containsMessage: #assert:) not
+	analyzer analyzeMethod: originalMethod.
+	self assert: (analyzer result method: originalMethod containsMessage: #assert:) not
 ]
 
 { #category : 'tests' }
@@ -49,24 +44,21 @@ MessageAnalyzerTest >> testHasTwoFoos [
 	originalMethodInstanceSide := MyTestAnalyzerTestFixture >> #foo.
 	originalMethodClassSide := MyTestAnalyzerTestFixture class >> #foo.
 
-	self analyzeMethod: originalMethodInstanceSide.
-	self analyzeMethod: originalMethodClassSide.
+	analyzer analyzeMethod: originalMethodInstanceSide.
+	analyzer analyzeMethod: originalMethodClassSide.
 
-	self assertCollection: (analyzer result method: originalMethodInstanceSide parseTree) hasSameElements: { #x. #y . #z}.
-	self assertCollection: (analyzer result method: originalMethodClassSide parseTree) hasSameElements: { #xxx. #yyy }
+	self assertCollection: (analyzer result method: originalMethodInstanceSide) hasSameElements: { #x. #y . #z}.
+	self assertCollection: (analyzer result method: originalMethodClassSide) hasSameElements: { #xxx. #yyy }
 ]
 
 { #category : 'tests' }
 MessageAnalyzerTest >> testInstanceIsMutable [
 
 	| result1 result2 |
-	self analyzeMethod: 'foo
-	self x .
-	self y'.
-	result1 := self result .
-	self analyzeMethod: 'bar
-	self a b c'.
-	result2 := self result .
+	analyzer analyzeMethod: MyTestAnalyzerTestFixture >> #foo .
+	result1 := analyzer result .
+	analyzer analyzeMethod: MyTestAnalyzerTestFixture >> #bar .
+	result2 := analyzer result .
 	self 
 		assert: result1 ~= result2 .
 	self
@@ -75,12 +67,12 @@ MessageAnalyzerTest >> testInstanceIsMutable [
 
 { #category : 'tests' }
 MessageAnalyzerTest >> testMethodIsIncluded [
-	self analyzeMethod: 'selector1
-	self x y foo'.
-	self analyzeMethod: 'selector2
-	somevar x.
-	somevar y'.
-	self assert: (self result method: #selector1 includes: #selector2) .
-	self assert: (self result method: #selector2 includes: #selector1) not
-	 
+
+	| fooMethod containedFoo |
+	fooMethod := MyTestAnalyzerTestFixture >> #foo .
+	containedFoo := MyTestAnalyzerTestFixture >> #containedFoo .
+	analyzer analyzeMethod: fooMethod .
+	analyzer analyzeMethod: containedFoo.
+	self assert: (analyzer result method: fooMethod containsSubmethod: containedFoo).
+	self assert: (analyzer result method: containedFoo containsSubmethod: fooMethod) not
 ]

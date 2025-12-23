@@ -14,8 +14,8 @@ Class {
 }
 
 { #category : 'evaluating' }
-MessageAnalyzer >> analyzeMethod: aProgramNode [
-	^ self visit: aProgramNode 
+MessageAnalyzer >> analyzeMethod: aCompiledMethod [
+	^ self visit: aCompiledMethod parseTree 
 ]
 
 { #category : 'initialization' }

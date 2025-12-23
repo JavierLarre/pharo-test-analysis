@@ -18,6 +18,12 @@ MyTestAnalyzerTestFixture >> bar [
 ]
 
 { #category : 'accessing' }
+MyTestAnalyzerTestFixture >> containedFoo [
+
+	self x.
+]
+
+{ #category : 'accessing' }
 MyTestAnalyzerTestFixture >> foo [
 
 	self x.

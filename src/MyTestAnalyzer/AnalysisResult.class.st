@@ -13,26 +13,26 @@ Class {
 
 { #category : 'instance creation' }
 AnalysisResult class >> withMethods: aMethodsDictionary [
-	^ self new methods: aMethodsDictionary
+	^ self new methods: aMethodsDictionary copy
 ]
 
 { #category : 'accessing' }
-AnalysisResult >> method: aSymbol [ 
-	^methods at: aSymbol 
+AnalysisResult >> method: aCompiledMethod [
+	^methods at: aCompiledMethod parseTree 
 ]
 
 { #category : 'accessing' }
-AnalysisResult >> method: methodSymbol containsMessage: messageSymbol [ 
-	^(methods at: methodSymbol ) includes: messageSymbol 
+AnalysisResult >> method: aCompiledMethod containsMessage: aMessageSymbol [ 
+	^(methods at: aCompiledMethod parseTree ) includes: aMessageSymbol 
 ]
 
 { #category : 'accessing' }
-AnalysisResult >> method: method includes: subMethod [ 
+AnalysisResult >> method: aCompiledMethod containsSubmethod: aCompiledSubmethod [ 
 	| methodMessages subMethodMessages |
-	methodMessages := methods at: method .
-	subMethodMessages := methods at: subMethod.
+	methodMessages := methods at: aCompiledMethod parseTree .
+	subMethodMessages := methods at: aCompiledSubmethod parseTree .
 	^(subMethodMessages anySatisfy: [ :each | (methodMessages includes: each) not ]) not.
-	"I do not like double negation"
+	"todo: I do not like double negation"
 	 
 ]
 
