@@ -2,32 +2,38 @@
 I store pre defined methods for analyzer tests to use
 "
 Class {
-	#name : 'MethodMessagesAnalyzerTestFixture',
+	#name : 'MethodMessagesAnalyzerFixture',
 	#superclass : 'Object',
 	#category : 'MethodMessagesAnalyzer-Tests',
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerTestFixture class >> foo [
+MethodMessagesAnalyzerFixture class >> foo [
 
 	self xxx yyy
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerTestFixture >> bar [
+MethodMessagesAnalyzerFixture >> bar [
 
 	self a b c
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerTestFixture >> containedFoo [
+MethodMessagesAnalyzerFixture >> callsFoo [
+
+	self foo
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalyzerFixture >> containedFoo [
 
 	self x.
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerTestFixture >> foo [
+MethodMessagesAnalyzerFixture >> foo [
 
 	self x.
 	self y.
@@ -35,10 +41,17 @@ MethodMessagesAnalyzerTestFixture >> foo [
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerTestFixture >> fooWithAssert [
+MethodMessagesAnalyzerFixture >> fooWithAssert [
 
 	self x.
 	self y.
 	self z.
 	self assert: true
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalyzerFixture >> subContainedFoo [
+
+	self x.
+	self y
 ]
