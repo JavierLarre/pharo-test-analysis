@@ -12,18 +12,8 @@ Class {
 }
 
 { #category : 'evaluating' }
-MessageAnalyzerTest >> analyzeMethod: aMethodExpression [
-	^ analyzer analyzeMethod: ( self parseMethod: aMethodExpression )
-]
-
-{ #category : 'parsing' }
-MessageAnalyzerTest >> parseMethod: aMethodExpression [
-	^ OCParser parseMethod: aMethodExpression 
-]
-
-{ #category : 'accessing' }
-MessageAnalyzerTest >> result [ 
-	^ analyzer result 
+MessageAnalyzerTest >> analyzeMethod: aCompiledMethod [
+	^ analyzer analyzeMethod: aCompiledMethod parseTree
 ]
 
 { #category : 'running' }
@@ -34,19 +24,36 @@ MessageAnalyzerTest >> setUp [
 
 { #category : 'tests' }
 MessageAnalyzerTest >> testAnalyzesMethodMessages [
-	self analyzeMethod: 'foo
-	self x y z.
-	self a b c'.
-	self assert: (self result method: #foo) equals: { #x . #y . #z . #a . #b . #c } asSet 
+
+	| originalMethod |
+	originalMethod := MyTestAnalyzerTestFixture >> #foo.
+
+	self analyzeMethod: originalMethod.
+	self assert: (analyzer result method: originalMethod parseTree) equals: { #x. #y. #z } asSet
 ]
 
 { #category : 'tests' }
 MessageAnalyzerTest >> testDoesNotIncludeAssert [
-	self analyzeMethod: 'foo
-	self x.
-	var y.
-	self assert: (self z x)'.
-	self assert: (self result method: #foo containsMessage: #assert:) not
+
+	| originalMethod |
+	originalMethod := MyTestAnalyzerTestFixture >> #fooWithAssert.
+
+	self analyzeMethod: originalMethod.
+	self assert: (analyzer result method: originalMethod parseTree containsMessage: #assert:) not
+]
+
+{ #category : 'tests' }
+MessageAnalyzerTest >> testHasTwoFoos [
+
+	| originalMethodInstanceSide originalMethodClassSide |
+	originalMethodInstanceSide := MyTestAnalyzerTestFixture >> #foo.
+	originalMethodClassSide := MyTestAnalyzerTestFixture class >> #foo.
+
+	self analyzeMethod: originalMethodInstanceSide.
+	self analyzeMethod: originalMethodClassSide.
+
+	self assertCollection: (analyzer result method: originalMethodInstanceSide parseTree) hasSameElements: { #x. #y . #z}.
+	self assertCollection: (analyzer result method: originalMethodClassSide parseTree) hasSameElements: { #xxx. #yyy }
 ]
 
 { #category : 'tests' }

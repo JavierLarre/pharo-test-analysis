@@ -46,9 +46,9 @@ MessageAnalyzer >> visitMessageNode: aMessageNode [
 { #category : 'visiting' }
 MessageAnalyzer >> visitMethodNode: aMethodNode [
 	| previousMessages |
-	previousMessages := messages .
+	previousMessages := messages.
 	messages := Set new.
 	super visitMethodNode: aMethodNode.
-	methods at: aMethodNode selector put: messages.
-	messages := previousMessages 
+	methods at: aMethodNode put: messages.
+	messages := previousMessages
 ]
