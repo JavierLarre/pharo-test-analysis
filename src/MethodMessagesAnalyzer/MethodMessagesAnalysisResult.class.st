@@ -16,6 +16,24 @@ MethodMessagesAnalysisResult class >> withMethods: aMethodsDictionary [
 	^ self new methods: aMethodsDictionary
 ]
 
+{ #category : 'testing' }
+MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage [
+
+	^self message: aMessage isConnectedTo: targetMessage visited: Set new
+]
+
+{ #category : 'testing' }
+MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage visited: visitedSet [
+
+	| methodSets |
+	methodSets := (methods keys 
+						reject: [ :parseTree | visitedSet includes: parseTree selector ])
+		             select: [ :parseTree | parseTree selector = aMessage ]
+		             thenCollect: [ :parseTree | methods at: parseTree ] .
+	^ methodSets anySatisfy: [ :messageSet | (messageSet includes: targetMessage) 
+		or: [messageSet anySatisfy: [ :message | self message: message isConnectedTo: targetMessage visited: ( visitedSet copyWith: message ) ]] ]
+]
+
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> method: aCompiledMethod containsMessage: aMessageSymbol [ 
 	^(methods at: aCompiledMethod parseTree ) includes: aMessageSymbol 
@@ -26,9 +44,14 @@ MethodMessagesAnalysisResult >> method: aCompiledMethod containsSubmethod: aComp
 	| methodMessages subMethodMessages |
 	methodMessages := methods at: aCompiledMethod parseTree .
 	subMethodMessages := methods at: aCompiledSubmethod parseTree .
-	^(subMethodMessages anySatisfy: [ :each | (methodMessages includes: each) not ]) not.
-	"todo: I do not like double negation"
+	^subMethodMessages inject: true into: [ :isSubset :each | isSubset and: [ methodMessages includes: each ] ]
 	 
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalysisResult >> method: aCompiledMethod isConnectedToMessage: aMessage [ 
+	^(self method: aCompiledMethod containsMessage: aMessage)
+		or: [ (self methodMessages: aCompiledMethod) anySatisfy: [ :each | self message: each isConnectedTo: aMessage ] ] 
 ]
 
 { #category : 'accessing' }
@@ -37,13 +60,13 @@ MethodMessagesAnalysisResult >> methodMessages: aCompiledMethod [
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> methods [
-	^methods keys 
+MethodMessagesAnalysisResult >> methods: aMethodDictionary [
+	methods := aMethodDictionary .
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> methods: aMethodDictionary [
-	methods := aMethodDictionary .
+MethodMessagesAnalysisResult >> methodsAnalyzed [
+	^methods keys 
 ]
 
 { #category : 'printing' }
