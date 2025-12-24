@@ -19,7 +19,29 @@ MethodMessagesAnalysisResult class >> withMethods: aMethodsDictionary [
 { #category : 'testing' }
 MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage [
 
-	^self message: aMessage isConnectedTo: targetMessage visited: Set new
+	| stack visited currentMessage messageSets neighbour |
+	stack := LinkedList new .
+	stack add: aMessage .
+	visited := { aMessage } asSet .
+	
+	[ stack isNotEmpty ] whileTrue: [ 
+		currentMessage := stack last .
+		messageSets := methods keys 
+			select: [ :parseTree | parseTree selector = currentMessage ]
+			thenCollect: [ :parseTree | methods at: parseTree ] .
+		messageSets := messageSets inject: Set new into: [ :allMessages :aSet | allMessages union: aSet ] .
+		neighbour := messageSets 
+			detect: [ :message | (visited includes: message) not ] 
+			ifNone: [ nil ].
+		neighbour 
+			ifNotNil: [ 
+				neighbour = targetMessage ifTrue: [ ^true ] .
+				visited add: neighbour . ]
+			ifNil: [ 
+				stack removeLast ]
+		
+	 ] .
+	^false
 ]
 
 { #category : 'testing' }
@@ -30,7 +52,7 @@ MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage v
 						reject: [ :parseTree | visitedSet includes: parseTree selector ])
 		             select: [ :parseTree | parseTree selector = aMessage ]
 		             thenCollect: [ :parseTree | methods at: parseTree ] .
-	^ methodSets anySatisfy: [ :messageSet | (messageSet includes: targetMessage) 
+	^ methodSets anySatisfy: [ :messageSet | (messageSet includes: targetMessage)  
 		or: [messageSet anySatisfy: [ :message | self message: message isConnectedTo: targetMessage visited: ( visitedSet copyWith: message ) ]] ]
 ]
 
