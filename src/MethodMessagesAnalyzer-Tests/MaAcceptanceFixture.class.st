@@ -2,39 +2,44 @@
 I store pre-defined methods for use in analyzer graph tests
 "
 Class {
-	#name : 'MethodMessagesAnalyzerGraphFixture',
+	#name : 'MaAcceptanceFixture',
 	#superclass : 'Object',
 	#category : 'MethodMessagesAnalyzer-Tests',
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerGraphFixture >> cycle1 [
+MaAcceptanceFixture >> cycle1 [
 	self cycle2
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerGraphFixture >> cycle2 [
+MaAcceptanceFixture >> cycle2 [
 	self cycle1
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerGraphFixture >> foo [ 
+MaAcceptanceFixture >> foo [ 
 	self y.
 	self assert: self bar 
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerGraphFixture >> root [
+MaAcceptanceFixture >> root [
 	self x y z
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerGraphFixture >> x [ 
+MaAcceptanceFixture >> x [ 
 	self end
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerGraphFixture >> y [ 
+MaAcceptanceFixture >> y [ 
 	self end 
+]
+
+{ #category : 'accessing' }
+MaAcceptanceFixture >> z [
+	self cycle1 
 ]

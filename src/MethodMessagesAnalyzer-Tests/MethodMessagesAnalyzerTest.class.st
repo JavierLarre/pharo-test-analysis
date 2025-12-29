@@ -51,10 +51,10 @@ MethodMessagesAnalyzerTest >> testAreConnected [
 MethodMessagesAnalyzerTest >> testCycle [
 
 	| cycleMethod |
-	cycleMethod := MethodMessagesAnalyzerGraphFixture >> #cycle1.
+	cycleMethod := MaAcceptanceFixture >> #cycle1.
 	analyzer
 		analyzeMethod: cycleMethod;
-		analyzeMethod: MethodMessagesAnalyzerGraphFixture >> #cycle2.
+		analyzeMethod: MaAcceptanceFixture >> #cycle2.
 	self 
 		deny: (analyzer result method: cycleMethod isConnectedToMessage: #doesNotExist)
 ]

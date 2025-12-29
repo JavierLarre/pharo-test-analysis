@@ -18,10 +18,16 @@ MethodMessagesAnalyzerAcceptanceTest >> setUp [
 MethodMessagesAnalyzerAcceptanceTest >> testAreConnected [
 
 	| rootMethod |
-	rootMethod := MethodMessagesAnalyzerGraphFixture >> #root .
+	rootMethod := MaAcceptanceFixture >> #root .
 	analyzer
 		analyzeMethod: rootMethod;
-		analyzeMethod: MethodMessagesAnalyzerGraphFixture >> #x .
+		analyzeMethod: MaAcceptanceFixture >> #x .
 
-	self assert: (analyzer result method: rootMethod isConnectedToMessage: #x)
+	self 
+		assert: (analyzer result method: rootMethod isConnectedToMessage: #x) ;
+		deny: (analyzer result method: rootMethod isConnectedToMessage: #cycle1) .
+		
+	analyzer analyzeMethod: MaAcceptanceFixture >> #z .
+	
+	self assert: (analyzer result method: rootMethod isConnectedToMessage: #cycle1) 
 ]
