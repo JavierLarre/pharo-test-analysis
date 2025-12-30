@@ -16,6 +16,26 @@ MethodMessagesAnalysisResult class >> withMethods: aMethodsDictionary [
 	^ self new methods: aMethodsDictionary
 ]
 
+{ #category : 'accessing' }
+MethodMessagesAnalysisResult >> guardedHelpers [
+	^{ MaHelperFixture >> #guardedHelper }
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalysisResult >> helperIsGuarded: aCompiledMethod [ 
+	^ true
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalysisResult >> helperMethods [
+	^ { MaHelperFixture >> #helper }
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalysisResult >> isHelper: aCompiledMethod [ 
+	^ true
+]
+
 { #category : 'testing' }
 MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage [
 
