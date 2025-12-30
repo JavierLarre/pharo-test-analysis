@@ -14,6 +14,16 @@ MethodMessagesAnalyzerFixture class >> foo [
 	self xxx yyy
 ]
 
+{ #category : 'as yet unclassified' }
+MethodMessagesAnalyzerFixture class >> xxx [
+	"empty"
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalyzerFixture >> a [
+	"empty"
+]
+
 { #category : 'accessing' }
 MethodMessagesAnalyzerFixture >> bar [
 
@@ -54,4 +64,19 @@ MethodMessagesAnalyzerFixture >> subContainedFoo [
 
 	self x.
 	self y
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalyzerFixture >> x [
+	"empty"
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalyzerFixture >> y [
+	"empty"
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalyzerFixture >> z [
+	"empty"
 ]

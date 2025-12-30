@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : 'accessing' }
+MaAcceptanceFixture >> bar [
+	self end
+]
+
+{ #category : 'accessing' }
 MaAcceptanceFixture >> cycle1 [
 	self cycle2
 ]
@@ -16,6 +21,11 @@ MaAcceptanceFixture >> cycle1 [
 { #category : 'accessing' }
 MaAcceptanceFixture >> cycle2 [
 	self cycle1
+]
+
+{ #category : 'accessing' }
+MaAcceptanceFixture >> end [
+	"empty"
 ]
 
 { #category : 'accessing' }
