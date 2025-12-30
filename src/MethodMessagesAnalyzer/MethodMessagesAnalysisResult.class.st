@@ -5,11 +5,21 @@ Class {
 	#name : 'MethodMessagesAnalysisResult',
 	#superclass : 'Object',
 	#instVars : [
-		'methods'
+		'methods',
+		'helperMethods'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
 }
+
+{ #category : 'instance creation' }
+MethodMessagesAnalysisResult class >> analyzedMethods: aMethodsDictionary helperMethods: aMethodsSet [
+
+	^ self new 
+		methods: aMethodsDictionary;
+		helperMethods: aMethodsSet;
+		yourself 
+]
 
 { #category : 'instance creation' }
 MethodMessagesAnalysisResult class >> withMethods: aMethodsDictionary [
@@ -28,20 +38,19 @@ MethodMessagesAnalysisResult >> helperIsGuarded: aCompiledMethod [
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> helperMethods [
-	^ { MaHelperFixture >> #helper }
+	^ helperMethods 
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalysisResult >> helperMethods: aSet [
+	
+	helperMethods := aSet 
 ]
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> isHelper: aCompiledMethod [ 
 	
-	| interpreter |
-	interpreter := RTFSelfCallInterpreter new.
-
-	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
-
-	interpreter send: #testHelper fromClass: MaHelperFixture.
-	
-	^ interpreter selfSentMethods includes: aCompiledMethod 
+	^ helperMethods includes: aCompiledMethod 
 ]
 
 { #category : 'testing' }

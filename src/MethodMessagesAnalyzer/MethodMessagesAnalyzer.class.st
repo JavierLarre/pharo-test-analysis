@@ -9,7 +9,8 @@ Class {
 		'methods',
 		'bannedMessages',
 		'helperMessages',
-		'helperMethods'
+		'helperMethods',
+		'selfCallsFinder'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -17,7 +18,13 @@ Class {
 
 { #category : 'evaluating' }
 MethodMessagesAnalyzer >> analyzeMethod: aCompiledMethod [
-	^ self visit: aCompiledMethod parseTree 
+
+	| selfCalls |
+	aCompiledMethod parseTree acceptVisitor: self.
+	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
+	selfCalls select: [ :each | (methods keys includes: each parseTree) not ] thenDo: [ :each | self analyzeMethod: each].
+	helperMethods := selfCalls select: [ :each | self result method: each isConnectedToMessage: #assert: ]
+		
 ]
 
 { #category : 'initialization' }
@@ -27,27 +34,32 @@ MethodMessagesAnalyzer >> initialize [
 	methods := Dictionary new.
 	helperMessages := { #assert: } asSet.
 	helperMethods := Set new.
-	bannedMessages := { #assert: } asSet
+	bannedMessages := { #assert: } asSet.
+	selfCallsFinder := MaSelfCallsFinder new 
+		interpreter: (RTFSelfCallInterpreter new 
+			considerClassesThat: [:class | class inheritsFrom: TestCase]; 
+			yourself);
+		yourself 
 ]
 
 { #category : 'helpers' }
 MethodMessagesAnalyzer >> result [
-	^MethodMessagesAnalysisResult withMethods: methods copy 
+	^MethodMessagesAnalysisResult 
+		analyzedMethods: methods copy
+		helperMethods: helperMethods copy 
 ]
 
 { #category : 'visiting' }
 MethodMessagesAnalyzer >> visitMessageNode: aMessageNode [
+	
+	messages add: aMessageNode selector.
 	super visitMessageNode: aMessageNode 
 ]
 
 { #category : 'visiting' }
 MethodMessagesAnalyzer >> visitMethodNode: aMethodNode [
-	| previousMessages |
-	previousMessages := messages.
+	
 	messages := Set new.
 	super visitMethodNode: aMethodNode.
-	methods at: aMethodNode put: (messages difference: bannedMessages).
-	(messages intersection: helperMessages) 
-		ifNotEmpty: [ helperMethods add: aMethodNode ].
-	messages := previousMessages
+	methods at: aMethodNode put: messages
 ]
