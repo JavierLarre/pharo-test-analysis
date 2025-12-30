@@ -9,6 +9,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+MaHelperFixture >> guardedHelper [
+	
+	self assert: true
+	
+]
+
+{ #category : 'as yet unclassified' }
 MaHelperFixture >> helper [
 	
 	self assert: true
@@ -17,5 +24,6 @@ MaHelperFixture >> helper [
 { #category : 'as yet unclassified' }
 MaHelperFixture >> testHelper [
 	
-	self helper
+	self helper.
+	true ifTrue: [ self guardedHelper . ]
 ]
