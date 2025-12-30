@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'messages',
 		'methods',
-		'bannedMessages',
-		'helperMessages',
+		'guardedHelpers',
+		'guardedMessages',
 		'helperMethods',
 		'selfCallsFinder'
 	],
@@ -23,8 +23,8 @@ MethodMessagesAnalyzer >> analyzeMethod: aCompiledMethod [
 	aCompiledMethod parseTree acceptVisitor: self.
 	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
 	selfCalls select: [ :each | (methods keys includes: each parseTree) not ] thenDo: [ :each | self analyzeMethod: each].
-	helperMethods := selfCalls select: [ :each | self result method: each isConnectedToMessage: #assert: ]
-		
+	helperMethods at: aCompiledMethod parseTree put: (selfCalls select: [ :each | self result method: each isConnectedToMessage: #assert: ]).
+	guardedHelpers at: aCompiledMethod parseTree put: (guardedMessages intersection: helperMethods )
 ]
 
 { #category : 'initialization' }
@@ -32,14 +32,14 @@ MethodMessagesAnalyzer >> initialize [
 	super initialize. 
 	messages := Set new.
 	methods := Dictionary new.
-	helperMessages := { #assert: } asSet.
-	helperMethods := Set new.
-	bannedMessages := { #assert: } asSet.
+	helperMethods := Dictionary new.
 	selfCallsFinder := MaSelfCallsFinder new 
 		interpreter: (RTFSelfCallInterpreter new 
 			considerClassesThat: [:class | class inheritsFrom: TestCase]; 
 			yourself);
-		yourself 
+		yourself.
+	guardedHelpers := Dictionary new.
+	guardedMessages := Set new 
 ]
 
 { #category : 'helpers' }
@@ -52,8 +52,15 @@ MethodMessagesAnalyzer >> result [
 { #category : 'visiting' }
 MethodMessagesAnalyzer >> visitMessageNode: aMessageNode [
 	
+	| oldMessages |
+	oldMessages := messages.
+	messages :=  Set new.
+	({ #ifTrue: . #ifFalse: } includes: aMessageNode selector)
+		ifTrue: [ aMessageNode arguments do: [ :each | self visitNode: each ].
+			guardedMessages addAll: messages].
+	messages := oldMessages.
 	messages add: aMessageNode selector.
-	super visitMessageNode: aMessageNode 
+	super visitMessageNode: aMessageNode.
 ]
 
 { #category : 'visiting' }

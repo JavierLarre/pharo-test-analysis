@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methods',
-		'helperMethods'
+		'helperMethods',
+		'bannedMessages'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -42,15 +43,22 @@ MethodMessagesAnalysisResult >> helperMethods [
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> helperMethods: aSet [
+MethodMessagesAnalysisResult >> helperMethods: aDictionary [
 	
-	helperMethods := aSet 
+	helperMethods := aDictionary 
+]
+
+{ #category : 'initialization' }
+MethodMessagesAnalysisResult >> initialize [ 
+	
+	super initialize.
+	bannedMessages := { #assert: } asSet 
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> isHelper: aCompiledMethod [ 
+MethodMessagesAnalysisResult >> isHelper: aCompiledHelper in: aCompiledMethod [
 	
-	^ helperMethods includes: aCompiledMethod 
+	^ (helperMethods at: aCompiledMethod parseTree ) includes: aCompiledHelper 
 ]
 
 { #category : 'testing' }
@@ -101,6 +109,8 @@ MethodMessagesAnalysisResult >> methodMessages: aCompiledMethod [
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> methods: aMethodDictionary [
 	methods := aMethodDictionary .
+	methods keysDo: [ :each | 
+		methods at: each put: ((methods at: each) difference: bannedMessages )]
 ]
 
 { #category : 'accessing' }
