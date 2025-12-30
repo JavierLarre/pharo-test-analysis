@@ -7,7 +7,9 @@ Class {
 	#instVars : [
 		'messages',
 		'methods',
-		'bannedMessages'
+		'bannedMessages',
+		'helperMessages',
+		'helperMethods'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -23,7 +25,9 @@ MethodMessagesAnalyzer >> initialize [
 	super initialize. 
 	messages := Set new.
 	methods := Dictionary new.
-	bannedMessages := { #assert: } asSet 
+	helperMessages := { #assert: } asSet.
+	helperMethods := Set new.
+	bannedMessages := { #assert: } asSet
 ]
 
 { #category : 'helpers' }
@@ -33,8 +37,6 @@ MethodMessagesAnalyzer >> result [
 
 { #category : 'visiting' }
 MethodMessagesAnalyzer >> visitMessageNode: aMessageNode [
-	(bannedMessages includes: aMessageNode selector)
-		ifFalse: [ messages add: aMessageNode selector].
 	super visitMessageNode: aMessageNode 
 ]
 
@@ -44,6 +46,8 @@ MethodMessagesAnalyzer >> visitMethodNode: aMethodNode [
 	previousMessages := messages.
 	messages := Set new.
 	super visitMethodNode: aMethodNode.
-	methods at: aMethodNode put: messages.
+	methods at: aMethodNode put: (messages difference: bannedMessages).
+	(messages intersection: helperMessages) 
+		ifNotEmpty: [ helperMethods add: aMethodNode ].
 	messages := previousMessages
 ]

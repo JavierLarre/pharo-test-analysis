@@ -23,7 +23,7 @@ MethodMessagesAnalysisResult >> guardedHelpers [
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> helperIsGuarded: aCompiledMethod [ 
-	^ true
+	^true
 ]
 
 { #category : 'accessing' }
@@ -33,7 +33,15 @@ MethodMessagesAnalysisResult >> helperMethods [
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> isHelper: aCompiledMethod [ 
-	^ true
+	
+	| interpreter |
+	interpreter := RTFSelfCallInterpreter new.
+
+	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
+
+	interpreter send: #testHelper fromClass: MaHelperFixture.
+	
+	^ interpreter selfSentMethods includes: aCompiledMethod 
 ]
 
 { #category : 'testing' }
