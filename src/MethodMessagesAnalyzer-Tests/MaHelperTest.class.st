@@ -12,7 +12,14 @@ Class {
 MaHelperTest >> setUp [
 	
 	super setUp.
-	analyzer := MethodMessagesAnalyzer new 	
+	analyzer := MethodMessagesAnalyzer new.
+	MaHelperFixture superclass: TestCase
+]
+
+{ #category : 'running' }
+MaHelperTest >> tearDown [ 
+	MaHelperFixture superclass: Object.
+	super tearDown 
 ]
 
 { #category : 'tests' }
