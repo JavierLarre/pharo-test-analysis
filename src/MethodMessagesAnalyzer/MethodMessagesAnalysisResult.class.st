@@ -39,13 +39,18 @@ MethodMessagesAnalysisResult >> helperIsGuarded: aCompiledMethod [
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> helperMethods [
-	^ helperMethods 
+	^ helperMethods keys
 ]
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> helperMethods: aDictionary [
 	
 	helperMethods := aDictionary 
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalysisResult >> helperMethodsOf: aCompiledMethod [
+	^ helperMethods at: aCompiledMethod parseTree 
 ]
 
 { #category : 'initialization' }

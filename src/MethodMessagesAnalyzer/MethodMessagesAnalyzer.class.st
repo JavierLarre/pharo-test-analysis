@@ -23,7 +23,7 @@ MethodMessagesAnalyzer >> analyzeMethod: aCompiledMethod [
 	aCompiledMethod parseTree acceptVisitor: self.
 	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
 	selfCalls select: [ :each | (methods keys includes: each parseTree) not ] thenDo: [ :each | self analyzeMethod: each].
-	helperMethods at: aCompiledMethod parseTree put: (selfCalls select: [ :each | self result method: each isConnectedToMessage: #assert: ]).
+	helperMethods at: aCompiledMethod parseTree put: (selfCalls select: [ :each | (methods at: each parseTree) includes: #assert: ]).
 	guardedHelpers at: aCompiledMethod parseTree put: (guardedMessages intersection: helperMethods )
 ]
 
