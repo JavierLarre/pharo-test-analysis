@@ -22,8 +22,14 @@ MaHelperFixture >> helper [
 ]
 
 { #category : 'as yet unclassified' }
+MaHelperFixture >> notAHelper [
+	^true
+]
+
+{ #category : 'as yet unclassified' }
 MaHelperFixture >> testHelper [
 	
 	self helper.
-	true ifTrue: [ self guardedHelper . ]
+	true ifTrue: [ self guardedHelper . ].
+	self notAHelper
 ]
