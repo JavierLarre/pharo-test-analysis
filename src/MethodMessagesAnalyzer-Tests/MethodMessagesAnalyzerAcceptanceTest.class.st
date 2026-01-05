@@ -11,7 +11,7 @@ Class {
 { #category : 'running' }
 MethodMessagesAnalyzerAcceptanceTest >> setUp [
 	super setUp.
-	analyzer := MethodMessagesAnalyzer new 
+	analyzer := MethodMessagesAnalyzer new
 ]
 
 { #category : 'tests' }
