@@ -44,3 +44,48 @@ MaHelperTest >> testDetectsHelpers [
 		assert: (analyzer helpers helperIsGuarded: guardedHelper );
 		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }
 ]
+
+{ #category : 'tests' }
+MaHelperTest >> testDistinguishesGuardedHelpers [
+
+	| testHelper helper guardedHelper notAHelper |
+	testHelper := MaHelperFixture >> #testNotHelperIsGuarded.
+	notAHelper := MaHelperFixture >> #notAHelper.
+	helper := MaHelperFixture >> #helper.
+	guardedHelper := MaHelperFixture >> #guardedHelper.
+	
+	 analyzer analyzeMethod: testHelper.
+	
+	self 
+		assert: (analyzer helpers atMethod: testHelper includesHelper: guardedHelper);
+		assert: (analyzer helpers helperIsGuarded: guardedHelper);
+		deny: (analyzer helpers helperIsGuarded: notAHelper)
+]
+
+{ #category : 'tests' }
+MaHelperTest >> testGuardedHelperIsHelper [
+
+	| testHelper guardedHelper |
+	testHelper := MaHelperFixture >> #testHelper.
+	guardedHelper := MaHelperFixture >> #guardedHelper.
+	
+	analyzer analyzeMethod: testHelper.
+	
+	self 
+		assert: (analyzer helpers atMethod: testHelper includesHelper: guardedHelper );
+		assert: (analyzer helpers helperIsGuarded: guardedHelper );
+		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }
+]
+
+{ #category : 'tests' }
+MaHelperTest >> testIncludesHelper [
+
+	| testHelper helper |
+	testHelper := MaHelperFixture >> #testHelper.
+	helper := MaHelperFixture >> #helper.
+	
+	 analyzer analyzeMethod: testHelper.
+	
+	self 
+		assert: (analyzer helpers atMethod: testHelper includesHelper: helper)
+]

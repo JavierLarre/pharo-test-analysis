@@ -33,3 +33,12 @@ MaHelperFixture >> testHelper [
 	true ifTrue: [ self guardedHelper . ].
 	self notAHelper
 ]
+
+{ #category : 'tests' }
+MaHelperFixture >> testNotHelperIsGuarded [
+
+	false ifFalse: [ self notAHelper ].
+	true ifTrue: [ self guardedHelper ].
+	self helper.
+	self notAHelper 	
+]
