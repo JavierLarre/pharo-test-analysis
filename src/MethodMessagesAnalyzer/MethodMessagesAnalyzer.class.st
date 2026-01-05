@@ -33,13 +33,9 @@ MethodMessagesAnalyzer >> initialize [
 	messages := Set new.
 	methods := Dictionary new.
 	helperMethods := Dictionary new.
-	selfCallsFinder := MaSelfCallsFinder new 
-		interpreter: (RTFSelfCallInterpreter new 
-			considerClassesThat: [:class | class inheritsFrom: TestCase]; 
-			yourself);
-		yourself.
 	guardedHelpers := Dictionary new.
-	guardedMessages := Set new 
+	guardedMessages := Set new.
+	selfCallsFinder := MaSelfCallsFinderStub new 
 ]
 
 { #category : 'helpers' }
@@ -47,6 +43,12 @@ MethodMessagesAnalyzer >> result [
 	^MethodMessagesAnalysisResult 
 		analyzedMethods: methods copy
 		helperMethods: helperMethods copy 
+]
+
+{ #category : 'initialization' }
+MethodMessagesAnalyzer >> selfCallsFinder: aSelfCallsFinder [
+
+	selfCallsFinder := aSelfCallsFinder 
 ]
 
 { #category : 'visiting' }

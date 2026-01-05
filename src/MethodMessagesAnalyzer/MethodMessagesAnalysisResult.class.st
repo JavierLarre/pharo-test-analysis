@@ -6,7 +6,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methods',
-		'helperMethods',
+		'helpers',
 		'bannedMessages'
 	],
 	#category : 'MethodMessagesAnalyzer',
@@ -39,31 +39,32 @@ MethodMessagesAnalysisResult >> helperIsGuarded: aCompiledMethod [
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> helperMethods [
-	^ helperMethods keys
+	^ helpers helpers 
 ]
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> helperMethods: aDictionary [
 	
-	helperMethods := aDictionary 
+	helpers helpers: aDictionary 
 ]
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> helperMethodsOf: aCompiledMethod [
-	^ helperMethods at: aCompiledMethod parseTree 
+	^ helpers helpersOf: aCompiledMethod 
 ]
 
 { #category : 'initialization' }
 MethodMessagesAnalysisResult >> initialize [ 
 	
 	super initialize.
+	helpers := MaHelpers new.
 	bannedMessages := { #assert: } asSet 
 ]
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> isHelper: aCompiledHelper in: aCompiledMethod [
 	
-	^ (helperMethods at: aCompiledMethod parseTree ) includes: aCompiledHelper 
+	^ helpers isHelper: aCompiledHelper in: aCompiledMethod 
 ]
 
 { #category : 'testing' }
