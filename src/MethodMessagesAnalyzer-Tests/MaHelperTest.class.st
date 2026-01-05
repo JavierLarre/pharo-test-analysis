@@ -63,6 +63,21 @@ MaHelperTest >> testDistinguishesGuardedHelpers [
 ]
 
 { #category : 'tests' }
+MaHelperTest >> testFalseGuarded [
+
+	| testHelper guardedHelper |
+	testHelper := MaHelperFixture >> #testHelper.
+	guardedHelper := MaHelperFixture class >> #guardedHelper.
+	
+	analyzer 
+		analyzeMethod: testHelper;
+		analyzeMethod: MaHelperFixture class >> #testFalseGuarded.
+	
+	self 
+		deny: (analyzer helpers helperIsGuarded: MaHelperFixture >> #guardedHelper )
+]
+
+{ #category : 'tests' }
 MaHelperTest >> testGuardedHelperIsHelper [
 
 	| testHelper guardedHelper |

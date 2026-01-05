@@ -26,6 +26,7 @@ MaMethodAnalyzer >> analyzeMethod: aCompiledMethod [
 	compiledHelpers := selfCalls select: [ :each | (messages methodMessages: each) includes: #assert: ].
 	helpers atMethod: aCompiledMethod putHelpers: compiledHelpers.
 	helpers guardedHelpers: (compiledHelpers select: [ :each | guardedMessages includes: each selector ]).
+	guardedMessages := Set new.
 	messages removeMessages: bannedMessages
 ]
 

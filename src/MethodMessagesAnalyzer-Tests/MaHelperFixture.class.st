@@ -9,6 +9,18 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+MaHelperFixture class >> guardedHelper [ 
+	
+	"I am not a helper nor I am guarded"
+	^true
+]
+
+{ #category : 'tests' }
+MaHelperFixture class >> testFalseGuarded [
+	self guardedHelper 
+]
+
+{ #category : 'as yet unclassified' }
 MaHelperFixture >> guardedHelper [
 	
 	self assert: true
