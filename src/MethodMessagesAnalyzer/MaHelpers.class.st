@@ -5,22 +5,50 @@ Class {
 	#name : 'MaHelpers',
 	#superclass : 'Object',
 	#instVars : [
-		'helpers'
+		'helpers',
+		'guardedHelpers'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
 }
 
 { #category : 'accessing' }
+MaHelpers >> atMethod: aCompiledMethod includesHelper: aCompiledHelper [
+
+	^(helpers at: aCompiledMethod ) includes: aCompiledHelper 
+]
+
+{ #category : 'accessing' }
+MaHelpers >> atMethod: aCompiledMethod putHelpers: aHelpersCollection [
+
+	helpers at: aCompiledMethod put: aHelpersCollection 
+]
+
+{ #category : 'copying' }
+MaHelpers >> copy [ 
+
+	^ self class new
+		helpers: helpers copy;
+		guardedHelpers: guardedHelpers copy;
+		yourself 
+]
+
+{ #category : 'accessing' }
 MaHelpers >> guardedHelpers [
 	
-	^ { MaHelperFixture >> #guardedHelper }
+	^ guardedHelpers 
+]
+
+{ #category : 'accessing' }
+MaHelpers >> guardedHelpers: aHelperCollection [
+	
+	guardedHelpers := aHelperCollection 
 ]
 
 { #category : 'accessing' }
 MaHelpers >> helperIsGuarded: aCompiledMethod [ 
 	
-	^ true
+	^ guardedHelpers includes: aCompiledMethod 
 ]
 
 { #category : 'accessing' }
@@ -38,11 +66,13 @@ MaHelpers >> helpers: aHelperCollection [
 { #category : 'accessing' }
 MaHelpers >> helpersOf: aCompiledMethod [
 	
-	^helpers at: aCompiledMethod parseTree 
+	^helpers at: aCompiledMethod 
 ]
 
-{ #category : 'accessing' }
-MaHelpers >> isHelper: aCompiledHelper in: aCompiledMethod [
+{ #category : 'initialization' }
+MaHelpers >> initialize [ 
 
-	^(helpers at: aCompiledMethod parseTree ) includes: aCompiledHelper 
+	super initialize. 
+	helpers := Dictionary new.
+	guardedHelpers := Set new
 ]

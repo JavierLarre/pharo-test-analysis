@@ -12,7 +12,7 @@ Class {
 MaHelperTest >> setUp [
 	
 	super setUp.
-	analyzer := MethodMessagesAnalyzer new 
+	analyzer := MaMethodAnalyzer new 
 		selfCallsFinder: 
 			(MaInterpreterWrapper new 
 				interpreter: (RTFSelfCallInterpreter new 
@@ -39,7 +39,7 @@ MaHelperTest >> testDetectsHelpers [
 	 analyzer analyzeMethod: testHelper.
 	
 	self 
-		assert: (analyzer helpers isHelper: helper in: testHelper);
+		assert: (analyzer helpers atMethod: testHelper includesHelper: helper);
 		assertCollection: (analyzer helpers helpersOf: testHelper) hasSameElements: { helper . guardedHelper };
 		assert: (analyzer helpers helperIsGuarded: guardedHelper );
 		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }

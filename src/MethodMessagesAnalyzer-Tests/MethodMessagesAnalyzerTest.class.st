@@ -14,7 +14,7 @@ Class {
 { #category : 'running' }
 MethodMessagesAnalyzerTest >> setUp [
 	super setUp.
-	analyzer := MethodMessagesAnalyzer new
+	analyzer := MaMethodAnalyzer new
 ]
 
 { #category : 'tests' }
@@ -25,7 +25,7 @@ MethodMessagesAnalyzerTest >> testAnalyzesMethodMessages [
 
 	analyzer analyzeMethod: originalMethod .
 	self 
-		assert: (analyzer result methodMessages: originalMethod) equals: { #x. #y. #z } asSet
+		assert: (analyzer messages methodMessages: originalMethod) equals: { #x. #y. #z } asSet
 ]
 
 { #category : 'tests' }
@@ -42,9 +42,9 @@ MethodMessagesAnalyzerTest >> testAreConnected [
 		analyzeMethod: classFoo .
 
 	self
-		assert: (analyzer result method: callsFoo isConnectedToMessage: #foo) ;
-		assert: (analyzer result method: callsFoo isConnectedToMessage: #x) ;
-		assert: (analyzer result method: callsFoo isConnectedToMessage: #xxx)
+		assert: (analyzer messages method: callsFoo isConnectedToMessage: #foo) ;
+		assert: (analyzer messages method: callsFoo isConnectedToMessage: #x) ;
+		assert: (analyzer messages method: callsFoo isConnectedToMessage: #xxx)
 ]
 
 { #category : 'tests' }
@@ -56,7 +56,7 @@ MethodMessagesAnalyzerTest >> testCycle [
 		analyzeMethod: cycleMethod;
 		analyzeMethod: MaAcceptanceFixture >> #cycle2.
 	self 
-		deny: (analyzer result method: cycleMethod isConnectedToMessage: #doesNotExist)
+		deny: (analyzer messages method: cycleMethod isConnectedToMessage: #doesNotExist)
 ]
 
 { #category : 'tests' }
@@ -64,17 +64,18 @@ MethodMessagesAnalyzerTest >> testDoesNotIncludeAssert [
 
 	| originalMethod |
 	originalMethod := MethodMessagesAnalyzerFixture >> #fooWithAssert.
+	analyzer bannedMessages: { #assert: }.
 
 	analyzer analyzeMethod: originalMethod.
-	self deny: (analyzer result method: originalMethod containsMessage: #assert:) 
+	self deny: (analyzer messages method: originalMethod containsMessage: #assert:) 
 ]
 
 { #category : 'tests' }
 MethodMessagesAnalyzerTest >> testEmptyAnalyzer [
 
 	self 
-		assertEmpty: (analyzer result methodsAnalyzed) ;
-		should: [ analyzer result methodMessages: (MethodMessagesAnalyzerFixture >> #foo) ] raise: MethodNotFound
+		assertEmpty: (analyzer messages methodsAnalyzed) ;
+		should: [ analyzer messages methodMessages: (MethodMessagesAnalyzerFixture >> #foo) ] raise: MethodNotFound
 ]
 
 { #category : 'tests' }
@@ -88,8 +89,8 @@ MethodMessagesAnalyzerTest >> testHasTwoFoos [
 	analyzer analyzeMethod: classSideMethod.
 
 	self
-		assertCollection: (analyzer result methodMessages: instanceSideMethod) hasSameElements: { #x. #y . #z} ;
-		assertCollection: (analyzer result methodMessages: classSideMethod) hasSameElements: { #xxx. #yyy }
+		assertCollection: (analyzer messages methodMessages: instanceSideMethod) hasSameElements: { #x. #y . #z} ;
+		assertCollection: (analyzer messages methodMessages: classSideMethod) hasSameElements: { #xxx. #yyy }
 ]
 
 { #category : 'tests' }
@@ -97,9 +98,9 @@ MethodMessagesAnalyzerTest >> testInstanceIsMutable [
 
 	| result1 result2 |
 	analyzer analyzeMethod: MethodMessagesAnalyzerFixture >> #foo .
-	result1 := analyzer result .
+	result1 := analyzer messages .
 	analyzer analyzeMethod: MethodMessagesAnalyzerFixture >> #bar .
-	result2 := analyzer result .
+	result2 := analyzer messages .
 	self 
 		deny: result1 equals: result2 ;
 		deny: result1 methodsAnalyzed equals: result2 methodsAnalyzed
@@ -118,9 +119,9 @@ MethodMessagesAnalyzerTest >> testIsTransitive [
 		analyzeMethod: middle;
 		analyzeMethod: to .
 	self 
-		assert: (analyzer result method: from containsSubmethod: middle) ;
-		assert: (analyzer result method: middle containsSubmethod: to) ;
-		assert: (analyzer result method: from containsSubmethod: to)
+		assert: (analyzer messages method: from containsSubmethod: middle) ;
+		assert: (analyzer messages method: middle containsSubmethod: to) ;
+		assert: (analyzer messages method: from containsSubmethod: to)
 ]
 
 { #category : 'tests' }
@@ -132,6 +133,6 @@ MethodMessagesAnalyzerTest >> testMethodIsIncluded [
 	analyzer analyzeMethod: fooMethod .
 	analyzer analyzeMethod: containedFoo.
 	self 
-		assert: (analyzer result method: fooMethod containsSubmethod: containedFoo) ;
-		deny: (analyzer result method: containedFoo containsSubmethod: fooMethod) 
+		assert: (analyzer messages method: fooMethod containsSubmethod: containedFoo) ;
+		deny: (analyzer messages method: containedFoo containsSubmethod: fooMethod) 
 ]

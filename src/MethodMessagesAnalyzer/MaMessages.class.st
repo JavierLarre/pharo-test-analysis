@@ -2,7 +2,7 @@
 I store the result of the analysis done by `MyTestAnalyzer`
 "
 Class {
-	#name : 'MethodMessagesAnalysisResult',
+	#name : 'MaMessages',
 	#superclass : 'Object',
 	#instVars : [
 		'methods'
@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> atMethod: aMethodNode putMessages: aMessageSet [
+MaMessages >> atMethod: aMethodNode putMessages: aMessageSet [
 
 	methods at: aMethodNode put: aMessageSet 
 ]
 
 { #category : 'copying' }
-MethodMessagesAnalysisResult >> copy [
+MaMessages >> copy [
 
 	^ self class new
 		methods: methods copy;
@@ -26,25 +26,25 @@ MethodMessagesAnalysisResult >> copy [
 ]
 
 { #category : 'testing' }
-MethodMessagesAnalysisResult >> includes: aCompiledMethod [
+MaMessages >> includes: aCompiledMethod [
 	^ methods includesKey: aCompiledMethod parseTree 
 ]
 
 { #category : 'initialization' }
-MethodMessagesAnalysisResult >> initialize [ 
+MaMessages >> initialize [ 
 	
 	super initialize.
 	methods := Dictionary new.
 ]
 
 { #category : 'testing' }
-MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage [
+MaMessages >> message: aMessage isConnectedTo: targetMessage [
 
 	^ self message: aMessage isConnectedTo: targetMessage visited: Set new .
 ]
 
 { #category : 'testing' }
-MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage visited: visitedSet [
+MaMessages >> message: aMessage isConnectedTo: targetMessage visited: visitedSet [
 
 	| methodSets |
 	methodSets := methods keys 
@@ -58,12 +58,12 @@ MethodMessagesAnalysisResult >> message: aMessage isConnectedTo: targetMessage v
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> method: aCompiledMethod containsMessage: aMessageSymbol [ 
+MaMessages >> method: aCompiledMethod containsMessage: aMessageSymbol [ 
 	^(methods at: aCompiledMethod parseTree ) includes: aMessageSymbol 
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> method: aCompiledMethod containsSubmethod: aCompiledSubmethod [ 
+MaMessages >> method: aCompiledMethod containsSubmethod: aCompiledSubmethod [ 
 	| methodMessages subMethodMessages |
 	methodMessages := methods at: aCompiledMethod parseTree .
 	subMethodMessages := methods at: aCompiledSubmethod parseTree .
@@ -72,38 +72,35 @@ MethodMessagesAnalysisResult >> method: aCompiledMethod containsSubmethod: aComp
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> method: aCompiledMethod isConnectedToMessage: aMessage [ 
+MaMessages >> method: aCompiledMethod isConnectedToMessage: aMessage [ 
 	^(self method: aCompiledMethod containsMessage: aMessage)
 		or: [ (self methodMessages: aCompiledMethod) anySatisfy: [ :each | self message: each isConnectedTo: aMessage ] ] 
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> methodMessages: aCompiledMethod [
+MaMessages >> methodMessages: aCompiledMethod [
 	^methods at: aCompiledMethod parseTree ifAbsent: [ MethodNotFound signal ]
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> methods: aMethodDictionary [
+MaMessages >> methods: aMethodDictionary [
 	methods := aMethodDictionary
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> methodsAnalyzed [
+MaMessages >> methodsAnalyzed [
 	^methods keys 
 ]
 
 { #category : 'printing' }
-MethodMessagesAnalysisResult >> printOn: aStream [
+MaMessages >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream
-		nextPutAll: '(' ; 
-		nextPutAll: methods asString;
-		nextPutAll: ')'
+	methods printOn: aStream 
 ]
 
 { #category : 'removing' }
-MethodMessagesAnalysisResult >> removeMessages: aMessageCollection [
+MaMessages >> removeMessages: aMessageCollection [
 
 	methods keysAndValuesDo: 
 		[ :methodNode :methodMessages | 

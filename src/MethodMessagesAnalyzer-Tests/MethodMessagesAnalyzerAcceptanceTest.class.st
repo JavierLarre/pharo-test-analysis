@@ -11,7 +11,7 @@ Class {
 { #category : 'running' }
 MethodMessagesAnalyzerAcceptanceTest >> setUp [
 	super setUp.
-	analyzer := MethodMessagesAnalyzer new
+	analyzer := MaMethodAnalyzer new
 ]
 
 { #category : 'tests' }
@@ -24,10 +24,10 @@ MethodMessagesAnalyzerAcceptanceTest >> testAreConnected [
 		analyzeMethod: MaAcceptanceFixture >> #x .
 
 	self 
-		assert: (analyzer result method: rootMethod isConnectedToMessage: #x) ;
-		deny: (analyzer result method: rootMethod isConnectedToMessage: #cycle1) .
+		assert: (analyzer messages method: rootMethod isConnectedToMessage: #x) ;
+		deny: (analyzer messages method: rootMethod isConnectedToMessage: #cycle1) .
 		
 	analyzer analyzeMethod: MaAcceptanceFixture >> #z .
 	
-	self assert: (analyzer result method: rootMethod isConnectedToMessage: #cycle1) 
+	self assert: (analyzer messages method: rootMethod isConnectedToMessage: #cycle1) 
 ]
