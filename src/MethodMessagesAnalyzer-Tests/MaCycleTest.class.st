@@ -1,5 +1,5 @@
 Class {
-	#name : 'MethodMessagesAnalyzerAcceptanceTest',
+	#name : 'MaCycleTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'analyzer'
@@ -9,25 +9,25 @@ Class {
 }
 
 { #category : 'running' }
-MethodMessagesAnalyzerAcceptanceTest >> setUp [
+MaCycleTest >> setUp [
 	super setUp.
 	analyzer := MaMethodAnalyzer new
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerAcceptanceTest >> testAreConnected [
+MaCycleTest >> testCycle [ 
 
 	| rootMethod |
-	rootMethod := MaAcceptanceFixture >> #root .
+	rootMethod := MaFixtureWithCycles >> #root .
 	analyzer
 		analyzeMethod: rootMethod;
-		analyzeMethod: MaAcceptanceFixture >> #x .
+		analyzeMethod: MaFixtureWithCycles >> #x .
 
 	self 
 		assert: (analyzer messages method: rootMethod isConnectedToMessage: #x) ;
 		deny: (analyzer messages method: rootMethod isConnectedToMessage: #cycle1) .
 		
-	analyzer analyzeMethod: MaAcceptanceFixture >> #z .
+	analyzer analyzeMethod: MaFixtureWithCycles >> #z .
 	
 	self assert: (analyzer messages method: rootMethod isConnectedToMessage: #cycle1) 
 ]

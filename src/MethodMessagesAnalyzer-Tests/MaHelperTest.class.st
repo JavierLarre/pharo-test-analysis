@@ -16,16 +16,16 @@ MaHelperTest >> setUp [
 		selfCallsFinder: 
 			(MaInterpreterWrapper new 
 				interpreter: (RTFSelfCallInterpreter new 
-					considerClassesThat: [:class | class inheritsFrom: TestCase]; 
+					considerClassesThat: [:class | true]; 
 				yourself));
 		yourself.
-	MaHelperFixture superclass: TestCase
+	MaHelperFixture superclass: TestCase 
 ]
 
 { #category : 'running' }
 MaHelperTest >> tearDown [ 
-	MaHelperFixture superclass: Object.
-	super tearDown 
+	super tearDown.
+	MaHelperFixture superclass: Object 
 ]
 
 { #category : 'tests' }

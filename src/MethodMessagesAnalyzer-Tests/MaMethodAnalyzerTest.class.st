@@ -2,7 +2,7 @@
 A MyTestAnalyzerTest is a test class for testing the behavior of MyTestAnalyzer
 "
 Class {
-	#name : 'MethodMessagesAnalyzerTest',
+	#name : 'MaMethodAnalyzerTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'analyzer'
@@ -12,16 +12,16 @@ Class {
 }
 
 { #category : 'running' }
-MethodMessagesAnalyzerTest >> setUp [
+MaMethodAnalyzerTest >> setUp [
 	super setUp.
 	analyzer := MaMethodAnalyzer new
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testAnalyzesMethodMessages [
+MaMethodAnalyzerTest >> testAnalyzesMethodMessages [
 
 	| originalMethod |
-	originalMethod := MethodMessagesAnalyzerFixture >> #foo .
+	originalMethod := MaFixture >> #foo .
 
 	analyzer analyzeMethod: originalMethod .
 	self 
@@ -29,12 +29,12 @@ MethodMessagesAnalyzerTest >> testAnalyzesMethodMessages [
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testAreConnected [
+MaMethodAnalyzerTest >> testAreConnected [
 
 	| callsFoo instanceFoo classFoo  |
-	callsFoo := MethodMessagesAnalyzerFixture >> #callsFoo .
-	instanceFoo := MethodMessagesAnalyzerFixture >> #foo .
-	classFoo := MethodMessagesAnalyzerFixture class >> #foo .
+	callsFoo := MaFixture >> #callsFoo .
+	instanceFoo := MaFixture >> #foo .
+	classFoo := MaFixture class >> #foo .
 
 	analyzer 
 		analyzeMethod: callsFoo ;
@@ -48,22 +48,22 @@ MethodMessagesAnalyzerTest >> testAreConnected [
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testCycle [
+MaMethodAnalyzerTest >> testCycle [
 
 	| cycleMethod |
-	cycleMethod := MaAcceptanceFixture >> #cycle1.
+	cycleMethod := MaFixtureWithCycles >> #cycle1.
 	analyzer
 		analyzeMethod: cycleMethod;
-		analyzeMethod: MaAcceptanceFixture >> #cycle2.
+		analyzeMethod: MaFixtureWithCycles >> #cycle2.
 	self 
 		deny: (analyzer messages method: cycleMethod isConnectedToMessage: #doesNotExist)
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testDoesNotIncludeAssert [
+MaMethodAnalyzerTest >> testDoesNotIncludeAssert [
 
 	| originalMethod |
-	originalMethod := MethodMessagesAnalyzerFixture >> #fooWithAssert.
+	originalMethod := MaFixture >> #fooWithAssert.
 	analyzer bannedMessages: { #assert: }.
 
 	analyzer analyzeMethod: originalMethod.
@@ -71,19 +71,19 @@ MethodMessagesAnalyzerTest >> testDoesNotIncludeAssert [
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testEmptyAnalyzer [
+MaMethodAnalyzerTest >> testEmptyAnalyzer [
 
 	self 
 		assertEmpty: (analyzer messages methodsAnalyzed) ;
-		should: [ analyzer messages methodMessages: (MethodMessagesAnalyzerFixture >> #foo) ] raise: MethodNotFound
+		should: [ analyzer messages methodMessages: (MaFixture >> #foo) ] raise: MethodNotFound
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testHasTwoFoos [
+MaMethodAnalyzerTest >> testHasTwoFoos [
 
 	| instanceSideMethod classSideMethod |
-	instanceSideMethod := MethodMessagesAnalyzerFixture >> #foo.
-	classSideMethod := MethodMessagesAnalyzerFixture class >> #foo.
+	instanceSideMethod := MaFixture >> #foo.
+	classSideMethod := MaFixture class >> #foo.
 
 	analyzer analyzeMethod: instanceSideMethod.
 	analyzer analyzeMethod: classSideMethod.
@@ -94,12 +94,12 @@ MethodMessagesAnalyzerTest >> testHasTwoFoos [
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testInstanceIsMutable [
+MaMethodAnalyzerTest >> testInstanceIsMutable [
 
 	| result1 result2 |
-	analyzer analyzeMethod: MethodMessagesAnalyzerFixture >> #foo .
+	analyzer analyzeMethod: MaFixture >> #foo .
 	result1 := analyzer messages .
-	analyzer analyzeMethod: MethodMessagesAnalyzerFixture >> #bar .
+	analyzer analyzeMethod: MaFixture >> #bar .
 	result2 := analyzer messages .
 	self 
 		deny: result1 equals: result2 ;
@@ -107,12 +107,12 @@ MethodMessagesAnalyzerTest >> testInstanceIsMutable [
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testIsTransitive [
+MaMethodAnalyzerTest >> testIsTransitive [
 
 	| from to middle |
-	from := MethodMessagesAnalyzerFixture >> #foo .
-	middle := MethodMessagesAnalyzerFixture >> #subContainedFoo .
-	to := MethodMessagesAnalyzerFixture >> #containedFoo .
+	from := MaFixture >> #foo .
+	middle := MaFixture >> #subContainedFoo .
+	to := MaFixture >> #containedFoo .
 
 	analyzer 
 		analyzeMethod: from;
@@ -125,11 +125,11 @@ MethodMessagesAnalyzerTest >> testIsTransitive [
 ]
 
 { #category : 'tests' }
-MethodMessagesAnalyzerTest >> testMethodIsIncluded [
+MaMethodAnalyzerTest >> testMethodIsIncluded [
 
 	| fooMethod containedFoo |
-	fooMethod := MethodMessagesAnalyzerFixture >> #foo .
-	containedFoo := MethodMessagesAnalyzerFixture >> #containedFoo .
+	fooMethod := MaFixture >> #foo .
+	containedFoo := MaFixture >> #containedFoo .
 	analyzer analyzeMethod: fooMethod .
 	analyzer analyzeMethod: containedFoo.
 	self 

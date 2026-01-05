@@ -2,48 +2,48 @@
 I store pre defined methods for analyzer tests to use
 "
 Class {
-	#name : 'MethodMessagesAnalyzerFixture',
+	#name : 'MaFixture',
 	#superclass : 'Object',
 	#category : 'MethodMessagesAnalyzer-Tests',
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture class >> foo [
+MaFixture class >> foo [
 
 	self xxx yyy
 ]
 
 { #category : 'as yet unclassified' }
-MethodMessagesAnalyzerFixture class >> xxx [
+MaFixture class >> xxx [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> a [
+MaFixture >> a [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> bar [
+MaFixture >> bar [
 
 	self a b c
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> callsFoo [
+MaFixture >> callsFoo [
 
 	self foo
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> containedFoo [
+MaFixture >> containedFoo [
 
 	self x.
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> foo [
+MaFixture >> foo [
 
 	self x.
 	self y.
@@ -51,7 +51,7 @@ MethodMessagesAnalyzerFixture >> foo [
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> fooWithAssert [
+MaFixture >> fooWithAssert [
 
 	self x.
 	self y.
@@ -60,23 +60,23 @@ MethodMessagesAnalyzerFixture >> fooWithAssert [
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> subContainedFoo [
+MaFixture >> subContainedFoo [
 
 	self x.
 	self y
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> x [
+MaFixture >> x [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> y [
+MaFixture >> y [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MethodMessagesAnalyzerFixture >> z [
+MaFixture >> z [
 	"empty"
 ]
