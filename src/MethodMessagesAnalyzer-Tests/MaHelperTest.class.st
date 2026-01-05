@@ -39,8 +39,8 @@ MaHelperTest >> testDetectsHelpers [
 	 analyzer analyzeMethod: testHelper.
 	
 	self 
-		assert: (analyzer result isHelper: helper in: testHelper);
-		assertCollection: (analyzer result helperMethodsOf: testHelper) hasSameElements: { helper . guardedHelper };
-		assert: (analyzer result helperIsGuarded: guardedHelper );
-		assertCollection: analyzer result guardedHelpers hasSameElements: { guardedHelper }
+		assert: (analyzer helpers isHelper: helper in: testHelper);
+		assertCollection: (analyzer helpers helpersOf: testHelper) hasSameElements: { helper . guardedHelper };
+		assert: (analyzer helpers helperIsGuarded: guardedHelper );
+		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }
 ]
