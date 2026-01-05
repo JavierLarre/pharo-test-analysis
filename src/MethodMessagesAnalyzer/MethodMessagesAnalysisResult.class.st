@@ -5,66 +5,36 @@ Class {
 	#name : 'MethodMessagesAnalysisResult',
 	#superclass : 'Object',
 	#instVars : [
-		'methods',
-		'helpers',
-		'bannedMessages'
+		'methods'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
 }
 
-{ #category : 'instance creation' }
-MethodMessagesAnalysisResult class >> analyzedMethods: aMethodsDictionary helperMethods: aMethodsSet [
-
-	^ self new 
-		methods: aMethodsDictionary;
-		helperMethods: aMethodsSet;
-		yourself 
-]
-
-{ #category : 'instance creation' }
-MethodMessagesAnalysisResult class >> withMethods: aMethodsDictionary [
-	^ self new methods: aMethodsDictionary
-]
-
 { #category : 'accessing' }
-MethodMessagesAnalysisResult >> guardedHelpers [
-	^{ MaHelperFixture >> #guardedHelper }
+MethodMessagesAnalysisResult >> atMethod: aMethodNode putMessages: aMessageSet [
+
+	methods at: aMethodNode put: aMessageSet 
 ]
 
-{ #category : 'accessing' }
-MethodMessagesAnalysisResult >> helperIsGuarded: aCompiledMethod [ 
-	^true
+{ #category : 'copying' }
+MethodMessagesAnalysisResult >> copy [
+
+	^ self class new
+		methods: methods copy;
+		yourself
 ]
 
-{ #category : 'accessing' }
-MethodMessagesAnalysisResult >> helperMethods [
-	^ helpers helpers 
-]
-
-{ #category : 'accessing' }
-MethodMessagesAnalysisResult >> helperMethods: aDictionary [
-	
-	helpers helpers: aDictionary 
-]
-
-{ #category : 'accessing' }
-MethodMessagesAnalysisResult >> helperMethodsOf: aCompiledMethod [
-	^ helpers helpersOf: aCompiledMethod 
+{ #category : 'testing' }
+MethodMessagesAnalysisResult >> includes: aCompiledMethod [
+	^ methods includesKey: aCompiledMethod parseTree 
 ]
 
 { #category : 'initialization' }
 MethodMessagesAnalysisResult >> initialize [ 
 	
 	super initialize.
-	helpers := MaHelpers new.
-	bannedMessages := { #assert: } asSet 
-]
-
-{ #category : 'accessing' }
-MethodMessagesAnalysisResult >> isHelper: aCompiledHelper in: aCompiledMethod [
-	
-	^ helpers isHelper: aCompiledHelper in: aCompiledMethod 
+	methods := Dictionary new.
 ]
 
 { #category : 'testing' }
@@ -114,9 +84,7 @@ MethodMessagesAnalysisResult >> methodMessages: aCompiledMethod [
 
 { #category : 'accessing' }
 MethodMessagesAnalysisResult >> methods: aMethodDictionary [
-	methods := aMethodDictionary .
-	methods keysDo: [ :each | 
-		methods at: each put: ((methods at: each) difference: bannedMessages )]
+	methods := aMethodDictionary
 ]
 
 { #category : 'accessing' }
@@ -132,4 +100,12 @@ MethodMessagesAnalysisResult >> printOn: aStream [
 		nextPutAll: '(' ; 
 		nextPutAll: methods asString;
 		nextPutAll: ')'
+]
+
+{ #category : 'removing' }
+MethodMessagesAnalysisResult >> removeMessages: aMessageCollection [
+
+	methods keysAndValuesDo: 
+		[ :methodNode :methodMessages | 
+			methods at: methodNode put: (methodMessages difference: aMessageCollection) ]
 ]

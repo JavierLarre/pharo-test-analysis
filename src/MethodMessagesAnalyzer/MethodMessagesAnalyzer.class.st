@@ -10,7 +10,9 @@ Class {
 		'guardedHelpers',
 		'guardedMessages',
 		'helperMethods',
-		'selfCallsFinder'
+		'selfCallsFinder',
+		'bannedMessages',
+		'result'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -22,9 +24,17 @@ MethodMessagesAnalyzer >> analyzeMethod: aCompiledMethod [
 	| selfCalls |
 	aCompiledMethod parseTree acceptVisitor: self.
 	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
-	selfCalls select: [ :each | (methods keys includes: each parseTree) not ] thenDo: [ :each | self analyzeMethod: each].
-	helperMethods at: aCompiledMethod parseTree put: (selfCalls select: [ :each | (methods at: each parseTree) includes: #assert: ]).
-	guardedHelpers at: aCompiledMethod parseTree put: (guardedMessages intersection: helperMethods )
+	selfCalls reject: [ :each | result includes: each ] thenDo: [ :each | each parseTree acceptVisitor: self].
+	helperMethods at: aCompiledMethod parseTree put: (selfCalls select: [ :each | (result methodMessages: each) includes: #assert: ]).
+	guardedHelpers at: aCompiledMethod parseTree put: (guardedMessages intersection: helperMethods ).
+	result removeMessages: bannedMessages 
+]
+
+{ #category : 'accessing' }
+MethodMessagesAnalyzer >> helpers [ 
+	^ MaHelpers new 
+		helpers: helperMethods;
+		yourself
 ]
 
 { #category : 'initialization' }
@@ -35,14 +45,14 @@ MethodMessagesAnalyzer >> initialize [
 	helperMethods := Dictionary new.
 	guardedHelpers := Dictionary new.
 	guardedMessages := Set new.
-	selfCallsFinder := MaSelfCallsFinderStub new 
+	bannedMessages := { #assert: } asSet.
+	selfCallsFinder := MaSelfCallsFinderStub new.
+	result := MethodMessagesAnalysisResult new.
 ]
 
 { #category : 'helpers' }
 MethodMessagesAnalyzer >> result [
-	^MethodMessagesAnalysisResult 
-		analyzedMethods: methods copy
-		helperMethods: helperMethods copy 
+	^result copy 
 ]
 
 { #category : 'initialization' }
@@ -70,5 +80,6 @@ MethodMessagesAnalyzer >> visitMethodNode: aMethodNode [
 	
 	messages := Set new.
 	super visitMethodNode: aMethodNode.
-	methods at: aMethodNode put: messages
+	methods at: aMethodNode put: messages.
+	result atMethod: aMethodNode putMessages: messages.
 ]

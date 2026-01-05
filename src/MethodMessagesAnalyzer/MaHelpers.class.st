@@ -12,6 +12,18 @@ Class {
 }
 
 { #category : 'accessing' }
+MaHelpers >> guardedHelpers [
+	
+	^ { MaHelperFixture >> #guardedHelper }
+]
+
+{ #category : 'accessing' }
+MaHelpers >> helperIsGuarded: aCompiledMethod [ 
+	
+	^ true
+]
+
+{ #category : 'accessing' }
 MaHelpers >> helpers [
 	
 	^helpers 
