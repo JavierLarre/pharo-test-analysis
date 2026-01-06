@@ -29,6 +29,18 @@ MaHelperTest >> tearDown [
 ]
 
 { #category : 'tests' }
+MaHelperTest >> testAssertIsNotHelper [
+
+	| helper |
+	helper := MaHelperFixture >> #helper.
+	
+	 analyzer analyzeMethod: helper.
+	
+	self 
+		deny: (analyzer helpers atMethod: helper includesHelper: (MaHelperFixture lookupSelector: #assert:))
+]
+
+{ #category : 'tests' }
 MaHelperTest >> testDetectsHelpers [
 
 	| testHelper helper guardedHelper |
@@ -41,7 +53,7 @@ MaHelperTest >> testDetectsHelpers [
 	self 
 		assert: (analyzer helpers atMethod: testHelper includesHelper: helper);
 		assertCollection: (analyzer helpers helpersOf: testHelper) hasSameElements: { helper . guardedHelper };
-		assert: (analyzer helpers helperIsGuarded: guardedHelper );
+		assert: (analyzer helpers isGuarded: guardedHelper );
 		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }
 ]
 
@@ -58,8 +70,8 @@ MaHelperTest >> testDistinguishesGuardedHelpers [
 	
 	self 
 		assert: (analyzer helpers atMethod: testHelper includesHelper: guardedHelper);
-		assert: (analyzer helpers helperIsGuarded: guardedHelper);
-		deny: (analyzer helpers helperIsGuarded: notAHelper)
+		assert: (analyzer helpers isGuarded: guardedHelper);
+		deny: (analyzer helpers isGuarded: notAHelper)
 ]
 
 { #category : 'tests' }
@@ -84,7 +96,22 @@ MaHelperTest >> testFalseGuarded [
 		analyzeMethod: MaHelperFixture class >> #testFalseGuarded.
 	
 	self 
-		deny: (analyzer helpers helperIsGuarded: MaHelperFixture >> #guardedHelper )
+		deny: (analyzer helpers isGuarded: MaHelperFixture >> #guardedHelper )
+]
+
+{ #category : 'tests' }
+MaHelperTest >> testFindsAllGuardedMessages [
+
+	| testBigHelperGuarded bigHelper |
+	testBigHelperGuarded := MaHelperFixture >> #testBigHelperGuarded .
+	bigHelper := MaHelperFixture >> #bigHelper.
+	
+	analyzer analyzeMethod: testBigHelperGuarded.
+	
+	self 
+		assert: (analyzer helpers isGuarded: bigHelper );
+		assert: (analyzer messages method: bigHelper isConnectedToMessage: #helper0);
+		deny: (analyzer helpers isGuarded: MaHelperFixture >> #helper0)
 ]
 
 { #category : 'tests' }
@@ -98,8 +125,24 @@ MaHelperTest >> testGuardedHelperIsHelper [
 	
 	self 
 		assert: (analyzer helpers atMethod: testHelper includesHelper: guardedHelper );
-		assert: (analyzer helpers helperIsGuarded: guardedHelper );
+		assert: (analyzer helpers isGuarded: guardedHelper );
 		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }
+]
+
+{ #category : 'tests' }
+MaHelperTest >> testHelpersMayBeAdded [
+
+	| helper isHelperGuardedBlock |
+	helper := MaHelperFixture >> #bigHelper.
+	isHelperGuardedBlock := [ analyzer helpers isGuarded: helper ].
+	
+	analyzer analyzeMethod: MaHelperFixture >> #testBigHelper.
+	
+	self deny: isHelperGuardedBlock value.
+		
+	analyzer analyzeMethod: MaHelperFixture >> #testBigHelperGuarded .
+	
+	self assert: isHelperGuardedBlock value
 ]
 
 { #category : 'tests' }

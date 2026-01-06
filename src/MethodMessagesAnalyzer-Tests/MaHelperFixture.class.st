@@ -20,6 +20,15 @@ MaHelperFixture class >> testFalseGuarded [
 	self guardedHelper 
 ]
 
+{ #category : 'tests' }
+MaHelperFixture >> bigHelper [
+	
+	self helper0;
+		helper1;
+		helper2;
+		guardedHelper
+]
+
 { #category : 'as yet unclassified' }
 MaHelperFixture >> guardedHelper [
 	
@@ -34,8 +43,39 @@ MaHelperFixture >> helper [
 ]
 
 { #category : 'as yet unclassified' }
+MaHelperFixture >> helper0 [
+	
+	self assert: true
+]
+
+{ #category : 'as yet unclassified' }
+MaHelperFixture >> helper1 [
+	
+	self assert: false
+]
+
+{ #category : 'as yet unclassified' }
+MaHelperFixture >> helper2 [
+	
+	self assert: false;
+		assert: true
+]
+
+{ #category : 'as yet unclassified' }
 MaHelperFixture >> notAHelper [
 	^true
+]
+
+{ #category : 'tests' }
+MaHelperFixture >> testBigHelper [
+
+	self bigHelper
+]
+
+{ #category : 'tests' }
+MaHelperFixture >> testBigHelperGuarded [
+
+	true ifTrue: [ self bigHelper ]
 ]
 
 { #category : 'as yet unclassified' }
