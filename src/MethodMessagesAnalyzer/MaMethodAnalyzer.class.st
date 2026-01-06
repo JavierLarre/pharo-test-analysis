@@ -3,14 +3,13 @@ I should find messages that are related
 "
 Class {
 	#name : 'MaMethodAnalyzer',
-	#superclass : 'OCProgramNodeVisitor',
+	#superclass : 'Object',
 	#instVars : [
-		'guardedMessages',
 		'selfCallsFinder',
 		'bannedMessages',
 		'helpers',
-		'messagesFound',
-		'messages'
+		'messages',
+		'messageVisitor'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -20,13 +19,13 @@ Class {
 MaMethodAnalyzer >> analyzeMethod: aCompiledMethod [
 
 	| selfCalls compiledHelpers |
-	aCompiledMethod parseTree acceptVisitor: self.
+	messageVisitor := MaMessageVisitor new.
+	self putMessages: aCompiledMethod.
 	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
-	selfCalls reject: [ :each | messages includes: each ] thenDo: [ :each | each parseTree acceptVisitor: self ].
+	selfCalls reject: [ :each | messages includes: each ] thenDo: [ :each | self putMessages: each ].
 	compiledHelpers := selfCalls select: [ :each | (messages methodMessages: each) includes: #assert: ].
 	helpers atMethod: aCompiledMethod putHelpers: compiledHelpers.
-	helpers guardedHelpers: (compiledHelpers select: [ :each | guardedMessages includes: each selector ]).
-	guardedMessages := Set new.
+	helpers guardedHelpers: (compiledHelpers select: [ :each | messageVisitor guardedMessages includes: each selector ]).
 	messages removeMessages: bannedMessages
 ]
 
@@ -43,9 +42,7 @@ MaMethodAnalyzer >> helpers [
 
 { #category : 'initialization' }
 MaMethodAnalyzer >> initialize [ 
-	super initialize. 
-	messagesFound := Set new.
-	guardedMessages := Set new.
+	super initialize.
 	bannedMessages := Set new.
 	selfCallsFinder := MaSelfCallsFinderStub new.
 	messages := MaMessages new.
@@ -57,30 +54,15 @@ MaMethodAnalyzer >> messages [
 	^messages copy 
 ]
 
+{ #category : 'evaluating' }
+MaMethodAnalyzer >> putMessages: aCompiledMethod [
+
+	messageVisitor visit: aCompiledMethod parseTree.
+	messages atMethod: aCompiledMethod parseTree putMessages: messageVisitor foundMessages.
+]
+
 { #category : 'initialization' }
 MaMethodAnalyzer >> selfCallsFinder: aSelfCallsFinder [
 
 	selfCallsFinder := aSelfCallsFinder 
-]
-
-{ #category : 'visiting' }
-MaMethodAnalyzer >> visitMessageNode: aMessageNode [
-	
-	| oldMessages |
-	oldMessages := messagesFound.
-	messagesFound :=  Set new.
-	({ #ifTrue: . #ifFalse: } includes: aMessageNode selector)
-		ifTrue: [ aMessageNode arguments do: [ :each | self visitNode: each ].
-			guardedMessages addAll: messagesFound].
-	messagesFound := oldMessages.
-	messagesFound add: aMessageNode selector.
-	super visitMessageNode: aMessageNode.
-]
-
-{ #category : 'visiting' }
-MaMethodAnalyzer >> visitMethodNode: aMethodNode [
-	
-	messagesFound := Set new.
-	super visitMethodNode: aMethodNode.
-	messages atMethod: aMethodNode putMessages: messagesFound.
 ]
