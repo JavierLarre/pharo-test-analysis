@@ -59,14 +59,14 @@ MaMessages >> message: aMessage isConnectedTo: targetMessage visited: visitedSet
 
 { #category : 'accessing' }
 MaMessages >> method: aCompiledMethod containsMessage: aMessageSymbol [ 
-	^(methods at: aCompiledMethod parseTree ) includes: aMessageSymbol 
+	^(self methodMessages: aCompiledMethod ) includes: aMessageSymbol 
 ]
 
 { #category : 'accessing' }
 MaMessages >> method: aCompiledMethod containsSubmethod: aCompiledSubmethod [ 
 	| methodMessages subMethodMessages |
-	methodMessages := methods at: aCompiledMethod parseTree .
-	subMethodMessages := methods at: aCompiledSubmethod parseTree .
+	methodMessages := self methodMessages: aCompiledMethod .
+	subMethodMessages := self methodMessages: aCompiledSubmethod .
 	^subMethodMessages inject: true into: [ :isSubset :each | isSubset and: [ methodMessages includes: each ] ]
 	 
 ]
