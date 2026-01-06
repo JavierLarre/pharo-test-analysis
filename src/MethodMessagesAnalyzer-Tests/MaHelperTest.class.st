@@ -16,7 +16,7 @@ MaHelperTest >> setUp [
 		selfCallsFinder: 
 			(MaInterpreterWrapper new 
 				interpreter: (RTFSelfCallInterpreter new 
-					considerClassesThat: [:class | true]; 
+					considerClassesThat: [:class | class inheritsFrom: TestCase ]; 
 				yourself));
 		yourself.
 	MaHelperFixture superclass: TestCase 
