@@ -63,6 +63,16 @@ MaHelperTest >> testDistinguishesGuardedHelpers [
 ]
 
 { #category : 'tests' }
+MaHelperTest >> testEmpty [
+
+	self assertEmpty: analyzer helpers helpers;
+		assertEmpty: analyzer helpers guardedHelpers;
+		should: [ analyzer helpers helpersOf: MaHelperFixture >> #testHelper ] raise: MethodNotFound;
+		should: [ analyzer helpers atMethod: MaHelperFixture >> #testHelper includesHelper: MaHelperFixture >> #helper] raise: MethodNotFound; 
+		deny: (analyzer helpers isGuarded: MaHelperFixture >> #guardedHelper)
+]
+
+{ #category : 'tests' }
 MaHelperTest >> testFalseGuarded [
 
 	| testHelper guardedHelper |
