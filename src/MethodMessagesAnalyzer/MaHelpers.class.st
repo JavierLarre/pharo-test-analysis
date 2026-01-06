@@ -15,7 +15,7 @@ Class {
 { #category : 'accessing' }
 MaHelpers >> atMethod: aCompiledMethod includesHelper: aCompiledHelper [
 
-	^(helpers at: aCompiledMethod ) includes: aCompiledHelper 
+	^(self helpersOf: aCompiledMethod ) includes: aCompiledHelper 
 ]
 
 { #category : 'accessing' }
@@ -46,12 +46,6 @@ MaHelpers >> guardedHelpers: aHelperCollection [
 ]
 
 { #category : 'accessing' }
-MaHelpers >> helperIsGuarded: aCompiledMethod [ 
-	
-	^ guardedHelpers includes: aCompiledMethod 
-]
-
-{ #category : 'accessing' }
 MaHelpers >> helpers [
 	
 	^helpers 
@@ -66,7 +60,7 @@ MaHelpers >> helpers: aHelperCollection [
 { #category : 'accessing' }
 MaHelpers >> helpersOf: aCompiledMethod [
 	
-	^helpers at: aCompiledMethod 
+	^helpers at: aCompiledMethod ifAbsent: [ MethodNotFound signal ]
 ]
 
 { #category : 'initialization' }
@@ -75,4 +69,10 @@ MaHelpers >> initialize [
 	super initialize. 
 	helpers := Dictionary new.
 	guardedHelpers := Set new
+]
+
+{ #category : 'accessing' }
+MaHelpers >> isGuarded: aCompiledMethod [ 
+	
+	^ guardedHelpers includes: aCompiledMethod 
 ]
