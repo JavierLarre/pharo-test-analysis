@@ -72,10 +72,18 @@ MaMethodAnalyzerTest >> testDoesNotIncludeAssert [
 
 { #category : 'tests' }
 MaMethodAnalyzerTest >> testEmptyAnalyzer [
-
-	self 
-		assertEmpty: (analyzer messages methodsAnalyzed) ;
-		should: [ analyzer messages methodMessages: (MaFixture >> #foo) ] raise: MethodNotFound
+	
+	
+	| fooMethod |
+	fooMethod := MaFixture >> #foo.
+	self
+		assertEmpty: analyzer messages methodsAnalyzed;
+		should: [ analyzer messages methodMessages: fooMethod ]
+		raise: MethodNotFound;
+		should: [ analyzer messages method: fooMethod isConnectedToMessage: #bar ] raise: MethodNotFound;
+		should: [ analyzer messages method: fooMethod containsMessage: #foo ] raise: MethodNotFound;
+		should: [ analyzer messages method: fooMethod containsSubmethod: fooMethod ] raise: MethodNotFound;
+		deny: (analyzer messages message: #foo isConnectedTo: #bar )
 ]
 
 { #category : 'tests' }
