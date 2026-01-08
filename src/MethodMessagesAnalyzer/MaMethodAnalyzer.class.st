@@ -58,7 +58,7 @@ MaMethodAnalyzer >> messages [
 MaMethodAnalyzer >> putMessages: aCompiledMethod [
 
 	messageVisitor visit: aCompiledMethod parseTree.
-	messages atMethod: aCompiledMethod parseTree putMessages: messageVisitor foundMessages.
+	messages atMethod: aCompiledMethod putMessages: messageVisitor foundMessages.
 ]
 
 { #category : 'initialization' }

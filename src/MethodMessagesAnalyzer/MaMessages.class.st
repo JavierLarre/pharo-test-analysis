@@ -12,9 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-MaMessages >> atMethod: aMethodNode putMessages: aMessageSet [
+MaMessages >> atMethod: aCompiledMethod putMessages: aMessageSet [
 
-	methods at: aMethodNode put: aMessageSet 
+	methods at: aCompiledMethod put: aMessageSet 
 ]
 
 { #category : 'copying' }
@@ -27,7 +27,7 @@ MaMessages >> copy [
 
 { #category : 'testing' }
 MaMessages >> includes: aCompiledMethod [
-	^ methods includesKey: aCompiledMethod parseTree 
+	^ methods includesKey: aCompiledMethod 
 ]
 
 { #category : 'initialization' }
@@ -79,7 +79,7 @@ MaMessages >> method: aCompiledMethod isConnectedToMessage: aMessage [
 
 { #category : 'accessing' }
 MaMessages >> methodMessages: aCompiledMethod [
-	^methods at: aCompiledMethod parseTree ifAbsent: [ MethodNotFound signal ]
+	^methods at: aCompiledMethod ifAbsent: [ MethodNotFound signal ]
 ]
 
 { #category : 'accessing' }
@@ -103,6 +103,6 @@ MaMessages >> printOn: aStream [
 MaMessages >> removeMessages: aMessageCollection [
 
 	methods keysAndValuesDo: 
-		[ :methodNode :methodMessages | 
-			methods at: methodNode put: (methodMessages difference: aMessageCollection) ]
+		[ :compiledMethod :methodMessages | 
+			methods at: compiledMethod put: (methodMessages difference: aMessageCollection) ]
 ]
