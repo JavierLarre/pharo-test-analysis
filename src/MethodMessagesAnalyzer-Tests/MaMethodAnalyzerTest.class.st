@@ -144,3 +144,14 @@ MaMethodAnalyzerTest >> testMethodIsIncluded [
 		assert: (analyzer messages method: fooMethod containsSubmethod: containedFoo) ;
 		deny: (analyzer messages method: containedFoo containsSubmethod: fooMethod) 
 ]
+
+{ #category : 'tests' }
+MaMethodAnalyzerTest >> testSetMessages [
+
+	| messages compiledMethod messagesList |
+	messages := MaMessages new.
+	compiledMethod := MaFixture >> #foo.
+	messagesList := { #these. #messages. #dont. #exist }.
+	messages atMethod: compiledMethod putMessages: messagesList.
+	self assertCollection: (messages methodMessages: compiledMethod) hasSameElements: messagesList
+]

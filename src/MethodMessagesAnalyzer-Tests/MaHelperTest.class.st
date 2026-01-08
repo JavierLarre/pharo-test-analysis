@@ -157,3 +157,21 @@ MaHelperTest >> testIncludesHelper [
 	self 
 		assert: (analyzer helpers atMethod: testHelper includesHelper: helper)
 ]
+
+{ #category : 'tests' }
+MaHelperTest >> testSetHelpers [
+
+	| helpers compiledHelper expectedHelpers expectedGuardedHelpers |
+	helpers := MaHelpers new.
+	compiledHelper := MaHelperFixture >> #helper.
+	expectedHelpers := { #these. #helpers. #dont. #exist }.
+	expectedGuardedHelpers := { #these. #guardedHelpers. #neither }.
+	helpers
+		atMethod: compiledHelper putHelpers: expectedHelpers;
+		guardedHelpers: expectedGuardedHelpers.
+	self
+		assertCollection: (helpers helpersOf: compiledHelper ) hasSameElements: expectedHelpers;
+		assertCollection: (helpers guardedHelpers ) hasSameElements: expectedGuardedHelpers;
+		assert: (helpers isGuarded: #guardedHelpers );
+		assert: (helpers atMethod: compiledHelper includesHelper: #helpers)
+]
