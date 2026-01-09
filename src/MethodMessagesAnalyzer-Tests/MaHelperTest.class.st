@@ -146,6 +146,18 @@ MaHelperTest >> testHelpersMayBeAdded [
 ]
 
 { #category : 'tests' }
+MaHelperTest >> testIgnoresNotHelper [
+
+	| testHelper |
+	testHelper := MaHelperFixture >> #testHelper.
+	
+	 analyzer analyzeMethod: testHelper.
+	
+	self 
+		deny: (analyzer helpers atMethod: testHelper includesHelper: MaHelperFixture >> #notAHelper )
+]
+
+{ #category : 'tests' }
 MaHelperTest >> testIncludesHelper [
 
 	| testHelper helper |
