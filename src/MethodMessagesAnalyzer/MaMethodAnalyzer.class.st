@@ -18,14 +18,15 @@ Class {
 { #category : 'evaluating' }
 MaMethodAnalyzer >> analyzeMethod: aCompiledMethod [
 
-	| selfCalls compiledHelpers |
+	| selfCalls compiledHelpers guardedMessages|
 	messageVisitor := MaMessageVisitor new.
 	self putMessages: aCompiledMethod.
+	guardedMessages := messageVisitor guardedMessages .
 	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
 	selfCalls reject: [ :each | messages includes: each ] thenDo: [ :each | self putMessages: each ].
 	compiledHelpers := selfCalls select: [ :each | (messages methodMessages: each) includes: #assert: ].
 	helpers atMethod: aCompiledMethod putHelpers: compiledHelpers.
-	helpers guardedHelpers: (compiledHelpers select: [ :each | messageVisitor guardedMessages includes: each selector ]).
+	helpers guardedHelpers: (compiledHelpers select: [ :each | guardedMessages includes: each selector ]).
 	messages removeMessages: bannedMessages
 ]
 
@@ -57,6 +58,7 @@ MaMethodAnalyzer >> messages [
 { #category : 'evaluating' }
 MaMethodAnalyzer >> putMessages: aCompiledMethod [
 
+	messageVisitor := MaMessageVisitor new.
 	messageVisitor visit: aCompiledMethod parseTree.
 	messages atMethod: aCompiledMethod putMessages: messageVisitor foundMessages.
 ]
@@ -64,5 +66,5 @@ MaMethodAnalyzer >> putMessages: aCompiledMethod [
 { #category : 'initialization' }
 MaMethodAnalyzer >> selfCallsFinder: aSelfCallsFinder [
 
-	selfCallsFinder := aSelfCallsFinder 
+	selfCallsFinder := MySelfCallsInterpreter new
 ]
