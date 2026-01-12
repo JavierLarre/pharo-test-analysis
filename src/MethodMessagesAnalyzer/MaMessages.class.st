@@ -11,6 +11,12 @@ Class {
 	#package : 'MethodMessagesAnalyzer'
 }
 
+{ #category : 'comparing' }
+MaMessages >> = aMaMessages [
+	
+	^ methods = aMaMessages methods
+]
+
 { #category : 'accessing' }
 MaMessages >> atMethod: aCompiledMethod putMessages: aMessageSet [
 
@@ -80,6 +86,12 @@ MaMessages >> method: aCompiledMethod isConnectedToMessage: aMessage [
 { #category : 'accessing' }
 MaMessages >> methodMessages: aCompiledMethod [
 	^methods at: aCompiledMethod ifAbsent: [ MethodNotFound signal ]
+]
+
+{ #category : 'accessing' }
+MaMessages >> methods [
+
+	^methods 
 ]
 
 { #category : 'accessing' }
