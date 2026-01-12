@@ -24,7 +24,7 @@ MaMethodAnalyzer >> analyzeMethod: aCompiledMethod [
 	guardedMessages := messageVisitor guardedMessages .
 	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
 	selfCalls reject: [ :each | messages includes: each ] thenDo: [ :each | self putMessages: each ].
-	compiledHelpers := selfCalls select: [ :each | (messages methodMessages: each) includes: #assert: ].
+	compiledHelpers := selfCalls select: [ :each | messages method: each isConnectedToMessage: #assert: ].
 	helpers atMethod: aCompiledMethod putHelpers: compiledHelpers.
 	helpers guardedHelpers: (compiledHelpers select: [ :each | guardedMessages includes: each selector ]).
 	messages removeMessages: bannedMessages
