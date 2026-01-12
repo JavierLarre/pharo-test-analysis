@@ -4,6 +4,9 @@ I store helpers that are to be used for analysis in tests
 Class {
 	#name : 'MaHelperFixture',
 	#superclass : 'Object',
+	#instVars : [
+		'x'
+	],
 	#category : 'MethodMessagesAnalyzer-Tests',
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
@@ -25,8 +28,8 @@ MaHelperFixture >> bigHelper [
 	
 	self helper0;
 		helper1;
-		helper2;
-		guardedHelper
+		helper2.
+	false ifTrue: [ self guardedHelper ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -62,8 +65,15 @@ MaHelperFixture >> helper2 [
 ]
 
 { #category : 'as yet unclassified' }
+MaHelperFixture >> nestedHelper [
+	
+	self helper.
+]
+
+{ #category : 'as yet unclassified' }
 MaHelperFixture >> notAHelper [
-	^true
+	
+	x value
 ]
 
 { #category : 'tests' }
@@ -82,8 +92,15 @@ MaHelperFixture >> testBigHelperGuarded [
 MaHelperFixture >> testHelper [
 	
 	self helper.
+	x foo.
 	true ifTrue: [ self guardedHelper . ].
 	self notAHelper
+]
+
+{ #category : 'as yet unclassified' }
+MaHelperFixture >> testNested [
+	
+	self nestedHelper.
 ]
 
 { #category : 'tests' }
