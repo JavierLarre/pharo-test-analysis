@@ -98,9 +98,9 @@ MySelfCallsInterpreter >> visitMessageNode: aMessageNode [
 	foundMessages add: aMessageNode selector.
 	isGuarded ifTrue: [ guardedMessages add: aMessageNode selector ].
 	({ #ifTrue: . #ifFalse: } includes: aMessageNode selector)
-		ifTrue: [ 
-			isGuarded := true.
-			aMessageNode arguments do: [ :each | each acceptVisitor: self ] ].
+		ifTrue: [ isGuarded := true ].
+	
+	aMessageNode arguments do: [ :each | each acceptVisitor: self ].
 	isGuarded := previousIsGuarded.
 	aMessageNode receiver acceptVisitor: self.
 	super visitMessageNode: aMessageNode.
