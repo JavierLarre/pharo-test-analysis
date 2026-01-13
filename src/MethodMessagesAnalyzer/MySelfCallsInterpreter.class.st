@@ -24,6 +24,18 @@ MySelfCallsInterpreter >> addCallNode: aCallNode [
 	callStack push: selfSentMethod 
 ]
 
+{ #category : 'api' }
+MySelfCallsInterpreter >> analyzeMethod: aCompiledMethod [
+
+	selfClass := aCompiledMethod methodClass.
+	callStack push: aCompiledMethod .
+	[ callStack isEmpty ] whileFalse: [ 
+		currentMethod := callStack pop.
+		currentMethod parseTree acceptVisitor: self ].
+	self putHelpersConnectedTo: aCompiledMethod .
+	selfSentMethods do: [ :each | self putHelpersConnectedTo: each ]
+]
+
 { #category : 'private' }
 MySelfCallsInterpreter >> getCallNodeFromMessageNode: aMessageNode [
 
@@ -54,7 +66,7 @@ MySelfCallsInterpreter >> initialize [
 ]
 
 { #category : 'private' }
-MySelfCallsInterpreter >> putHelpersConnectedToAssert: aCompiledMethod [
+MySelfCallsInterpreter >> putHelpersConnectedTo: aCompiledMethod [
 	
 	helpers 
 		atMethod: aCompiledMethod 
@@ -64,13 +76,7 @@ MySelfCallsInterpreter >> putHelpersConnectedToAssert: aCompiledMethod [
 { #category : 'api' }
 MySelfCallsInterpreter >> send: aSelector fromClass: aClass [
 
-	selfClass := aClass.
-	callStack push: (selfClass lookupSelector: aSelector).
-	[ callStack isEmpty ] whileFalse: [ 
-		currentMethod := callStack pop.
-		currentMethod parseTree acceptVisitor: self ].
-	self putHelpersConnectedToAssert: (selfClass lookupSelector: aSelector).
-	selfSentMethods do: [ :each | self putHelpersConnectedToAssert: each ]
+	self analyzeMethod: (aClass lookupSelector: aSelector)
 ]
 
 { #category : 'private' }
