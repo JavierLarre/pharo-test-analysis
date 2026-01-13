@@ -35,14 +35,15 @@ MaMethodVisitorTest >> tearDown [
 
 { #category : 'tests' }
 MaMethodVisitorTest >> testDifferentiatesNestedGuardedMessages [
+
+	| guardedMessages |
+	self analyzeMethodFromFixture: #testHelper.
 	
-	self analyzeMethodFromFixture: #testBigHelper.
-	
-	self 
-		assertCollection: visitor guardedMessages 
-		includesAll: { #guardedHelper }; 
-		denyCollection: visitor guardedMessages 
-		includesAll: { #bigHelper }
+	guardedMessages := visitor guardedMessages methodMessages: (self helperMethodFromFixture: #testHelper).
+
+	self
+		assertCollection: guardedMessages includesAll: { #guardedHelper };
+		denyCollection: guardedMessages includesAll: { #helper }
 ]
 
 { #category : 'tests' }
@@ -53,6 +54,20 @@ MaMethodVisitorTest >> testFindsMessagesSentToSelf [
 	self 
 		assertCollection: visitor selfSentMethods 
 		includesAll: { self helperMethodFromFixture: #helper }
+]
+
+{ #category : 'tests' }
+MaMethodVisitorTest >> testGuardedMessagesAreConnected [
+
+	| testBigHelperGuarded |
+	self analyzeMethodFromFixture: #testBigHelperGuarded.
+	testBigHelperGuarded := self helperMethodFromFixture: #testBigHelperGuarded.
+
+	self
+		assertCollection: (visitor guardedMessages methodMessages: testBigHelperGuarded) hasSameElements: { #bigHelper };
+		assertCollection: (visitor guardedMessages methodMessages: (self helperMethodFromFixture: #bigHelper))
+		hasSameElements: { #guardedHelper };
+		assert: (visitor guardedMessages method: testBigHelperGuarded isConnectedToMessage: #guardedHelper)
 ]
 
 { #category : 'tests' }
@@ -80,12 +95,12 @@ MaMethodVisitorTest >> testIncludesCallOnArguments [
 
 { #category : 'tests' }
 MaMethodVisitorTest >> testIncludesGuardedMessages [
-	
+
+	| guardedMessages |
 	self analyzeMethodFromFixture: #testHelper.
-	
-	self 
-		assertCollection: visitor guardedMessages 
-		hasSameElements: { #guardedHelper }
+	guardedMessages := visitor guardedMessages methodMessages: (self helperMethodFromFixture: #testHelper).
+
+	self assertCollection: guardedMessages hasSameElements: { #guardedHelper }
 ]
 
 { #category : 'tests' }
@@ -121,23 +136,14 @@ MaMethodVisitorTest >> testIncludesMessages [
 ]
 
 { #category : 'tests' }
-MaMethodVisitorTest >> testIncludesNestedGuardedMessages [
-	
-	self analyzeMethodFromFixture: #testBigHelperGuarded .
-	
-	self 
-		assertCollection: visitor guardedMessages 
-		includesAll: { #bigHelper . #guardedHelper }.
-]
-
-{ #category : 'tests' }
 MaMethodVisitorTest >> testVisitorIsEmpty [
 	
 	self 
-		assertEmpty: visitor guardedMessages;
 		assertEmpty: visitor methodsSelfCalls;
+		assertEmpty: visitor guardedMessages methodsAnalyzed ;
 		assertEmpty: visitor messages methodsAnalyzed;
-		assertEmpty: visitor helpers helpers 
+		assertEmpty: visitor helpers helpers;
+		assertEmpty: visitor guardedHelpers helpers
 ]
 
 { #category : 'tests' }

@@ -53,8 +53,7 @@ MaHelperTest >> testDetectsHelpers [
 	self 
 		assert: (analyzer helpers atMethod: testHelper includesHelper: helper);
 		assertCollection: (analyzer helpers helpersOf: testHelper) hasSameElements: { helper . guardedHelper };
-		assert: (analyzer helpers isGuarded: guardedHelper );
-		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }
+		assertCollection: (analyzer guardedHelpers helpersOf: testHelper ) hasSameElements: { guardedHelper }
 ]
 
 { #category : 'tests' }
@@ -70,18 +69,18 @@ MaHelperTest >> testDistinguishesGuardedHelpers [
 	
 	self 
 		assert: (analyzer helpers atMethod: testHelper includesHelper: guardedHelper);
-		assert: (analyzer helpers isGuarded: guardedHelper);
-		deny: (analyzer helpers isGuarded: notAHelper)
+		assert: (analyzer guardedHelpers atMethod: testHelper includesHelper: guardedHelper);
+		deny: (analyzer guardedHelpers atMethod: testHelper includesHelper: notAHelper)
 ]
 
 { #category : 'tests' }
 MaHelperTest >> testEmpty [
 
 	self assertEmpty: analyzer helpers helpers;
-		assertEmpty: analyzer helpers guardedHelpers;
+		assertEmpty: analyzer guardedHelpers helpers;
 		should: [ analyzer helpers helpersOf: MaHelperFixture >> #testHelper ] raise: MethodNotFound;
-		should: [ analyzer helpers atMethod: MaHelperFixture >> #testHelper includesHelper: MaHelperFixture >> #helper] raise: MethodNotFound; 
-		deny: (analyzer helpers isGuarded: MaHelperFixture >> #guardedHelper)
+		should: [ analyzer helpers atMethod: MaHelperFixture >> #testHelper includesHelper: MaHelperFixture >> #helper] raise: MethodNotFound;
+		should: [ analyzer guardedHelpers atMethod: MaHelperFixture >> #testHelper includesHelper: MaHelperFixture >> #helper] raise: MethodNotFound
 ]
 
 { #category : 'tests' }
@@ -96,7 +95,7 @@ MaHelperTest >> testFalseGuarded [
 		analyzeMethod: MaHelperFixture class >> #testFalseGuarded.
 	
 	self 
-		deny: (analyzer helpers isGuarded: MaHelperFixture >> #guardedHelper )
+		assert: (analyzer guardedHelpers atMethod: testHelper includesHelper: MaHelperFixture >> #guardedHelper )
 ]
 
 { #category : 'tests' }
@@ -109,9 +108,9 @@ MaHelperTest >> testFindsAllGuardedMessages [
 	analyzer analyzeMethod: testBigHelperGuarded.
 	
 	self 
-		assert: (analyzer helpers isGuarded: bigHelper );
+		assert: (analyzer guardedHelpers atMethod: testBigHelperGuarded includesHelper: bigHelper );
 		assert: (analyzer messages method: bigHelper isConnectedToMessage: #helper0);
-		deny: (analyzer helpers isGuarded: MaHelperFixture >> #helper0)
+		deny: (analyzer guardedHelpers atMethod: testBigHelperGuarded includesHelper: MaHelperFixture >> #helper0)
 ]
 
 { #category : 'tests' }
@@ -125,24 +124,8 @@ MaHelperTest >> testGuardedHelperIsHelper [
 	
 	self 
 		assert: (analyzer helpers atMethod: testHelper includesHelper: guardedHelper );
-		assert: (analyzer helpers isGuarded: guardedHelper );
-		assertCollection: analyzer helpers guardedHelpers hasSameElements: { guardedHelper }
-]
-
-{ #category : 'tests' }
-MaHelperTest >> testHelpersMayBeAdded [
-
-	| helper isHelperGuardedBlock |
-	helper := MaHelperFixture >> #bigHelper.
-	isHelperGuardedBlock := [ analyzer helpers isGuarded: helper ].
-	
-	analyzer analyzeMethod: MaHelperFixture >> #testBigHelper.
-	
-	self deny: isHelperGuardedBlock value.
-		
-	analyzer analyzeMethod: MaHelperFixture >> #testBigHelperGuarded .
-	
-	self assert: isHelperGuardedBlock value
+		assert: (analyzer guardedHelpers atMethod: testHelper includesHelper: guardedHelper );
+		assertCollection: (analyzer guardedHelpers helpersOf: testHelper ) hasSameElements: { guardedHelper }
 ]
 
 { #category : 'tests' }
@@ -173,17 +156,13 @@ MaHelperTest >> testIncludesHelper [
 { #category : 'tests' }
 MaHelperTest >> testSetHelpers [
 
-	| helpers compiledHelper expectedHelpers expectedGuardedHelpers |
+	| helpers compiledHelper expectedHelpers |
 	helpers := MaHelpers new.
 	compiledHelper := MaHelperFixture >> #helper.
 	expectedHelpers := { #these. #helpers. #dont. #exist }.
-	expectedGuardedHelpers := { #these. #guardedHelpers. #neither }.
 	helpers
-		atMethod: compiledHelper putHelpers: expectedHelpers;
-		guardedHelpers: expectedGuardedHelpers.
+		atMethod: compiledHelper putHelpers: expectedHelpers.
 	self
 		assertCollection: (helpers helpersOf: compiledHelper ) hasSameElements: expectedHelpers;
-		assertCollection: (helpers guardedHelpers ) hasSameElements: expectedGuardedHelpers;
-		assert: (helpers isGuarded: #guardedHelpers );
 		assert: (helpers atMethod: compiledHelper includesHelper: #helpers)
 ]
