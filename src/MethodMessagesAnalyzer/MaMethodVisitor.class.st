@@ -2,7 +2,7 @@
 playing around
 "
 Class {
-	#name : 'MySelfCallsInterpreter',
+	#name : 'MaMethodVisitor',
 	#superclass : 'RTFSelfCallInterpreter',
 	#instVars : [
 		'foundMessages',
@@ -17,14 +17,14 @@ Class {
 }
 
 { #category : 'private' }
-MySelfCallsInterpreter >> addCallNode: aCallNode [
+MaMethodVisitor >> addCallNode: aCallNode [
 
 	selfSentMethods add: selfSentMethod.
 	callStack push: selfSentMethod 
 ]
 
 { #category : 'api' }
-MySelfCallsInterpreter >> analyzeMethod: aCompiledMethod [
+MaMethodVisitor >> analyzeMethod: aCompiledMethod [
 
 	selfClass := aCompiledMethod methodClass.
 	callStack push: aCompiledMethod .
@@ -35,24 +35,24 @@ MySelfCallsInterpreter >> analyzeMethod: aCompiledMethod [
 ]
 
 { #category : 'private' }
-MySelfCallsInterpreter >> getCallNodeFromMessageNode: aMessageNode [
+MaMethodVisitor >> getCallNodeFromMessageNode: aMessageNode [
 
 	^nil
 ]
 
 { #category : 'accessing' }
-MySelfCallsInterpreter >> guardedMessages [ 
+MaMethodVisitor >> guardedMessages [ 
 	^ guardedMessages 
 ]
 
 { #category : 'accessing' }
-MySelfCallsInterpreter >> helpers [ 
+MaMethodVisitor >> helpers [ 
 	
 	^ helpers 
 ]
 
 { #category : 'initialization' }
-MySelfCallsInterpreter >> initialize [ 
+MaMethodVisitor >> initialize [ 
 
 	super initialize.
 	considerClassesThat := [ :class | class inheritsFrom: TestCase ].
@@ -64,7 +64,7 @@ MySelfCallsInterpreter >> initialize [
 ]
 
 { #category : 'private' }
-MySelfCallsInterpreter >> putHelpersConnectedTo: aCompiledMethod [
+MaMethodVisitor >> putHelpersConnectedTo: aCompiledMethod [
 	
 	helpers 
 		atMethod: aCompiledMethod 
@@ -72,13 +72,13 @@ MySelfCallsInterpreter >> putHelpersConnectedTo: aCompiledMethod [
 ]
 
 { #category : 'api' }
-MySelfCallsInterpreter >> send: aSelector fromClass: aClass [
+MaMethodVisitor >> send: aSelector fromClass: aClass [
 
 	self analyzeMethod: (aClass lookupSelector: aSelector)
 ]
 
 { #category : 'private' }
-MySelfCallsInterpreter >> setMethodFromNode: aMessageNode [
+MaMethodVisitor >> setMethodFromNode: aMessageNode [
 
 	| lookupClass |
 	lookupClass := aMessageNode receiver isSuperVariable
@@ -89,7 +89,7 @@ MySelfCallsInterpreter >> setMethodFromNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
-MySelfCallsInterpreter >> visitCompiledMethod: aCompiledMethod [
+MaMethodVisitor >> visitCompiledMethod: aCompiledMethod [
 
 	| oldMethods |
 	oldMethods := selfSentMethods .
@@ -104,7 +104,7 @@ MySelfCallsInterpreter >> visitCompiledMethod: aCompiledMethod [
 ]
 
 { #category : 'visiting' }
-MySelfCallsInterpreter >> visitMessageNode: aMessageNode [
+MaMethodVisitor >> visitMessageNode: aMessageNode [
 
 	| previousIsGuarded |
 	previousIsGuarded := isGuarded.
@@ -120,7 +120,7 @@ MySelfCallsInterpreter >> visitMessageNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
-MySelfCallsInterpreter >> visitNodes: aMessageNode [
+MaMethodVisitor >> visitNodes: aMessageNode [
 	
 	
 ]

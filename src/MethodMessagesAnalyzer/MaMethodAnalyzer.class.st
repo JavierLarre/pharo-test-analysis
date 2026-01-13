@@ -22,7 +22,7 @@ MaMethodAnalyzer >> analyzeMethod: aCompiledMethod [
 	messageVisitor := MaMessageVisitor new.
 	self putMessages: aCompiledMethod.
 	guardedMessages := messageVisitor guardedMessages .
-	selfCalls := selfCallsFinder selfCalls: aCompiledMethod.
+	selfCalls := selfCallsFinder analyzeMethod: aCompiledMethod; selfSentMethods .
 	selfCalls reject: [ :each | messages includes: each ] thenDo: [ :each | self putMessages: each ].
 	compiledHelpers := selfCalls select: [ :each | messages method: each isConnectedToMessage: #assert: ].
 	helpers atMethod: aCompiledMethod putHelpers: compiledHelpers.
@@ -66,5 +66,5 @@ MaMethodAnalyzer >> putMessages: aCompiledMethod [
 { #category : 'initialization' }
 MaMethodAnalyzer >> selfCallsFinder: aSelfCallsFinder [
 
-	selfCallsFinder := MySelfCallsInterpreter new
+	selfCallsFinder := MaMethodVisitor new
 ]
