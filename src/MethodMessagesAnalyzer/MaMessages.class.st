@@ -104,6 +104,19 @@ MaMessages >> methodsAnalyzed [
 	^methods keys 
 ]
 
+{ #category : 'api' }
+MaMessages >> methodsConnectedTo: aSelector [
+
+	^ methods keys select: [ :method | self method: method isConnectedToMessage: aSelector ]
+]
+
+{ #category : 'api' }
+MaMessages >> methodsFrom: aCompiledMethod thatAreConectedTo: aSelector [
+
+	^ (self methodsConnectedTo: aSelector) 
+	select: [ :method | self method: aCompiledMethod isConnectedToMessage: method selector]
+]
+
 { #category : 'printing' }
 MaMessages >> printOn: aStream [
 
