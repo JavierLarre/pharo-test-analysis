@@ -5,8 +5,7 @@ Class {
 	#name : 'MaHelpers',
 	#superclass : 'Object',
 	#instVars : [
-		'helpers',
-		'guardedHelpers'
+		'helpers'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -29,20 +28,7 @@ MaHelpers >> copy [
 
 	^ self class new
 		helpers: helpers copy;
-		guardedHelpers: guardedHelpers copy;
 		yourself 
-]
-
-{ #category : 'accessing' }
-MaHelpers >> guardedHelpers [
-	
-	^ guardedHelpers 
-]
-
-{ #category : 'accessing' }
-MaHelpers >> guardedHelpers: aHelperCollection [
-	
-	guardedHelpers := aHelperCollection 
 ]
 
 { #category : 'accessing' }
@@ -68,11 +54,4 @@ MaHelpers >> initialize [
 
 	super initialize. 
 	helpers := Dictionary new.
-	guardedHelpers := Set new
-]
-
-{ #category : 'accessing' }
-MaHelpers >> isGuarded: aCompiledMethod [ 
-	
-	^ guardedHelpers includes: aCompiledMethod 
 ]
