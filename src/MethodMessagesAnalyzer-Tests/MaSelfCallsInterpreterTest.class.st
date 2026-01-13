@@ -15,6 +15,12 @@ MaSelfCallsInterpreterTest >> setUp [
 	MaHelperFixture superclass: TestCase 
 ]
 
+{ #category : 'running' }
+MaSelfCallsInterpreterTest >> tearDown [ 
+	MaHelperFixture superclass: Object.
+	super tearDown 
+]
+
 { #category : 'tests' }
 MaSelfCallsInterpreterTest >> testDifferentiatesNestedGuardedMessages [
 	
