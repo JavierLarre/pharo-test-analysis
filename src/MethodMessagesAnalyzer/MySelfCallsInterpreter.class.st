@@ -53,6 +53,14 @@ MySelfCallsInterpreter >> initialize [
 	methodsSelfCalls := Dictionary new
 ]
 
+{ #category : 'private' }
+MySelfCallsInterpreter >> putHelpersConnectedToAssert: aCompiledMethod [
+	
+	helpers 
+		atMethod: aCompiledMethod 
+		putHelpers: (messages methodsFrom: aCompiledMethod thatAreConectedTo: #assert:).
+]
+
 { #category : 'api' }
 MySelfCallsInterpreter >> selfCalls: aCompiledMethod [
 	self send: aCompiledMethod selector fromClass: aCompiledMethod methodClass.
@@ -67,7 +75,8 @@ MySelfCallsInterpreter >> send: aSelector fromClass: aClass [
 	[ callStack isEmpty ] whileFalse: [ 
 		currentMethod := callStack pop.
 		currentMethod parseTree acceptVisitor: self ].
-	helpers atMethod: (selfClass lookupSelector: aSelector) putHelpers: (selfSentMethods select: [ :helper | messages method: helper isConnectedToMessage: #assert: ])
+	self putHelpersConnectedToAssert: (selfClass lookupSelector: aSelector).
+	selfSentMethods do: [ :each | self putHelpersConnectedToAssert: each ]
 ]
 
 { #category : 'private' }
