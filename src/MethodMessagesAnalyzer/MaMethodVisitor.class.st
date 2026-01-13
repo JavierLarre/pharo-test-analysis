@@ -7,10 +7,12 @@ Class {
 	#instVars : [
 		'foundMessages',
 		'guardedMessages',
-		'messages',
 		'methodsSelfCalls',
 		'isGuarded',
-		'helpers'
+		'messages',
+		'helpers',
+		'guardedHelpers',
+		'foundGuardedMessages'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -41,6 +43,11 @@ MaMethodVisitor >> getCallNodeFromMessageNode: aMessageNode [
 ]
 
 { #category : 'accessing' }
+MaMethodVisitor >> guardedHelpers [ 
+	^ guardedHelpers 
+]
+
+{ #category : 'accessing' }
 MaMethodVisitor >> guardedMessages [ 
 	^ guardedMessages 
 ]
@@ -57,9 +64,10 @@ MaMethodVisitor >> initialize [
 	super initialize.
 	considerClassesThat := [ :class | class inheritsFrom: TestCase ].
 	foundMessages := Set new.
-	guardedMessages := Set new.
-	messages := MaMessages new .
+	guardedMessages := MaMessages new.
+	messages := MaMessages new.
 	helpers := MaHelpers new.
+	guardedHelpers := MaHelpers new.
 	methodsSelfCalls := Dictionary new
 ]
 
@@ -69,6 +77,10 @@ MaMethodVisitor >> putHelpersConnectedTo: aCompiledMethod [
 	helpers 
 		atMethod: aCompiledMethod 
 		putHelpers: (messages methodsFrom: aCompiledMethod thatAreConectedTo: #assert:).
+	guardedHelpers 
+		atMethod: aCompiledMethod 
+		putHelpers: ( 
+			( helpers helpersOf: aCompiledMethod ) select: [ :helper | guardedMessages method: aCompiledMethod containsMessage: helper selector ] ) 
 ]
 
 { #category : 'api' }
@@ -94,10 +106,12 @@ MaMethodVisitor >> visitCompiledMethod: aCompiledMethod [
 	| oldMethods |
 	oldMethods := selfSentMethods .
 	foundMessages := Set new.
+	foundGuardedMessages := Set new.
 	selfSentMethods := OrderedCollection new.
 	isGuarded := false.
 	self visitMethodNode: aCompiledMethod parseTree. 
 	messages atMethod: aCompiledMethod putMessages: foundMessages.
+	guardedMessages atMethod: aCompiledMethod putMessages: foundGuardedMessages.
 	methodsSelfCalls at: aCompiledMethod put: selfSentMethods.
 	oldMethods addAll: selfSentMethods.
 	selfSentMethods := oldMethods 
@@ -109,7 +123,7 @@ MaMethodVisitor >> visitMessageNode: aMessageNode [
 	| previousIsGuarded |
 	previousIsGuarded := isGuarded.
 	foundMessages add: aMessageNode selector.
-	isGuarded ifTrue: [ guardedMessages add: aMessageNode selector ].
+	isGuarded ifTrue: [ foundGuardedMessages add: aMessageNode selector ].
 	({ #ifTrue: . #ifFalse: } includes: aMessageNode selector)
 		ifTrue: [ isGuarded := true ].
 	
