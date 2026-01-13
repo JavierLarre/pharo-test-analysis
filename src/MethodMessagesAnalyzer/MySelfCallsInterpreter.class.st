@@ -8,7 +8,6 @@ Class {
 		'foundMessages',
 		'guardedMessages',
 		'messages',
-		'currentMethod',
 		'methodsSelfCalls',
 		'isGuarded',
 		'helpers'
@@ -30,9 +29,8 @@ MySelfCallsInterpreter >> analyzeMethod: aCompiledMethod [
 	selfClass := aCompiledMethod methodClass.
 	callStack push: aCompiledMethod .
 	[ callStack isEmpty ] whileFalse: [ 
-		currentMethod := callStack pop.
-		currentMethod parseTree acceptVisitor: self ].
-	self putHelpersConnectedTo: aCompiledMethod .
+		self visitCompiledMethod: callStack pop ].
+	self putHelpersConnectedTo: aCompiledMethod.
 	selfSentMethods do: [ :each | self putHelpersConnectedTo: each ]
 ]
 
@@ -91,6 +89,21 @@ MySelfCallsInterpreter >> setMethodFromNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
+MySelfCallsInterpreter >> visitCompiledMethod: aCompiledMethod [
+
+	| oldMethods |
+	oldMethods := selfSentMethods .
+	foundMessages := Set new.
+	selfSentMethods := OrderedCollection new.
+	isGuarded := false.
+	self visitMethodNode: aCompiledMethod parseTree. 
+	messages atMethod: aCompiledMethod putMessages: foundMessages.
+	methodsSelfCalls at: aCompiledMethod put: selfSentMethods.
+	oldMethods addAll: selfSentMethods.
+	selfSentMethods := oldMethods 
+]
+
+{ #category : 'visiting' }
 MySelfCallsInterpreter >> visitMessageNode: aMessageNode [
 
 	| previousIsGuarded |
@@ -104,21 +117,6 @@ MySelfCallsInterpreter >> visitMessageNode: aMessageNode [
 	isGuarded := previousIsGuarded.
 	aMessageNode receiver acceptVisitor: self.
 	super visitMessageNode: aMessageNode.
-]
-
-{ #category : 'visiting' }
-MySelfCallsInterpreter >> visitMethodNode: aMethodNode [
-
-	| oldMethods |
-	oldMethods := selfSentMethods .
-	foundMessages := Set new.
-	selfSentMethods := OrderedCollection new.
-	isGuarded := false.
-	super visitMethodNode: aMethodNode. 
-	messages atMethod: currentMethod putMessages: foundMessages.
-	methodsSelfCalls at: currentMethod put: selfSentMethods.
-	oldMethods addAll: selfSentMethods.
-	selfSentMethods := oldMethods 
 ]
 
 { #category : 'visiting' }
