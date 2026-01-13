@@ -12,13 +12,7 @@ Class {
 MaHelperTest >> setUp [
 	
 	super setUp.
-	analyzer := MaMethodAnalyzer new 
-		selfCallsFinder: 
-			(MaInterpreterWrapper new 
-				interpreter: (RTFSelfCallInterpreter new 
-					considerClassesThat: [:class | class inheritsFrom: TestCase ]; 
-				yourself));
-		yourself.
+	analyzer := MaMethodAnalyzer new.
 	MaHelperFixture superclass: TestCase 
 ]
 
