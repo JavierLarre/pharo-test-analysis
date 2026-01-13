@@ -62,12 +62,6 @@ MySelfCallsInterpreter >> putHelpersConnectedToAssert: aCompiledMethod [
 ]
 
 { #category : 'api' }
-MySelfCallsInterpreter >> selfCalls: aCompiledMethod [
-	self send: aCompiledMethod selector fromClass: aCompiledMethod methodClass.
-	^ selfSentMethods 
-]
-
-{ #category : 'api' }
 MySelfCallsInterpreter >> send: aSelector fromClass: aClass [
 
 	selfClass := aClass.
