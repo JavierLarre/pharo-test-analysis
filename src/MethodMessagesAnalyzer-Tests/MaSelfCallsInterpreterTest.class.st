@@ -52,6 +52,16 @@ MaSelfCallsInterpreterTest >> testHasMethodSelfCalls [
 ]
 
 { #category : 'tests' }
+MaSelfCallsInterpreterTest >> testIncludesCallOnArguments [ 
+	
+	selfCallFinder analyzeMethod: MaHelperFixture >> #testHelperOnArguments.
+	
+	self 
+		assertCollection: selfCallFinder selfSentMethods 
+		includesAll: { MaHelperFixture >> #helper } 
+]
+
+{ #category : 'tests' }
 MaSelfCallsInterpreterTest >> testIncludesGuardedMessages [
 	
 	selfCallFinder send: #testHelper fromClass: MaHelperFixture.

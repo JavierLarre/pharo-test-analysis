@@ -97,6 +97,12 @@ MaHelperFixture >> testHelper [
 	self notAHelper
 ]
 
+{ #category : 'tests' }
+MaHelperFixture >> testHelperOnArguments [
+
+	self assert: self helper
+]
+
 { #category : 'as yet unclassified' }
 MaHelperFixture >> testNested [
 	
