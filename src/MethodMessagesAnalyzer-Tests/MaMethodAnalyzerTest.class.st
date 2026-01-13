@@ -48,15 +48,21 @@ MaMethodAnalyzerTest >> testAreConnected [
 ]
 
 { #category : 'tests' }
-MaMethodAnalyzerTest >> testCycle [
+MaMethodAnalyzerTest >> testCycle [ 
 
-	| cycleMethod |
-	cycleMethod := MaFixtureWithCycles >> #cycle1.
+	| rootMethod |
+	rootMethod := MaFixtureWithCycles >> #root .
 	analyzer
-		analyzeMethod: cycleMethod;
-		analyzeMethod: MaFixtureWithCycles >> #cycle2.
+		analyzeMethod: rootMethod;
+		analyzeMethod: MaFixtureWithCycles >> #x .
+
 	self 
-		deny: (analyzer messages method: cycleMethod isConnectedToMessage: #doesNotExist)
+		assert: (analyzer messages method: rootMethod isConnectedToMessage: #x) ;
+		deny: (analyzer messages method: rootMethod isConnectedToMessage: #cycle1) .
+		
+	analyzer analyzeMethod: MaFixtureWithCycles >> #z .
+	
+	self assert: (analyzer messages method: rootMethod isConnectedToMessage: #cycle1) 
 ]
 
 { #category : 'tests' }
