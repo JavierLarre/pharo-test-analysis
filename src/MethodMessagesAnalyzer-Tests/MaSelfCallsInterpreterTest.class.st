@@ -28,6 +28,16 @@ MaSelfCallsInterpreterTest >> tearDown [
 ]
 
 { #category : 'tests' }
+MaSelfCallsInterpreterTest >> testAnalyzerIsEmpty [
+	
+	self 
+		assertEmpty: selfCallFinder guardedMessages;
+		assertEmpty: selfCallFinder methodsSelfCalls;
+		assertEmpty: selfCallFinder messages methodsAnalyzed;
+		assertEmpty: selfCallFinder helpers helpers 
+]
+
+{ #category : 'tests' }
 MaSelfCallsInterpreterTest >> testDifferentiatesNestedGuardedMessages [
 	
 	selfCallFinder analyzeMethod: (self helperMethodFromFixture: #testBigHelper).
