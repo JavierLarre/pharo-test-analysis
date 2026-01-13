@@ -9,6 +9,7 @@ Class {
 		'bannedMessages',
 		'helpers',
 		'messages',
+		'guardedHelpers',
 		'messageVisitor'
 	],
 	#category : 'MethodMessagesAnalyzer',
@@ -26,7 +27,7 @@ MaMethodAnalyzer >> analyzeMethod: aCompiledMethod [
 	selfCalls reject: [ :each | messages includes: each ] thenDo: [ :each | self putMessages: each ].
 	compiledHelpers := selfCalls select: [ :each | messages method: each isConnectedToMessage: #assert: ].
 	helpers atMethod: aCompiledMethod putHelpers: compiledHelpers.
-	helpers guardedHelpers: (compiledHelpers select: [ :each | guardedMessages includes: each selector ]).
+	guardedHelpers atMethod: aCompiledMethod putHelpers: (compiledHelpers select: [ :each | guardedMessages includes: each selector ]).
 	messages removeMessages: bannedMessages
 ]
 
@@ -34,6 +35,11 @@ MaMethodAnalyzer >> analyzeMethod: aCompiledMethod [
 MaMethodAnalyzer >> bannedMessages: aCollection [
 
 	bannedMessages := aCollection 
+]
+
+{ #category : 'accessing' }
+MaMethodAnalyzer >> guardedHelpers [
+	^ guardedHelpers
 ]
 
 { #category : 'accessing' }
@@ -45,9 +51,10 @@ MaMethodAnalyzer >> helpers [
 MaMethodAnalyzer >> initialize [ 
 	super initialize.
 	bannedMessages := Set new.
-	selfCallsFinder := MaSelfCallsFinderStub new.
+	selfCallsFinder := MaMethodVisitor new.
 	messages := MaMessages new.
-	helpers := MaHelpers new 
+	helpers := MaHelpers new.
+	guardedHelpers := MaHelpers new
 ]
 
 { #category : 'helpers' }
