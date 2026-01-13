@@ -8,6 +8,12 @@ Class {
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
 
+{ #category : 'as yet unclassified' }
+MaSelfCallsInterpreterTest >> helperMethodFromFixture: aSelector [
+	
+	^MaHelperFixture >> aSelector 
+]
+
 { #category : 'running' }
 MaSelfCallsInterpreterTest >> setUp [
 	super setUp.
@@ -24,7 +30,7 @@ MaSelfCallsInterpreterTest >> tearDown [
 { #category : 'tests' }
 MaSelfCallsInterpreterTest >> testDifferentiatesNestedGuardedMessages [
 	
-	selfCallFinder send: #testBigHelper fromClass: MaHelperFixture.
+	selfCallFinder analyzeMethod: (self helperMethodFromFixture: #testBigHelper).
 	
 	self 
 		assert: (selfCallFinder guardedMessages includes: #guardedHelper ); 
@@ -104,7 +110,7 @@ MaSelfCallsInterpreterTest >> testIncludesMessages [
 { #category : 'tests' }
 MaSelfCallsInterpreterTest >> testIncludesNestedGuardedMessages [
 	
-	selfCallFinder send: #testBigHelperGuarded fromClass: MaHelperFixture.
+	selfCallFinder analyzeMethod: (self helperMethodFromFixture: #testBigHelperGuarded).
 	
 	self 
 		assertCollection: selfCallFinder guardedMessages 
