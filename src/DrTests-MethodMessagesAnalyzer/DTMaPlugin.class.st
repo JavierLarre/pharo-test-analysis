@@ -26,6 +26,15 @@ DTMaPlugin class >> weight [
 	^ 10
 ]
 
+{ #category : 'private' }
+DTMaPlugin >> analyseTestFrom: aDTPluginConfiguration [
+
+	| result |
+	result := self pluginResultClass new.
+	aDTPluginConfiguration items do: [ :testClass | result ].
+	^ result
+]
+
 { #category : 'accessing' }
 DTMaPlugin >> firstListLabel [
 	^ 'Packages'
