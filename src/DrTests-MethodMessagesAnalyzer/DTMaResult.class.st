@@ -18,6 +18,6 @@ DTMaResult >> buildTreeForUI [
 	^ DTTreeNode new subResults: { (DTTreeNode new 
 			name: 'Analyzed methods';
 			subResults:
-				(Set new )
+				({ (MaHelperFixture >> #testHelper) asResultForDrTest })
 			yourself) }
 ]

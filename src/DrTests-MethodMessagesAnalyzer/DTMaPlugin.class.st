@@ -45,11 +45,7 @@ DTMaPlugin >> resultButtonHelp [
 { #category : 'api' }
 DTMaPlugin >> runForConfiguration: aDTPluginConfiguration [
 
-	| result |
-	result := self pluginResultClass new.
-	aDTPluginConfiguration items do: [ :testClass |
-		result  ].
-	^ result 
+	^ self analyseTestFrom: aDTPluginConfiguration
 ]
 
 { #category : 'accessing' }
