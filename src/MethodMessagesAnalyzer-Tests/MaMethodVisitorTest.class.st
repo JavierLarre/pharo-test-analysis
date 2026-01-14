@@ -8,14 +8,14 @@ Class {
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'utilities' }
 MaMethodVisitorTest >> analyzeMethodFromFixture: aSelector [
 	
-	visitor analyzeMethod:( self helperMethodFromFixture: aSelector )
+	visitor analyzeMethod: ( self fixtureMethod: aSelector )
 ]
 
-{ #category : 'as yet unclassified' }
-MaMethodVisitorTest >> helperMethodFromFixture: aSelector [
+{ #category : 'utilities' }
+MaMethodVisitorTest >> fixtureMethod: aSelector [
 	
 	^MaHelperFixture >> aSelector 
 ]
@@ -39,7 +39,7 @@ MaMethodVisitorTest >> testDifferentiatesNestedGuardedMessages [
 	| guardedMessages |
 	self analyzeMethodFromFixture: #testHelper.
 	
-	guardedMessages := visitor guardedMessages methodMessages: (self helperMethodFromFixture: #testHelper).
+	guardedMessages := visitor guardedMessages methodMessages: (self fixtureMethod: #testHelper).
 
 	self
 		assertCollection: guardedMessages includesAll: { #guardedHelper };
@@ -52,8 +52,8 @@ MaMethodVisitorTest >> testFindsMessagesSentToSelf [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: visitor selfSentMethods 
-		includesAll: { self helperMethodFromFixture: #helper }
+		assertCollection: (visitor methodsSelfCalls at: (self fixtureMethod: #testHelper))
+		includesAll: { self fixtureMethod: #helper }
 ]
 
 { #category : 'tests' }
@@ -61,11 +61,11 @@ MaMethodVisitorTest >> testGuardedMessagesAreConnected [
 
 	| testBigHelperGuarded |
 	self analyzeMethodFromFixture: #testBigHelperGuarded.
-	testBigHelperGuarded := self helperMethodFromFixture: #testBigHelperGuarded.
+	testBigHelperGuarded := self fixtureMethod: #testBigHelperGuarded.
 
 	self
 		assertCollection: (visitor guardedMessages methodMessages: testBigHelperGuarded) hasSameElements: { #bigHelper };
-		assertCollection: (visitor guardedMessages methodMessages: (self helperMethodFromFixture: #bigHelper))
+		assertCollection: (visitor guardedMessages methodMessages: (self fixtureMethod: #bigHelper))
 		hasSameElements: { #guardedHelper };
 		assert: (visitor guardedMessages method: testBigHelperGuarded isConnectedToMessage: #guardedHelper)
 ]
@@ -76,11 +76,11 @@ MaMethodVisitorTest >> testHasMethodSelfCalls [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor methodsSelfCalls at: (self helperMethodFromFixture: #testHelper)) 
+		assertCollection: (visitor methodsSelfCalls at: (self fixtureMethod: #testHelper)) 
 		hasSameElements: { 
-			self helperMethodFromFixture: #helper . 
-			self helperMethodFromFixture: #guardedHelper . 
-			self helperMethodFromFixture: #notAHelper }
+			self fixtureMethod: #helper . 
+			self fixtureMethod: #guardedHelper . 
+			self fixtureMethod: #notAHelper }
 ]
 
 { #category : 'tests' }
@@ -89,8 +89,8 @@ MaMethodVisitorTest >> testIncludesCallOnArguments [
 	self analyzeMethodFromFixture: #testHelperOnArguments .
 	
 	self 
-		assertCollection: visitor selfSentMethods 
-		includesAll: { self helperMethodFromFixture: #helper } 
+		assertCollection: (visitor methodsSelfCalls at: (self fixtureMethod: #testHelperOnArguments))
+		includesAll: { self fixtureMethod: #helper } 
 ]
 
 { #category : 'tests' }
@@ -98,7 +98,7 @@ MaMethodVisitorTest >> testIncludesGuardedMessages [
 
 	| guardedMessages |
 	self analyzeMethodFromFixture: #testHelper.
-	guardedMessages := visitor guardedMessages methodMessages: (self helperMethodFromFixture: #testHelper).
+	guardedMessages := visitor guardedMessages methodMessages: (self fixtureMethod: #testHelper).
 
 	self assertCollection: guardedMessages hasSameElements: { #guardedHelper }
 ]
@@ -111,8 +111,8 @@ MaMethodVisitorTest >> testIncludesHelper [
 	self 
 		assertCollection: (visitor helpers helpersOf: MaHelperFixture >> #testHelper ) 
 		hasSameElements: { 
-		self helperMethodFromFixture: #helper . 
-		self helperMethodFromFixture: #guardedHelper } 
+		self fixtureMethod: #helper . 
+		self fixtureMethod: #guardedHelper } 
 ]
 
 { #category : 'tests' }
@@ -122,7 +122,7 @@ MaMethodVisitorTest >> testIncludesHelperFromOtherSelfCalls [
 	
 	self 
 		assertCollection: (visitor helpers helpersOf: MaHelperFixture >> #nestedHelper ) 
-		hasSameElements: { self helperMethodFromFixture: #helper } 
+		hasSameElements: { self fixtureMethod: #helper } 
 ]
 
 { #category : 'tests' }
@@ -152,7 +152,7 @@ MaMethodVisitorTest >> testVisitsAreEqual [
 	| newSelfCallFinder |
 	self analyzeMethodFromFixture: #testHelper.
 	newSelfCallFinder := MaMethodVisitor new 
-		analyzeMethod: (self helperMethodFromFixture: #testHelper); 
+		analyzeMethod: (self fixtureMethod: #testHelper); 
 		yourself.
 	
 	self 
