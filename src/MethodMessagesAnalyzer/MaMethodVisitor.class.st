@@ -4,7 +4,7 @@ The same analysis is done on any method called that is on the same class, that i
 "
 Class {
 	#name : 'MaMethodVisitor',
-	#superclass : 'RTFSelfCallInterpreter',
+	#superclass : 'RTFSelfCallVisitorTemplate',
 	#instVars : [
 		'foundMessages',
 		'guardedMessages',
@@ -13,7 +13,8 @@ Class {
 		'messages',
 		'helpers',
 		'guardedHelpers',
-		'foundGuardedMessages'
+		'foundGuardedMessages',
+		'callStack'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -70,6 +71,18 @@ MaMethodVisitor >> initialize [
 	helpers := MaHelpers new.
 	guardedHelpers := MaHelpers new.
 	methodsSelfCalls := Dictionary new
+]
+
+{ #category : 'accessing' }
+MaMethodVisitor >> messages [
+	
+	^ messages
+]
+
+{ #category : 'accessing' }
+MaMethodVisitor >> methodsSelfCalls [
+
+	^ methodsSelfCalls
 ]
 
 { #category : 'private' }
