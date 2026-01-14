@@ -21,9 +21,9 @@ Class {
 }
 
 { #category : 'private' }
-MaMethodVisitor >> addCallNode: aCallNode [
+MaMethodVisitor >> analyze [
 
-	selfSentMethods add: selfSentMethod.
+	super analyze.
 	callStack push: selfSentMethod 
 ]
 
@@ -36,12 +36,6 @@ MaMethodVisitor >> analyzeMethod: aCompiledMethod [
 		self visitCompiledMethod: callStack pop ].
 	self putHelpersConnectedTo: aCompiledMethod.
 	selfSentMethods do: [ :each | self putHelpersConnectedTo: each ]
-]
-
-{ #category : 'private' }
-MaMethodVisitor >> getCallNodeFromMessageNode: aMessageNode [
-
-	^nil
 ]
 
 { #category : 'accessing' }
@@ -70,7 +64,8 @@ MaMethodVisitor >> initialize [
 	messages := MaMessages new.
 	helpers := MaHelpers new.
 	guardedHelpers := MaHelpers new.
-	methodsSelfCalls := Dictionary new
+	methodsSelfCalls := Dictionary new.
+	callStack := Stack new.
 ]
 
 { #category : 'accessing' }
@@ -95,23 +90,6 @@ MaMethodVisitor >> putHelpersConnectedTo: aCompiledMethod [
 		atMethod: aCompiledMethod 
 		putHelpers: ( 
 			( helpers helpersOf: aCompiledMethod ) select: [ :helper | guardedMessages method: aCompiledMethod containsMessage: helper selector ] ) 
-]
-
-{ #category : 'api' }
-MaMethodVisitor >> send: aSelector fromClass: aClass [
-
-	self analyzeMethod: (aClass lookupSelector: aSelector)
-]
-
-{ #category : 'private' }
-MaMethodVisitor >> setMethodFromNode: aMessageNode [
-
-	| lookupClass |
-	lookupClass := aMessageNode receiver isSuperVariable
-		               ifTrue: [ selfClass superclass ]
-		               ifFalse: [ selfClass ].
-
-	selfSentMethod := lookupClass lookupSelector: aMessageNode selector.
 ]
 
 { #category : 'visiting' }
