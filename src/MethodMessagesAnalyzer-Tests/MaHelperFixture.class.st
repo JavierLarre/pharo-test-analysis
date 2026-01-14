@@ -103,6 +103,14 @@ MaHelperFixture >> testHelperOnArguments [
 	self assert: self helper
 ]
 
+{ #category : 'tests' }
+MaHelperFixture >> testHelperWithVariable [
+	
+	true ifTrue: [ x helper ].
+	self helper
+	
+]
+
 { #category : 'as yet unclassified' }
 MaHelperFixture >> testNested [
 	

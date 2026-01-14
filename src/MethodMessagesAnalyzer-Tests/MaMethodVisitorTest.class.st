@@ -84,6 +84,17 @@ MaMethodVisitorTest >> testHasMethodSelfCalls [
 ]
 
 { #category : 'tests' }
+MaMethodVisitorTest >> testHelperWithVariable [ 
+	
+	self 
+		skip: 'not my priority right now';
+		analyzeMethodFromFixture: #testHelperWithVariable;
+		deny: (visitor guardedHelpers 
+					atMethod: (self fixtureMethod: #testHelperWithVariable ) 
+					includesHelper: (self fixtureMethod: #helper ))
+]
+
+{ #category : 'tests' }
 MaMethodVisitorTest >> testIncludesCallOnArguments [ 
 	
 	self analyzeMethodFromFixture: #testHelperOnArguments .
