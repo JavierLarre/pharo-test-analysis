@@ -34,19 +34,6 @@ MaMethodVisitorTest >> tearDown [
 ]
 
 { #category : 'tests' }
-MaMethodVisitorTest >> testDifferentiatesNestedGuardedMessages [
-
-	| guardedMessages |
-	self analyzeMethodFromFixture: #testHelper.
-	
-	guardedMessages := visitor guardedMessages methodMessages: (self fixtureMethod: #testHelper).
-
-	self
-		assertCollection: guardedMessages includesAll: { #guardedHelper };
-		denyCollection: guardedMessages includesAll: { #helper }
-]
-
-{ #category : 'tests' }
 MaMethodVisitorTest >> testFindsMessagesSentToSelf [
 	
 	self analyzeMethodFromFixture: #testHelper.
@@ -54,20 +41,6 @@ MaMethodVisitorTest >> testFindsMessagesSentToSelf [
 	self 
 		assertCollection: (visitor methodsSelfCalls at: (self fixtureMethod: #testHelper))
 		includesAll: { self fixtureMethod: #helper }
-]
-
-{ #category : 'tests' }
-MaMethodVisitorTest >> testGuardedMessagesAreConnected [
-
-	| testBigHelperGuarded |
-	self analyzeMethodFromFixture: #testBigHelperGuarded.
-	testBigHelperGuarded := self fixtureMethod: #testBigHelperGuarded.
-
-	self
-		assertCollection: (visitor guardedMessages methodMessages: testBigHelperGuarded) hasSameElements: { #bigHelper };
-		assertCollection: (visitor guardedMessages methodMessages: (self fixtureMethod: #bigHelper))
-		hasSameElements: { #guardedHelper };
-		assert: (visitor guardedMessages method: testBigHelperGuarded isConnectedToMessage: #guardedHelper)
 ]
 
 { #category : 'tests' }
@@ -84,17 +57,6 @@ MaMethodVisitorTest >> testHasMethodSelfCalls [
 ]
 
 { #category : 'tests' }
-MaMethodVisitorTest >> testHelperWithVariable [ 
-	
-	self 
-		skip: 'not my priority right now';
-		analyzeMethodFromFixture: #testHelperWithVariable;
-		deny: (visitor guardedHelpers 
-					atMethod: (self fixtureMethod: #testHelperWithVariable ) 
-					includesHelper: (self fixtureMethod: #helper ))
-]
-
-{ #category : 'tests' }
 MaMethodVisitorTest >> testIncludesCallOnArguments [ 
 	
 	self analyzeMethodFromFixture: #testHelperOnArguments .
@@ -105,56 +67,10 @@ MaMethodVisitorTest >> testIncludesCallOnArguments [
 ]
 
 { #category : 'tests' }
-MaMethodVisitorTest >> testIncludesGuardedMessages [
-
-	| guardedMessages |
-	self analyzeMethodFromFixture: #testHelper.
-	guardedMessages := visitor guardedMessages methodMessages: (self fixtureMethod: #testHelper).
-
-	self assertCollection: guardedMessages hasSameElements: { #guardedHelper }
-]
-
-{ #category : 'tests' }
-MaMethodVisitorTest >> testIncludesHelper [ 
-	
-	self analyzeMethodFromFixture: #testHelper.
-	
-	self 
-		assertCollection: (visitor helpers helpersOf: MaHelperFixture >> #testHelper ) 
-		hasSameElements: { 
-		self fixtureMethod: #helper . 
-		self fixtureMethod: #guardedHelper } 
-]
-
-{ #category : 'tests' }
-MaMethodVisitorTest >> testIncludesHelperFromOtherSelfCalls [
-	
-	self analyzeMethodFromFixture: #testNested.
-	
-	self 
-		assertCollection: (visitor helpers helpersOf: MaHelperFixture >> #nestedHelper ) 
-		hasSameElements: { self fixtureMethod: #helper } 
-]
-
-{ #category : 'tests' }
-MaMethodVisitorTest >> testIncludesMessages [
-	
-	self analyzeMethodFromFixture: #testHelper.
-	
-	self 
-		assertCollection: (visitor messages methodMessages: MaHelperFixture >> #testHelper)
-		includesAll: { #helper . #foo . #ifTrue: . #notAHelper }
-]
-
-{ #category : 'tests' }
 MaMethodVisitorTest >> testVisitorIsEmpty [
 	
 	self 
-		assertEmpty: visitor methodsSelfCalls;
-		assertEmpty: visitor guardedMessages methodsAnalyzed ;
-		assertEmpty: visitor messages methodsAnalyzed;
-		assertEmpty: visitor helpers helpers;
-		assertEmpty: visitor guardedHelpers helpers
+		assertEmpty: visitor methodsSelfCalls
 ]
 
 { #category : 'tests' }
@@ -167,8 +83,8 @@ MaMethodVisitorTest >> testVisitsAreEqual [
 		yourself.
 	
 	self 
-		assert: visitor messages
-		equals: newSelfCallFinder messages
+		assert: visitor methodsSelfCalls 
+		equals: newSelfCallFinder methodsSelfCalls 
 ]
 
 { #category : 'tests' }
@@ -177,5 +93,5 @@ MaMethodVisitorTest >> testVisitsSelfCalls [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assert: (visitor messages includes: MaHelperFixture >> #helper)
+		assert: (visitor methodsSelfCalls includesKey: MaHelperFixture >> #helper)
 ]
