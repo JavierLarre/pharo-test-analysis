@@ -1,6 +1,5 @@
 "
-I analyze methods by visiting them using the RTF interpreter template. The results of my analysis is the messages of the method, the messages sent to self, the guarded messages and the methods that are helpers. 
-The same analysis is done on any method called that is on the same class, that is, all the messages sent to self are looked up and analyzed too.
+I visit methods through the RTFSelfCallsVisitorTemplate. I also store the self calls of each method visited.
 "
 Class {
 	#name : 'MaMethodVisitor',
