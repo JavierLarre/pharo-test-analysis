@@ -64,7 +64,7 @@ MaMessagesVisitorTest >> testIncludesMessages [
 	
 	self 
 		assertCollection: (visitor messages methodMessages: MaVisitorFixture >> #testHelper)
-		includesAll: { #helper . #foo . #ifTrue: . #notAHelper }
+		includesAll: { #helper . #foo . #notAHelper . #guardedHelper }
 ]
 
 { #category : 'tests' }
