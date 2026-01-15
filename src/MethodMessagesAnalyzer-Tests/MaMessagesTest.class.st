@@ -65,7 +65,6 @@ MaMessagesTest >> testCycle [
 		atMethod: (self fixtureMethod: #cycle2) putMessages: { #cycle1 . #z }.
 
 	self 
-		skip: 'i just found this';
 		assert: (messages method: root isConnectedToMessage: #z);
 		deny: (messages method: root isConnectedToMessage: #aaaaaa)
 ]
