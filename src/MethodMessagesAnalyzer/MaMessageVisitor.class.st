@@ -1,3 +1,6 @@
+"
+I find and store the messages sent by visited methods, as well as including guarded messages
+"
 Class {
 	#name : 'MaMessageVisitor',
 	#superclass : 'MaMethodVisitor',
@@ -56,16 +59,15 @@ MaMessageVisitor >> messages [
 MaMessageVisitor >> visitCompiledMethod: aCompiledMethod [
 	
 	| memento |
+	messages atMethod: aCompiledMethod putMessages: aCompiledMethod messages.
+	
 	memento := self copy.
-	foundMessages := Set new.
 	foundGuardedMessages := Set new.
 	isGuarded := false.
 
 	super visitCompiledMethod: aCompiledMethod.
 	
-	messages atMethod: aCompiledMethod putMessages: foundMessages.
 	guardedMessages atMethod: aCompiledMethod putMessages: foundGuardedMessages.
-	foundMessages := memento foundMessages.
 	foundGuardedMessages := memento foundGuardedMessages.
 	isGuarded := memento isGuarded 
 ]
