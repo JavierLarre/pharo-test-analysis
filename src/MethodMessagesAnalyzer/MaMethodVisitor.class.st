@@ -6,13 +6,8 @@ Class {
 	#name : 'MaMethodVisitor',
 	#superclass : 'RTFSelfCallVisitorTemplate',
 	#instVars : [
-		'foundMessages',
-		'guardedMessages',
 		'methodsSelfCalls',
-		'isGuarded',
-		'messages',
-		'foundGuardedMessages',
-		'callStack'
+		'foundMethods'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -22,16 +17,21 @@ Class {
 MaMethodVisitor >> analyze [
 
 	super analyze.
-	callStack push: selfSentMethod 
+	foundMethods add: selfSentMethod.
+	self visitCompiledMethod: selfSentMethod 
 ]
 
 { #category : 'api' }
 MaMethodVisitor >> analyzeMethod: aCompiledMethod [
 
 	selfClass := aCompiledMethod methodClass.
-	callStack push: aCompiledMethod .
-	[ callStack isEmpty ] whileFalse: [ 
-		self visitCompiledMethod: callStack pop ]
+	self visitCompiledMethod: aCompiledMethod 
+]
+
+{ #category : 'accessing' }
+MaMethodVisitor >> foundMethods [
+
+	^ foundMethods
 ]
 
 { #category : 'initialization' }
@@ -39,11 +39,8 @@ MaMethodVisitor >> initialize [
 
 	super initialize.
 	considerClassesThat := [ :class | class inheritsFrom: TestCase ].
-	foundMessages := Set new.
-	guardedMessages := MaMessages new.
-	messages := MaMessages new.
 	methodsSelfCalls := Dictionary new.
-	callStack := Stack new.
+	foundMethods := OrderedCollection new.
 ]
 
 { #category : 'accessing' }
@@ -55,11 +52,11 @@ MaMethodVisitor >> methodsSelfCalls [
 { #category : 'visiting' }
 MaMethodVisitor >> visitCompiledMethod: aCompiledMethod [
 
-	| oldMethods |
-	oldMethods := selfSentMethods .
-	selfSentMethods := OrderedCollection new.
+	| memento |
+	memento := self copy.
+	foundMethods := OrderedCollection new.
 	self visitMethodNode: aCompiledMethod parseTree. 
-	methodsSelfCalls at: aCompiledMethod put: selfSentMethods.
-	oldMethods addAll: selfSentMethods.
-	selfSentMethods := oldMethods 
+	methodsSelfCalls at: aCompiledMethod put: foundMethods .
+	memento foundMethods addAll: foundMethods .
+	foundMethods := memento foundMethods 
 ]

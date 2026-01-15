@@ -2,48 +2,61 @@
 I store pre defined methods for analyzer tests to use
 "
 Class {
-	#name : 'MaFixture',
+	#name : 'MaMessagesFixture',
 	#superclass : 'Object',
 	#category : 'MethodMessagesAnalyzer-Tests',
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
 
 { #category : 'accessing' }
-MaFixture class >> foo [
+MaMessagesFixture class >> foo [
 
 	self xxx yyy
 ]
 
 { #category : 'as yet unclassified' }
-MaFixture class >> xxx [
+MaMessagesFixture class >> xxx [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MaFixture >> a [
+MaMessagesFixture >> a [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MaFixture >> bar [
+MaMessagesFixture >> bar [
 
 	self a b c
 ]
 
+{ #category : 'as yet unclassified' }
+MaMessagesFixture >> callsCycle [
+
+]
+
 { #category : 'accessing' }
-MaFixture >> callsFoo [
+MaMessagesFixture >> callsFoo [
 
 	self foo
 ]
 
 { #category : 'accessing' }
-MaFixture >> containedFoo [
+MaMessagesFixture >> containedFoo [
 
 	self x.
 ]
 
+{ #category : 'as yet unclassified' }
+MaMessagesFixture >> cycle1 [
+]
+
+{ #category : 'as yet unclassified' }
+MaMessagesFixture >> cycle2 [
+]
+
 { #category : 'accessing' }
-MaFixture >> foo [
+MaMessagesFixture >> foo [
 
 	self x.
 	self y.
@@ -51,7 +64,7 @@ MaFixture >> foo [
 ]
 
 { #category : 'accessing' }
-MaFixture >> fooWithAssert [
+MaMessagesFixture >> fooWithAssert [
 
 	self x.
 	self y.
@@ -60,23 +73,23 @@ MaFixture >> fooWithAssert [
 ]
 
 { #category : 'accessing' }
-MaFixture >> subContainedFoo [
+MaMessagesFixture >> subContainedFoo [
 
 	self x.
 	self y
 ]
 
 { #category : 'accessing' }
-MaFixture >> x [
+MaMessagesFixture >> x [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MaFixture >> y [
+MaMessagesFixture >> y [
 	"empty"
 ]
 
 { #category : 'accessing' }
-MaFixture >> z [
+MaMessagesFixture >> z [
 	"empty"
 ]

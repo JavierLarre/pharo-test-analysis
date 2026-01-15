@@ -1,19 +1,19 @@
 Class {
-	#name : 'MaHelperMessagesVisitorTest',
+	#name : 'MaMessagesVisitorTest',
 	#superclass : 'MaMethodVisitorTest',
 	#category : 'MethodMessagesAnalyzer-Tests',
 	#package : 'MethodMessagesAnalyzer-Tests'
 }
 
 { #category : 'running' }
-MaHelperMessagesVisitorTest >> setUp [ 
+MaMessagesVisitorTest >> setUp [ 
 
 	super setUp.
-	visitor := MaMessageCollectorVisitor new
+	visitor := MaMessageVisitor new
 ]
 
 { #category : 'tests' }
-MaHelperMessagesVisitorTest >> testDifferentiatesNestedGuardedMessages [
+MaMessagesVisitorTest >> testDifferentiatesNestedGuardedMessages [
 
 	| guardedMessages |
 	self analyzeMethodFromFixture: #testHelper.
@@ -26,7 +26,7 @@ MaHelperMessagesVisitorTest >> testDifferentiatesNestedGuardedMessages [
 ]
 
 { #category : 'tests' }
-MaHelperMessagesVisitorTest >> testEmpty [ 
+MaMessagesVisitorTest >> testEmpty [ 
 
 	self
 		assertEmpty: visitor messages methodsAnalyzed ;
@@ -34,7 +34,7 @@ MaHelperMessagesVisitorTest >> testEmpty [
 ]
 
 { #category : 'tests' }
-MaHelperMessagesVisitorTest >> testGuardedMessagesAreConnected [
+MaMessagesVisitorTest >> testGuardedMessagesAreConnected [
 
 	| testBigHelperGuarded |
 	self analyzeMethodFromFixture: #testBigHelperGuarded.
@@ -48,7 +48,7 @@ MaHelperMessagesVisitorTest >> testGuardedMessagesAreConnected [
 ]
 
 { #category : 'tests' }
-MaHelperMessagesVisitorTest >> testIncludesGuardedMessages [
+MaMessagesVisitorTest >> testIncludesGuardedMessages [
 
 	| guardedMessages |
 	self analyzeMethodFromFixture: #testHelper.
@@ -58,21 +58,21 @@ MaHelperMessagesVisitorTest >> testIncludesGuardedMessages [
 ]
 
 { #category : 'tests' }
-MaHelperMessagesVisitorTest >> testIncludesMessages [
+MaMessagesVisitorTest >> testIncludesMessages [
 	
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor messages methodMessages: MaHelperFixture >> #testHelper)
+		assertCollection: (visitor messages methodMessages: MaVisitorFixture >> #testHelper)
 		includesAll: { #helper . #foo . #ifTrue: . #notAHelper }
 ]
 
 { #category : 'tests' }
-MaHelperMessagesVisitorTest >> testVisitsAreEqual [ 
+MaMessagesVisitorTest >> testVisitsAreEqual [ 
 
 	| newVisitor |
 	self analyzeMethodFromFixture: #testHelper.
-	newVisitor := MaMessageCollectorVisitor new
+	newVisitor := MaMessageVisitor new
 		analyzeMethod: (self fixtureMethod: #testHelper);
 		yourself.
 	

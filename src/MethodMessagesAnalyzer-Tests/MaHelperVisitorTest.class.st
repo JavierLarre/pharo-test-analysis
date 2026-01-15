@@ -40,7 +40,7 @@ MaHelperVisitorTest >> testIncludesHelper [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor helpers helpersOf: MaHelperFixture >> #testHelper ) 
+		assertCollection: (visitor helpers helpersOf: MaVisitorFixture >> #testHelper ) 
 		hasSameElements: { 
 		self fixtureMethod: #helper . 
 		self fixtureMethod: #guardedHelper } 
@@ -52,6 +52,6 @@ MaHelperVisitorTest >> testIncludesHelperFromOtherSelfCalls [
 	self analyzeMethodFromFixture: #testNested.
 	
 	self 
-		assertCollection: (visitor helpers helpersOf: MaHelperFixture >> #nestedHelper ) 
+		assertCollection: (visitor helpers helpersOf: MaVisitorFixture >> #nestedHelper ) 
 		hasSameElements: { self fixtureMethod: #helper } 
 ]

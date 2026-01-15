@@ -1,6 +1,6 @@
 Class {
 	#name : 'MaHelperVisitor',
-	#superclass : 'MaMessageCollectorVisitor',
+	#superclass : 'MaMessageVisitor',
 	#instVars : [
 		'helpers',
 		'guardedHelpers'
@@ -8,15 +8,6 @@ Class {
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
 }
-
-{ #category : 'api' }
-MaHelperVisitor >> analyzeMethod: aCompiledMethod [
-
-	super analyzeMethod: aCompiledMethod.
-	
-	self putHelpersConnectedTo: aCompiledMethod.
-	selfSentMethods do: [ :each | self putHelpersConnectedTo: each ]
-]
 
 { #category : 'accessing' }
 MaHelperVisitor >> guardedHelpers [ 
@@ -47,4 +38,17 @@ MaHelperVisitor >> putHelpersConnectedTo: aCompiledMethod [
 		atMethod: aCompiledMethod 
 		putHelpers: ( 
 			( helpers helpersOf: aCompiledMethod ) select: [ :helper | guardedMessages method: aCompiledMethod containsMessage: helper selector ] ) 
+]
+
+{ #category : 'visiting' }
+MaHelperVisitor >> visitCompiledMethod: aCompiledMethod [
+
+	| memento |
+	memento := self copy.
+	helpers := MaHelpers new.
+	guardedHelpers := MaHelpers new.
+	
+	super visitCompiledMethod: aCompiledMethod.
+	
+	self putHelpersConnectedTo: aCompiledMethod 
 ]

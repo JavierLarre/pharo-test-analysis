@@ -17,20 +17,27 @@ MaMethodVisitorTest >> analyzeMethodFromFixture: aSelector [
 { #category : 'utilities' }
 MaMethodVisitorTest >> fixtureMethod: aSelector [
 	
-	^MaHelperFixture >> aSelector 
+	^MaVisitorFixture >> aSelector 
 ]
 
 { #category : 'running' }
 MaMethodVisitorTest >> setUp [
 	super setUp.
 	visitor := MaMethodVisitor new.
-	MaHelperFixture superclass: TestCase 
+	MaVisitorFixture superclass: TestCase 
 ]
 
 { #category : 'running' }
 MaMethodVisitorTest >> tearDown [ 
-	MaHelperFixture superclass: Object.
+	MaVisitorFixture superclass: Object.
 	super tearDown 
+]
+
+{ #category : 'tests' }
+MaMethodVisitorTest >> testEmpty [
+	
+	self 
+		assertEmpty: visitor methodsSelfCalls
 ]
 
 { #category : 'tests' }
@@ -67,10 +74,11 @@ MaMethodVisitorTest >> testIncludesCallOnArguments [
 ]
 
 { #category : 'tests' }
-MaMethodVisitorTest >> testVisitorIsEmpty [
-	
+MaMethodVisitorTest >> testVisitCycle [
+
 	self 
-		assertEmpty: visitor methodsSelfCalls
+		analyzeMethodFromFixture: #testCycle;
+		assertCollection: visitor selfSentMethods hasSameElements: { self fixtureMethod: #cycle1 . self fixtureMethod: #cycle2 }
 ]
 
 { #category : 'tests' }
@@ -93,5 +101,5 @@ MaMethodVisitorTest >> testVisitsSelfCalls [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assert: (visitor methodsSelfCalls includesKey: MaHelperFixture >> #helper)
+		assert: (visitor methodsSelfCalls includesKey: MaVisitorFixture >> #helper)
 ]

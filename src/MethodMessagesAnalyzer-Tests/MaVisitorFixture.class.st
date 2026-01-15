@@ -2,7 +2,7 @@
 I store helpers that are to be used for analysis in tests
 "
 Class {
-	#name : 'MaHelperFixture',
+	#name : 'MaVisitorFixture',
 	#superclass : 'Object',
 	#instVars : [
 		'x'
@@ -12,19 +12,19 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MaHelperFixture class >> guardedHelper [ 
+MaVisitorFixture class >> guardedHelper [ 
 	
 	"I am not a helper nor I am guarded"
 	^true
 ]
 
 { #category : 'tests' }
-MaHelperFixture class >> testFalseGuarded [
+MaVisitorFixture class >> testFalseGuarded [
 	self guardedHelper 
 ]
 
 { #category : 'tests' }
-MaHelperFixture >> bigHelper [
+MaVisitorFixture >> bigHelper [
 	
 	self helper0;
 		helper1;
@@ -32,64 +32,82 @@ MaHelperFixture >> bigHelper [
 	false ifTrue: [ self guardedHelper ]
 ]
 
+{ #category : 'accessing' }
+MaVisitorFixture >> cycle1 [ 
+
+	self cycle2
+]
+
+{ #category : 'accessing' }
+MaVisitorFixture >> cycle2 [ 
+
+	self cycle1
+]
+
 { #category : 'as yet unclassified' }
-MaHelperFixture >> guardedHelper [
+MaVisitorFixture >> guardedHelper [
 	
 	self assert: true
 	
 ]
 
 { #category : 'as yet unclassified' }
-MaHelperFixture >> helper [
+MaVisitorFixture >> helper [
 	
 	self assert: true
 ]
 
 { #category : 'as yet unclassified' }
-MaHelperFixture >> helper0 [
+MaVisitorFixture >> helper0 [
 	
 	self assert: true
 ]
 
 { #category : 'as yet unclassified' }
-MaHelperFixture >> helper1 [
+MaVisitorFixture >> helper1 [
 	
 	self assert: false
 ]
 
 { #category : 'as yet unclassified' }
-MaHelperFixture >> helper2 [
+MaVisitorFixture >> helper2 [
 	
 	self assert: false;
 		assert: true
 ]
 
 { #category : 'as yet unclassified' }
-MaHelperFixture >> nestedHelper [
+MaVisitorFixture >> nestedHelper [
 	
 	self helper.
 ]
 
 { #category : 'as yet unclassified' }
-MaHelperFixture >> notAHelper [
+MaVisitorFixture >> notAHelper [
 	
 	x value
 ]
 
 { #category : 'tests' }
-MaHelperFixture >> testBigHelper [
+MaVisitorFixture >> testBigHelper [
 
 	self bigHelper
 ]
 
 { #category : 'tests' }
-MaHelperFixture >> testBigHelperGuarded [
+MaVisitorFixture >> testBigHelperGuarded [
 
 	true ifTrue: [ self bigHelper ]
 ]
 
+{ #category : 'tests' }
+MaVisitorFixture >> testCycle [
+
+	self cycle1
+]
+
 { #category : 'as yet unclassified' }
-MaHelperFixture >> testHelper [
+MaVisitorFixture >> testHelper [
 	
 	self helper.
 	x foo.
@@ -98,13 +116,13 @@ MaHelperFixture >> testHelper [
 ]
 
 { #category : 'tests' }
-MaHelperFixture >> testHelperOnArguments [
+MaVisitorFixture >> testHelperOnArguments [
 
 	self assert: self helper
 ]
 
 { #category : 'tests' }
-MaHelperFixture >> testHelperWithVariable [
+MaVisitorFixture >> testHelperWithVariable [
 	
 	true ifTrue: [ x helper ].
 	self helper
@@ -112,13 +130,13 @@ MaHelperFixture >> testHelperWithVariable [
 ]
 
 { #category : 'as yet unclassified' }
-MaHelperFixture >> testNested [
+MaVisitorFixture >> testNested [
 	
 	self nestedHelper.
 ]
 
 { #category : 'tests' }
-MaHelperFixture >> testNotHelperIsGuarded [
+MaVisitorFixture >> testNotHelperIsGuarded [
 
 	false ifFalse: [ self notAHelper ].
 	true ifTrue: [ self guardedHelper ].
