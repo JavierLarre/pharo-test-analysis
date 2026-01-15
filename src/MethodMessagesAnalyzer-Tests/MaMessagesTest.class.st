@@ -40,6 +40,20 @@ MaMessagesTest >> testConnectionIsTransitive [
 ]
 
 { #category : 'tests' }
+MaMessagesTest >> testContainedSubmethods [
+
+	| foo containedFoo |
+	foo := self fixtureMethod: #foo.
+	containedFoo := self fixtureMethod: #bar.
+	
+	messages 
+		atMethod: foo putMessages: #( a b c x y z );
+		atMethod: containedFoo putMessages: #( a c x y ).
+		
+	self assert: (messages method: foo containsSubmethod: containedFoo )
+]
+
+{ #category : 'tests' }
 MaMessagesTest >> testCycle [
 
 	| root |
@@ -54,6 +68,14 @@ MaMessagesTest >> testCycle [
 		skip: 'i just found this';
 		assert: (messages method: root isConnectedToMessage: #z);
 		deny: (messages method: root isConnectedToMessage: #aaaaaa)
+]
+
+{ #category : 'tests' }
+MaMessagesTest >> testEmpty [
+
+	self 
+		assertEmpty: messages methodsAnalyzed;
+		deny: (messages message: #foo isConnectedTo: #bar )
 ]
 
 { #category : 'tests' }
@@ -81,4 +103,46 @@ MaMessagesTest >> testIsConnected [
 	self 
 		assert: (messages method: foo isConnectedToMessage: #x);
 		assert: (messages method: callsFoo isConnectedToMessage: #x)
+]
+
+{ #category : 'tests' }
+MaMessagesTest >> testMessagesContainThemselves [
+
+	| method |
+	method := self fixtureMethod: #foo.
+	
+	messages 
+		atMethod: method putMessages: #( a b c x y z ).
+		
+	self assert: (messages method: method containsSubmethod: method)
+]
+
+{ #category : 'tests' }
+MaMessagesTest >> testRaisesNotFound [
+
+	| method |
+	method := self fixtureMethod: #foo.
+	
+	self
+		should: [ messages methodMessages: method ] raise: MethodNotFound;
+		should: [ messages method: method isConnectedToMessage: #bar ] raise: MethodNotFound;
+		should: [ messages method: method containsMessage: #foo ] raise: MethodNotFound;
+		should: [ messages method: method containsSubmethod: method ] raise: MethodNotFound
+]
+
+{ #category : 'tests' }
+MaMessagesTest >> testRemovesMessages [
+
+	| x y |
+	x := self fixtureMethod: #x.
+	y := self fixtureMethod: #y.
+
+	messages
+		atMethod: x putMessages: #( a b c );
+		atMethod: y putMessages: #( d e f c );
+		removeMessages: #( f c ).
+
+	self
+		assertCollection: (messages methodMessages: x) hasSameElements: #( a b );
+		assertCollection: (messages methodMessages: y) hasSameElements: #( d e )
 ]
