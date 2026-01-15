@@ -60,7 +60,7 @@ MaMessages >> message: aMessage isConnectedTo: targetMessage visited: visitedSet
 							[ :parseTree | methods at: parseTree ] .
 	^ methodSets 
 		anySatisfy: [ :messageSet | (messageSet includes: targetMessage)  
-			or: [messageSet anySatisfy: [ :message | self message: message isConnectedTo: targetMessage visited: ( visitedSet copyWith: message ) ]] ]
+			or: [messageSet anySatisfy: [ :message | self message: message isConnectedTo: targetMessage visited: ( visitedSet copyWith: aMessage ) ]] ]
 ]
 
 { #category : 'accessing' }
