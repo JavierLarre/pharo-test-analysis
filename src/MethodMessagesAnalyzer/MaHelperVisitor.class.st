@@ -1,9 +1,13 @@
+"
+I find and store self calls that are connected to asserting selectors
+"
 Class {
 	#name : 'MaHelperVisitor',
 	#superclass : 'MaMessageVisitor',
 	#instVars : [
 		'helpers',
-		'guardedHelpers'
+		'guardedHelpers',
+		'helperSelectors'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
@@ -12,6 +16,18 @@ Class {
 { #category : 'accessing' }
 MaHelperVisitor >> guardedHelpers [ 
 	^ guardedHelpers 
+]
+
+{ #category : 'accessing' }
+MaHelperVisitor >> helperSelectors [
+
+	^ helperSelectors ifNil: [ helperSelectors := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
+MaHelperVisitor >> helperSelectors: anObject [
+
+	helperSelectors := anObject
 ]
 
 { #category : 'accessing' }
@@ -33,7 +49,7 @@ MaHelperVisitor >> putHelpersConnectedTo: aCompiledMethod [
 	
 	helpers 
 		atMethod: aCompiledMethod 
-		putHelpers: (messages methodsFrom: aCompiledMethod thatAreConectedTo: #assert:).
+		putHelpers: ((methodsSelfCalls at: aCompiledMethod ) select: [ :methodSelfCall | messages method: methodSelfCall  isConnectedToMessage: #assert: ] ).
 	guardedHelpers 
 		atMethod: aCompiledMethod 
 		putHelpers: ( 
