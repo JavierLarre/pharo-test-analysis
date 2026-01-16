@@ -3,7 +3,7 @@ I visit methods through the RTFSelfCallsVisitorTemplate. I also store the self c
 "
 Class {
 	#name : 'MaMethodVisitor',
-	#superclass : 'RTFSelfCallVisitorTemplate',
+	#superclass : 'RTFSelfCallVisitorInterpreter',
 	#instVars : [
 		'methodsSelfCalls',
 		'foundMethods'
