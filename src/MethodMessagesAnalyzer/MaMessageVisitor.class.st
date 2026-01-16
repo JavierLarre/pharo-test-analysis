@@ -5,48 +5,18 @@ Class {
 	#name : 'MaMessageVisitor',
 	#superclass : 'MaMethodVisitor',
 	#instVars : [
-		'foundGuardedMessages',
-		'foundMessages',
-		'guardedMessages',
-		'isGuarded',
 		'messages'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
 }
 
-{ #category : 'accessing' }
-MaMessageVisitor >> foundGuardedMessages [
-
-	^foundGuardedMessages 
-]
-
-{ #category : 'accessing' }
-MaMessageVisitor >> foundMessages [ 
-	
-	^foundMessages 
-]
-
-{ #category : 'accessing' }
-MaMessageVisitor >> guardedMessages [ 
-	^ guardedMessages 
-]
-
 { #category : 'initialization' }
 MaMessageVisitor >> initialize [ 
 
 	super initialize.
 	
-	foundMessages := Set new.
-	foundGuardedMessages := Set new.
-	guardedMessages := MaMessages new.
 	messages := MaMessages new.
-]
-
-{ #category : 'accessing' }
-MaMessageVisitor >> isGuarded [ 
-
-	^ isGuarded 
 ]
 
 { #category : 'accessing' }
@@ -58,38 +28,9 @@ MaMessageVisitor >> messages [
 { #category : 'visiting' }
 MaMessageVisitor >> visitCompiledMethod: aCompiledMethod [
 	
-	| memento |
-	messages atMethod: aCompiledMethod putMessages: aCompiledMethod messages.
-	
-	memento := self copy.
-	foundGuardedMessages := Set new.
-	isGuarded := false.
+	messages 
+		atMethod: aCompiledMethod 
+		putMessages: (aCompiledMethod parseTree allMessageNodes collect: [ :messageNode | messageNode selector ]) .
 
 	super visitCompiledMethod: aCompiledMethod.
-	
-	guardedMessages atMethod: aCompiledMethod putMessages: foundGuardedMessages.
-	foundGuardedMessages := memento foundGuardedMessages.
-	isGuarded := memento isGuarded 
-]
-
-{ #category : 'visiting' }
-MaMessageVisitor >> visitMessageNode: aMessageNode [
-
-	| previousIsGuarded |
-	previousIsGuarded := isGuarded.
-	foundMessages add: aMessageNode selector.
-	isGuarded ifTrue: [ foundGuardedMessages add: aMessageNode selector ].
-	({ #ifTrue: . #ifFalse: } includes: aMessageNode selector)
-		ifTrue: [ isGuarded := true ].
-	
-	aMessageNode arguments do: [ :each | each acceptVisitor: self ].
-	isGuarded := previousIsGuarded.
-	aMessageNode receiver acceptVisitor: self.
-	super visitMessageNode: aMessageNode.
-]
-
-{ #category : 'visiting' }
-MaMessageVisitor >> visitNodes: aMessageNode [
-	
-	
 ]

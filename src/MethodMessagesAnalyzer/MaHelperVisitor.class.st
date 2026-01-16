@@ -6,17 +6,11 @@ Class {
 	#superclass : 'MaMessageVisitor',
 	#instVars : [
 		'helpers',
-		'guardedHelpers',
 		'helperSelectors'
 	],
 	#category : 'MethodMessagesAnalyzer',
 	#package : 'MethodMessagesAnalyzer'
 }
-
-{ #category : 'accessing' }
-MaHelperVisitor >> guardedHelpers [ 
-	^ guardedHelpers 
-]
 
 { #category : 'accessing' }
 MaHelperVisitor >> helperSelectors [
@@ -41,7 +35,6 @@ MaHelperVisitor >> initialize [
 
 	super initialize.
 	helpers := MaHelpers new.
-	guardedHelpers := MaHelpers new.
 ]
 
 { #category : 'private' }
@@ -49,22 +42,15 @@ MaHelperVisitor >> putHelpersConnectedTo: aCompiledMethod [
 	
 	helpers 
 		atMethod: aCompiledMethod 
-		putHelpers: ((methodsSelfCalls at: aCompiledMethod ) select: [ :methodSelfCall | messages method: methodSelfCall  isConnectedToMessage: #assert: ] ).
-	guardedHelpers 
-		atMethod: aCompiledMethod 
-		putHelpers: ( 
-			( helpers helpersOf: aCompiledMethod ) select: [ :helper | guardedMessages method: aCompiledMethod containsMessage: helper selector ] ) 
+		putHelpers: ((methodsSelfCalls at: aCompiledMethod ) 
+			select: [ :methodSelfCall | 
+				helperSelectors anySatisfy: [ :helper | 
+					messages method: methodSelfCall isConnectedToMessage: helper ] ] )
 ]
 
 { #category : 'visiting' }
 MaHelperVisitor >> visitCompiledMethod: aCompiledMethod [
-
-	| memento |
-	memento := self copy.
-	helpers := MaHelpers new.
-	guardedHelpers := MaHelpers new.
 	
 	super visitCompiledMethod: aCompiledMethod.
-	
 	self putHelpersConnectedTo: aCompiledMethod 
 ]
