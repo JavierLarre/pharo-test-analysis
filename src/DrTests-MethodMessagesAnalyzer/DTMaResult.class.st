@@ -11,19 +11,22 @@ Class {
 	#package : 'DrTests-MethodMessagesAnalyzer'
 }
 
+{ #category : 'factory' }
+DTMaResult >> buildClassNode: aClass withResults: aCollection [
+
+	^ self buildTreeNode 
+		name: aClass name;
+		subResults: (aCollection collect: [ :analysisData | 
+			DTTreeLeafNode new content: analysisData; yourself ] )
+]
+
 { #category : 'accessing' }
 DTMaResult >> buildTreeForUI [
 	
 	<dtTestMaResultTreeNamed: 'List of analyzed methods' order: 1>
 	^ self buildTreeNode 
-		subResults: { self buildTreeNode 
-							name: #aSelector;
-							subResults: { DTTreeLeafNode new 
-												content: (DTMaAnalysisData new 
-																analyserVisitor: MaMessageVisitor new;
-																yourself);
-												yourself }; 
-							yourself };
+		subResults: ((self results groupedBy: [ :analysisData | analysisData testCase class ]) 
+							associations collect: [ :assoc | self buildClassNode: assoc key withResults: assoc value ] );
 		yourself
 ]
 

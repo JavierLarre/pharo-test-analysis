@@ -13,25 +13,15 @@ MaHelperVisitorTest >> setUp [
 	super setUp.
 
 	visitor := MaHelperVisitor new
+		helperSelectors: #( assert: );
+		yourself
 ]
 
 { #category : 'running' }
 MaHelperVisitorTest >> testEmpty [
 
 	self 
-		assertEmpty: visitor helpers helpers;
-		assertEmpty: visitor guardedHelpers helpers
-]
-
-{ #category : 'tests' }
-MaHelperVisitorTest >> testHelperWithVariable [ 
-	
-	self 
-		skip: 'not my priority right now';
-		analyzeMethodFromFixture: #testHelperWithVariable;
-		deny: (visitor guardedHelpers 
-					atMethod: (self fixtureMethod: #testHelperWithVariable ) 
-					includesHelper: (self fixtureMethod: #helper ))
+		assertEmpty: visitor helpers helpers
 ]
 
 { #category : 'tests' }

@@ -27,7 +27,7 @@ DTMaAnalysisData >> analyserVisitor: anObject [
 { #category : 'accessing' }
 DTMaAnalysisData >> drTestsName [
 	
-	^ self testCase asString , ' : ', self analyserVisitor asString
+	^ self testCase selector , ' : '
 ]
 
 { #category : 'accessing' }
