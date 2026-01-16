@@ -26,15 +26,6 @@ DTMaPlugin class >> weight [
 	^ 10
 ]
 
-{ #category : 'private' }
-DTMaPlugin >> analyseTestFrom: aDTPluginConfiguration [
-
-	| result |
-	result := self pluginResultClass new.
-	aDTPluginConfiguration items do: [ :testClass | result ].
-	^ result
-]
-
 { #category : 'accessing' }
 DTMaPlugin >> firstListLabel [
 	^ 'Packages'
@@ -54,7 +45,13 @@ DTMaPlugin >> resultButtonHelp [
 { #category : 'api' }
 DTMaPlugin >> runForConfiguration: aDTPluginConfiguration [
 
-	^ self analyseTestFrom: aDTPluginConfiguration
+	| testVisitor |
+	testVisitor := DTMaTestCaseVisitor new 
+		visit: aDTPluginConfiguration asTestSuite;
+		yourself.
+	^ self pluginResultClass new 
+		result: testVisitor analysisData;
+		yourself
 ]
 
 { #category : 'accessing' }
