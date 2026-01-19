@@ -51,8 +51,8 @@ DTMaPlugin >> runForConfiguration: aDTPluginConfiguration [
 		visit: aDTPluginConfiguration asTestSuite;
 		yourself.
 	^ self pluginResultClass new 
-		result: testVisitor analysisData;
-		visitor: testVisitor methodVisitor;
+		viewModel: (DTMaViewModel new 
+			testCasesMessages: testVisitor testCasesMessages );
 		yourself
 ]
 

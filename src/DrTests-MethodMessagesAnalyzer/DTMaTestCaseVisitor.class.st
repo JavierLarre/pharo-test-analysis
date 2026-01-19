@@ -2,23 +2,17 @@ Class {
 	#name : 'DTMaTestCaseVisitor',
 	#superclass : 'SUnitVisitor',
 	#instVars : [
-		'analysisData',
-		'methodVisitor'
+		'methodVisitor',
+		'testCasesMessages'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer',
 	#package : 'DrTests-MethodMessagesAnalyzer'
 }
 
-{ #category : 'accessing' }
-DTMaTestCaseVisitor >> analysisData [
+{ #category : 'initialization' }
+DTMaTestCaseVisitor >> initialize [
 
-	^ analysisData ifNil: [ analysisData := SortedCollection new ]
-]
-
-{ #category : 'accessing' }
-DTMaTestCaseVisitor >> analysisData: anObject [
-
-	analysisData := anObject
+	testCasesMessages := OrderedCollection new.
 ]
 
 { #category : 'accessing' }
@@ -33,14 +27,21 @@ DTMaTestCaseVisitor >> methodVisitor: anObject [
 	methodVisitor := anObject
 ]
 
-{ #category : 'private' }
-DTMaTestCaseVisitor >> testCaseAnaysisVisitor: aTestCase [
+{ #category : 'accessing' }
+DTMaTestCaseVisitor >> testCasesMessages [
 
-	^ methodVisitor analyzeMethod: aTestCase class >> aTestCase selector
+	^ testCasesMessages
 ]
 
 { #category : 'visiting' }
 DTMaTestCaseVisitor >> visitTestCase: aTestCase [
 
-	methodVisitor analyzeMethod: aTestCase class >> aTestCase selector
+	| compiledMethod |
+	compiledMethod := aTestCase class >> aTestCase selector.
+
+	methodVisitor analyzeMethod: compiledMethod.
+	testCasesMessages add: (DTMaTestCaseMessages new
+			 testCase: aTestCase;
+			 messages: (methodVisitor messages methodMessages: compiledMethod) asOrderedCollection ;
+			 yourself)
 ]
