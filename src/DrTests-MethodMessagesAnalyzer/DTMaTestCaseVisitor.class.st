@@ -12,7 +12,10 @@ Class {
 { #category : 'initialization' }
 DTMaTestCaseVisitor >> initialize [
 
-	testCasesMessages := OrderedCollection new.
+	super initialize.
+	testCasesMessages := SortedCollection new 
+		sort: [ :testCaseMessages1 :testCaseMessages2 | 
+			methodVisitor messages method: testCaseMessages1 testMethod containsSubmethod: testCaseMessages2 testMethod ] .
 ]
 
 { #category : 'accessing' }
@@ -41,7 +44,8 @@ DTMaTestCaseVisitor >> visitTestCase: aTestCase [
 
 	methodVisitor analyzeMethod: compiledMethod.
 	testCasesMessages add: (DTMaTestCaseMessages new
-			 testCase: aTestCase;
-			 messages: (methodVisitor messages methodMessages: compiledMethod) asOrderedCollection ;
+			testCase: aTestCase;
+			testMethod: compiledMethod;
+			messages: (methodVisitor messages methodMessages: compiledMethod) asOrderedCollection ;
 			 yourself)
 ]

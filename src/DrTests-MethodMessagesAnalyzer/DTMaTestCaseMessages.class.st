@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'testCase',
-		'messages'
+		'messages',
+		'testMethod'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer',
 	#package : 'DrTests-MethodMessagesAnalyzer'
@@ -31,4 +32,16 @@ DTMaTestCaseMessages >> testCase [
 DTMaTestCaseMessages >> testCase: anObject [
 
 	testCase := anObject
+]
+
+{ #category : 'accessing' }
+DTMaTestCaseMessages >> testMethod [
+
+	^ testMethod
+]
+
+{ #category : 'accessing' }
+DTMaTestCaseMessages >> testMethod: aCompiledMethod [
+
+	testMethod := aCompiledMethod 
 ]
