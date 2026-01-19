@@ -25,6 +25,12 @@ MaMessageVisitor >> messages [
 	^ messages
 ]
 
+{ #category : 'accessing' }
+MaMessageVisitor >> messages: aMessages [
+	
+	messages := aMessages 
+]
+
 { #category : 'visiting' }
 MaMessageVisitor >> visitCompiledMethod: aCompiledMethod [
 	
