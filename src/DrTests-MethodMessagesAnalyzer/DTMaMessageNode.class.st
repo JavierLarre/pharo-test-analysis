@@ -1,3 +1,6 @@
+"
+I am a leaf node for DrTest that shows a message selector
+"
 Class {
 	#name : 'DTMaMessageNode',
 	#superclass : 'Object',

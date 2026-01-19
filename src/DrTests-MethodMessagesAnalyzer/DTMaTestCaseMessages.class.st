@@ -1,3 +1,6 @@
+"
+I store the messages of a test case
+"
 Class {
 	#name : 'DTMaTestCaseMessages',
 	#superclass : 'Object',
