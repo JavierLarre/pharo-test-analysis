@@ -30,6 +30,16 @@ MaMessageVisitorTest >> testIncludesMessages [
 ]
 
 { #category : 'tests' }
+MaMessageVisitorTest >> testMessagesEqualsSet [
+	
+	self analyzeMethodFromFixture: #testHelper.
+	
+	self 
+		assertCollection: (visitor messages methodMessages: MaVisitorFixture >> #testHelper)
+		equals: { #helper . #foo . #ifTrue: . #notAHelper . #guardedHelper } asSet
+]
+
+{ #category : 'tests' }
 MaMessageVisitorTest >> testVisitsAreEqual [ 
 
 	| newVisitor |
