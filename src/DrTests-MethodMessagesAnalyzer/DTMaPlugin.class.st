@@ -47,10 +47,12 @@ DTMaPlugin >> runForConfiguration: aDTPluginConfiguration [
 
 	| testVisitor |
 	testVisitor := DTMaTestCaseVisitor new 
+		methodVisitor: MaMessageVisitor new;
 		visit: aDTPluginConfiguration asTestSuite;
 		yourself.
 	^ self pluginResultClass new 
 		result: testVisitor analysisData;
+		visitor: testVisitor methodVisitor;
 		yourself
 ]
 

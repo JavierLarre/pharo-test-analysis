@@ -2,7 +2,8 @@ Class {
 	#name : 'DTMaTestCaseVisitor',
 	#superclass : 'SUnitVisitor',
 	#instVars : [
-		'analysisData'
+		'analysisData',
+		'methodVisitor'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer',
 	#package : 'DrTests-MethodMessagesAnalyzer'
@@ -11,7 +12,7 @@ Class {
 { #category : 'accessing' }
 DTMaTestCaseVisitor >> analysisData [
 
-	^ analysisData
+	^ analysisData ifNil: [ analysisData := SortedCollection new ]
 ]
 
 { #category : 'accessing' }
@@ -20,20 +21,26 @@ DTMaTestCaseVisitor >> analysisData: anObject [
 	analysisData := anObject
 ]
 
-{ #category : 'initialization' }
-DTMaTestCaseVisitor >> initialize [ 
-	
-	super initialize.
-	self analysisData: OrderedCollection new.
+{ #category : 'accessing' }
+DTMaTestCaseVisitor >> methodVisitor [
+
+	^ methodVisitor
+]
+
+{ #category : 'accessing' }
+DTMaTestCaseVisitor >> methodVisitor: anObject [
+
+	methodVisitor := anObject
+]
+
+{ #category : 'private' }
+DTMaTestCaseVisitor >> testCaseAnaysisVisitor: aTestCase [
+
+	^ methodVisitor analyzeMethod: aTestCase class >> aTestCase selector
 ]
 
 { #category : 'visiting' }
 DTMaTestCaseVisitor >> visitTestCase: aTestCase [
-	
-	self analysisData 
-		add: 
-			(DTMaAnalysisData new
-				testCase: aTestCase;
-				analyserVisitor: (MaMessageVisitor new analyzeMethod: aTestCase class >> aTestCase selector);
-				yourself)
+
+	methodVisitor analyzeMethod: aTestCase class >> aTestCase selector
 ]

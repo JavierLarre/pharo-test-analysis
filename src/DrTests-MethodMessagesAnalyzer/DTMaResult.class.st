@@ -5,7 +5,8 @@ Class {
 	#name : 'DTMaResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'result'
+		'result',
+		'visitor'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer',
 	#package : 'DrTests-MethodMessagesAnalyzer'
@@ -17,16 +18,23 @@ DTMaResult >> buildClassNode: aClass withResults: aCollection [
 	^ self buildTreeNode 
 		name: aClass name;
 		subResults: (aCollection collect: [ :analysisData | 
-			DTTreeLeafNode new content: analysisData; yourself ] )
+			self buildTreeNode 
+				name: analysisData testCase selector; 
+				subResults: (analysisData buildMessagesNodes collect: [ :messageNode |
+					DTTreeLeafNode new content: messageNode; yourself ] ) ; 
+				yourself ] )
 ]
 
 { #category : 'accessing' }
 DTMaResult >> buildTreeForUI [
 	
-	<dtTestMaResultTreeNamed: 'List of analyzed methods' order: 1>
+	<dtTestMaResultTreeNamed: 'List of methods messages' order: 1>
 	^ self buildTreeNode 
-		subResults: ((self results groupedBy: [ :analysisData | analysisData testCase class ]) 
-							associations collect: [ :assoc | self buildClassNode: assoc key withResults: assoc value ] );
+		subResults: (visitor messages methodsAnalyzed collect: [ :compiledMethod | 
+			self buildTreeNode 
+			name: compiledMethod selector;
+			subResults: ((visitor messages methodMessages: compiledMethod ) collect: [ :message |
+				DTTreeLeafNode new content: ( DTMaMessageNode new message: message; yourself ); yourself ] ) ] );
 		yourself
 ]
 
@@ -35,11 +43,11 @@ DTMaResult >> buildTreeNode [
 	"Returns a node with the sub-results aggregator initialized in a way that it sum the durations of sub results."
 
 	^ DTTreeNode new
-		subResultsAggregator: [ :subResults |
+		"subResultsAggregator: [ :subResults |
 				subResults
 					inject: 0 
 					into: [ :totalMessages :dtTreeLeaf | 
-						totalMessages + dtTreeLeaf content analyserVisitor messages methodsAnalyzed size ] ];
+						totalMessages + dtTreeLeaf content analyserVisitor messages methodsAnalyzed size ] ];"
 		yourself
 ]
 
@@ -53,4 +61,12 @@ DTMaResult >> result: anObject [
 DTMaResult >> results [
 
 	^ result
+]
+
+{ #category : 'accessing' }
+DTMaResult >> visitor: aVisitor [
+
+	visitor := aVisitor 
+
+	
 ]

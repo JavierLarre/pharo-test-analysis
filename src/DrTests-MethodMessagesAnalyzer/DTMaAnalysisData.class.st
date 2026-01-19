@@ -24,10 +24,11 @@ DTMaAnalysisData >> analyserVisitor: anObject [
 	analyserVisitor := anObject
 ]
 
-{ #category : 'accessing' }
-DTMaAnalysisData >> drTestsName [
+{ #category : 'factory' }
+DTMaAnalysisData >> buildMessagesNodes [
 	
-	^ self testCase selector , ' : '
+	^ (analyserVisitor messages methodMessages: (testCase class >> testCase selector) ) collect: [ :message | 
+		DTMaMessageNode new message: message; yourself ]
 ]
 
 { #category : 'accessing' }
