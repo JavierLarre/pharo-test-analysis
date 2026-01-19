@@ -21,16 +21,31 @@ DTMaResult >> buildMessageLeafNode: message [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+DTMaResult >> buildTestCaseMessagesNode: testCaseMessages [
+
+	^ self buildTreeNode
+		  name: testCaseMessages testCase selector;
+		  subResults: (testCaseMessages messages collect: [ :message | self buildMessageLeafNode: message ])
+]
+
 { #category : 'accessing' }
 DTMaResult >> buildTreeForUI [
 
-	<dtTestMaResultTreeNamed: 'List of methods messages sorted by priority' order: 1>
+	<dtTestMaResultTreeNamed: 'List of methods messages sorted by priority' order: 2>
 	^ self buildTreeNode
 		  subResults: (viewModel testCasesMessages collect: [ :testCaseMessages |
-						   self buildTreeNode
-							   name: testCaseMessages testCase selector;
-							   subResults: (testCaseMessages messages collect: [ :message | 
-									self buildMessageLeafNode: message ]) ]);
+						   self buildTestCaseMessagesNode: testCaseMessages ]);
+		  yourself
+]
+
+{ #category : 'accessing' }
+DTMaResult >> buildTreeForUIGroupedByClass [
+
+	<dtTestMaResultTreeNamed: 'List of methods messages sorted by priority grouped by class' order: 1>
+	^ self buildTreeNode
+		  subResults: (viewModel testCasesMessagesByClass associations collect: [ :assoc |
+						   self buildTreeNode: assoc value byClass: assoc key ]);
 		  yourself
 ]
 
@@ -39,6 +54,16 @@ DTMaResult >> buildTreeNode [
 
 	^ DTTreeNode new
 		yourself
+]
+
+{ #category : 'accessing' }
+DTMaResult >> buildTreeNode: testCasesMessages byClass: aClass [
+
+	^ self buildTreeNode
+		  name: aClass name;
+		  subResults: (testCasesMessages collect: [ :testCaseMessages | 
+			self buildTestCaseMessagesNode: testCaseMessages ]);
+		  yourself
 ]
 
 { #category : 'accessing' }

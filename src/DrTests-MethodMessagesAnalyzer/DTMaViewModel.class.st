@@ -29,3 +29,10 @@ DTMaViewModel >> testCasesMessages: anObject [
 
 	testCasesMessages := anObject
 ]
+
+{ #category : 'tests' }
+DTMaViewModel >> testCasesMessagesByClass [
+
+	^ testCasesMessages groupedBy: [ :testCaseMessages |
+		testCaseMessages testCase class ]
+]

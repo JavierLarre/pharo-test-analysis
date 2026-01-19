@@ -45,14 +45,9 @@ DTMaPlugin >> resultButtonHelp [
 { #category : 'api' }
 DTMaPlugin >> runForConfiguration: aDTPluginConfiguration [
 
-	| testVisitor |
-	testVisitor := DTMaTestCaseVisitor new 
-		methodVisitor: MaMessageVisitor new;
-		visit: aDTPluginConfiguration asTestSuite;
-		yourself.
 	^ self pluginResultClass new 
-		viewModel: (DTMaViewModel new 
-			testCasesMessages: testVisitor testCasesMessages );
+		viewModel: (DTMaWidget new 
+			analyzeTestSuite: aDTPluginConfiguration asTestSuite);
 		yourself
 ]
 
