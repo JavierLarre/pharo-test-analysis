@@ -30,7 +30,8 @@ MaMessageVisitor >> visitCompiledMethod: aCompiledMethod [
 	
 	messages 
 		atMethod: aCompiledMethod 
-		putMessages: (aCompiledMethod parseTree allMessageNodes collect: [ :messageNode | messageNode selector ]) .
+		putMessages: (aCompiledMethod parseTree allMessageNodes collect: [ :messageNode | 
+			messageNode selector ]) asSet .
 
 	super visitCompiledMethod: aCompiledMethod.
 ]
