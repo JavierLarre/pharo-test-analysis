@@ -1,5 +1,5 @@
 "
-I store the messages of a test case
+I store the messages and the compiled method of a test case
 "
 Class {
 	#name : 'DTMaTestCaseMessages',

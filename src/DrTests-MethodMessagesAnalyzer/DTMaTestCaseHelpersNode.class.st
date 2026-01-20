@@ -1,3 +1,6 @@
+"
+I am a DrTestTreeNode for displaying the helper methods of a test case
+"
 Class {
 	#name : 'DTMaTestCaseHelpersNode',
 	#superclass : 'DTTreeNode',

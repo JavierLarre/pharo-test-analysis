@@ -1,5 +1,5 @@
 "
-I am the result report for the MethodMessageAnalyzer plugin for DrTests
+I route the logic for displaying different analysis options
 "
 Class {
 	#name : 'DTMaResult',

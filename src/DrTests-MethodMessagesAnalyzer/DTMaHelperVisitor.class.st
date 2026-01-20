@@ -1,3 +1,6 @@
+"
+I analyze test cases using `MaHelperVisitor` and build the view model with the visitors found
+"
 Class {
 	#name : 'DTMaHelperVisitor',
 	#superclass : 'DTMaTestCaseVisitor',

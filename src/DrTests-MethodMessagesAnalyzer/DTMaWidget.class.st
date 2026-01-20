@@ -1,3 +1,6 @@
+"
+I encapsulate the `DTMaTestCaseVisitor`s used as options of analysis
+"
 Class {
 	#name : 'DTMaWidget',
 	#superclass : 'Object',

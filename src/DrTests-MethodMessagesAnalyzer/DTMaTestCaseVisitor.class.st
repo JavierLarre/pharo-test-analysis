@@ -1,5 +1,5 @@
 "
-I am a visitor of test cases that analyses a test method using the given analyzer
+I am an abstract visitor of test cases. I provide a hook for building the view model
 "
 Class {
 	#name : 'DTMaTestCaseVisitor',

@@ -1,3 +1,6 @@
+"
+I am a DrTestTreeLeaf for displaying the messages of a test case
+"
 Class {
 	#name : 'DTMaTestCaseMessagesNode',
 	#superclass : 'DTTreeNode',
