@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'testCasesMessages',
-		'testCasesHelpers'
+		'testCasesHelpers',
+		'testCasesSelfSentMethods'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer-DTOs',
 	#package : 'DrTests-MethodMessagesAnalyzer',
@@ -18,6 +19,12 @@ DTMaViewModel >> initialize [
 
 	super initialize.
 	testCasesMessages := OrderedCollection new
+]
+
+{ #category : 'private' }
+DTMaViewModel >> testCaseClassBlock [
+
+	^ [ :testCaseMessages | testCaseMessages testCase class ]
 ]
 
 { #category : 'accessing' }
@@ -35,8 +42,7 @@ DTMaViewModel >> testCasesHelpers: anObject [
 { #category : 'tests' }
 DTMaViewModel >> testCasesHelpersByClass [
 
-	^ testCasesHelpers groupedBy: [ :testCaseHelpers |
-		testCaseHelpers testCase class ]
+	^ testCasesHelpers groupedBy: self testCaseClassBlock 
 ]
 
 { #category : 'accessing' }
@@ -54,6 +60,23 @@ DTMaViewModel >> testCasesMessages: anObject [
 { #category : 'tests' }
 DTMaViewModel >> testCasesMessagesByClass [
 
-	^ testCasesMessages groupedBy: [ :testCaseMessages |
-		testCaseMessages testCase class ]
+	^ testCasesMessages groupedBy: self testCaseClassBlock 
+]
+
+{ #category : 'tests' }
+DTMaViewModel >> testCasesSelfSentMethods [
+
+	^ testCasesSelfSentMethods 
+]
+
+{ #category : 'tests' }
+DTMaViewModel >> testCasesSelfSentMethods: anObject [
+
+	testCasesSelfSentMethods := anObject 
+]
+
+{ #category : 'tests' }
+DTMaViewModel >> testCasesSelfSentMethodsByClass [
+
+	^ testCasesSelfSentMethods groupedBy: self testCaseClassBlock
 ]

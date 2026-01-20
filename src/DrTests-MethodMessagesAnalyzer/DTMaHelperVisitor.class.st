@@ -28,12 +28,6 @@ DTMaHelperVisitor >> initialize [
 	testCasesHelpers := OrderedCollection new
 ]
 
-{ #category : 'accessing' }
-DTMaHelperVisitor >> testCasesHelpers [
-
-	^ testCasesHelpers
-]
-
 { #category : 'visiting' }
 DTMaHelperVisitor >> visitTestCase: aTestCase [
 

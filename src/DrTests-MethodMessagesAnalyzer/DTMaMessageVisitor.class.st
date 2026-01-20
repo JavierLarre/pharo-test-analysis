@@ -45,12 +45,6 @@ DTMaMessageVisitor >> initialize [
 			yourself.
 ]
 
-{ #category : 'accessing' }
-DTMaMessageVisitor >> testCasesMessages [
-
-	^ testCasesMessages
-]
-
 { #category : 'visiting' }
 DTMaMessageVisitor >> visitTestCase: aTestCase [
 

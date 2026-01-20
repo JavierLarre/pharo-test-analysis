@@ -46,6 +46,6 @@ DTMaWidget >> initialize [
 
 	super initialize.
 	viewModel := DTMaViewModel new.
-	visitors := { DTMaHelperVisitor . DTMaMessageVisitor } collect: [ :visitorClass |
+	visitors := { DTMaHelperVisitor . DTMaMessageVisitor . DTMaSelfMethodsVisitor } collect: [ :visitorClass |
 		visitorClass new ] 
 ]

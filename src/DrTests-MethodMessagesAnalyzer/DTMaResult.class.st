@@ -53,9 +53,21 @@ DTMaResult >> buildTreeForUIHelpers [
 ]
 
 { #category : 'accessing' }
+DTMaResult >> buildTreeForUISelfSentMessages [
+
+	<dtTestMaResultTreeNamed: 'List of self sent methods' order: 2>
+	^ self buildTreeNode
+		  subResults: (viewModel testCasesSelfSentMethodsByClass associations collect: [ :assoc |
+						   (self buildHelpersTreeNode: assoc value)
+								name: assoc key name; 
+								yourself ]);
+		  yourself
+]
+
+{ #category : 'accessing' }
 DTMaResult >> buildTreeForUIShowAllMessages [
 
-	<dtTestMaResultTreeNamed: 'List of all method messages' order: 2>
+	<dtTestMaResultTreeNamed: 'List of all method messages' order: 3>
 	^ self buildTreeNode
 		  subResults: (viewModel testCasesMessages collect: [ :testCaseMessages |
 						   self buildTreeNode
