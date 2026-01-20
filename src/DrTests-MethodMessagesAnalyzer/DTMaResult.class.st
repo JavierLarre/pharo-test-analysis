@@ -13,24 +13,22 @@ Class {
 }
 
 { #category : 'accessing' }
-DTMaResult >> buildHelpersTreeNode: testCasesHelpers [
+DTMaResult >> buildNodeWithCases: testCasesMessages andNodeClass: aClass [
 
 	^ self buildTreeNode
-		  subResults: (testCasesHelpers 
+		  subResults: (testCasesMessages 
 							collect: [ :testCaseHelpers | 
-								(DTMaTestCaseHelpersNode new messages: testCaseHelpers; yourself ) ]);
+								(aClass new messages: testCaseHelpers; yourself ) ]);
 		  yourself
 ]
 
 { #category : 'accessing' }
-DTMaResult >> buildMessagesTreeNode: testCasesMessages [
+DTMaResult >> buildNodesWithClass: testCasesMessages andNodeClass: aClass [
 
-	^ self buildTreeNode
-		  subResults: (testCasesMessages 
-							reject: [ :testCaseMessages | testCaseMessages messages isEmpty ] 
-							thenCollect: [ :testCaseMessages | 
-								DTMaTestCaseNode new messages: testCaseMessages; yourself ]);
-		  yourself
+	^ (self groupTestCasesByClass: testCasesMessages ) associations collect: [ :assoc | 
+		(self buildNodeWithCases: assoc value andNodeClass: aClass )
+			name: assoc key name;
+			yourself ]
 ]
 
 { #category : 'accessing' }
@@ -38,11 +36,10 @@ DTMaResult >> buildTreeForUI [
 
 	<dtTestMaResultTreeNamed: 'List of methods messages sorted by priority grouped by class' order: 1>
 	^ self buildTreeNode
-		  subResults: (viewModel testCasesMessagesByClass associations
-							collect: [ :assoc |
-								(self buildMessagesTreeNode: assoc value)
-									name: assoc key name; yourself ]);
-		  yourself
+		subResults: (self 
+			buildNodesWithClass: viewModel testCasesMessages 
+			andNodeClass: DTMaTestCaseMessagesNode );
+		yourself
 ]
 
 { #category : 'accessing' }
@@ -50,11 +47,10 @@ DTMaResult >> buildTreeForUIHelpers [
 
 	<dtTestMaResultTreeNamed: 'List of all method helpers grouped by class' order: 3>
 	^ self buildTreeNode
-		            subResults: (viewModel testCasesHelpersByClass associations collect: [ :assoc |
-						             (self buildHelpersTreeNode: assoc value)
-							             name: assoc key name;
-							             yourself ]);
-		            yourself
+		subResults: (self 
+			buildNodesWithClass: viewModel testCasesHelpers 
+			andNodeClass: DTMaTestCaseHelpersNode );
+		yourself
 ]
 
 { #category : 'accessing' }
@@ -62,32 +58,31 @@ DTMaResult >> buildTreeForUISelfSentMessages [
 
 	<dtTestMaResultTreeNamed: 'List of self sent methods' order: 2>
 	^ self buildTreeNode
-		  subResults: (viewModel testCasesSelfSentMethodsByClass associations collect: [ :assoc |
-						   (self buildHelpersTreeNode: assoc value)
-								name: assoc key name; 
-								yourself ]);
-		  yourself
+		subResults: (self 
+			buildNodesWithClass: viewModel testCasesSelfSentMethods 
+			andNodeClass: DTMaTestCaseHelpersNode );
+		yourself
 ]
 
 { #category : 'accessing' }
 DTMaResult >> buildTreeForUIShowAllMessages [
 
 	<dtTestMaResultTreeNamed: 'List of all method messages' order: 4>
-	^ self buildTreeNode
-		  subResults: (viewModel testCasesMessages collect: [ :testCaseMessages |
-						   self buildTreeNode
-							name: testCaseMessages testCase selector;
-							subResults: (testCaseMessages messages collect: [ :message | 
-								DTMaMessageNode new message: message; yourself ]); 
-							yourself ]);
-		  yourself
+	^ self 
+		buildNodeWithCases: viewModel testCasesMessages
+		andNodeClass: DTMaTestCaseMessagesNode
 ]
 
 { #category : 'private' }
 DTMaResult >> buildTreeNode [
 
 	^ DTTreeNode new
-		yourself
+]
+
+{ #category : 'utilities' }
+DTMaResult >> groupTestCasesByClass: testCasesMessages [
+
+	^ testCasesMessages groupedBy: [ :testCaseMessages | testCaseMessages testCase class ]
 ]
 
 { #category : 'accessing' }

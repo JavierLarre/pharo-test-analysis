@@ -14,19 +14,6 @@ Class {
 	#tag : 'DTOs'
 }
 
-{ #category : 'initialization' }
-DTMaViewModel >> initialize [
-
-	super initialize.
-	testCasesMessages := OrderedCollection new
-]
-
-{ #category : 'private' }
-DTMaViewModel >> testCaseClassBlock [
-
-	^ [ :testCaseMessages | testCaseMessages testCase class ]
-]
-
 { #category : 'accessing' }
 DTMaViewModel >> testCasesHelpers [
 
@@ -37,12 +24,6 @@ DTMaViewModel >> testCasesHelpers [
 DTMaViewModel >> testCasesHelpers: anObject [
 
 	testCasesHelpers := anObject
-]
-
-{ #category : 'tests' }
-DTMaViewModel >> testCasesHelpersByClass [
-
-	^ testCasesHelpers groupedBy: self testCaseClassBlock 
 ]
 
 { #category : 'accessing' }
@@ -58,12 +39,6 @@ DTMaViewModel >> testCasesMessages: anObject [
 ]
 
 { #category : 'tests' }
-DTMaViewModel >> testCasesMessagesByClass [
-
-	^ testCasesMessages groupedBy: self testCaseClassBlock 
-]
-
-{ #category : 'tests' }
 DTMaViewModel >> testCasesSelfSentMethods [
 
 	^ testCasesSelfSentMethods 
@@ -73,10 +48,4 @@ DTMaViewModel >> testCasesSelfSentMethods [
 DTMaViewModel >> testCasesSelfSentMethods: anObject [
 
 	testCasesSelfSentMethods := anObject 
-]
-
-{ #category : 'tests' }
-DTMaViewModel >> testCasesSelfSentMethodsByClass [
-
-	^ testCasesSelfSentMethods groupedBy: self testCaseClassBlock
 ]
