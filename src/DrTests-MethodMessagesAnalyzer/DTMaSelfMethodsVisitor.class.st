@@ -15,7 +15,7 @@ Class {
 { #category : 'build' }
 DTMaSelfMethodsVisitor >> buildViewModel: aViewModel [
 
-	aViewModel testCasesSelfSentMethods: testCasesMethods 
+	aViewModel testCasesSelfSentMethods: (self filterEmptyMessages: testCasesMethods )
 ]
 
 { #category : 'initialization' }

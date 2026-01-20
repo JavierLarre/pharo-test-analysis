@@ -15,7 +15,7 @@ Class {
 { #category : 'build' }
 DTMaHelperVisitor >> buildViewModel: aViewModel [
 
-	aViewModel testCasesHelpers: testCasesHelpers 
+	aViewModel testCasesHelpers: (self filterEmptyMessages: testCasesHelpers )
 ]
 
 { #category : 'initialization' }

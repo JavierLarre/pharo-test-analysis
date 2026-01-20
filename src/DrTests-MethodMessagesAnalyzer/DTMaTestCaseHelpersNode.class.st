@@ -3,17 +3,15 @@ I am a DrTestTreeNode for displaying the helper methods of a test case
 "
 Class {
 	#name : 'DTMaTestCaseHelpersNode',
-	#superclass : 'DTTreeNode',
+	#superclass : 'DTMaTestCaseNode',
 	#category : 'DrTests-MethodMessagesAnalyzer-node',
 	#package : 'DrTests-MethodMessagesAnalyzer',
 	#tag : 'node'
 }
 
 { #category : 'accessing' }
-DTMaTestCaseHelpersNode >> helpers: aTestCaseHelpers [
+DTMaTestCaseHelpersNode >> messages: aTestCaseMessages [
 
-	self
-		name: aTestCaseHelpers testCase selector;
-		subResults: (DTMaMessageNode toNodes: aTestCaseHelpers messages ).
-	self subResults do: [ :messageNode | messageNode browseMethod: aTestCaseHelpers testCase class >> messageNode message ]
+	super messages: aTestCaseMessages .
+	self subResults do: [ :messageNode | messageNode browseMethod: aTestCaseMessages testCase class >> messageNode message ]
 ]

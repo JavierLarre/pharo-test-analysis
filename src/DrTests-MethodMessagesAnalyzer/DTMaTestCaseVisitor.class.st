@@ -18,6 +18,12 @@ DTMaTestCaseVisitor >> buildViewModel: aViewModel [
 	
 ]
 
+{ #category : 'utilities' }
+DTMaTestCaseVisitor >> filterEmptyMessages: aMessagesCollection [
+
+	^ aMessagesCollection reject: [ :testMessages | testMessages messages isEmpty ]
+]
+
 { #category : 'accessing' }
 DTMaTestCaseVisitor >> methodVisitor [
 
