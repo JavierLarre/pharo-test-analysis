@@ -3,19 +3,32 @@ I am a leaf node for DrTest that shows a message selector
 "
 Class {
 	#name : 'DTMaMessageNode',
-	#superclass : 'Object',
+	#superclass : 'DTTreeLeafNode',
 	#instVars : [
 		'message',
 		'browseMethod'
 	],
-	#category : 'DrTests-MethodMessagesAnalyzer',
-	#package : 'DrTests-MethodMessagesAnalyzer'
+	#category : 'DrTests-MethodMessagesAnalyzer-node',
+	#package : 'DrTests-MethodMessagesAnalyzer',
+	#tag : 'node'
 }
+
+{ #category : 'instance creation' }
+DTMaMessageNode class >> toNodes: messages [
+
+	^ messages collect: [ :message | self new message: message; yourself ]
+]
 
 { #category : 'accessing' }
 DTMaMessageNode >> browseMethod: anObject [
 
 	browseMethod := anObject
+]
+
+{ #category : 'accessing' }
+DTMaMessageNode >> content [
+
+	^ self
 ]
 
 { #category : 'actions' }

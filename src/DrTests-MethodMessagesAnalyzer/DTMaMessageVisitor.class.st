@@ -1,8 +1,12 @@
 Class {
 	#name : 'DTMaMessageVisitor',
 	#superclass : 'DTMaTestCaseVisitor',
-	#category : 'DrTests-MethodMessagesAnalyzer',
-	#package : 'DrTests-MethodMessagesAnalyzer'
+	#instVars : [
+		'testCasesMessages'
+	],
+	#category : 'DrTests-MethodMessagesAnalyzer-visitor',
+	#package : 'DrTests-MethodMessagesAnalyzer',
+	#tag : 'visitor'
 }
 
 { #category : 'build' }

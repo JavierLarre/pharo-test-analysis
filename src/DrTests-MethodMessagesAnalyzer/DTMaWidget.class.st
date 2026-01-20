@@ -6,8 +6,9 @@ Class {
 		'viewModel',
 		'visitors'
 	],
-	#category : 'DrTests-MethodMessagesAnalyzer',
-	#package : 'DrTests-MethodMessagesAnalyzer'
+	#category : 'DrTests-MethodMessagesAnalyzer-presenter',
+	#package : 'DrTests-MethodMessagesAnalyzer',
+	#tag : 'presenter'
 }
 
 { #category : 'factory' }

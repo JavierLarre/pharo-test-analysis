@@ -5,11 +5,11 @@ Class {
 	#name : 'DTMaTestCaseVisitor',
 	#superclass : 'SUnitVisitor',
 	#instVars : [
-		'methodVisitor',
-		'testCasesMessages'
+		'methodVisitor'
 	],
-	#category : 'DrTests-MethodMessagesAnalyzer',
-	#package : 'DrTests-MethodMessagesAnalyzer'
+	#category : 'DrTests-MethodMessagesAnalyzer-visitor',
+	#package : 'DrTests-MethodMessagesAnalyzer',
+	#tag : 'visitor'
 }
 
 { #category : 'build' }

@@ -9,8 +9,9 @@ Class {
 		'messages',
 		'testMethod'
 	],
-	#category : 'DrTests-MethodMessagesAnalyzer',
-	#package : 'DrTests-MethodMessagesAnalyzer'
+	#category : 'DrTests-MethodMessagesAnalyzer-DTOs',
+	#package : 'DrTests-MethodMessagesAnalyzer',
+	#tag : 'DTOs'
 }
 
 { #category : 'accessing' }

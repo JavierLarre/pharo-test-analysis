@@ -4,8 +4,9 @@ I am plugin implementing MethodMessageAnalyzer in DrTests
 Class {
 	#name : 'DTMaPlugin',
 	#superclass : 'DrTestsPlugin',
-	#category : 'DrTests-MethodMessagesAnalyzer',
-	#package : 'DrTests-MethodMessagesAnalyzer'
+	#category : 'DrTests-MethodMessagesAnalyzer-presenter',
+	#package : 'DrTests-MethodMessagesAnalyzer',
+	#tag : 'presenter'
 }
 
 { #category : 'api - accessing' }
