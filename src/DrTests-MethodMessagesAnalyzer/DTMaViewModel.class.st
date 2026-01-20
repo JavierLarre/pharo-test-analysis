@@ -5,7 +5,8 @@ Class {
 	#name : 'DTMaViewModel',
 	#superclass : 'Object',
 	#instVars : [
-		'testCasesMessages'
+		'testCasesMessages',
+		'testCasesHelpers'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer',
 	#package : 'DrTests-MethodMessagesAnalyzer'
@@ -16,6 +17,25 @@ DTMaViewModel >> initialize [
 
 	super initialize.
 	testCasesMessages := OrderedCollection new
+]
+
+{ #category : 'accessing' }
+DTMaViewModel >> testCasesHelpers [
+
+	^ testCasesHelpers
+]
+
+{ #category : 'accessing' }
+DTMaViewModel >> testCasesHelpers: anObject [
+
+	testCasesHelpers := anObject
+]
+
+{ #category : 'tests' }
+DTMaViewModel >> testCasesHelpersByClass [
+
+	^ testCasesHelpers groupedBy: [ :testCaseHelpers |
+		testCaseHelpers testCase class ]
 ]
 
 { #category : 'accessing' }

@@ -2,11 +2,21 @@ Class {
 	#name : 'DTMaWidget',
 	#superclass : 'Object',
 	#instVars : [
-		'testVisitor'
+		'testVisitor',
+		'viewModel',
+		'visitors'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer',
 	#package : 'DrTests-MethodMessagesAnalyzer'
 }
+
+{ #category : 'factory' }
+DTMaWidget class >> buildHelperVisitor [
+
+	^ MaHelperVisitor new
+		helperSelectors: TAssertable selectors;
+		yourself
+]
 
 { #category : 'factory' }
 DTMaWidget class >> buildMethodVisitor [
@@ -21,17 +31,17 @@ DTMaWidget class >> buildMethodVisitor [
 { #category : 'api' }
 DTMaWidget >> analyzeTestSuite: aTestSuite [
 
-	testVisitor visit: aTestSuite. 
-	^ DTMaViewModel new
-		  testCasesMessages: testVisitor testCasesMessages;
-		  yourself
+	visitors do: [ :visitor | 
+		visitor visit: aTestSuite; 
+		buildViewModel: viewModel ].
+	^ viewModel 
 ]
 
 { #category : 'initialization' }
 DTMaWidget >> initialize [ 
 
 	super initialize.
-	testVisitor := DTMaTestCaseVisitor new 
-		methodVisitor: self class buildMethodVisitor;
-		yourself
+	viewModel := DTMaViewModel new.
+	visitors := { DTMaHelperVisitor . DTMaMessageVisitor } collect: [ :visitorClass |
+		visitorClass new ] 
 ]

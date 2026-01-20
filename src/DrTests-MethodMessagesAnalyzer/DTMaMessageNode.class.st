@@ -5,11 +5,24 @@ Class {
 	#name : 'DTMaMessageNode',
 	#superclass : 'Object',
 	#instVars : [
-		'message'
+		'message',
+		'browseMethod'
 	],
 	#category : 'DrTests-MethodMessagesAnalyzer',
 	#package : 'DrTests-MethodMessagesAnalyzer'
 }
+
+{ #category : 'accessing' }
+DTMaMessageNode >> browseMethod: anObject [
+
+	browseMethod := anObject
+]
+
+{ #category : 'actions' }
+DTMaMessageNode >> drTestsBrowse [ 
+	
+	^ browseMethod drTestsBrowse
+]
 
 { #category : 'accessing' }
 DTMaMessageNode >> drTestsName [ 
