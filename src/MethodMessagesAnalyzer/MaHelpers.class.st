@@ -29,3 +29,9 @@ MaHelpers >> initialize [
 	super initialize. 
 	methodHelpers := Dictionary new.
 ]
+
+{ #category : 'testing' }
+MaHelpers >> isEmpty [ 
+	
+	^ methodHelpers isEmpty 
+]
