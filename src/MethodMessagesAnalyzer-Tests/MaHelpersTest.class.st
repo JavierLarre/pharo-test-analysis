@@ -21,7 +21,7 @@ MaHelpersTest >> setUp [
 MaHelpersTest >> testSelectors [
 
 	| messages method |
-	method := MaVisitorFixture >> #helper.
+	method := CompiledMethod new selector: #foo; yourself.
 	messages := MaMessages new
 		            atMethod: method putMessages: #( assert: );
 		            yourself.
