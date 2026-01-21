@@ -22,6 +22,22 @@ MaMessagesTest >> setUp [
 ]
 
 { #category : 'tests' }
+MaMessagesTest >> testAnyMessagesAreConnected [
+
+	| method selectors |
+	
+	method := self fixtureMethod: #foo.
+	selectors := { #= . #+ . #< }.
+	
+	messages 
+		atMethod: method putMessages: { #= . #+ . #< };
+		atMethod: (self fixtureMethod: #= ) putMessages: { #>= . #<= } .
+	
+	self
+		assert: (messages method: method isConnectedToAnyMessage: { #= . #- . #>= })
+]
+
+{ #category : 'tests' }
 MaMessagesTest >> testConnectionIsTransitive [
 
 	| callsFoo instanceFoo classFoo |
