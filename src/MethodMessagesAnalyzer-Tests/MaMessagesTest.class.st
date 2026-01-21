@@ -26,17 +26,14 @@ MaMessagesTest >> setUp [
 { #category : 'tests' }
 MaMessagesTest >> testAnyMessagesAreConnected [
 
-	| method selectors |
+	| method |
 	
-	method := self fixtureMethod: #foo.
-	selectors := { #= . #+ . #< }.
+	method := self buildDummyMethod: #foo.
 	
-	messages 
-		atMethod: method putMessages: { #= . #+ . #< };
-		atMethod: (self fixtureMethod: #= ) putMessages: { #>= . #<= } .
+	messages atMethod: method putMessages: { #= . #+ . #< }.
 	
 	self
-		assert: (messages method: method isConnectedToAnyMessage: { #= . #- . #>= })
+		assert: (messages method: method isConnectedToAnyMessage: { #+ . #- . #>= })
 ]
 
 { #category : 'tests' }
@@ -132,6 +129,38 @@ MaMessagesTest >> testMessagesIncludesThemselves [
 		atMethod: method putMessages: #( a b c x y z ).
 		
 	self assert: (messages method: method includesSubmethod: method)
+]
+
+{ #category : 'tests' }
+MaMessagesTest >> testNestedMessagesAreConnected [
+
+	| method |
+	
+	method := self buildDummyMethod: #foo.
+	
+	messages 
+		atMethod: method putMessages: { #= . #+ . #< };
+		atMethod: (self buildDummyMethod: #= ) putMessages: { #>= . #<= } .
+	
+	self
+		assert: (messages method: method isConnectedToAnyMessage: { #- . #>= })
+]
+
+{ #category : 'tests' }
+MaMessagesTest >> testNoMessageIsConnected [
+
+	| method |
+	
+	method := self buildDummyMethod: #foo.
+	
+	messages
+		atMethod: method putMessages: { #= . #+ . #< };
+		atMethod: (self buildDummyMethod: #= ) putMessages: { #assert: . #plus . #minus };
+		atMethod: (self buildDummyMethod: #+) putMessages: { #= . #+ . #foo };
+		atMethod: (self buildDummyMethod: #< ) putMessages: {  } .
+	
+	self
+		deny: (messages method: method isConnectedToAnyMessage: { #/ . #- . #>= })
 ]
 
 { #category : 'tests' }
