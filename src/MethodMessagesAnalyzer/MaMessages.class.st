@@ -84,6 +84,13 @@ MaMessages >> method: aCompiledMethod includesSubmethod: aCompiledSubmethod [
 		isSubset and: [ methodMessages includes: each ] ]
 ]
 
+{ #category : 'testing' }
+MaMessages >> method: aCompiledMethod isConnectedToAnyMessage: aMessageCollection [ 
+	
+	^ aMessageCollection anySatisfy: [ :message | 
+		self method: aCompiledMethod isConnectedToMessage: message ]
+]
+
 { #category : 'accessing' }
 MaMessages >> method: aCompiledMethod isConnectedToMessage: aMessage [
  
