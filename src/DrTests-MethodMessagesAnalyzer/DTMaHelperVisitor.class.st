@@ -38,6 +38,6 @@ DTMaHelperVisitor >> visitTestCase: aTestCase [
 	testCasesHelpers add: (DTMaTestCaseMessages new
 			testCase: aTestCase;
 			testMethod: compiledMethod;
-			messages: ((methodVisitor helpers helpersOf: compiledMethod ) collect: [ :compiledHelper |
+			messages: ((methodVisitor helpers atMethod: compiledMethod ) collect: [ :compiledHelper |
 				compiledHelper selector ] ) )
 ]

@@ -12,23 +12,21 @@ Class {
 }
 
 { #category : 'accessing' }
+MaHelpers >> atMethod: aCompiledMethod [
+	
+	^helpers at: aCompiledMethod ifAbsent: [ MethodNotFound signal ]
+]
+
+{ #category : 'accessing' }
 MaHelpers >> atMethod: aCompiledMethod includesHelper: aCompiledHelper [
 
-	^(self helpersOf: aCompiledMethod ) includes: aCompiledHelper 
+	^(self atMethod: aCompiledMethod ) includes: aCompiledHelper 
 ]
 
 { #category : 'accessing' }
 MaHelpers >> atMethod: aCompiledMethod putHelpers: aHelpersCollection [
 
 	helpers at: aCompiledMethod put: aHelpersCollection 
-]
-
-{ #category : 'copying' }
-MaHelpers >> copy [ 
-
-	^ self class new
-		helpers: helpers copy;
-		yourself 
 ]
 
 { #category : 'accessing' }
@@ -41,12 +39,6 @@ MaHelpers >> helpers [
 MaHelpers >> helpers: aHelperCollection [
 	
 	helpers := aHelperCollection 
-]
-
-{ #category : 'accessing' }
-MaHelpers >> helpersOf: aCompiledMethod [
-	
-	^helpers at: aCompiledMethod ifAbsent: [ MethodNotFound signal ]
 ]
 
 { #category : 'initialization' }
