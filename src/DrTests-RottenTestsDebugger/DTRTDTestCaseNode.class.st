@@ -32,8 +32,13 @@ DTRTDTestCaseNode >> drTestsBrowse [
 
 { #category : 'accessing' }
 DTRTDTestCaseNode >> drTestsName [
-	"Returns the name to display for this object in DrTestsUI."
-	^ name
+	
+	^ String streamContents: [ :stream | 
+		stream
+			<< name;
+			<< ' (';
+			<< testCaseMessages messages size asString;
+			<< ')' ]
 ]
 
 { #category : 'accessing' }
