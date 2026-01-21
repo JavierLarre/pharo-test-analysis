@@ -13,12 +13,6 @@ Class {
 }
 
 { #category : 'accessing' }
-MaHelperVisitor >> helperSelectors [
-
-	^ helperSelectors ifNil: [ helperSelectors := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
 MaHelperVisitor >> helperSelectors: anObject [
 
 	helperSelectors := anObject
@@ -42,10 +36,9 @@ MaHelperVisitor >> putHelpersConnectedTo: aCompiledMethod [
 	
 	helpers 
 		atMethod: aCompiledMethod 
-		putHelpers: ((methodsSelfCalls at: aCompiledMethod ) 
-			select: [ :methodSelfCall | 
-				helperSelectors anySatisfy: [ :helper | 
-					messages method: methodSelfCall isConnectedToMessage: helper ] ] )
+		putHelpers: ((methodsSelfCalls at: aCompiledMethod ) select: [ :methodSelfCall | 
+			helperSelectors anySatisfy: [ :helper | 
+				messages method: methodSelfCall isConnectedToMessage: helper ] ] )
 ]
 
 { #category : 'visiting' }
