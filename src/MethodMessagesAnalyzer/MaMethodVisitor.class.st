@@ -27,12 +27,6 @@ MaMethodVisitor >> analyzeMethod: aCompiledMethod [
 	self visitCompiledMethod: aCompiledMethod 
 ]
 
-{ #category : 'accessing' }
-MaMethodVisitor >> foundMethods [
-
-	^ foundMethods
-]
-
 { #category : 'initialization' }
 MaMethodVisitor >> initialize [ 
 
