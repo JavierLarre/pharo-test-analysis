@@ -23,7 +23,7 @@ MaMessages >> atMethod: aCompiledMethod [
 ]
 
 { #category : 'accessing' }
-MaMessages >> atMethod: aCompiledMethod containsMessage: aSelector [ 
+MaMessages >> atMethod: aCompiledMethod includesMessage: aSelector [ 
 
 	^ (self atMethod: aCompiledMethod) includes: aSelector 
 ]
@@ -70,11 +70,6 @@ MaMessages >> message: aMessage isConnectedTo: targetMessage visited: visitedSet
 ]
 
 { #category : 'accessing' }
-MaMessages >> method: aCompiledMethod includesMessage: aMessageSymbol [ 
-	^(self atMethod: aCompiledMethod ) includes: aMessageSymbol 
-]
-
-{ #category : 'accessing' }
 MaMessages >> method: aCompiledMethod includesSubmethod: aCompiledSubmethod [ 
 	
 	| methodMessages subMethodMessages |
@@ -94,7 +89,7 @@ MaMessages >> method: aCompiledMethod isConnectedToAnyMessage: aMessageCollectio
 { #category : 'accessing' }
 MaMessages >> method: aCompiledMethod isConnectedToMessage: aMessage [
  
-	^ (self method: aCompiledMethod includesMessage: aMessage) 
+	^ (self atMethod: aCompiledMethod includesMessage: aMessage) 
 		or: [ (self atMethod: aCompiledMethod) anySatisfy: [ :each | 
 				self message: each isConnectedTo: aMessage ] ] 
 ]

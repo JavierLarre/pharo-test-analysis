@@ -172,6 +172,6 @@ MaMessagesTest >> testRaisesNotFound [
 	self
 		should: [ messages atMethod: method ] raise: MethodNotFound;
 		should: [ messages method: method isConnectedToMessage: #bar ] raise: MethodNotFound;
-		should: [ messages method: method includesMessage: #foo ] raise: MethodNotFound;
+		should: [ messages atMethod: method includesMessage: #foo ] raise: MethodNotFound;
 		should: [ messages method: method includesSubmethod: method ] raise: MethodNotFound
 ]
