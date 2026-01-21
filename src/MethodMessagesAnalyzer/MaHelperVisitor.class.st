@@ -32,18 +32,15 @@ MaHelperVisitor >> initialize [
 ]
 
 { #category : 'private' }
-MaHelperVisitor >> putHelpersConnectedTo: aCompiledMethod [
-	
-	helpers 
-		atMethod: aCompiledMethod 
-		putHelpers: ((methodsSelfCalls at: aCompiledMethod ) select: [ :methodSelfCall | 
-			helperSelectors anySatisfy: [ :helper | 
-				messages method: methodSelfCall isConnectedToMessage: helper ] ] )
+MaHelperVisitor >> selectMethodHelpers: aCompiledMethod [
+
+	^ (methodsSelfCalls at: aCompiledMethod) select: [ :methodSelfCall |
+		  messages method: methodSelfCall isConnectedToAnyMessage: helperSelectors ]
 ]
 
 { #category : 'visiting' }
 MaHelperVisitor >> visitCompiledMethod: aCompiledMethod [
 	
 	super visitCompiledMethod: aCompiledMethod.
-	self putHelpersConnectedTo: aCompiledMethod 
+	helpers atMethod: aCompiledMethod putHelpers: (self selectMethodHelpers: aCompiledMethod) 
 ]
