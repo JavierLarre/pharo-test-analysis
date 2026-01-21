@@ -40,20 +40,6 @@ MaMessagesTest >> testConnectionIsTransitive [
 ]
 
 { #category : 'tests' }
-MaMessagesTest >> testContainedSubmethods [
-
-	| foo containedFoo |
-	foo := self fixtureMethod: #foo.
-	containedFoo := self fixtureMethod: #bar.
-	
-	messages 
-		atMethod: foo putMessages: #( a b c x y z );
-		atMethod: containedFoo putMessages: #( a c x y ).
-		
-	self assert: (messages method: foo includesSubmethod: containedFoo )
-]
-
-{ #category : 'tests' }
 MaMessagesTest >> testCycle [
 
 	| root |
@@ -86,6 +72,20 @@ MaMessagesTest >> testHasMessages [
 	messages atMethod: method putMessages: #( x y ).
 
 	self assertCollection: (messages atMethod: method) hasSameElements: { #x. #y }
+]
+
+{ #category : 'tests' }
+MaMessagesTest >> testIncludesSubmethods [
+
+	| foo containedFoo |
+	foo := self fixtureMethod: #foo.
+	containedFoo := self fixtureMethod: #bar.
+	
+	messages 
+		atMethod: foo putMessages: #( a b c x y z );
+		atMethod: containedFoo putMessages: #( a c x y ).
+		
+	self assert: (messages method: foo includesSubmethod: containedFoo )
 ]
 
 { #category : 'tests' }
