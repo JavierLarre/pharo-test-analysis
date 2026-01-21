@@ -47,26 +47,6 @@ MaMessages >> isEmpty [
 	^ methodsMessages isEmpty 
 ]
 
-{ #category : 'testing' }
-MaMessages >> message: aMessage isConnectedTo: targetMessage [
-
-	^ self message: aMessage isConnectedTo: targetMessage visited: Set new .
-]
-
-{ #category : 'testing' }
-MaMessages >> message: aMessage isConnectedTo: targetMessage visited: visitedSet [
-
-	(visitedSet includes: aMessage ) 
-		ifTrue: [ ^ false ].
-		
-	"DFS travel through all the methods that are named the same as aMessage"
-	^ methodsMessages keys anySatisfy: [ :compiledMethod |
-		compiledMethod selector = aMessage and: [ 
-			(self atMethod: compiledMethod includesMessage: targetMessage ) or: [ 
-				(self atMethod: compiledMethod ) anySatisfy: [ :message | 
-					self message: message isConnectedTo: targetMessage visited: ( visitedSet copyWith: aMessage ) ] ] ] ] 
-]
-
 { #category : 'accessing' }
 MaMessages >> method: aCompiledMethod includesSubmethod: aCompiledSubmethod [ 
 	
@@ -87,9 +67,15 @@ MaMessages >> method: aCompiledMethod isConnectedToAnyMessage: aMessageCollectio
 { #category : 'accessing' }
 MaMessages >> method: aCompiledMethod isConnectedToMessage: aMessage [
  
-	^ (self atMethod: aCompiledMethod includesMessage: aMessage) 
-		or: [ (self atMethod: aCompiledMethod) anySatisfy: [ :each | 
-				self message: each isConnectedTo: aMessage ] ] 
+	^ MaConnectedMessagesDFS new
+		messages: self;
+		method: aCompiledMethod isConnectedTo: aMessage 
+]
+
+{ #category : 'accessing' }
+MaMessages >> methods [
+	
+	^ methodsMessages keys
 ]
 
 { #category : 'accessing' }
