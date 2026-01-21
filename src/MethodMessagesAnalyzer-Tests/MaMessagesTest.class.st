@@ -105,7 +105,7 @@ MaMessagesTest >> testIsConnected [
 ]
 
 { #category : 'tests' }
-MaMessagesTest >> testMessagesContainThemselves [
+MaMessagesTest >> testMessagesIncludesThemselves [
 
 	| method |
 	method := self fixtureMethod: #foo.
