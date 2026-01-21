@@ -22,8 +22,15 @@ DTRTDResult >> buildTreeForUI [
 { #category : 'accessing' }
 DTRTDResult >> buildTreeForUIHelpers [
 
-	<dtTestMaResultTreeNamed: 'List of all method helpers grouped by class' order: 3>
+	<dtTestMaResultTreeNamed: 'List of helpers' order: 3>
 	^ DTRTDTestCaseHelpersNode buildNodeByClass: viewModel testCasesHelpers
+]
+
+{ #category : 'accessing' }
+DTRTDResult >> buildTreeForUIMethodsPriority [
+
+	<dtTestMaResultTreeNamed: 'List of methods and their priorities' order: 2>
+	^ DTRTDTestCasePriorityNode buildNodeByClass: viewModel testCasesMessages 
 ]
 
 { #category : 'accessing' }
