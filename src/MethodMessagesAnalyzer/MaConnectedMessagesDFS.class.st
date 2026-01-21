@@ -1,5 +1,5 @@
 "
-I travel through the messages to test if a given method is connected to a message in the call tree
+I travel through `MaMessages` to test if a given method is connected to a target message in the call tree
 "
 Class {
 	#name : 'MaConnectedMessagesDFS',
