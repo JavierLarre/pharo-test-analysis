@@ -56,17 +56,15 @@ MaMessages >> message: aMessage isConnectedTo: targetMessage [
 { #category : 'testing' }
 MaMessages >> message: aMessage isConnectedTo: targetMessage visited: visitedSet [
 
-	| methodSets |
-	methodSets := methodsMessages keys 
-		             select: 
-							[ :parseTree | 
-							(parseTree selector = aMessage) and: [ (visitedSet includes: parseTree selector) not ] ]
-		             thenCollect: 
-							[ :parseTree | 
-							methodsMessages at: parseTree ] .
-	^ methodSets anySatisfy: [ :messageSet | 
-		(messageSet includes: targetMessage) or: [messageSet anySatisfy: [ :message | 
-				self message: message isConnectedTo: targetMessage visited: ( visitedSet copyWith: aMessage ) ]] ]
+	(visitedSet includes: aMessage ) 
+		ifTrue: [ ^ false ].
+		
+	"DFS travel through all the methods that are named the same as aMessage"
+	^ methodsMessages keys anySatisfy: [ :compiledMethod |
+		compiledMethod selector = aMessage and: [ 
+			(self atMethod: compiledMethod includesMessage: targetMessage ) or: [ 
+				(self atMethod: compiledMethod ) anySatisfy: [ :message | 
+					self message: message isConnectedTo: targetMessage visited: ( visitedSet copyWith: aMessage ) ] ] ] ] 
 ]
 
 { #category : 'accessing' }
