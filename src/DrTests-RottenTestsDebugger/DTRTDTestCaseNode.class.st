@@ -14,6 +14,52 @@ Class {
 	#tag : 'node'
 }
 
+{ #category : 'factory' }
+DTRTDTestCaseNode class >> buildNodeByClass: testCasesMessages [
+
+	^ self buildTreeNode
+		subResults: (self buildNodesByClass: testCasesMessages );
+		yourself
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseNode class >> buildNodeWithMessages: testCasesMessages [
+
+	^ self buildTreeNode 
+		subResults: (testCasesMessages collect: [ :testCaseMessages | 
+			self messages: testCaseMessages ] );
+		yourself 
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseNode class >> buildNodesByClass: testCasesMessages [
+
+	^ (self groupTestCasesByClass: testCasesMessages ) associations collect: [ :assoc | 
+		(self buildNodeWithMessages: assoc value )
+			name: assoc key name;
+			yourself ]
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseNode class >> buildTreeNode [
+
+	^ DTTreeNode new
+]
+
+{ #category : 'utilities' }
+DTRTDTestCaseNode class >> groupTestCasesByClass: testCasesMessages [
+
+	^ testCasesMessages groupedBy: [ :testCaseMessages | testCaseMessages testCase class ]
+]
+
+{ #category : 'instance creation' }
+DTRTDTestCaseNode class >> messages: aTestCaseMessages [
+
+	^ self new
+		messages: aTestCaseMessages;
+		yourself
+]
+
 { #category : 'visiting' }
 DTRTDTestCaseNode >> acceptVisitor: aDTResultsTreeVisitor [
 	^ subResults do: [ :subResult | subResult acceptVisitor: aDTResultsTreeVisitor ]
@@ -35,7 +81,7 @@ DTRTDTestCaseNode >> drTestsName [
 	
 	^ String streamContents: [ :stream | 
 		stream
-			<< name;
+			<< testCaseMessages testCase selector;
 			<< ' (';
 			<< testCaseMessages messages size asString;
 			<< ')' ]
@@ -45,7 +91,6 @@ DTRTDTestCaseNode >> drTestsName [
 DTRTDTestCaseNode >> messages: aTestCaseMessages [
 
 	testCaseMessages := aTestCaseMessages.
-	name := aTestCaseMessages testCase selector.
 	subResults := DTRTDMessageNode toNodes: aTestCaseMessages messages
 ]
 

@@ -18,7 +18,7 @@ DTRTDMessageVisitor >> buildViewModel: aViewModel [
 	aViewModel testCasesMessages: testCasesMessages 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'comparing' }
 DTRTDMessageVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
 
 	(methodVisitor messages 

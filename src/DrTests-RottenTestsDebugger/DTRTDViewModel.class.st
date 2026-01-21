@@ -38,13 +38,13 @@ DTRTDViewModel >> testCasesMessages: anObject [
 	testCasesMessages := anObject
 ]
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 DTRTDViewModel >> testCasesSelfSentMethods [
 
 	^ testCasesSelfSentMethods 
 ]
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 DTRTDViewModel >> testCasesSelfSentMethods: anObject [
 
 	testCasesSelfSentMethods := anObject 

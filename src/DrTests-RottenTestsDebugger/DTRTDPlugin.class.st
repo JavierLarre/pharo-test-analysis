@@ -27,6 +27,19 @@ DTRTDPlugin class >> weight [
 	^ 10
 ]
 
+{ #category : 'building' }
+DTRTDPlugin >> buildViewModelFrom: aTestSuite [
+
+	| viewModel |
+	viewModel := DTRTDViewModel new.
+	{ DTRTDHelperVisitor . DTRTDMessageVisitor . DTRTDSelfMethodsVisitor } 
+		do: [ :visitorClass | 
+			visitorClass new 
+				visit: aTestSuite; 
+				buildViewModel: viewModel ].
+	^ viewModel 
+]
+
 { #category : 'accessing' }
 DTRTDPlugin >> firstListLabel [
 	^ 'Packages'
@@ -47,8 +60,7 @@ DTRTDPlugin >> resultButtonHelp [
 DTRTDPlugin >> runForConfiguration: aDTPluginConfiguration [
 
 	^ self pluginResultClass new 
-		viewModel: (DTRTDWidget new 
-			analyzeTestSuite: aDTPluginConfiguration asTestSuite);
+		viewModel: (self buildViewModelFrom: aDTPluginConfiguration asTestSuite);
 		yourself
 ]
 

@@ -12,10 +12,9 @@ Class {
 	#tag : 'visitor'
 }
 
-{ #category : 'build' }
+{ #category : 'building' }
 DTRTDTestCaseVisitor >> buildViewModel: aViewModel [
-
-	
+	"hook for setting variables into the model"
 ]
 
 { #category : 'utilities' }
