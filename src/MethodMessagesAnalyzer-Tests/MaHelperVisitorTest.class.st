@@ -21,7 +21,7 @@ MaHelperVisitorTest >> setUp [
 MaHelperVisitorTest >> testEmpty [
 
 	self 
-		assertEmpty: visitor helpers helpers
+		assertEmpty: visitor helpers
 ]
 
 { #category : 'tests' }
