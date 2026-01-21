@@ -51,11 +51,11 @@ MaMethodVisitor >> methodsSelfCalls [
 { #category : 'visiting' }
 MaMethodVisitor >> visitCompiledMethod: aCompiledMethod [
 
-	| memento |
-	memento := self copy.
+	| oldMethods |
+	oldMethods := foundMethods .
 	foundMethods := OrderedCollection new.
 	self visitMethodNode: aCompiledMethod parseTree. 
 	methodsSelfCalls at: aCompiledMethod put: foundMethods .
-	memento foundMethods addAll: foundMethods .
-	foundMethods := memento foundMethods 
+	oldMethods addAll: foundMethods .
+	foundMethods := oldMethods 
 ]
