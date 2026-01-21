@@ -16,7 +16,7 @@ MaMessageVisitorTest >> setUp [
 MaMessageVisitorTest >> testEmpty [ 
 
 	self
-		assertEmpty: visitor messages methodsAnalyzed
+		assertEmpty: visitor messages
 ]
 
 { #category : 'tests' }
@@ -25,7 +25,7 @@ MaMessageVisitorTest >> testIncludesMessages [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor messages methodMessages: MaVisitorFixture >> #testHelper)
+		assertCollection: (visitor messages atMethod: MaVisitorFixture >> #testHelper)
 		includesAll: { #helper . #foo . #notAHelper . #guardedHelper }
 ]
 
@@ -35,7 +35,7 @@ MaMessageVisitorTest >> testMessagesEqualsSet [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor messages methodMessages: MaVisitorFixture >> #testHelper)
+		assertCollection: (visitor messages atMethod: MaVisitorFixture >> #testHelper)
 		equals: { #helper . #foo . #ifTrue: . #notAHelper . #guardedHelper } asSet
 ]
 

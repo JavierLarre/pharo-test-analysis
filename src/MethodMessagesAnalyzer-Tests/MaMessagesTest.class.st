@@ -50,7 +50,7 @@ MaMessagesTest >> testContainedSubmethods [
 		atMethod: foo putMessages: #( a b c x y z );
 		atMethod: containedFoo putMessages: #( a c x y ).
 		
-	self assert: (messages method: foo containsSubmethod: containedFoo )
+	self assert: (messages method: foo includesSubmethod: containedFoo )
 ]
 
 { #category : 'tests' }
@@ -73,7 +73,7 @@ MaMessagesTest >> testCycle [
 MaMessagesTest >> testEmpty [
 
 	self 
-		assertEmpty: messages methodsAnalyzed;
+		assertEmpty: messages;
 		deny: (messages message: #foo isConnectedTo: #bar )
 ]
 
@@ -85,7 +85,7 @@ MaMessagesTest >> testHasMessages [
 
 	messages atMethod: method putMessages: #( x y ).
 
-	self assertCollection: (messages methodMessages: method) hasSameElements: { #x. #y }
+	self assertCollection: (messages atMethod: method) hasSameElements: { #x. #y }
 ]
 
 { #category : 'tests' }
@@ -113,7 +113,7 @@ MaMessagesTest >> testMessagesContainThemselves [
 	messages 
 		atMethod: method putMessages: #( a b c x y z ).
 		
-	self assert: (messages method: method containsSubmethod: method)
+	self assert: (messages method: method includesSubmethod: method)
 ]
 
 { #category : 'tests' }
@@ -123,25 +123,8 @@ MaMessagesTest >> testRaisesNotFound [
 	method := self fixtureMethod: #foo.
 	
 	self
-		should: [ messages methodMessages: method ] raise: MethodNotFound;
+		should: [ messages atMethod: method ] raise: MethodNotFound;
 		should: [ messages method: method isConnectedToMessage: #bar ] raise: MethodNotFound;
-		should: [ messages method: method containsMessage: #foo ] raise: MethodNotFound;
-		should: [ messages method: method containsSubmethod: method ] raise: MethodNotFound
-]
-
-{ #category : 'tests' }
-MaMessagesTest >> testRemovesMessages [
-
-	| x y |
-	x := self fixtureMethod: #x.
-	y := self fixtureMethod: #y.
-
-	messages
-		atMethod: x putMessages: #( a b c );
-		atMethod: y putMessages: #( d e f c );
-		removeMessages: #( f c ).
-
-	self
-		assertCollection: (messages methodMessages: x) hasSameElements: #( a b );
-		assertCollection: (messages methodMessages: y) hasSameElements: #( d e )
+		should: [ messages method: method includesMessage: #foo ] raise: MethodNotFound;
+		should: [ messages method: method includesSubmethod: method ] raise: MethodNotFound
 ]

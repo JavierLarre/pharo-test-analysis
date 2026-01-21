@@ -24,7 +24,7 @@ DTMaMessageVisitor >> doesMethodHasLessMessages: aTestCase than: aBiggerTest [
 	| messages |
 	messages := methodVisitor messages.
 
-	^ (messages methodMessages: aTestCase testMethod) size < (messages methodMessages: aBiggerTest testMethod ) size
+	^ (messages atMethod: aTestCase testMethod) size < (messages atMethod: aBiggerTest testMethod ) size
 ]
 
 { #category : 'initialization' }
@@ -40,7 +40,7 @@ DTMaMessageVisitor >> initialize [
 		sort: [ :testCaseMessages1 :testCaseMessages2 | 
 			(methodVisitor messages 
 				method: testCaseMessages1 testMethod 
-				containsSubmethod: testCaseMessages2 testMethod) or: [ 
+				includesSubmethod: testCaseMessages2 testMethod) or: [ 
 					self doesMethodHasLessMessages: testCaseMessages1 than: testCaseMessages2 ] ];
 			yourself.
 ]
@@ -55,6 +55,6 @@ DTMaMessageVisitor >> visitTestCase: aTestCase [
 	testCasesMessages add: (DTMaTestCaseMessages new
 			testCase: aTestCase;
 			testMethod: compiledMethod;
-			messages: (methodVisitor messages methodMessages: compiledMethod) asOrderedCollection ;
+			messages: (methodVisitor messages atMethod: compiledMethod) asOrderedCollection ;
 			 yourself).
 ]

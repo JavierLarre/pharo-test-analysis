@@ -27,6 +27,6 @@ MaFilteredMessagesTest >> testFilteredMessages [
 		putMessages: { #foo . #bar . #assert: } asSet.
 	
 	self
-		assertCollection: (messages methodMessages: compiledMethod ) 
+		assertCollection: (messages atMethod: compiledMethod ) 
 		equals: { #foo . #bar } asSet
 ]
