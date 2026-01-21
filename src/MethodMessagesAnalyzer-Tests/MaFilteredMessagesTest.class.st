@@ -20,7 +20,7 @@ MaFilteredMessagesTest >> testFilteredMessages [
 
 	| compiledMethod |
 	messages bannedMessages: { #assert: } asSet.
-	compiledMethod := self fixtureMethod: #foo.
+	compiledMethod := self buildDummyMethod: #foo.
 	
 	messages 
 		atMethod: compiledMethod 
