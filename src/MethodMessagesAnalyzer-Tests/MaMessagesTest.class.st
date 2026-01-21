@@ -9,9 +9,11 @@ Class {
 }
 
 { #category : 'utilities' }
-MaMessagesTest >> fixtureMethod: aSelector [
+MaMessagesTest >> buildDummyMethod: aSelector [
 
-	^ MaMessagesFixture >> aSelector 
+	^ CompiledMethod new 
+		selector: aSelector;
+		yourself
 ]
 
 { #category : 'running' }
@@ -41,8 +43,8 @@ MaMessagesTest >> testAnyMessagesAreConnected [
 MaMessagesTest >> testConnectionIsTransitive [
 
 	| callsFoo instanceFoo classFoo |
-	callsFoo := self fixtureMethod: #callsFoo.
-	instanceFoo := self fixtureMethod: #foo.
+	callsFoo := self buildDummyMethod: #callsFoo.
+	instanceFoo := self buildDummyMethod: #foo.
 	classFoo := MaMessagesFixture class >> #foo.
 
 	messages 
@@ -59,12 +61,12 @@ MaMessagesTest >> testConnectionIsTransitive [
 MaMessagesTest >> testCycle [
 
 	| root |
-	root := self fixtureMethod: #callsCycle.
+	root := self buildDummyMethod: #callsCycle.
 
 	messages 
 		atMethod: root putMessages: { #cycle1 . #x };
-		atMethod: (self fixtureMethod: #cycle1) putMessages: { #cycle2 . #y };
-		atMethod: (self fixtureMethod: #cycle2) putMessages: { #cycle1 . #z }.
+		atMethod: (self buildDummyMethod: #cycle1) putMessages: { #cycle2 . #y };
+		atMethod: (self buildDummyMethod: #cycle2) putMessages: { #cycle1 . #z }.
 
 	self 
 		assert: (messages method: root isConnectedToMessage: #z);
@@ -83,7 +85,7 @@ MaMessagesTest >> testEmpty [
 MaMessagesTest >> testHasMessages [
 
 	| method |
-	method := self fixtureMethod: #foo.
+	method := self buildDummyMethod: #foo.
 
 	messages atMethod: method putMessages: #( x y ).
 
@@ -94,8 +96,8 @@ MaMessagesTest >> testHasMessages [
 MaMessagesTest >> testIncludesSubmethods [
 
 	| foo containedFoo |
-	foo := self fixtureMethod: #foo.
-	containedFoo := self fixtureMethod: #bar.
+	foo := self buildDummyMethod: #foo.
+	containedFoo := self buildDummyMethod: #bar.
 	
 	messages 
 		atMethod: foo putMessages: #( a b c x y z );
@@ -108,8 +110,8 @@ MaMessagesTest >> testIncludesSubmethods [
 MaMessagesTest >> testIsConnected [
 
 	| callsFoo foo |
-	callsFoo := self fixtureMethod: #callsFoo.
-	foo := self fixtureMethod: #foo.
+	callsFoo := self buildDummyMethod: #callsFoo.
+	foo := self buildDummyMethod: #foo.
 
 	messages 
 		atMethod: foo putMessages: { #x. #y };
@@ -124,7 +126,7 @@ MaMessagesTest >> testIsConnected [
 MaMessagesTest >> testMessagesIncludesThemselves [
 
 	| method |
-	method := self fixtureMethod: #foo.
+	method := self buildDummyMethod: #foo.
 	
 	messages 
 		atMethod: method putMessages: #( a b c x y z ).
@@ -136,7 +138,7 @@ MaMessagesTest >> testMessagesIncludesThemselves [
 MaMessagesTest >> testRaisesNotFound [
 
 	| method |
-	method := self fixtureMethod: #foo.
+	method := self buildDummyMethod: #foo.
 	
 	self
 		should: [ messages atMethod: method ] raise: MethodNotFound;
