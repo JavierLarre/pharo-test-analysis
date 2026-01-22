@@ -72,6 +72,20 @@ RTDMessagesTest >> testCycle [
 ]
 
 { #category : 'tests' }
+RTDMessagesTest >> testDoesIncludesSubMethod [ 
+
+	| foo includesFoo |
+	foo := self buildDummyMethod: #foo.
+	includesFoo := self buildDummyMethod: #includesFoo.
+	
+	messages 
+		at: foo put: #( a b x y  );
+		at: includesFoo put: #( a b c x y z ).
+		
+	self assert: (messages does: includesFoo includesSubMethod: foo)
+]
+
+{ #category : 'tests' }
 RTDMessagesTest >> testEmpty [
 
 	self 
@@ -87,24 +101,6 @@ RTDMessagesTest >> testHasMessages [
 	messages at: method put: #( x y ).
 
 	self assertCollection: (messages at: method) hasSameElements: { #x. #y }
-]
-
-{ #category : 'tests' }
-RTDMessagesTest >> testIncludesSubmethods [
-
-	| foo containedFoo containedFoo2 |
-	foo := self buildDummyMethod: #foo.
-	containedFoo := self buildDummyMethod: #containedFoo.
-	containedFoo2 := self buildDummyMethod: #containedFoo2.
-	
-	messages 
-		at: foo put: #( a b c x y z );
-		at: containedFoo put: #( a c x y );
-		at: containedFoo2 put: #( a b z ) .
-		
-	self 
-		assertCollection: (messages subMethodsIncludedBy: foo ) 
-		hasSameElements: { containedFoo . containedFoo2  }
 ]
 
 { #category : 'tests' }
@@ -133,6 +129,24 @@ RTDMessagesTest >> testMessagesIncludesThemselves [
 		at: method put: #( a b c x y z ).
 		
 	self assert: (messages does: method includesSubMethod: method)
+]
+
+{ #category : 'tests' }
+RTDMessagesTest >> testMethodsThatInclude [
+
+	| foo containsFoo containsFoo2 |
+	foo := self buildDummyMethod: #foo.
+	containsFoo := self buildDummyMethod: #containsFoo.
+	containsFoo2 := self buildDummyMethod: #containsFoo2.
+	
+	messages 
+		at: foo put: #( a b x y );
+		at: containsFoo put: #( a b c x y  );
+		at: containsFoo2 put: #( a b x y z ) .
+		
+	self 
+		assertCollection: (messages methodsThatInclude: foo ) 
+		hasSameElements: { containsFoo . containsFoo2  }
 ]
 
 { #category : 'tests' }
@@ -178,4 +192,22 @@ RTDMessagesTest >> testRaisesNotFound [
 		should: [ messages is: method connectedTo: #bar ] raise: RTDMethodNotFound;
 		should: [ messages does: method includesMessage: #foo ] raise: RTDMethodNotFound;
 		should: [ messages does: method includesSubMethod: method ] raise: RTDMethodNotFound
+]
+
+{ #category : 'tests' }
+RTDMessagesTest >> testSubMethodsIncludedBy [
+
+	| foo containedFoo containedFoo2 |
+	foo := self buildDummyMethod: #foo.
+	containedFoo := self buildDummyMethod: #containedFoo.
+	containedFoo2 := self buildDummyMethod: #containedFoo2.
+	
+	messages 
+		at: foo put: #( a b c x y z );
+		at: containedFoo put: #( a c x y );
+		at: containedFoo2 put: #( a b z ) .
+		
+	self 
+		assertCollection: (messages subMethodsIncludedBy: foo ) 
+		hasSameElements: { containedFoo . containedFoo2  }
 ]
