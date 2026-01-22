@@ -32,7 +32,7 @@ DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
 	| viewModel |
 	viewModel := DTRTDViewModel new.
-	{ DTRTDHelperVisitor . DTRTDMessageVisitor . DTRTDSelfMethodsVisitor } 
+	{ DTRTDHelperVisitor . DTRTDMessageVisitor . DTRTDSelfMethodsVisitor . DTRTDPriorityVisitor } 
 		do: [ :visitorClass | 
 			visitorClass new 
 				visit: aTestSuite; 

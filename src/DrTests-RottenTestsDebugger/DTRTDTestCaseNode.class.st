@@ -23,21 +23,19 @@ DTRTDTestCaseNode class >> buildNodeByClass: testCasesMessages [
 ]
 
 { #category : 'factory' }
-DTRTDTestCaseNode class >> buildNodeWithMessages: testCasesMessages [
-
-	^ self buildTreeNode 
-		subResults: (testCasesMessages collect: [ :testCaseMessages | 
-			self messages: testCaseMessages ] );
-		yourself 
-]
-
-{ #category : 'factory' }
 DTRTDTestCaseNode class >> buildNodesByClass: testCasesMessages [
 
 	^ (self groupTestCasesByClass: testCasesMessages ) associations collect: [ :assoc | 
-		(self buildNodeWithMessages: assoc value )
-			name: assoc key name;
-			yourself ]
+		self buildTreeNode 
+			subResults: (self buildTestCasesNodes: assoc value );
+			name: assoc key name; yourself ]
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseNode class >> buildTestCasesNodes: testCasesMessages [
+
+	^ testCasesMessages collect: [ :testCaseMessages | 
+		self messages: testCaseMessages ] 
 ]
 
 { #category : 'factory' }

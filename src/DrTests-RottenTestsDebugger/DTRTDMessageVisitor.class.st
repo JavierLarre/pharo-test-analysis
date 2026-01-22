@@ -3,10 +3,7 @@ I analyze test cases using `MaMessageVisitor` and build the view model with the 
 "
 Class {
 	#name : 'DTRTDMessageVisitor',
-	#superclass : 'DTRTDTestCaseVisitor',
-	#instVars : [
-		'testCasesMessages'
-	],
+	#superclass : 'DTRTDFingerPrintVisitor',
 	#category : 'DrTests-RottenTestsDebugger-visitor',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'visitor'
@@ -31,21 +28,6 @@ DTRTDMessageVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCase
 			ifTrue: [ ^ true ].
 	^ testCaseMessages1 <= testCaseMessages2 
 	
-]
-
-{ #category : 'initialization' }
-DTRTDMessageVisitor >> initialize [
-
-	super initialize.
-	methodVisitor := MaMessageVisitor new
-		                 messages: (MaFilteredMessages new
-				                  bannedMessages: TAssertable selectors asSet;
-				                  yourself);
-		                 yourself.
-	testCasesMessages := SortedCollection new
-		                     sort: [ :testCaseMessages1 :testCaseMessages2 |
-			                     self compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 ];
-		                     yourself
 ]
 
 { #category : 'visiting' }

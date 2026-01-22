@@ -29,8 +29,8 @@ DTRTDResult >> buildTreeForUIHelpers [
 { #category : 'accessing' }
 DTRTDResult >> buildTreeForUIMethodsPriority [
 
-	<dtTestMaResultTreeNamed: 'List of methods and their priorities' order: 2>
-	^ DTRTDTestCasePriorityNode buildNodeByClass: viewModel testCasesMessages 
+	<dtTestMaResultTreeNamed: 'List of methods and their priorities' order: 5>
+	^ DTRTDTestCasePriorityNode buildNodeByClass: viewModel testCasesPriorities 
 ]
 
 { #category : 'accessing' }
@@ -44,7 +44,7 @@ DTRTDResult >> buildTreeForUISelfSentMessages [
 DTRTDResult >> buildTreeForUIShowAllMessages [
 
 	<dtTestMaResultTreeNamed: 'List of all method messages' order: 4>
-	^ DTRTDTestCaseMessagesNode buildNodeWithMessages: viewModel testCasesMessages
+	^ DTRTDTestCaseMessagesNode buildTestCasesNodes: viewModel testCasesMessages
 ]
 
 { #category : 'accessing' }

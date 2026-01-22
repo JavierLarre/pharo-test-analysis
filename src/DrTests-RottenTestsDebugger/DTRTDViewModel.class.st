@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'testCasesMessages',
 		'testCasesHelpers',
-		'testCasesSelfSentMethods'
+		'testCasesSelfSentMethods',
+		'testCasesPriorities'
 	],
 	#category : 'DrTests-RottenTestsDebugger-DTOs',
 	#package : 'DrTests-RottenTestsDebugger',
@@ -36,6 +37,18 @@ DTRTDViewModel >> testCasesMessages [
 DTRTDViewModel >> testCasesMessages: anObject [
 
 	testCasesMessages := anObject
+]
+
+{ #category : 'accessing' }
+DTRTDViewModel >> testCasesPriorities [
+
+	^ testCasesPriorities
+]
+
+{ #category : 'accessing' }
+DTRTDViewModel >> testCasesPriorities: anObject [
+
+	testCasesPriorities := anObject
 ]
 
 { #category : 'accessing' }
