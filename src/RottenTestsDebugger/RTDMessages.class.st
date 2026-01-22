@@ -83,6 +83,14 @@ RTDMessages >> methodsMessages [
 	^methodsMessages 
 ]
 
+{ #category : 'api' }
+RTDMessages >> methodsThatInclude: aSubMethod [
+
+	^ (self methods select: [ :compiledMethod | 
+			self does: compiledMethod includesSubMethod: aSubMethod ])
+		difference: 	{ aSubMethod } 
+]
+
 { #category : 'printing' }
 RTDMessages >> printOn: aStream [
 
@@ -90,10 +98,10 @@ RTDMessages >> printOn: aStream [
 	methodsMessages printElementsOn: aStream 
 ]
 
-{ #category : 'accessing' }
+{ #category : 'api' }
 RTDMessages >> subMethodsIncludedBy: aCompiledMethod [ 
 	
 	^ (self methods select: [ :subMethod | 
-			self does: aCompiledMethod includesSubmethod: subMethod ])
+			self does: aCompiledMethod includesSubMethod: subMethod ])
 		difference: { aCompiledMethod }
 ]
