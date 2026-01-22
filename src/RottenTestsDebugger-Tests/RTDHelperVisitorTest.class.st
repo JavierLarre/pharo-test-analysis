@@ -12,7 +12,7 @@ Class {
 RTDHelperVisitorTest >> setUp [
 	super setUp.
 
-	visitor := MaHelperVisitor new
+	visitor := RTDHelperVisitor new
 		helperSelectors: #( assert: );
 		yourself
 ]

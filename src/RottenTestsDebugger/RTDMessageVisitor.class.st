@@ -2,7 +2,7 @@
 I find and store the messages sent by visited methods, as well as including guarded messages
 "
 Class {
-	#name : 'MaMessageVisitor',
+	#name : 'RTDMessageVisitor',
 	#superclass : 'RTDMethodVisitor',
 	#instVars : [
 		'messages'
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'initialization' }
-MaMessageVisitor >> initialize [ 
+RTDMessageVisitor >> initialize [ 
 
 	super initialize.
 	
@@ -20,19 +20,19 @@ MaMessageVisitor >> initialize [
 ]
 
 { #category : 'accessing' }
-MaMessageVisitor >> messages [
+RTDMessageVisitor >> messages [
 	
 	^ messages
 ]
 
 { #category : 'accessing' }
-MaMessageVisitor >> messages: aMessages [
+RTDMessageVisitor >> messages: aMessages [
 	
 	messages := aMessages 
 ]
 
 { #category : 'visiting' }
-MaMessageVisitor >> visitCompiledMethod: aCompiledMethod [
+RTDMessageVisitor >> visitCompiledMethod: aCompiledMethod [
 	
 	messages 
 		at: aCompiledMethod 

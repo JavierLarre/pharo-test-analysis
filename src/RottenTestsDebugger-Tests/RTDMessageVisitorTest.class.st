@@ -9,7 +9,7 @@ Class {
 RTDMessageVisitorTest >> setUp [ 
 
 	super setUp.
-	visitor := MaMessageVisitor new
+	visitor := RTDMessageVisitor new
 ]
 
 { #category : 'tests' }
@@ -44,7 +44,7 @@ RTDMessageVisitorTest >> testVisitsAreEqual [
 
 	| newVisitor |
 	self analyzeMethodFromFixture: #testHelper.
-	newVisitor := MaMessageVisitor new
+	newVisitor := RTDMessageVisitor new
 		analyzeMethod: (self fixtureClass >> #testHelper);
 		yourself.
 	
