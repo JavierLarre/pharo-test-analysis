@@ -42,6 +42,13 @@ RTDMethodVisitor >> methodsSelfCalls [
 	^ methodsSelfCalls
 ]
 
+{ #category : 'copying' }
+RTDMethodVisitor >> postCopy [ 
+	
+	methodsSelfCalls := methodsSelfCalls copy.
+	^ self
+]
+
 { #category : 'visiting' }
 RTDMethodVisitor >> visitCompiledMethod: aCompiledMethod [
 
