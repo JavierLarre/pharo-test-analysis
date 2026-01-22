@@ -1,3 +1,6 @@
+"
+I provide a method for building a `DTRTDTestCaseMessages` with the messages of `MaMessageVisitor`
+"
 Class {
 	#name : 'DTRTDFingerPrintVisitor',
 	#superclass : 'DTRTDTestCaseVisitor',

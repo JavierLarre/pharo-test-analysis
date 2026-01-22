@@ -1,3 +1,6 @@
+"
+I build the view model with `DTRTDTestCasePriorities`
+"
 Class {
 	#name : 'DTRTDPriorityVisitor',
 	#superclass : 'DTRTDFingerPrintVisitor',

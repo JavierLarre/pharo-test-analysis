@@ -1,5 +1,5 @@
 "
-I analyze test cases using `MaMessageVisitor` and build the view model with the messages found
+I build the view model with the messages found of each test case
 "
 Class {
 	#name : 'DTRTDMessageVisitor',

@@ -1,3 +1,6 @@
+"
+I add fields to `DTRTDTestCaseMessages` for storing both lower and higher priority test cases 
+"
 Class {
 	#name : 'DTRTDTestCasePriorities',
 	#superclass : 'DTRTDTestCaseMessages',
