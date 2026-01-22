@@ -92,15 +92,19 @@ RTDMessagesTest >> testHasMessages [
 { #category : 'tests' }
 RTDMessagesTest >> testIncludesSubmethods [
 
-	| foo containedFoo |
+	| foo containedFoo containedFoo2 |
 	foo := self buildDummyMethod: #foo.
-	containedFoo := self buildDummyMethod: #bar.
+	containedFoo := self buildDummyMethod: #containedFoo.
+	containedFoo2 := self buildDummyMethod: #containedFoo2.
 	
 	messages 
 		atMethod: foo putMessages: #( a b c x y z );
-		atMethod: containedFoo putMessages: #( a c x y ).
+		atMethod: containedFoo putMessages: #( a c x y );
+		atMethod: containedFoo2 putMessages: #( a b z ) .
 		
-	self assert: (messages method: foo includesSubmethod: containedFoo )
+	self 
+		assertCollection: (messages methodsIncludedBy: foo ) 
+		hasSameElements: { containedFoo . containedFoo2  }
 ]
 
 { #category : 'tests' }

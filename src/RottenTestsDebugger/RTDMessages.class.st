@@ -79,6 +79,14 @@ RTDMessages >> methods [
 ]
 
 { #category : 'accessing' }
+RTDMessages >> methodsIncludedBy: aCompiledMethod [ 
+	
+	^ (self methods select: [ :compiledMethod | 
+			self method: aCompiledMethod includesSubmethod: compiledMethod ])
+		difference: { aCompiledMethod }
+]
+
+{ #category : 'accessing' }
 RTDMessages >> methodsMessages [
 
 	^methodsMessages 
