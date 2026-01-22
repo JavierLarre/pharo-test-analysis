@@ -26,15 +26,6 @@ DTRTDTestCaseVisitor class >> testCaseViewModelClass [
 ]
 
 { #category : 'building' }
-DTRTDTestCaseVisitor >> buildTestCaseMessages: aTestCase [
-
-	^ self class testCaseViewModelClass new
-		  testCase: aTestCase;
-		  testMethod: (self testCaseMethod: aTestCase );
-		  yourself
-]
-
-{ #category : 'building' }
 DTRTDTestCaseVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
 	aTestCaseViewModel
