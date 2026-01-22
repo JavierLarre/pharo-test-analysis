@@ -5,20 +5,41 @@ Class {
 	#name : 'DTRTDTestCaseVisitor',
 	#superclass : 'SUnitVisitor',
 	#instVars : [
-		'methodVisitor'
+		'methodVisitor',
+		'testCasesViewModels'
 	],
 	#category : 'DrTests-RottenTestsDebugger-visitor',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'visitor'
 }
 
+{ #category : 'factory' }
+DTRTDTestCaseVisitor class >> methodVisitorClass [
+
+	^ self subclassResponsibility 
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseVisitor class >> testCaseViewModelClass [
+
+	^ DTRTDTestCaseMessages
+]
+
 { #category : 'building' }
 DTRTDTestCaseVisitor >> buildTestCaseMessages: aTestCase [
 
-	^ DTRTDTestCaseMessages new
+	^ self class testCaseViewModelClass new
 		  testCase: aTestCase;
 		  testMethod: (self testCaseMethod: aTestCase );
 		  yourself
+]
+
+{ #category : 'building' }
+DTRTDTestCaseVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
+
+	aTestCaseViewModel
+		testCase: aTestCase;
+		testMethod: (self testCaseMethod: aTestCase )
 ]
 
 { #category : 'building' }
@@ -30,6 +51,14 @@ DTRTDTestCaseVisitor >> buildViewModel: aViewModel [
 DTRTDTestCaseVisitor >> filterEmptyMessages: aMessagesCollection [
 
 	^ aMessagesCollection reject: [ :testMessages | testMessages messages isEmpty ]
+]
+
+{ #category : 'initialization' }
+DTRTDTestCaseVisitor >> initialize [
+
+	super initialize.
+	methodVisitor := self class methodVisitorClass new.
+	testCasesViewModels := OrderedCollection new.
 ]
 
 { #category : 'accessing' }
@@ -53,5 +82,9 @@ DTRTDTestCaseVisitor >> testCaseMethod: aTestCase [
 { #category : 'visiting' }
 DTRTDTestCaseVisitor >> visitTestCase: aTestCase [
 
-	methodVisitor analyzeMethod: (self testCaseMethod: aTestCase ).
+	| testCaseViewModel |
+	methodVisitor analyzeMethod: (self testCaseMethod: aTestCase).
+	testCaseViewModel := self class testCaseViewModelClass new.
+	self buildTestCaseViewModel: testCaseViewModel withTestCase: aTestCase.
+	testCasesViewModels add: testCaseViewModel
 ]

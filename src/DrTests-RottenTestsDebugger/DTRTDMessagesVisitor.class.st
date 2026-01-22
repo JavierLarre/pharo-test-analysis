@@ -2,26 +2,35 @@
 I provide a method for building a `DTRTDTestCaseMessages` with the messages of `MaMessageVisitor`
 "
 Class {
-	#name : 'DTRTDFingerPrintVisitor',
+	#name : 'DTRTDMessagesVisitor',
 	#superclass : 'DTRTDTestCaseVisitor',
-	#instVars : [
-		'testCasesMessages'
-	],
 	#category : 'DrTests-RottenTestsDebugger-visitor',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'visitor'
 }
 
-{ #category : 'building' }
-DTRTDFingerPrintVisitor >> buildTestCaseMessages: aTestCase [
+{ #category : 'factory' }
+DTRTDMessagesVisitor class >> methodVisitorClass [
 
-	^ (super buildTestCaseMessages: aTestCase)
-		  messages: (methodVisitor messages at: (self testCaseMethod: aTestCase) ) asOrderedCollection ;
-		  yourself
+	^ RTDMessageVisitor
+]
+
+{ #category : 'building' }
+DTRTDMessagesVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
+
+	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
+	aTestCaseViewModel 
+		messages: (methodVisitor messages at: (self testCaseMethod: aTestCase) ) asOrderedCollection
+]
+
+{ #category : 'building' }
+DTRTDMessagesVisitor >> buildViewModel: aViewModel [
+
+	aViewModel testCasesMessages: testCasesViewModels 
 ]
 
 { #category : 'comparing' }
-DTRTDFingerPrintVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
+DTRTDMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
 
 	(methodVisitor messages 
 		does: testCaseMessages1 testMethod 
@@ -36,15 +45,13 @@ DTRTDFingerPrintVisitor >> compareTestCaseMessages: testCaseMessages1 with: test
 ]
 
 { #category : 'initialization' }
-DTRTDFingerPrintVisitor >> initialize [
+DTRTDMessagesVisitor >> initialize [
 
 	super initialize.
-	methodVisitor := MaMessageVisitor new
-		                 messages: (MaFilteredMessages new
-				                  bannedMessages: TAssertable selectors asSet;
-				                  yourself);
-		                 yourself.
-	testCasesMessages := SortedCollection new
+	methodVisitor messages: (MaFilteredMessages new 
+		bannedMessages: TAssertable selectors asSet;
+		yourself).
+	testCasesViewModels := SortedCollection new
 		                     sort: [ :testCaseMessages1 :testCaseMessages2 |
 			                     self compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 ];
 		                     yourself

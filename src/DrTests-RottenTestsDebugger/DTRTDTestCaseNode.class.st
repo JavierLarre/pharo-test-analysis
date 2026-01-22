@@ -5,7 +5,6 @@ Class {
 	#name : 'DTRTDTestCaseNode',
 	#superclass : 'DTAbstractTreeNode',
 	#instVars : [
-		'name',
 		'subResults',
 		'testCaseMessages'
 	],

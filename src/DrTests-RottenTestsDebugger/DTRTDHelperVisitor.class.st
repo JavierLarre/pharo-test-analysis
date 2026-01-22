@@ -4,41 +4,37 @@ I analyze test cases using `MaHelperVisitor` and build the view model with the v
 Class {
 	#name : 'DTRTDHelperVisitor',
 	#superclass : 'DTRTDTestCaseVisitor',
-	#instVars : [
-		'testCasesHelpers'
-	],
 	#category : 'DrTests-RottenTestsDebugger-visitor',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'visitor'
 }
 
-{ #category : 'building' }
-DTRTDHelperVisitor >> buildTestCaseMessages: aTestCase [
+{ #category : 'factory' }
+DTRTDHelperVisitor class >> methodVisitorClass [
 
-	^ (super buildTestCaseMessages: aTestCase)
-		messages: ((methodVisitor helpers at: (self testCaseMethod: aTestCase )) collect: #selector ) asOrderedCollection ;
-		yourself 
+	^ RTDHelperVisitor 
+]
+
+{ #category : 'building' }
+DTRTDHelperVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
+
+	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
+	aTestCaseViewModel
+		messages: ((methodVisitor helpers 
+			at: (self testCaseMethod: aTestCase )) 
+			collect: #selector
+		) asOrderedCollection
 ]
 
 { #category : 'build' }
 DTRTDHelperVisitor >> buildViewModel: aViewModel [
 
-	aViewModel testCasesHelpers: (self filterEmptyMessages: testCasesHelpers )
+	aViewModel testCasesHelpers: (self filterEmptyMessages: testCasesViewModels )
 ]
 
 { #category : 'initialization' }
 DTRTDHelperVisitor >> initialize [ 
 	
 	super initialize.
-	methodVisitor := MaHelperVisitor new
-		helperSelectors: TAssertable selectors;
-		yourself.
-	testCasesHelpers := SortedCollection new
-]
-
-{ #category : 'visiting' }
-DTRTDHelperVisitor >> visitTestCase: aTestCase [
-
-	super visitTestCase: aTestCase.
-	testCasesHelpers add: ( self buildTestCaseMessages: aTestCase )
+	methodVisitor helperSelectors: TAssertable selectors
 ]

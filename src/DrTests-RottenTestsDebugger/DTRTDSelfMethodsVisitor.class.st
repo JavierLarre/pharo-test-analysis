@@ -12,30 +12,24 @@ Class {
 	#tag : 'visitor'
 }
 
-{ #category : 'building' }
-DTRTDSelfMethodsVisitor >> buildTestCaseMessages: aTestCase [
+{ #category : 'factory' }
+DTRTDSelfMethodsVisitor class >> methodVisitorClass [
 
-	^ (super buildTestCaseMessages: aTestCase )
-		messages: ((methodVisitor methodsSelfCalls at: (self testCaseMethod: aTestCase )) collect: #selector ) asOrderedCollection 
+	^ RTDMethodVisitor 
 ]
 
-{ #category : 'build' }
+{ #category : 'building' }
+DTRTDSelfMethodsVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
+
+	| testCaseSelfCalls |
+	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
+	testCaseSelfCalls := methodVisitor methodsSelfCalls at: (self testCaseMethod: aTestCase).
+
+	aTestCaseViewModel messages: (testCaseSelfCalls collect: #selector) asOrderedCollection
+]
+
+{ #category : 'building' }
 DTRTDSelfMethodsVisitor >> buildViewModel: aViewModel [
 
-	aViewModel testCasesSelfSentMethods: (self filterEmptyMessages: testCasesMethods )
-]
-
-{ #category : 'initialization' }
-DTRTDSelfMethodsVisitor >> initialize [ 
-
-	super initialize.
-	methodVisitor := RTDMethodVisitor new.
-	testCasesMethods := SortedCollection new
-]
-
-{ #category : 'visiting' }
-DTRTDSelfMethodsVisitor >> visitTestCase: aTestCase [
-
-	super visitTestCase: aTestCase.
-	testCasesMethods add: (self buildTestCaseMessages: aTestCase )
+	aViewModel testCasesSelfSentMethods: (self filterEmptyMessages: testCasesViewModels )
 ]

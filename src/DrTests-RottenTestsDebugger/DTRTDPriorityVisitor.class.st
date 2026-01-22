@@ -3,7 +3,7 @@ I build the view model with `DTRTDTestCasePriorities`
 "
 Class {
 	#name : 'DTRTDPriorityVisitor',
-	#superclass : 'DTRTDFingerPrintVisitor',
+	#superclass : 'DTRTDMessagesVisitor',
 	#instVars : [
 		'testCases'
 	],
@@ -12,46 +12,41 @@ Class {
 	#tag : 'visitor'
 }
 
-{ #category : 'building' }
-DTRTDPriorityVisitor >> buildTestCasePriorities: aTestCase [
+{ #category : 'factory' }
+DTRTDPriorityVisitor class >> testCaseViewModelClass [
 
-	| compiledMethod messages |
-	compiledMethod := self testCaseMethod: aTestCase.
-	messages := methodVisitor messages.
-	^ DTRTDTestCasePriorities new
-		  messages: (messages at: compiledMethod) asOrderedCollection ;
-		  testCase: aTestCase;
-		  testMethod: compiledMethod;
-		  higherPriorityCases: ((messages subMethodsIncludedBy: compiledMethod) collect: [ :method | 
-			DTRTDTestCaseMessages new messages: (messages at: method) asOrderedCollection ; testMethod: method; yourself ]) asOrderedCollection ;
-		  lowerPriorityCases: ((messages methodsThatInclude: compiledMethod) collect: [ :method | 
-			DTRTDTestCaseMessages new messages: (messages at: method) asOrderedCollection ; testMethod: method; yourself ]) asOrderedCollection ;
-		  yourself
+	^ DTRTDTestCasePriorities 
+]
+
+{ #category : 'building' }
+DTRTDPriorityVisitor >> buildTestCasePriorities: aTestCasePriorities [
+
+	aTestCasePriorities 
+		higherPriorityCases: (self buildTestCasesFrom: 
+			(methodVisitor messages subMethodsIncludedBy: aTestCasePriorities testMethod)) asOrderedCollection;
+		lowerPriorityCases: (self buildTestCasesFrom: 
+			(methodVisitor messages methodsThatInclude: aTestCasePriorities testMethod)) asOrderedCollection 
+]
+
+{ #category : 'private' }
+DTRTDPriorityVisitor >> buildTestCasesFrom: compiledMethods [
+
+	^ compiledMethods collect: [ :compiledMethod | 
+		DTRTDTestCaseMessages new 
+			messages: (methodVisitor messages at: compiledMethod) asOrderedCollection; 
+			testMethod: compiledMethod;
+			yourself  ]
 ]
 
 { #category : 'building' }
 DTRTDPriorityVisitor >> buildViewModel: aViewModel [
 
-	aViewModel testCasesPriorities: testCasesMessages 
-]
-
-{ #category : 'initialization' }
-DTRTDPriorityVisitor >> initialize [ 
-	
-	super initialize.
-	testCases := OrderedCollection new
-]
-
-{ #category : 'visiting' }
-DTRTDPriorityVisitor >> visitTestCase: aTestCase [
-
-	super visitTestCase: aTestCase.
-	testCases add: aTestCase 
+	aViewModel testCasesPriorities: testCasesViewModels 
 ]
 
 { #category : 'visiting' }
 DTRTDPriorityVisitor >> visitTestSuite: aTestSuite [
 
 	super visitTestSuite: aTestSuite.
-	testCasesMessages := testCases collect: [ :testCase | self buildTestCasePriorities: testCase ]
+	testCasesViewModels do: [ :testCase | self buildTestCasePriorities: testCase ]
 ]
