@@ -79,7 +79,7 @@ DTRTDTestCaseNode >> drTestsName [
 	
 	^ String streamContents: [ :stream | 
 		stream
-			<< testCaseMessages testCase selector;
+			<< testCaseMessages testMethod selector;
 			<< ' (';
 			<< testCaseMessages messages size asString;
 			<< ')' ]

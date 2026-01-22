@@ -4,22 +4,26 @@ Class {
 	#instVars : [
 		'testCases'
 	],
-	#category : 'DrTests-RottenTestsDebugger',
-	#package : 'DrTests-RottenTestsDebugger'
+	#category : 'DrTests-RottenTestsDebugger-visitor',
+	#package : 'DrTests-RottenTestsDebugger',
+	#tag : 'visitor'
 }
 
 { #category : 'building' }
-DTRTDPriorityVisitor >> buildTestCasePriorities: testCase [
+DTRTDPriorityVisitor >> buildTestCasePriorities: aTestCase [
 
-	| compiledMethod |
-	compiledMethod := testCase class >> testCase selector.
+	| compiledMethod messages |
+	compiledMethod := self testCaseMethod: aTestCase.
+	messages := methodVisitor messages.
 	^ DTRTDTestCasePriorities new
-		messages: (methodVisitor messages at: compiledMethod);
-		testCase: testCase;
-		testMethod: compiledMethod;
-		higherPriorityCases: {  };
-		lowerPriorityCases: {  };
-		yourself
+		  messages: (messages at: compiledMethod) asOrderedCollection ;
+		  testCase: aTestCase;
+		  testMethod: compiledMethod;
+		  higherPriorityCases: ((messages subMethodsIncludedBy: compiledMethod) collect: [ :method | 
+			DTRTDTestCaseMessages new messages: (messages at: method) asOrderedCollection ; testMethod: method; yourself ]) asOrderedCollection ;
+		  lowerPriorityCases: ((messages methodsThatInclude: compiledMethod) collect: [ :method | 
+			DTRTDTestCaseMessages new messages: (messages at: method) asOrderedCollection ; testMethod: method; yourself ]) asOrderedCollection ;
+		  yourself
 ]
 
 { #category : 'building' }

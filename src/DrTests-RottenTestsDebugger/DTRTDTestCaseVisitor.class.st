@@ -13,6 +13,15 @@ Class {
 }
 
 { #category : 'building' }
+DTRTDTestCaseVisitor >> buildTestCaseMessages: aTestCase [
+
+	^ DTRTDTestCaseMessages new
+		  testCase: aTestCase;
+		  testMethod: (self testCaseMethod: aTestCase );
+		  yourself
+]
+
+{ #category : 'building' }
 DTRTDTestCaseVisitor >> buildViewModel: aViewModel [
 	"hook for setting variables into the model"
 ]
@@ -35,8 +44,14 @@ DTRTDTestCaseVisitor >> methodVisitor: anObject [
 	methodVisitor := anObject
 ]
 
+{ #category : 'utilities' }
+DTRTDTestCaseVisitor >> testCaseMethod: aTestCase [
+
+	^ aTestCase class >> aTestCase selector
+]
+
 { #category : 'visiting' }
 DTRTDTestCaseVisitor >> visitTestCase: aTestCase [
 
-	methodVisitor analyzeMethod: aTestCase class >> aTestCase selector.
+	methodVisitor analyzeMethod: (self testCaseMethod: aTestCase ).
 ]

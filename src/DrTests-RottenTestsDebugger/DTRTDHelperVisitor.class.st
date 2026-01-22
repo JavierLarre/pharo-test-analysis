@@ -12,6 +12,14 @@ Class {
 	#tag : 'visitor'
 }
 
+{ #category : 'building' }
+DTRTDHelperVisitor >> buildTestCaseMessages: aTestCase [
+
+	^ (super buildTestCaseMessages: aTestCase)
+		messages: ((methodVisitor helpers at: (self testCaseMethod: aTestCase )) collect: #selector ) asOrderedCollection ;
+		yourself 
+]
+
 { #category : 'build' }
 DTRTDHelperVisitor >> buildViewModel: aViewModel [
 
@@ -31,13 +39,6 @@ DTRTDHelperVisitor >> initialize [
 { #category : 'visiting' }
 DTRTDHelperVisitor >> visitTestCase: aTestCase [
 
-	| compiledMethod |
-	compiledMethod := aTestCase class >> aTestCase selector.
-	
 	super visitTestCase: aTestCase.
-	testCasesHelpers add: (DTRTDTestCaseMessages new
-			testCase: aTestCase;
-			testMethod: compiledMethod;
-			messages: ((methodVisitor helpers at: compiledMethod ) collect: [ :compiledHelper |
-				compiledHelper selector ] ) )
+	testCasesHelpers add: ( self buildTestCaseMessages: aTestCase )
 ]

@@ -4,9 +4,33 @@ Class {
 	#instVars : [
 		'testCasesMessages'
 	],
-	#category : 'DrTests-RottenTestsDebugger',
-	#package : 'DrTests-RottenTestsDebugger'
+	#category : 'DrTests-RottenTestsDebugger-visitor',
+	#package : 'DrTests-RottenTestsDebugger',
+	#tag : 'visitor'
 }
+
+{ #category : 'building' }
+DTRTDFingerPrintVisitor >> buildTestCaseMessages: aTestCase [
+
+	^ (super buildTestCaseMessages: aTestCase)
+		  messages: (methodVisitor messages at: (self testCaseMethod: aTestCase) ) asOrderedCollection ;
+		  yourself
+]
+
+{ #category : 'comparing' }
+DTRTDFingerPrintVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
+
+	(methodVisitor messages 
+		does: testCaseMessages1 testMethod 
+		includesSubMethod: testCaseMessages2 testMethod)
+			ifTrue: [ ^ false ].
+	(methodVisitor messages 
+		does: testCaseMessages2 testMethod 
+		includesSubMethod: testCaseMessages1 testMethod)
+			ifTrue: [ ^ true ].
+	^ testCaseMessages1 <= testCaseMessages2 
+	
+]
 
 { #category : 'initialization' }
 DTRTDFingerPrintVisitor >> initialize [

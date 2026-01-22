@@ -44,7 +44,8 @@ DTRTDResult >> buildTreeForUISelfSentMessages [
 DTRTDResult >> buildTreeForUIShowAllMessages [
 
 	<dtTestMaResultTreeNamed: 'List of all method messages' order: 4>
-	^ DTRTDTestCaseMessagesNode buildTestCasesNodes: viewModel testCasesMessages
+	^ DTRTDTestCaseMessagesNode buildTreeNode
+		subResults: (DTRTDTestCaseMessagesNode buildTestCasesNodes: viewModel testCasesMessages)
 ]
 
 { #category : 'accessing' }

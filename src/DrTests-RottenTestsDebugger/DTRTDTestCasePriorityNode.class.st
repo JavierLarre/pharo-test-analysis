@@ -18,12 +18,12 @@ DTRTDTestCasePriorityNode class >> messages: aTestCasePriorities [
 		subResults: {
 			self buildTreeNode 
 				subResults: (self superclass 
-					buildTestCasesNodes: aTestCasePriorities lowerPriorityCases);
+					buildTestCasesNodes: aTestCasePriorities lowerPriorityCases) asOrderedCollection ;
 				name: 'Is lower priority than:'; yourself.
 			self buildTreeNode
 				subResults: (self superclass 
-					buildTestCasesNodes: aTestCasePriorities higherPriorityCases);
+					buildTestCasesNodes: aTestCasePriorities higherPriorityCases) asOrderedCollection ;
 				name: 'Is higher priority than:'; yourself 
-		 };
+		 } asOrderedCollection ;
 		yourself
 ]
