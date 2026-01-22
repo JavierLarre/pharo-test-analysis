@@ -12,14 +12,15 @@ Class {
 RTDFilteredMessagesTest >> setUp [
 	super setUp.
 
-	messages := MaFilteredMessages new.
+	messages := MaFilteredMessages new
+		bannedMessages: { #assert: } asSet;
+		yourself
 ]
 
 { #category : 'tests' }
 RTDFilteredMessagesTest >> testFilteredMessages [
 
 	| compiledMethod |
-	messages bannedMessages: { #assert: } asSet.
 	compiledMethod := self buildDummyMethod: #foo.
 	
 	messages 
@@ -29,4 +30,21 @@ RTDFilteredMessagesTest >> testFilteredMessages [
 	self
 		assertCollection: (messages at: compiledMethod ) 
 		equals: { #foo . #bar } asSet
+]
+
+{ #category : 'tests' }
+RTDFilteredMessagesTest >> testMethodsThatInclude [ 
+
+	| foo includesFoo |
+	foo := self buildDummyMethod: #foo.
+	includesFoo := self buildDummyMethod: #includesFoo.
+	
+	messages 
+		bannedMessages: { #assert: . #deny: } asSet ;
+		at: foo put: { #foo . #bar . #assert: } asSet;
+		at: includesFoo put: { #foo . #bar . #deny: } asSet .
+	
+	self
+		assertCollection: (messages methodsThatInclude: foo) 
+		hasSameElements: { includesFoo } 
 ]
