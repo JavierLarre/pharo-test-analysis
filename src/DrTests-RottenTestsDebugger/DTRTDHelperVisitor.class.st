@@ -38,6 +38,6 @@ DTRTDHelperVisitor >> visitTestCase: aTestCase [
 	testCasesHelpers add: (DTRTDTestCaseMessages new
 			testCase: aTestCase;
 			testMethod: compiledMethod;
-			messages: ((methodVisitor helpers atMethod: compiledMethod ) collect: [ :compiledHelper |
+			messages: ((methodVisitor helpers at: compiledMethod ) collect: [ :compiledHelper |
 				compiledHelper selector ] ) )
 ]

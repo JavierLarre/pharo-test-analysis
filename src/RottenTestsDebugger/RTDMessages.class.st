@@ -18,20 +18,30 @@ RTDMessages >> = aMaMessages [
 ]
 
 { #category : 'accessing' }
-RTDMessages >> atMethod: aCompiledMethod [
+RTDMessages >> at: aCompiledMethod [
 	^methodsMessages at: aCompiledMethod ifAbsent: [ RTDMethodNotFound signal ]
 ]
 
 { #category : 'accessing' }
-RTDMessages >> atMethod: aCompiledMethod includesMessage: aSelector [ 
-
-	^ (self atMethod: aCompiledMethod) includes: aSelector 
-]
-
-{ #category : 'accessing' }
-RTDMessages >> atMethod: aCompiledMethod putMessages: aSelectorCollection [
+RTDMessages >> at: aCompiledMethod put: aSelectorCollection [
 
 	methodsMessages at: aCompiledMethod put: aSelectorCollection 
+]
+
+{ #category : 'testing' }
+RTDMessages >> does: aCompiledMethod includesMessage: aSelector [ 
+
+	^ (self at: aCompiledMethod) includes: aSelector 
+]
+
+{ #category : 'testing' }
+RTDMessages >> does: aCompiledMethod includesSubmethod: aCompiledSubmethod [ 
+	
+	| methodMessages subMethodMessages |
+	methodMessages := self at: aCompiledMethod.
+	subMethodMessages := self at: aCompiledSubmethod.
+	^ subMethodMessages inject: true into: [ :isSubset :each | 
+		isSubset and: [ methodMessages includes: each ] ]
 ]
 
 { #category : 'initialization' }
@@ -41,49 +51,31 @@ RTDMessages >> initialize [
 	methodsMessages := Dictionary new.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
+RTDMessages >> is: aCompiledMethod connectedTo: aMessage [
+ 
+	^ RTDConnectedMessagesDFS new
+		messages: self;
+		isMethod: aCompiledMethod connectedTo: aMessage 
+]
+
+{ #category : 'testing' }
+RTDMessages >> is: aCompiledMethod connectedToAny: aMessageCollection [ 
+	
+	^ aMessageCollection anySatisfy: [ :message | 
+		self is: aCompiledMethod connectedTo: message ]
+]
+
+{ #category : 'testing' }
 RTDMessages >> isEmpty [ 
 
 	^ methodsMessages isEmpty 
 ]
 
 { #category : 'accessing' }
-RTDMessages >> method: aCompiledMethod includesSubmethod: aCompiledSubmethod [ 
-	
-	| methodMessages subMethodMessages |
-	methodMessages := self atMethod: aCompiledMethod.
-	subMethodMessages := self atMethod: aCompiledSubmethod.
-	^ subMethodMessages inject: true into: [ :isSubset :each | 
-		isSubset and: [ methodMessages includes: each ] ]
-]
-
-{ #category : 'testing' }
-RTDMessages >> method: aCompiledMethod isConnectedToAnyMessage: aMessageCollection [ 
-	
-	^ aMessageCollection anySatisfy: [ :message | 
-		self method: aCompiledMethod isConnectedToMessage: message ]
-]
-
-{ #category : 'accessing' }
-RTDMessages >> method: aCompiledMethod isConnectedToMessage: aMessage [
- 
-	^ RTDConnectedMessagesDFS new
-		messages: self;
-		method: aCompiledMethod isConnectedTo: aMessage 
-]
-
-{ #category : 'accessing' }
 RTDMessages >> methods [
 	
 	^ methodsMessages keys
-]
-
-{ #category : 'accessing' }
-RTDMessages >> methodsIncludedBy: aCompiledMethod [ 
-	
-	^ (self methods select: [ :compiledMethod | 
-			self method: aCompiledMethod includesSubmethod: compiledMethod ])
-		difference: { aCompiledMethod }
 ]
 
 { #category : 'accessing' }
@@ -97,4 +89,12 @@ RTDMessages >> printOn: aStream [
 
 	super printOn: aStream.
 	methodsMessages printElementsOn: aStream 
+]
+
+{ #category : 'accessing' }
+RTDMessages >> subMethodsIncludedBy: aCompiledMethod [ 
+	
+	^ (self methods select: [ :subMethod | 
+			self does: aCompiledMethod includesSubmethod: subMethod ])
+		difference: { aCompiledMethod }
 ]

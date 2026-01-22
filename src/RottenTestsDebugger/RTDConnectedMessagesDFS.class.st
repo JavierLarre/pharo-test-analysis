@@ -20,7 +20,7 @@ RTDConnectedMessagesDFS >> initialize [
 ]
 
 { #category : 'testing' }
-RTDConnectedMessagesDFS >> message: aSelector isConnectedTo: targetSelector [
+RTDConnectedMessagesDFS >> isMessage: aSelector connectedTo: targetSelector [
 
 	(visited includes: aSelector )
 		ifTrue: [ ^ false ]
@@ -28,19 +28,19 @@ RTDConnectedMessagesDFS >> message: aSelector isConnectedTo: targetSelector [
 
 	^ messages methods anySatisfy: [ :compiledMethod |
 		compiledMethod selector = aSelector 
-			and: [ self method: compiledMethod isConnectedTo: targetSelector ] ]
+			and: [ self isMethod: compiledMethod connectedTo: targetSelector ] ]
+]
+
+{ #category : 'testing' }
+RTDConnectedMessagesDFS >> isMethod: aCompiledMethod connectedTo: aSelector [
+	
+	^ (messages does: aCompiledMethod includesMessage: aSelector) or: [
+		((messages at: aCompiledMethod) anySatisfy: [ :message | 
+			self isMessage: message connectedTo: aSelector ] ) ]
 ]
 
 { #category : 'accessing' }
 RTDConnectedMessagesDFS >> messages: aMessages [
 
 	messages := aMessages 
-]
-
-{ #category : 'testing' }
-RTDConnectedMessagesDFS >> method: aCompiledMethod isConnectedTo: aSelector [
-	
-	^ (messages atMethod: aCompiledMethod includesMessage: aSelector) or: [
-		((messages atMethod: aCompiledMethod) anySatisfy: [ :message | 
-			self message: message isConnectedTo: aSelector ] ) ]
 ]

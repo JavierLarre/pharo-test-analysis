@@ -30,10 +30,10 @@ RTDMessagesTest >> testAnyMessagesAreConnected [
 	
 	method := self buildDummyMethod: #foo.
 	
-	messages atMethod: method putMessages: { #= . #+ . #< }.
+	messages at: method put: { #= . #+ . #< }.
 	
 	self
-		assert: (messages method: method isConnectedToAnyMessage: { #+ . #- . #>= })
+		assert: (messages is: method connectedToAny: { #+ . #- . #>= })
 ]
 
 { #category : 'tests' }
@@ -46,13 +46,13 @@ RTDMessagesTest >> testConnectionWithSameMessages [
 	classFoo methodClass: self class.
 
 	messages 
-		atMethod: instanceFoo putMessages: { #x. #y };
-		atMethod: callsFoo putMessages: { #foo };
-		atMethod: classFoo putMessages: { #xxx . #yyy }.
+		at: instanceFoo put: { #x. #y };
+		at: callsFoo put: { #foo };
+		at: classFoo put: { #xxx . #yyy }.
 
 	self 
-		assert: (messages method: callsFoo isConnectedToMessage: #x);
-		assert: (messages method: callsFoo isConnectedToMessage: #xxx)
+		assert: (messages is: callsFoo connectedTo: #x);
+		assert: (messages is: callsFoo connectedTo: #xxx)
 ]
 
 { #category : 'tests' }
@@ -62,13 +62,13 @@ RTDMessagesTest >> testCycle [
 	root := self buildDummyMethod: #callsCycle.
 
 	messages 
-		atMethod: root putMessages: { #cycle1 . #x };
-		atMethod: (self buildDummyMethod: #cycle1) putMessages: { #cycle2 . #y };
-		atMethod: (self buildDummyMethod: #cycle2) putMessages: { #cycle1 . #z }.
+		at: root put: { #cycle1 . #x };
+		at: (self buildDummyMethod: #cycle1) put: { #cycle2 . #y };
+		at: (self buildDummyMethod: #cycle2) put: { #cycle1 . #z }.
 
 	self 
-		assert: (messages method: root isConnectedToMessage: #z);
-		deny: (messages method: root isConnectedToMessage: #aaaaaa)
+		assert: (messages is: root connectedTo: #z);
+		deny: (messages is: root connectedTo: #aaaaaa)
 ]
 
 { #category : 'tests' }
@@ -84,9 +84,9 @@ RTDMessagesTest >> testHasMessages [
 	| method |
 	method := self buildDummyMethod: #foo.
 
-	messages atMethod: method putMessages: #( x y ).
+	messages at: method put: #( x y ).
 
-	self assertCollection: (messages atMethod: method) hasSameElements: { #x. #y }
+	self assertCollection: (messages at: method) hasSameElements: { #x. #y }
 ]
 
 { #category : 'tests' }
@@ -98,12 +98,12 @@ RTDMessagesTest >> testIncludesSubmethods [
 	containedFoo2 := self buildDummyMethod: #containedFoo2.
 	
 	messages 
-		atMethod: foo putMessages: #( a b c x y z );
-		atMethod: containedFoo putMessages: #( a c x y );
-		atMethod: containedFoo2 putMessages: #( a b z ) .
+		at: foo put: #( a b c x y z );
+		at: containedFoo put: #( a c x y );
+		at: containedFoo2 put: #( a b z ) .
 		
 	self 
-		assertCollection: (messages methodsIncludedBy: foo ) 
+		assertCollection: (messages subMethodsIncludedBy: foo ) 
 		hasSameElements: { containedFoo . containedFoo2  }
 ]
 
@@ -115,12 +115,12 @@ RTDMessagesTest >> testIsConnected [
 	foo := self buildDummyMethod: #foo.
 
 	messages 
-		atMethod: foo putMessages: { #x. #y };
-		atMethod: callsFoo putMessages: { #foo }.
+		at: foo put: { #x. #y };
+		at: callsFoo put: { #foo }.
 
 	self 
-		assert: (messages method: foo isConnectedToMessage: #x);
-		assert: (messages method: callsFoo isConnectedToMessage: #x)
+		assert: (messages is: foo connectedTo: #x);
+		assert: (messages is: callsFoo connectedTo: #x)
 ]
 
 { #category : 'tests' }
@@ -130,9 +130,9 @@ RTDMessagesTest >> testMessagesIncludesThemselves [
 	method := self buildDummyMethod: #foo.
 	
 	messages 
-		atMethod: method putMessages: #( a b c x y z ).
+		at: method put: #( a b c x y z ).
 		
-	self assert: (messages method: method includesSubmethod: method)
+	self assert: (messages does: method includesSubmethod: method)
 ]
 
 { #category : 'tests' }
@@ -143,11 +143,11 @@ RTDMessagesTest >> testNestedMessagesAreConnected [
 	method := self buildDummyMethod: #foo.
 	
 	messages 
-		atMethod: method putMessages: { #= . #+ . #< };
-		atMethod: (self buildDummyMethod: #= ) putMessages: { #>= . #<= } .
+		at: method put: { #= . #+ . #< };
+		at: (self buildDummyMethod: #= ) put: { #>= . #<= } .
 	
 	self
-		assert: (messages method: method isConnectedToAnyMessage: { #- . #>= })
+		assert: (messages is: method connectedToAny: { #- . #>= })
 ]
 
 { #category : 'tests' }
@@ -158,13 +158,13 @@ RTDMessagesTest >> testNoMessageIsConnected [
 	method := self buildDummyMethod: #foo.
 	
 	messages
-		atMethod: method putMessages: { #= . #+ . #< };
-		atMethod: (self buildDummyMethod: #= ) putMessages: { #assert: . #plus . #minus };
-		atMethod: (self buildDummyMethod: #+) putMessages: { #= . #+ . #foo };
-		atMethod: (self buildDummyMethod: #< ) putMessages: {  } .
+		at: method put: { #= . #+ . #< };
+		at: (self buildDummyMethod: #= ) put: { #assert: . #plus . #minus };
+		at: (self buildDummyMethod: #+) put: { #= . #+ . #foo };
+		at: (self buildDummyMethod: #< ) put: {  } .
 	
 	self
-		deny: (messages method: method isConnectedToAnyMessage: { #/ . #- . #>= })
+		deny: (messages is: method connectedToAny: { #/ . #- . #>= })
 ]
 
 { #category : 'tests' }
@@ -174,8 +174,8 @@ RTDMessagesTest >> testRaisesNotFound [
 	method := self buildDummyMethod: #foo.
 	
 	self
-		should: [ messages atMethod: method ] raise: RTDMethodNotFound;
-		should: [ messages method: method isConnectedToMessage: #bar ] raise: RTDMethodNotFound;
-		should: [ messages atMethod: method includesMessage: #foo ] raise: RTDMethodNotFound;
-		should: [ messages method: method includesSubmethod: method ] raise: RTDMethodNotFound
+		should: [ messages at: method ] raise: RTDMethodNotFound;
+		should: [ messages is: method connectedTo: #bar ] raise: RTDMethodNotFound;
+		should: [ messages does: method includesMessage: #foo ] raise: RTDMethodNotFound;
+		should: [ messages does: method includesSubmethod: method ] raise: RTDMethodNotFound
 ]

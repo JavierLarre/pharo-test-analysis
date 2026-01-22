@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : 'accessing' }
-RTDHelpers >> atMethod: aCompiledMethod [
+RTDHelpers >> at: aCompiledMethod [
 	
 	^methodHelpers at: aCompiledMethod ifAbsent: [ RTDMethodNotFound signal ]
 ]
 
 { #category : 'accessing' }
-RTDHelpers >> atMethod: aCompiledMethod putHelpers: aHelpersCollection [
+RTDHelpers >> at: aCompiledMethod put: aHelpersCollection [
 
 	methodHelpers at: aCompiledMethod put: aHelpersCollection 
 ]

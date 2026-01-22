@@ -25,7 +25,7 @@ RTDMessageVisitorTest >> testIncludesMessages [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor messages atMethod: RTDVisitorFixture >> #testHelper)
+		assertCollection: (visitor messages at: RTDVisitorFixture >> #testHelper)
 		includesAll: { #helper . #foo . #notAHelper . #guardedHelper }
 ]
 
@@ -35,7 +35,7 @@ RTDMessageVisitorTest >> testMessagesEqualsSet [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor messages atMethod: RTDVisitorFixture >> #testHelper)
+		assertCollection: (visitor messages at: RTDVisitorFixture >> #testHelper)
 		equals: { #helper . #foo . #ifTrue: . #notAHelper . #guardedHelper } asSet
 ]
 

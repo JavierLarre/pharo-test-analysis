@@ -30,7 +30,7 @@ RTDHelperVisitorTest >> testIncludesHelper [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor helpers atMethod: RTDVisitorFixture >> #testHelper ) 
+		assertCollection: (visitor helpers at: RTDVisitorFixture >> #testHelper ) 
 		hasSameElements: { 
 		self fixtureMethod: #helper . 
 		self fixtureMethod: #guardedHelper } 
@@ -42,6 +42,6 @@ RTDHelperVisitorTest >> testIncludesHelperFromOtherSelfCalls [
 	self analyzeMethodFromFixture: #testNested.
 	
 	self 
-		assertCollection: (visitor helpers atMethod: RTDVisitorFixture >> #nestedHelper ) 
+		assertCollection: (visitor helpers at: RTDVisitorFixture >> #nestedHelper ) 
 		hasSameElements: { self fixtureMethod: #helper } 
 ]

@@ -23,10 +23,10 @@ RTDFilteredMessagesTest >> testFilteredMessages [
 	compiledMethod := self buildDummyMethod: #foo.
 	
 	messages 
-		atMethod: compiledMethod 
-		putMessages: { #foo . #bar . #assert: } asSet.
+		at: compiledMethod 
+		put: { #foo . #bar . #assert: } asSet.
 	
 	self
-		assertCollection: (messages atMethod: compiledMethod ) 
+		assertCollection: (messages at: compiledMethod ) 
 		equals: { #foo . #bar } asSet
 ]

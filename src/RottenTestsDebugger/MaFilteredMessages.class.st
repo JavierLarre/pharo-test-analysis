@@ -12,9 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-MaFilteredMessages >> atMethod: aCompiledMethod putMessages: aMessageSet [
+MaFilteredMessages >> at: aCompiledMethod put: aMessageSet [
 
-	super atMethod: aCompiledMethod putMessages: (aMessageSet difference: bannedMessages )
+	super at: aCompiledMethod put: (aMessageSet difference: bannedMessages )
 ]
 
 { #category : 'accessing' }

@@ -19,11 +19,11 @@ DTRTDMessageVisitor >> buildViewModel: aViewModel [
 DTRTDMessageVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
 
 	(methodVisitor messages 
-		method: testCaseMessages1 testMethod 
+		does: testCaseMessages1 testMethod 
 		includesSubmethod: testCaseMessages2 testMethod)
 			ifTrue: [ ^ false ].
 	(methodVisitor messages 
-		method: testCaseMessages2 testMethod 
+		does: testCaseMessages2 testMethod 
 		includesSubmethod: testCaseMessages1 testMethod)
 			ifTrue: [ ^ true ].
 	^ testCaseMessages1 <= testCaseMessages2 
@@ -40,6 +40,6 @@ DTRTDMessageVisitor >> visitTestCase: aTestCase [
 	testCasesMessages add: (DTRTDTestCaseMessages new
 			testCase: aTestCase;
 			testMethod: compiledMethod;
-			messages: (methodVisitor messages atMethod: compiledMethod) asOrderedCollection ;
+			messages: (methodVisitor messages at: compiledMethod) asOrderedCollection ;
 			 yourself).
 ]

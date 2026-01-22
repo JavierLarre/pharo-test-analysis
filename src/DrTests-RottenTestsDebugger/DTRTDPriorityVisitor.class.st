@@ -14,7 +14,7 @@ DTRTDPriorityVisitor >> buildTestCasePriorities: testCase [
 	| compiledMethod |
 	compiledMethod := testCase class >> testCase selector.
 	^ DTRTDTestCasePriorities new
-		messages: (methodVisitor messages atMethod: compiledMethod);
+		messages: (methodVisitor messages at: compiledMethod);
 		testCase: testCase;
 		testMethod: compiledMethod;
 		higherPriorityCases: {  };
