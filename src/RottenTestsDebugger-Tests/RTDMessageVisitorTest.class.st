@@ -45,7 +45,7 @@ RTDMessageVisitorTest >> testVisitsAreEqual [
 	| newVisitor |
 	self analyzeMethodFromFixture: #testHelper.
 	newVisitor := MaMessageVisitor new
-		analyzeMethod: (self fixtureMethod: #testHelper);
+		analyzeMethod: (self fixtureClass >> #testHelper);
 		yourself.
 	
 	self 
