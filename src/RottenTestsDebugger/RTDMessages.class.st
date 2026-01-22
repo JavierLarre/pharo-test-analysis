@@ -35,13 +35,12 @@ RTDMessages >> does: aCompiledMethod includesMessage: aSelector [
 ]
 
 { #category : 'testing' }
-RTDMessages >> does: aCompiledMethod includesSubmethod: aCompiledSubmethod [ 
+RTDMessages >> does: aCompiledMethod includesSubMethod: aCompiledSubmethod [ 
 	
 	| methodMessages subMethodMessages |
 	methodMessages := self at: aCompiledMethod.
 	subMethodMessages := self at: aCompiledSubmethod.
-	^ subMethodMessages inject: true into: [ :isSubset :each | 
-		isSubset and: [ methodMessages includes: each ] ]
+	^ (subMethodMessages difference: methodMessages) isEmpty 
 ]
 
 { #category : 'initialization' }

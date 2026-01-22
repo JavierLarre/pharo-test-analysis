@@ -132,7 +132,7 @@ RTDMessagesTest >> testMessagesIncludesThemselves [
 	messages 
 		at: method put: #( a b c x y z ).
 		
-	self assert: (messages does: method includesSubmethod: method)
+	self assert: (messages does: method includesSubMethod: method)
 ]
 
 { #category : 'tests' }
@@ -177,5 +177,5 @@ RTDMessagesTest >> testRaisesNotFound [
 		should: [ messages at: method ] raise: RTDMethodNotFound;
 		should: [ messages is: method connectedTo: #bar ] raise: RTDMethodNotFound;
 		should: [ messages does: method includesMessage: #foo ] raise: RTDMethodNotFound;
-		should: [ messages does: method includesSubmethod: method ] raise: RTDMethodNotFound
+		should: [ messages does: method includesSubMethod: method ] raise: RTDMethodNotFound
 ]

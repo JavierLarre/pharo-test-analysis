@@ -20,11 +20,11 @@ DTRTDMessageVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCase
 
 	(methodVisitor messages 
 		does: testCaseMessages1 testMethod 
-		includesSubmethod: testCaseMessages2 testMethod)
+		includesSubMethod: testCaseMessages2 testMethod)
 			ifTrue: [ ^ false ].
 	(methodVisitor messages 
 		does: testCaseMessages2 testMethod 
-		includesSubmethod: testCaseMessages1 testMethod)
+		includesSubMethod: testCaseMessages1 testMethod)
 			ifTrue: [ ^ true ].
 	^ testCaseMessages1 <= testCaseMessages2 
 	
