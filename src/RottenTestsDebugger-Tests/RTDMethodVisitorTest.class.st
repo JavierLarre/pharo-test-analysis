@@ -53,6 +53,19 @@ RTDMethodVisitorTest >> testEmpty [
 ]
 
 { #category : 'tests' }
+RTDMethodVisitorTest >> testEmptyMethods [
+	
+	self 
+		analyzeMethodFromFixture: #testEmpty;
+		denyCollection: visitor methodsSelfCalls keys includesAny: { self fixtureClass >> #emptyMethod };
+		assertEmpty: (visitor methodsSelfCalls at: self fixtureClass >> #noMessages );
+		
+		analyzeMethodFromFixture: #emptyMethod;
+		assert: (visitor methodsSelfCalls includesKey: self fixtureClass >> #emptyMethod );
+		assertEmpty: (visitor methodsSelfCalls at: self fixtureClass >> #emptyMethod )
+]
+
+{ #category : 'tests' }
 RTDMethodVisitorTest >> testFindsMessagesSentToSelf [
 	
 	self analyzeMethodFromFixture: #testHelper.

@@ -44,6 +44,11 @@ RTDVisitorFixture >> cycle2 [
 	self cycle1
 ]
 
+{ #category : 'tests' }
+RTDVisitorFixture >> emptyMethod [ 
+
+]
+
 { #category : 'as yet unclassified' }
 RTDVisitorFixture >> guardedHelper [
 	
@@ -82,6 +87,12 @@ RTDVisitorFixture >> nestedHelper [
 	self helper.
 ]
 
+{ #category : 'tests' }
+RTDVisitorFixture >> noMessages [
+
+	^ #( a c g b )
+]
+
 { #category : 'as yet unclassified' }
 RTDVisitorFixture >> notAHelper [
 	
@@ -104,6 +115,12 @@ RTDVisitorFixture >> testBigHelperGuarded [
 RTDVisitorFixture >> testCycle [
 
 	self cycle1
+]
+
+{ #category : 'tests' }
+RTDVisitorFixture >> testEmpty [
+
+	self emptyMethod; noMessages 
 ]
 
 { #category : 'as yet unclassified' }
