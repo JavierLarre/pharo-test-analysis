@@ -8,9 +8,9 @@ Class {
 		'message',
 		'browseMethod'
 	],
-	#category : 'DrTests-RottenTestsDebugger-node',
+	#category : 'DrTests-RottenTestsDebugger-Builders',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'node'
+	#tag : 'Builders'
 }
 
 { #category : 'instance creation' }
@@ -62,7 +62,7 @@ DTRTDMessageNode >> isLeaf [
 { #category : 'accessing' }
 DTRTDMessageNode >> message [
 
-	^ message ifNil: [ message := '' ]
+	^ message
 ]
 
 { #category : 'accessing' }

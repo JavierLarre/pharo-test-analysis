@@ -8,9 +8,9 @@ Class {
 		'methodVisitor',
 		'testCasesViewModels'
 	],
-	#category : 'DrTests-RottenTestsDebugger-visitor',
+	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'visitor'
+	#tag : 'Visitors'
 }
 
 { #category : 'factory' }
@@ -22,7 +22,7 @@ DTRTDTestCaseVisitor class >> methodVisitorClass [
 { #category : 'factory' }
 DTRTDTestCaseVisitor class >> testCaseViewModelClass [
 
-	^ DTRTDTestCaseMessages
+	^ DTRTDTestCaseViewModel
 ]
 
 { #category : 'building' }

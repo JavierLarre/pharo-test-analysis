@@ -4,14 +4,14 @@ I override `DTRTDNodeBuilder>>#buildNode:from:` to add a browse method to each n
 Class {
 	#name : 'DTRTDMessagesNodeBuilder',
 	#superclass : 'DTRTDNodeBuilder',
-	#category : 'DrTests-RottenTestsDebugger-node',
+	#category : 'DrTests-RottenTestsDebugger-Builders',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'node'
+	#tag : 'Builders'
 }
 
-{ #category : 'building' }
-DTRTDMessagesNodeBuilder >> buildNode: aTreeNode from: aTestCaseViewModel [
+{ #category : 'hooks' }
+DTRTDMessagesNodeBuilder >> buildNode: aTestCaseTreeNode from: aTestCaseViewModel [
 
-	aTreeNode subResults do: [ :messageNode | 
+	aTestCaseTreeNode subResults do: [ :messageNode | 
 		messageNode browseMethod: aTestCaseViewModel testMethod ]
 ]

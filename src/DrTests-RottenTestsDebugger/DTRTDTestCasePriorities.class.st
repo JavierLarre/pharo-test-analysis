@@ -3,7 +3,7 @@ I add fields to `DTRTDTestCaseMessages` for storing both lower and higher priori
 "
 Class {
 	#name : 'DTRTDTestCasePriorities',
-	#superclass : 'DTRTDTestCaseMessages',
+	#superclass : 'DTRTDTestCaseViewModel',
 	#instVars : [
 		'lowerPriorityCases',
 		'higherPriorityCases'

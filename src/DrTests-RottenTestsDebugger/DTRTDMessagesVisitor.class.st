@@ -4,9 +4,9 @@ I provide a method for building a `DTRTDTestCaseMessages` with the messages of `
 Class {
 	#name : 'DTRTDMessagesVisitor',
 	#superclass : 'DTRTDTestCaseVisitor',
-	#category : 'DrTests-RottenTestsDebugger-visitor',
+	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'visitor'
+	#tag : 'Visitors'
 }
 
 { #category : 'factory' }

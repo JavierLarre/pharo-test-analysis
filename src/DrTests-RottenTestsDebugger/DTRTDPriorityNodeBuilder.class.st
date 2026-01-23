@@ -1,23 +1,26 @@
+"
+I override `DTRTDNodeBuilder>>#nodeFrom:` to build the priorities of each test case
+"
 Class {
 	#name : 'DTRTDPriorityNodeBuilder',
 	#superclass : 'DTRTDMessagesNodeBuilder',
-	#category : 'DrTests-RottenTestsDebugger-node',
+	#category : 'DrTests-RottenTestsDebugger-Builders',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'node'
+	#tag : 'Builders'
 }
 
 { #category : 'building' }
-DTRTDPriorityNodeBuilder >> buildNodeFrom: aTestCaseViewModel [
+DTRTDPriorityNodeBuilder >> nodeFrom: aTestCaseViewModel [
 
-	^ (super buildNodeFrom: aTestCaseViewModel)
+	^ (super nodeFrom: aTestCaseViewModel)
 		subResults: { 
-			self buildTreeNode 
+			self treeNode 
 				subResults: (self class superclass new 
-					buildTestCasesNodes: aTestCaseViewModel lowerPriorityCases) asOrderedCollection;
+					nodesFrom: aTestCaseViewModel lowerPriorityCases) asOrderedCollection;
 				name: 'Is lower priority than'; yourself.
-			self buildTreeNode 
+			self treeNode 
 				subResults: (self class superclass new 
-					buildTestCasesNodes: aTestCaseViewModel higherPriorityCases ) asOrderedCollection;
+					nodesFrom: aTestCaseViewModel higherPriorityCases ) asOrderedCollection;
 				name: 'Is higher priority than'; yourself.
 		 } asOrderedCollection;
 		yourself

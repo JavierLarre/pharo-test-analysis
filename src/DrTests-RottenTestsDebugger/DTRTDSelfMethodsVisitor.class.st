@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'testCasesMethods'
 	],
-	#category : 'DrTests-RottenTestsDebugger-visitor',
+	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'visitor'
+	#tag : 'Visitors'
 }
 
 { #category : 'factory' }
@@ -25,7 +25,8 @@ DTRTDSelfMethodsVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCa
 	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
 	testCaseSelfCalls := methodVisitor methodsSelfCalls at: (self testCaseMethod: aTestCase).
 
-	aTestCaseViewModel messages: (testCaseSelfCalls collect: #selector) asOrderedCollection
+	aTestCaseViewModel 
+		messages: (testCaseSelfCalls collect: #selector) asOrderedCollection
 ]
 
 { #category : 'building' }

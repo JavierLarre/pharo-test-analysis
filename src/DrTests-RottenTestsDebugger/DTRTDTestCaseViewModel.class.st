@@ -2,11 +2,11 @@
 I store the messages and the compiled method of a test case
 "
 Class {
-	#name : 'DTRTDTestCaseMessages',
+	#name : 'DTRTDTestCaseViewModel',
 	#superclass : 'Object',
 	#instVars : [
-		'testCase',
 		'messages',
+		'testCase',
 		'testMethod'
 	],
 	#category : 'DrTests-RottenTestsDebugger-DTOs',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : 'comparing' }
-DTRTDTestCaseMessages >> <= aTestCaseMessages [
+DTRTDTestCaseViewModel >> <= aTestCaseMessages [
 	
 	messages size = aTestCaseMessages messages size
 		ifFalse: [ ^ messages size < aTestCaseMessages messages size ] .
@@ -23,37 +23,37 @@ DTRTDTestCaseMessages >> <= aTestCaseMessages [
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseMessages >> messages [
+DTRTDTestCaseViewModel >> messages [
 
 	^ messages
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseMessages >> messages: anObject [
+DTRTDTestCaseViewModel >> messages: anObject [
 
 	messages := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseMessages >> testCase [
+DTRTDTestCaseViewModel >> testCase [
 
 	^ testCase
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseMessages >> testCase: anObject [
+DTRTDTestCaseViewModel >> testCase: anObject [
 
 	testCase := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseMessages >> testMethod [
+DTRTDTestCaseViewModel >> testMethod [
 
 	^ testMethod
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseMessages >> testMethod: aCompiledMethod [
+DTRTDTestCaseViewModel >> testMethod: aCompiledMethod [
 
 	testMethod := aCompiledMethod 
 ]

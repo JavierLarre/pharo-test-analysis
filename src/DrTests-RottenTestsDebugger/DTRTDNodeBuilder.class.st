@@ -4,60 +4,61 @@ I provide builder methods and hooks to build `DTTreeNode`s from test cases
 Class {
 	#name : 'DTRTDNodeBuilder',
 	#superclass : 'Object',
-	#category : 'DrTests-RottenTestsDebugger-node',
+	#category : 'DrTests-RottenTestsDebugger-Builders',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'node'
+	#tag : 'Builders'
 }
 
 { #category : 'hooks' }
-DTRTDNodeBuilder >> buildNode: aTreeNode from: aTestCaseViewModel [
+DTRTDNodeBuilder >> buildNode: aTestCaseTreeNode from: aTestCaseViewModel [
+]
+
+{ #category : 'utilities' }
+DTRTDNodeBuilder >> groupedTestCasesByClass: testCaseViewModels [
+
+	^ testCaseViewModels groupedBy: [ :testCaseViewModel | testCaseViewModel testCase class ]
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> buildNodeByClass: testCasesMessages [
-
-	^ self buildTreeNode
-		subResults: (self buildNodesByClass: testCasesMessages );
-		yourself
-]
-
-{ #category : 'building' }
-DTRTDNodeBuilder >> buildNodeFrom: aTestCaseViewModel [
+DTRTDNodeBuilder >> nodeFrom: aTestCaseViewModel [
 
 	| treeNode |
-	treeNode := DTTreeNode new
+	treeNode := self treeNode
 		            subResults: (DTRTDMessageNode toNodes: aTestCaseViewModel messages);
 		            name: aTestCaseViewModel testMethod selector;
-		            subResultsAggregator: [ :subResults | subResults size ];
 		            yourself.
 	self buildNode: treeNode from: aTestCaseViewModel.
 	^ treeNode
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> buildNodesByClass: testCaseViewModels [
+DTRTDNodeBuilder >> nodeGroupedByClasses: testCasesMessages [
 
-	^ (self groupTestCasesByClass: testCaseViewModels ) associations collect: [ :assoc | 
-			self buildTreeNode
-				subResults: (self buildTestCasesNodes: assoc value);
+	^ self treeNode
+		subResults: (self nodesByClass: testCasesMessages );
+		yourself
+]
+
+{ #category : 'factory' }
+DTRTDNodeBuilder >> nodesByClass: testCaseViewModels [
+
+	^ (self groupedTestCasesByClass: testCaseViewModels ) associations collect: [ :assoc | 
+			self treeNode
+				subResults: (self nodesFrom: assoc value);
 				name: assoc key name; yourself ]
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> buildTestCasesNodes: testCaseViewModels [
+DTRTDNodeBuilder >> nodesFrom: testCaseViewModels [
 
 	^ testCaseViewModels collect: [ :testCaseViewModel |
-			self buildNodeFrom: testCaseViewModel ]
+			self nodeFrom: testCaseViewModel ]
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> buildTreeNode [
+DTRTDNodeBuilder >> treeNode [
 
 	^ DTTreeNode new
-]
-
-{ #category : 'utilities' }
-DTRTDNodeBuilder >> groupTestCasesByClass: testCaseViewModels [
-
-	^ testCaseViewModels groupedBy: [ :testCaseViewModel | testCaseViewModel testCase class ]
+		subResultsAggregator: [ :subResults | subResults size ];
+		yourself
 ]

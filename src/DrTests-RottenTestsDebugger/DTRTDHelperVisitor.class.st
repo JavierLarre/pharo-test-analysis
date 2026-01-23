@@ -4,9 +4,9 @@ I analyze test cases using `MaHelperVisitor` and build the view model with the v
 Class {
 	#name : 'DTRTDHelperVisitor',
 	#superclass : 'DTRTDTestCaseVisitor',
-	#category : 'DrTests-RottenTestsDebugger-visitor',
+	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'visitor'
+	#tag : 'Visitors'
 }
 
 { #category : 'factory' }
@@ -18,12 +18,11 @@ DTRTDHelperVisitor class >> methodVisitorClass [
 { #category : 'building' }
 DTRTDHelperVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
+	| compiledMethods |
 	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
+	compiledMethods := methodVisitor helpers at: (self testCaseMethod: aTestCase).
 	aTestCaseViewModel
-		messages: ((methodVisitor helpers 
-			at: (self testCaseMethod: aTestCase )) 
-			collect: #selector
-		) asOrderedCollection
+		messages: (compiledMethods collect: #selector) asOrderedCollection
 ]
 
 { #category : 'build' }

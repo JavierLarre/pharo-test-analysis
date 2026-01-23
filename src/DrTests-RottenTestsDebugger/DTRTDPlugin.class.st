@@ -4,9 +4,9 @@ I am plugin implementing MethodMessageAnalyzer in DrTests
 Class {
 	#name : 'DTRTDPlugin',
 	#superclass : 'DrTestsPlugin',
-	#category : 'DrTests-RottenTestsDebugger-presenter',
+	#category : 'DrTests-RottenTestsDebugger-Presenters',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'presenter'
+	#tag : 'Presenters'
 }
 
 { #category : 'api - accessing' }
@@ -48,7 +48,7 @@ DTRTDPlugin >> firstListLabel [
 { #category : 'accessing' }
 DTRTDPlugin >> pragmaForResultTrees [
 	"Returns the selector of the pragma to gather result trees."
-	^ 'dtTestMaResultTreeNamed:order:'
+	^ 'dtTestRTDResultTreeNamed:order:'
 ]
 
 { #category : 'api' }

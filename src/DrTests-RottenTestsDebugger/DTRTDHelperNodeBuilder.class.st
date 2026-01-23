@@ -1,17 +1,17 @@
 "
-I override `DTRTDNodeBuilder>>#buildNode:from:` to add a browse method to each node
+I override `DTRTDNodeBuilder>>#buildNode:from:` to add a browse method to each message node
 "
 Class {
 	#name : 'DTRTDHelperNodeBuilder',
 	#superclass : 'DTRTDNodeBuilder',
-	#category : 'DrTests-RottenTestsDebugger-node',
+	#category : 'DrTests-RottenTestsDebugger-Builders',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'node'
+	#tag : 'Builders'
 }
 
 { #category : 'hooks' }
-DTRTDHelperNodeBuilder >> buildNode: aTreeNode from: aTestCaseViewModel [
+DTRTDHelperNodeBuilder >> buildNode: aTestCaseTreeNode from: aTestCaseViewModel [
 
-	aTreeNode subResults do: [ :messageNode | 
+	aTestCaseTreeNode subResults do: [ :messageNode | 
 		messageNode browseMethod: aTestCaseViewModel testCase class >> messageNode message ]
 ]

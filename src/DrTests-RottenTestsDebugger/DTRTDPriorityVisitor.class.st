@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'testCases'
 	],
-	#category : 'DrTests-RottenTestsDebugger-visitor',
+	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
-	#tag : 'visitor'
+	#tag : 'Visitors'
 }
 
 { #category : 'factory' }
@@ -32,7 +32,7 @@ DTRTDPriorityVisitor >> buildTestCasePriorities: aTestCasePriorities [
 DTRTDPriorityVisitor >> buildTestCasesFrom: compiledMethods [
 
 	^ compiledMethods collect: [ :compiledMethod | 
-		DTRTDTestCaseMessages new 
+		DTRTDTestCaseViewModel new 
 			messages: (methodVisitor messages at: compiledMethod) asOrderedCollection; 
 			testMethod: compiledMethod;
 			yourself  ]
