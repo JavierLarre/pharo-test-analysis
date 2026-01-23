@@ -16,36 +16,36 @@ Class {
 DTRTDResult >> buildTreeForUI [
 
 	<dtTestMaResultTreeNamed: 'List of methods messages sorted by priority' order: 1>
-	^ DTRTDTestCaseMessagesNode buildNodeByClass: viewModel testCasesMessages 
+	^ DTRTDMessagesNodeBuilder new buildNodeByClass: viewModel testCasesMessages 
 ]
 
 { #category : 'accessing' }
 DTRTDResult >> buildTreeForUIHelpers [
 
 	<dtTestMaResultTreeNamed: 'List of helpers' order: 3>
-	^ DTRTDTestCaseHelpersNode buildNodeByClass: viewModel testCasesHelpers
+	^ DTRTDHelperNodeBuilder new buildNodeByClass: viewModel testCasesHelpers
 ]
 
 { #category : 'accessing' }
 DTRTDResult >> buildTreeForUIMethodsPriority [
 
 	<dtTestMaResultTreeNamed: 'List of methods and their priorities' order: 5>
-	^ DTRTDTestCasePriorityNode buildNodeByClass: viewModel testCasesPriorities 
+	^ DTRTDPriorityNodeBuilder new buildNodeByClass: viewModel testCasesPriorities 
 ]
 
 { #category : 'accessing' }
 DTRTDResult >> buildTreeForUISelfSentMessages [
 
 	<dtTestMaResultTreeNamed: 'List of self sent methods' order: 2>
-	^ DTRTDTestCaseHelpersNode buildNodeByClass: viewModel testCasesSelfSentMethods
+	^ DTRTDHelperNodeBuilder new buildNodeByClass: viewModel testCasesSelfSentMethods
 ]
 
 { #category : 'accessing' }
 DTRTDResult >> buildTreeForUIShowAllMessages [
 
 	<dtTestMaResultTreeNamed: 'List of all method messages' order: 4>
-	^ DTRTDTestCaseMessagesNode buildTreeNode
-		subResults: (DTRTDTestCaseMessagesNode buildTestCasesNodes: viewModel testCasesMessages)
+	^ DTRTDNodeBuilder new buildTreeNode
+		subResults: (DTRTDMessagesNodeBuilder new buildTestCasesNodes: viewModel testCasesMessages)
 ]
 
 { #category : 'accessing' }
