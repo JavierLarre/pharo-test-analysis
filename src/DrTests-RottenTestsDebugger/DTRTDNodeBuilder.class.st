@@ -26,6 +26,7 @@ DTRTDNodeBuilder >> nodeFrom: aTestCaseViewModel [
 	treeNode := self treeNode
 		            subResults: (DTRTDMessageNode toNodes: aTestCaseViewModel messages);
 		            name: aTestCaseViewModel testMethod selector;
+						browseBlock: [ aTestCaseViewModel testMethod drTestsBrowse ];
 		            yourself.
 	self buildNode: treeNode from: aTestCaseViewModel.
 	^ treeNode
