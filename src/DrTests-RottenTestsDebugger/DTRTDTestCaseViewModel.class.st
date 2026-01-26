@@ -21,6 +21,13 @@ DTRTDTestCaseViewModel >> <= aTestCaseMessages [
 	^ testMethod selector <= aTestCaseMessages testMethod selector 
 ]
 
+{ #category : 'initialization' }
+DTRTDTestCaseViewModel >> initialize [
+
+	super initialize.
+	messages := #().
+]
+
 { #category : 'accessing' }
 DTRTDTestCaseViewModel >> messages [
 
