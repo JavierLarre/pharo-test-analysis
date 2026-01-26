@@ -64,6 +64,18 @@ DTRTDTestCaseVisitor >> methodVisitor: anObject [
 	methodVisitor := anObject
 ]
 
+{ #category : 'printing' }
+DTRTDTestCaseVisitor >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream 
+		<< ' visitor: ';
+		print: methodVisitor;
+		<< ', testCases: ';
+		nextPutAll: testCasesViewModels;
+		<< ')'
+]
+
 { #category : 'utilities' }
 DTRTDTestCaseVisitor >> testCaseMethod: aTestCase [
 

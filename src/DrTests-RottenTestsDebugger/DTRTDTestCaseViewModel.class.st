@@ -19,7 +19,7 @@ DTRTDTestCaseViewModel >> <= aTestCaseMessages [
 	
 	messages size = aTestCaseMessages messages size
 		ifFalse: [ ^ messages size < aTestCaseMessages messages size ] .
-	^ testCase selector <= aTestCaseMessages testCase selector 
+	^ testMethod selector <= aTestCaseMessages testMethod selector 
 ]
 
 { #category : 'accessing' }
@@ -32,6 +32,17 @@ DTRTDTestCaseViewModel >> messages [
 DTRTDTestCaseViewModel >> messages: anObject [
 
 	messages := anObject
+]
+
+{ #category : 'printing' }
+DTRTDTestCaseViewModel >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream 
+		<< ': ';
+		print: (testMethod ifNil: [ testCase ]);
+		<< ', '.
+	messages printElementsOn: aStream. 
 ]
 
 { #category : 'accessing' }
