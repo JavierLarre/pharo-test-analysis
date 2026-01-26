@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 DTRTDFixture >> emptyMethod [
 
-	
+	^ #( a b c)
 ]
 
 { #category : 'fixtures' }
