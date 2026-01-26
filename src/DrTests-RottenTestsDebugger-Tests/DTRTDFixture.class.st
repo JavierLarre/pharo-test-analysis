@@ -1,3 +1,6 @@
+"
+I represent an example test suite for visitor tests
+"
 Class {
 	#name : 'DTRTDFixture',
 	#superclass : 'Object',

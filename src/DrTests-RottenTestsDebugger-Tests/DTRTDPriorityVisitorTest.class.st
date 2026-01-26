@@ -13,13 +13,13 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'utilities' }
 DTRTDPriorityVisitorTest >> fixtureClass [
 
 	^ DTRTDFixture
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'utilities' }
 DTRTDPriorityVisitorTest >> priorityTestCase: aSelector [
 
 	^ viewModel testCasesPriorities detect: [ :priorityTestCase | 
