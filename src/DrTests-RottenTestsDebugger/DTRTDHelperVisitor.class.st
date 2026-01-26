@@ -22,7 +22,7 @@ DTRTDHelperVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: a
 	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
 	compiledMethods := methodVisitor helpers at: (self testCaseMethod: aTestCase).
 	aTestCaseViewModel
-		messages: (compiledMethods collect: #selector) asOrderedCollection
+		messages: (compiledMethods collect: #selector)
 ]
 
 { #category : 'build' }

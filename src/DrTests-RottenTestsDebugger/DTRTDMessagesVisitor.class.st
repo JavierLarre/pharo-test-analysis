@@ -20,7 +20,7 @@ DTRTDMessagesVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase:
 
 	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
 	aTestCaseViewModel 
-		messages: (methodVisitor messages at: (self testCaseMethod: aTestCase) ) asOrderedCollection
+		messages: (methodVisitor messages at: (self testCaseMethod: aTestCase) )
 ]
 
 { #category : 'building' }
@@ -48,9 +48,10 @@ DTRTDMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCas
 DTRTDMessagesVisitor >> initialize [
 
 	super initialize.
-	methodVisitor messages: (MaFilteredMessages new 
-		bannedMessages: TAssertable selectors asSet;
-		yourself).
+	methodVisitor 
+		messages: (MaFilteredMessages new 
+			bannedMessages: TAssertable selectors asSet;
+			yourself).
 	testCasesViewModels := SortedCollection new
 		                     sort: [ :testCaseMessages1 :testCaseMessages2 |
 			                     self compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 ];

@@ -16,7 +16,7 @@ Class {
 { #category : 'instance creation' }
 DTRTDMessageNode class >> toNodes: messages [
 
-	^ messages collect: [ :message | self new message: message; yourself ]
+	^ (messages collect: [ :message | self new message: message; yourself ]) asOrderedCollection 
 ]
 
 { #category : 'visiting' }

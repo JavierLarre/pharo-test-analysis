@@ -20,9 +20,9 @@ DTRTDPriorityVisitor >> addPrioritiesTo: aTestCasePriorities [
 
 	aTestCasePriorities 
 		higherPriorityCases: (self buildTestCasesFrom: 
-			(methodVisitor messages subMethodsIncludedBy: aTestCasePriorities testMethod)) asOrderedCollection;
+			(methodVisitor messages subMethodsIncludedBy: aTestCasePriorities testMethod));
 		lowerPriorityCases: (self buildTestCasesFrom: 
-			(methodVisitor messages methodsThatInclude: aTestCasePriorities testMethod)) asOrderedCollection 
+			(methodVisitor messages methodsThatInclude: aTestCasePriorities testMethod)) 
 ]
 
 { #category : 'private' }
@@ -33,7 +33,7 @@ DTRTDPriorityVisitor >> buildTestCasesFrom: compiledMethods [
 			(methodVisitor messages at: compiledMethod) isEmpty ] 
 		thenCollect: [ :compiledMethod | 
 			DTRTDTestCaseViewModel new 
-				messages: (methodVisitor messages at: compiledMethod) asOrderedCollection; 
+				messages: (methodVisitor messages at: compiledMethod); 
 				testMethod: compiledMethod;
 				yourself  ]
 ]

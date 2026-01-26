@@ -23,7 +23,7 @@ DTRTDSelfMethodsVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCa
 	testCaseSelfCalls := methodVisitor methodsSelfCalls at: (self testCaseMethod: aTestCase).
 
 	aTestCaseViewModel 
-		messages: (testCaseSelfCalls collect: #selector) asOrderedCollection
+		messages: (testCaseSelfCalls collect: #selector) 
 ]
 
 { #category : 'building' }

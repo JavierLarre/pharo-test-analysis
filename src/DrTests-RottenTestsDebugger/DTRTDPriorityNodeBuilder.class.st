@@ -16,11 +16,11 @@ DTRTDPriorityNodeBuilder >> nodeFrom: aTestCaseViewModel [
 		subResults: { 
 			self treeNode 
 				subResults: (self class superclass new 
-					nodesFrom: aTestCaseViewModel lowerPriorityCases) asOrderedCollection;
+					nodesFrom: aTestCaseViewModel lowerPriorityCases);
 				name: 'Is lower priority than'; yourself.
 			self treeNode 
 				subResults: (self class superclass new 
-					nodesFrom: aTestCaseViewModel higherPriorityCases ) asOrderedCollection;
+					nodesFrom: aTestCaseViewModel higherPriorityCases );
 				name: 'Is higher priority than'; yourself.
 		 } asOrderedCollection;
 		yourself
