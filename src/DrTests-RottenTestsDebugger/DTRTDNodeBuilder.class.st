@@ -16,7 +16,7 @@ DTRTDNodeBuilder >> buildNode: aTestCaseTreeNode from: aTestCaseViewModel [
 { #category : 'utilities' }
 DTRTDNodeBuilder >> groupedTestCasesByClass: testCaseViewModels [
 
-	^ testCaseViewModels groupedBy: [ :testCaseViewModel | testCaseViewModel testCase class ]
+	^ testCaseViewModels groupedBy: [ :testCaseViewModel | testCaseViewModel testMethod methodClass ]
 ]
 
 { #category : 'factory' }

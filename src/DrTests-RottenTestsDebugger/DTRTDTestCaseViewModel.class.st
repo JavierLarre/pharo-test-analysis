@@ -6,7 +6,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'messages',
-		'testCase',
 		'testMethod'
 	],
 	#category : 'DrTests-RottenTestsDebugger-DTOs',
@@ -40,21 +39,9 @@ DTRTDTestCaseViewModel >> printOn: aStream [
 	super printOn: aStream.
 	aStream 
 		<< ': ';
-		print: (testMethod ifNil: [ testCase ]);
+		print: testMethod;
 		<< ', '.
 	messages printElementsOn: aStream. 
-]
-
-{ #category : 'accessing' }
-DTRTDTestCaseViewModel >> testCase [
-
-	^ testCase
-]
-
-{ #category : 'accessing' }
-DTRTDTestCaseViewModel >> testCase: anObject [
-
-	testCase := anObject
 ]
 
 { #category : 'accessing' }

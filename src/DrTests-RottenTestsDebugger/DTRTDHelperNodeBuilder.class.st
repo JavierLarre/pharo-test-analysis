@@ -13,5 +13,5 @@ Class {
 DTRTDHelperNodeBuilder >> buildNode: aTestCaseTreeNode from: aTestCaseViewModel [
 
 	aTestCaseTreeNode subResults do: [ :messageNode | 
-		messageNode browseMethod: aTestCaseViewModel testCase class >> messageNode message ]
+		messageNode browseMethod: aTestCaseViewModel testMethod methodClass >> messageNode message ]
 ]

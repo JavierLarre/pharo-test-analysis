@@ -29,7 +29,6 @@ DTRTDTestCaseVisitor class >> testCaseViewModelClass [
 DTRTDTestCaseVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
 	aTestCaseViewModel
-		testCase: aTestCase;
 		testMethod: (self testCaseMethod: aTestCase )
 ]
 
