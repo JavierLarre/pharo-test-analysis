@@ -9,7 +9,7 @@ Class {
 	#tag : 'Builders'
 }
 
-{ #category : 'building' }
+{ #category : 'factory' }
 DTRTDPriorityNodeBuilder >> nodeFrom: aTestCaseViewModel [
 
 	^ (super nodeFrom: aTestCaseViewModel)
@@ -23,5 +23,7 @@ DTRTDPriorityNodeBuilder >> nodeFrom: aTestCaseViewModel [
 					nodesFrom: aTestCaseViewModel higherPriorityCases );
 				name: 'Is higher priority than'; yourself.
 		 } asOrderedCollection;
+		subResultsAggregator: [ :subResults | 
+			aTestCaseViewModel lowerPriorityCases size + aTestCaseViewModel higherPriorityCases size ] ;
 		yourself
 ]
