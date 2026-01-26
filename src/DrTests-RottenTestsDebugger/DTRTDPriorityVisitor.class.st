@@ -4,9 +4,6 @@ I build the view model with `DTRTDTestCasePriorities`
 Class {
 	#name : 'DTRTDPriorityVisitor',
 	#superclass : 'DTRTDMessagesVisitor',
-	#instVars : [
-		'testCases'
-	],
 	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'Visitors'
@@ -19,7 +16,7 @@ DTRTDPriorityVisitor class >> testCaseViewModelClass [
 ]
 
 { #category : 'building' }
-DTRTDPriorityVisitor >> buildTestCasePriorities: aTestCasePriorities [
+DTRTDPriorityVisitor >> addPrioritiesTo: aTestCasePriorities [
 
 	aTestCasePriorities 
 		higherPriorityCases: (self buildTestCasesFrom: 
@@ -48,5 +45,5 @@ DTRTDPriorityVisitor >> buildViewModel: aViewModel [
 DTRTDPriorityVisitor >> visitTestSuite: aTestSuite [
 
 	super visitTestSuite: aTestSuite.
-	testCasesViewModels do: [ :testCase | self buildTestCasePriorities: testCase ]
+	testCasesViewModels do: [ :testCase | self addPrioritiesTo: testCase ]
 ]
