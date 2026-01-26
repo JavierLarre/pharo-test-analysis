@@ -13,11 +13,29 @@ Class {
 	#tag : 'Visitors'
 }
 
+{ #category : 'as yet unclassified' }
+DTRTDPriorityVisitorTest >> fixtureClass [
+
+	^ DTRTDFixture
+]
+
+{ #category : 'as yet unclassified' }
+DTRTDPriorityVisitorTest >> priorityTestCase: aSelector [
+
+	^ viewModel testCasesPriorities detect: [ :priorityTestCase | 
+		priorityTestCase testMethod = (self fixtureClass >> aSelector ) ]
+]
+
 { #category : 'running' }
 DTRTDPriorityVisitorTest >> setUp [
 	super setUp.
 
 	DTRTDFixture superclass: TestCase.
+	viewModel := DTRTDViewModel new.
+	visitor := DTRTDPriorityVisitor new
+		visit: self fixtureClass suite;
+		buildViewModel: viewModel;
+		yourself.
 ]
 
 { #category : 'running' }
@@ -30,10 +48,9 @@ DTRTDPriorityVisitorTest >> tearDown [
 { #category : 'tests' }
 DTRTDPriorityVisitorTest >> testEmptyMethodsAreIgnored [
 
-	viewModel := DTRTDViewModel new.
-	visitor := RTDMethodVisitor new.
-	visitor 
-		analyzeMethod: DTRTDFixture >> #testMethod.
+	| emptyMethod |
+	emptyMethod := self fixtureClass >> #emptyMethod.
 	self
-		assert: (visitor methodsSelfCalls includesKey: DTRTDFixture >> #emptyMethod)
+		deny: ((self priorityTestCase: #testMethod) higherPriorityCases anySatisfy: [ :testCaseViewModel |
+			testCaseViewModel testMethod = emptyMethod ])
 ]
