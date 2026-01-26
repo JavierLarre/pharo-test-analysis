@@ -9,12 +9,6 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'factory' }
-DTRTDHelperVisitor class >> methodVisitorClass [
-
-	^ RTDHelperVisitor 
-]
-
 { #category : 'building' }
 DTRTDHelperVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
@@ -36,4 +30,10 @@ DTRTDHelperVisitor >> initialize [
 	
 	super initialize.
 	methodVisitor helperSelectors: TAssertable selectors
+]
+
+{ #category : 'factory' }
+DTRTDHelperVisitor >> methodVisitorClass [
+
+	^ RTDHelperVisitor 
 ]

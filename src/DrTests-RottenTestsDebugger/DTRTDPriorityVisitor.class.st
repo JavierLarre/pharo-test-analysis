@@ -9,12 +9,6 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'factory' }
-DTRTDPriorityVisitor class >> testCaseViewModelClass [
-
-	^ DTRTDTestCasePriorities 
-]
-
 { #category : 'building' }
 DTRTDPriorityVisitor >> addPrioritiesTo: aTestCasePriorities [
 
@@ -42,6 +36,12 @@ DTRTDPriorityVisitor >> buildTestCasesFrom: compiledMethods [
 DTRTDPriorityVisitor >> buildViewModel: aViewModel [
 
 	aViewModel testCasesPriorities: testCasesViewModels 
+]
+
+{ #category : 'factory' }
+DTRTDPriorityVisitor >> testCaseViewModelClass [
+
+	^ DTRTDTestCasePriorities 
 ]
 
 { #category : 'visiting' }

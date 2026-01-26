@@ -9,12 +9,6 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'factory' }
-DTRTDSelfMethodsVisitor class >> methodVisitorClass [
-
-	^ RTDMethodVisitor 
-]
-
 { #category : 'building' }
 DTRTDSelfMethodsVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
@@ -30,4 +24,10 @@ DTRTDSelfMethodsVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCa
 DTRTDSelfMethodsVisitor >> buildViewModel: aViewModel [
 
 	aViewModel testCasesSelfSentMethods: (self filterEmptyMessages: testCasesViewModels )
+]
+
+{ #category : 'factory' }
+DTRTDSelfMethodsVisitor >> methodVisitorClass [
+
+	^ RTDMethodVisitor 
 ]

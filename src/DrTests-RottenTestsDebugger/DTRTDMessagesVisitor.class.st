@@ -9,12 +9,6 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'factory' }
-DTRTDMessagesVisitor class >> methodVisitorClass [
-
-	^ RTDMessageVisitor
-]
-
 { #category : 'building' }
 DTRTDMessagesVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
@@ -53,7 +47,13 @@ DTRTDMessagesVisitor >> initialize [
 			bannedMessages: TAssertable selectors asSet;
 			yourself).
 	testCasesViewModels := SortedCollection new
-		                     sort: [ :testCaseMessages1 :testCaseMessages2 |
-			                     self compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 ];
-		                     yourself
+		sort: [ :testCaseMessages1 :testCaseMessages2 |
+			self compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 ];
+		yourself
+]
+
+{ #category : 'factory' }
+DTRTDMessagesVisitor >> methodVisitorClass [
+
+	^ RTDMessageVisitor
 ]

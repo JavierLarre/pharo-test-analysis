@@ -13,18 +13,6 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'factory' }
-DTRTDTestCaseVisitor class >> methodVisitorClass [
-
-	^ self subclassResponsibility 
-]
-
-{ #category : 'factory' }
-DTRTDTestCaseVisitor class >> testCaseViewModelClass [
-
-	^ DTRTDTestCaseViewModel
-]
-
 { #category : 'building' }
 DTRTDTestCaseVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
@@ -47,7 +35,7 @@ DTRTDTestCaseVisitor >> filterEmptyMessages: aMessagesCollection [
 DTRTDTestCaseVisitor >> initialize [
 
 	super initialize.
-	methodVisitor := self class methodVisitorClass new.
+	methodVisitor := self methodVisitorClass new.
 	testCasesViewModels := OrderedCollection new.
 ]
 
@@ -61,6 +49,12 @@ DTRTDTestCaseVisitor >> methodVisitor [
 DTRTDTestCaseVisitor >> methodVisitor: anObject [
 
 	methodVisitor := anObject
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseVisitor >> methodVisitorClass [
+
+	^ self subclassResponsibility 
 ]
 
 { #category : 'printing' }
@@ -81,12 +75,18 @@ DTRTDTestCaseVisitor >> testCaseMethod: aTestCase [
 	^ aTestCase class >> aTestCase selector
 ]
 
+{ #category : 'factory' }
+DTRTDTestCaseVisitor >> testCaseViewModelClass [
+
+	^ DTRTDTestCaseViewModel
+]
+
 { #category : 'visiting' }
 DTRTDTestCaseVisitor >> visitTestCase: aTestCase [
 
 	| testCaseViewModel |
 	methodVisitor analyzeMethod: (self testCaseMethod: aTestCase).
-	testCaseViewModel := self class testCaseViewModelClass new.
+	testCaseViewModel := self testCaseViewModelClass new.
 	self buildTestCaseViewModel: testCaseViewModel withTestCase: aTestCase.
 	testCasesViewModels add: testCaseViewModel
 ]
