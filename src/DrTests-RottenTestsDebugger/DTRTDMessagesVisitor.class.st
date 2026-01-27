@@ -44,7 +44,7 @@ DTRTDMessagesVisitor >> initialize [
 	super initialize.
 	methodVisitor 
 		messages: (MaFilteredMessages new 
-			bannedMessages: TAssertable selectors asSet;
+			bannedMessages: (TAssertable selectors union: { #new } ) asSet;
 			yourself).
 	methodViewModels := SortedCollection new
 		sort: [ :testCaseMessages1 :testCaseMessages2 |
