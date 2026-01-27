@@ -16,8 +16,8 @@ Class {
 DTRTDTestCaseViewModelTest >> testPrintOn [
 
 	| result |
-	testCaseViewModel := DTRTDTestCaseViewModel new messages: { #a. #b. #c } asSet.
+	testCaseViewModel := DTRTDMethodViewModel new messages: { #a. #b. #c } asSet.
 	result := String streamContents: [ :s | testCaseViewModel printOn: s ].
-	({ 'a DTRTDTestCaseViewModel'. nil. #a. #b. #c } collect: #asString)
+	({ 'a DTRTDMethodViewModel'. nil. #a. #b. #c } collect: #asString)
 		do: [ :subString | self assert: (result includesSubstring: subString) ]
 ]

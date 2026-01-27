@@ -19,10 +19,10 @@ DTRTDHelperVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTest
 		messages: (compiledMethods collect: #selector)
 ]
 
-{ #category : 'build' }
+{ #category : 'building' }
 DTRTDHelperVisitor >> buildViewModel: aViewModel [
 
-	aViewModel testCasesHelpers: (self filterEmptyMessages: testCasesViewModels )
+	aViewModel helpers: (self filterEmptyMessages: methodViewModels )
 ]
 
 { #category : 'initialization' }
