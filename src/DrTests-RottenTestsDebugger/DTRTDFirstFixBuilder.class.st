@@ -13,9 +13,15 @@ Class {
 DTRTDFirstFixBuilder >> nodeFrom: aMethodViewModel [
 
 	^ (super nodeFrom: aMethodViewModel)
-		name: aMethodViewModel compiledMethod selector, ' is more important than:';
-		subResults: (self class superclass new "small hack to prevent using this nodeFrom"
-				nodesFrom: aMethodViewModel lowerPriorityMethods);
+		subResults: {
+			(super nodeFrom: aMethodViewModel) 
+				name: 'messages'; yourself.
+			self treeNode
+				name: 'is more important than:'; 
+				subResults: (self class superclass new "small hack to prevent using this nodeFrom"
+					nodesFrom: aMethodViewModel lowerPriorityMethods);
+				yourself
+		} asOrderedCollection;
 		subResultsAggregator: [ :subResults | 
 			aMethodViewModel lowerPriorityMethods size ];
 		yourself
