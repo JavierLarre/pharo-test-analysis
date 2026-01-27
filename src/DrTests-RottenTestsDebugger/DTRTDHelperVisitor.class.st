@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : 'building' }
-DTRTDHelperVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
+DTRTDHelperVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
 
 	| compiledMethods |
-	super buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase.
+	super buildMethodViewModel: aMethodViewModel withTestCase: aTestCase.
 	compiledMethods := methodVisitor helpers at: (self testCaseMethod: aTestCase).
-	aTestCaseViewModel
+	aMethodViewModel
 		messages: (compiledMethods collect: #selector)
 ]
 

@@ -2,11 +2,11 @@
 I store the messages and the compiled method of a test case
 "
 Class {
-	#name : 'DTRTDTestCaseViewModel',
+	#name : 'DTRTDMethodViewModel',
 	#superclass : 'Object',
 	#instVars : [
 		'messages',
-		'testMethod'
+		'compiledMethod'
 	],
 	#category : 'DrTests-RottenTestsDebugger-DTOs',
 	#package : 'DrTests-RottenTestsDebugger',
@@ -14,51 +14,51 @@ Class {
 }
 
 { #category : 'comparing' }
-DTRTDTestCaseViewModel >> <= aTestCaseMessages [
+DTRTDMethodViewModel >> <= aTestCaseMessages [
 	
 	messages size = aTestCaseMessages messages size
 		ifFalse: [ ^ messages size < aTestCaseMessages messages size ] .
-	^ testMethod selector <= aTestCaseMessages testMethod selector 
+	^ compiledMethod selector <= aTestCaseMessages compiledMethod selector 
+]
+
+{ #category : 'accessing' }
+DTRTDMethodViewModel >> compiledMethod [
+
+	^ compiledMethod
+]
+
+{ #category : 'accessing' }
+DTRTDMethodViewModel >> compiledMethod: aCompiledMethod [
+
+	compiledMethod := aCompiledMethod 
 ]
 
 { #category : 'initialization' }
-DTRTDTestCaseViewModel >> initialize [
+DTRTDMethodViewModel >> initialize [
 
 	super initialize.
 	messages := #().
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseViewModel >> messages [
+DTRTDMethodViewModel >> messages [
 
 	^ messages
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseViewModel >> messages: anObject [
+DTRTDMethodViewModel >> messages: anObject [
 
 	messages := anObject
 ]
 
 { #category : 'printing' }
-DTRTDTestCaseViewModel >> printOn: aStream [
+DTRTDMethodViewModel >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream 
 		<< ': ';
-		print: testMethod;
+		print: compiledMethod;
 		<< ', '.
 	messages printElementsOn: aStream. 
-]
-
-{ #category : 'accessing' }
-DTRTDTestCaseViewModel >> testMethod [
-
-	^ testMethod
-]
-
-{ #category : 'accessing' }
-DTRTDTestCaseViewModel >> testMethod: aCompiledMethod [
-
-	testMethod := aCompiledMethod 
 ]

@@ -5,10 +5,10 @@ Class {
 	#name : 'DTRTDViewModel',
 	#superclass : 'Object',
 	#instVars : [
-		'testCasesMessages',
-		'testCasesHelpers',
-		'testCasesSelfSentMethods',
-		'testCasesPriorities'
+		'messages',
+		'helpers',
+		'selfSentMethods',
+		'priorities'
 	],
 	#category : 'DrTests-RottenTestsDebugger-DTOs',
 	#package : 'DrTests-RottenTestsDebugger',
@@ -16,49 +16,49 @@ Class {
 }
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesHelpers [
+DTRTDViewModel >> helpers [
 
-	^ testCasesHelpers
+	^ helpers
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesHelpers: anObject [
+DTRTDViewModel >> helpers: anObject [
 
-	testCasesHelpers := anObject
+	helpers := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesMessages [
+DTRTDViewModel >> messages [
 
-	^ testCasesMessages
+	^ messages
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesMessages: anObject [
+DTRTDViewModel >> messages: anObject [
 
-	testCasesMessages := anObject
+	messages := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesPriorities [
+DTRTDViewModel >> priorities [
 
-	^ testCasesPriorities
+	^ priorities
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesPriorities: anObject [
+DTRTDViewModel >> priorities: anObject [
 
-	testCasesPriorities := anObject
+	priorities := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesSelfSentMethods [
+DTRTDViewModel >> selfSentMethods [
 
-	^ testCasesSelfSentMethods 
+	^ selfSentMethods 
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> testCasesSelfSentMethods: anObject [
+DTRTDViewModel >> selfSentMethods: anObject [
 
-	testCasesSelfSentMethods := anObject 
+	selfSentMethods := anObject 
 ]

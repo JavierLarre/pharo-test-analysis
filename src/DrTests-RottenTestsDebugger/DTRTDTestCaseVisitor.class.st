@@ -6,7 +6,7 @@ Class {
 	#superclass : 'SUnitVisitor',
 	#instVars : [
 		'methodVisitor',
-		'testCasesViewModels'
+		'methodViewModels'
 	],
 	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
@@ -14,10 +14,10 @@ Class {
 }
 
 { #category : 'building' }
-DTRTDTestCaseVisitor >> buildTestCaseViewModel: aTestCaseViewModel withTestCase: aTestCase [
+DTRTDTestCaseVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
 
-	aTestCaseViewModel
-		testMethod: (self testCaseMethod: aTestCase )
+	aMethodViewModel
+		compiledMethod: (self testCaseMethod: aTestCase )
 ]
 
 { #category : 'building' }
@@ -26,9 +26,9 @@ DTRTDTestCaseVisitor >> buildViewModel: aViewModel [
 ]
 
 { #category : 'utilities' }
-DTRTDTestCaseVisitor >> filterEmptyMessages: aMessagesCollection [
+DTRTDTestCaseVisitor >> filterEmptyMessages: aMethodViewModelCollection [
 
-	^ aMessagesCollection reject: [ :testMessages | testMessages messages isEmpty ]
+	^ aMethodViewModelCollection reject: [ :aMethodViewModel | aMethodViewModel messages isEmpty ]
 ]
 
 { #category : 'initialization' }
@@ -36,7 +36,13 @@ DTRTDTestCaseVisitor >> initialize [
 
 	super initialize.
 	methodVisitor := self methodVisitorClass new.
-	testCasesViewModels := OrderedCollection new.
+	methodViewModels := OrderedCollection new.
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseVisitor >> methodViewModelClass [
+
+	^ DTRTDMethodViewModel
 ]
 
 { #category : 'accessing' }
@@ -65,7 +71,7 @@ DTRTDTestCaseVisitor >> printOn: aStream [
 		<< ' visitor: ';
 		print: methodVisitor;
 		<< ', testCases: ';
-		nextPutAll: testCasesViewModels;
+		nextPutAll: methodViewModels;
 		<< ')'
 ]
 
@@ -75,18 +81,12 @@ DTRTDTestCaseVisitor >> testCaseMethod: aTestCase [
 	^ aTestCase class >> aTestCase selector
 ]
 
-{ #category : 'factory' }
-DTRTDTestCaseVisitor >> testCaseViewModelClass [
-
-	^ DTRTDTestCaseViewModel
-]
-
 { #category : 'visiting' }
 DTRTDTestCaseVisitor >> visitTestCase: aTestCase [
 
 	| testCaseViewModel |
 	methodVisitor analyzeMethod: (self testCaseMethod: aTestCase).
-	testCaseViewModel := self testCaseViewModelClass new.
-	self buildTestCaseViewModel: testCaseViewModel withTestCase: aTestCase.
-	testCasesViewModels add: testCaseViewModel
+	testCaseViewModel := self methodViewModelClass new.
+	self buildMethodViewModel: testCaseViewModel withTestCase: aTestCase.
+	methodViewModels add: testCaseViewModel
 ]

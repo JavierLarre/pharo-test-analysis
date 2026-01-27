@@ -32,12 +32,15 @@ DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
 	| viewModel |
 	viewModel := DTRTDViewModel new.
-	{ DTRTDHelperVisitor . DTRTDMessagesVisitor . DTRTDSelfMethodsVisitor . DTRTDPriorityVisitor } 
-		do: [ :visitorClass | 
-			visitorClass new 
-				visit: aTestSuite; 
+	{
+		DTRTDHelperVisitor.
+		DTRTDMessagesVisitor.
+		DTRTDSelfMethodsVisitor.
+		DTRTDFirstFixVisitor } do: [ :visitorClass |
+			visitorClass new
+				visit: aTestSuite;
 				buildViewModel: viewModel ].
-	^ viewModel 
+	^ viewModel
 ]
 
 { #category : 'accessing' }

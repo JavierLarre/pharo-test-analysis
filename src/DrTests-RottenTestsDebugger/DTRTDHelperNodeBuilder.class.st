@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : 'hooks' }
-DTRTDHelperNodeBuilder >> buildNode: aTestCaseTreeNode from: aTestCaseViewModel [
+DTRTDHelperNodeBuilder >> buildNode: aTreeNode from: aMethodViewModel [
 
-	aTestCaseTreeNode subResults do: [ :messageNode | 
-		messageNode browseMethod: aTestCaseViewModel testMethod methodClass >> messageNode message ]
+	aTreeNode subResults do: [ :messageNode | 
+		messageNode browseMethod: aMethodViewModel compiledMethod methodClass >> messageNode message ]
 ]

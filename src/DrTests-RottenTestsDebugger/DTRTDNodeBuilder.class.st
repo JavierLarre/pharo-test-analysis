@@ -10,49 +10,49 @@ Class {
 }
 
 { #category : 'hooks' }
-DTRTDNodeBuilder >> buildNode: aTestCaseTreeNode from: aTestCaseViewModel [
+DTRTDNodeBuilder >> buildNode: aTreeNode from: aMethodViewModel [
 ]
 
 { #category : 'utilities' }
-DTRTDNodeBuilder >> groupedTestCasesByClass: testCaseViewModels [
+DTRTDNodeBuilder >> groupedTestCasesByClass: methodViewModels [
 
-	^ testCaseViewModels groupedBy: [ :testCaseViewModel | testCaseViewModel testMethod methodClass ]
+	^ methodViewModels groupedBy: [ :methodViewModel | methodViewModel compiledMethod methodClass ]
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodeFrom: aTestCaseViewModel [
+DTRTDNodeBuilder >> nodeFrom: aMethodViewModel [
 
 	| treeNode |
 	treeNode := self treeNode
-		            subResults: (DTRTDMessageNode toNodes: aTestCaseViewModel messages);
-		            name: aTestCaseViewModel testMethod selector;
-						browseBlock: [ aTestCaseViewModel testMethod drTestsBrowse ];
+		            subResults: (DTRTDMessageNode toNodes: aMethodViewModel messages);
+		            name: aMethodViewModel compiledMethod selector;
+						browseBlock: [ aMethodViewModel compiledMethod drTestsBrowse ];
 		            yourself.
-	self buildNode: treeNode from: aTestCaseViewModel.
+	self buildNode: treeNode from: aMethodViewModel.
 	^ treeNode
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodeGroupedByClasses: testCasesMessages [
+DTRTDNodeBuilder >> nodeGroupedByClasses: methodViewModels [
 
 	^ self treeNode
-		subResults: (self nodesByClass: testCasesMessages );
+		subResults: (self nodesByClass: methodViewModels );
 		yourself
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodesByClass: testCaseViewModels [
+DTRTDNodeBuilder >> nodesByClass: methodViewModels [
 
-	^ (self groupedTestCasesByClass: testCaseViewModels ) associations collect: [ :assoc | 
+	^ (self groupedTestCasesByClass: methodViewModels ) associations collect: [ :assoc | 
 			self treeNode
 				subResults: (self nodesFrom: assoc value);
 				name: assoc key name; yourself ]
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodesFrom: testCaseViewModels [
+DTRTDNodeBuilder >> nodesFrom: methodViewModels [
 
-	^ testCaseViewModels collect: [ :testCaseViewModel |
+	^ methodViewModels collect: [ :testCaseViewModel |
 			self nodeFrom: testCaseViewModel ]
 ]
 

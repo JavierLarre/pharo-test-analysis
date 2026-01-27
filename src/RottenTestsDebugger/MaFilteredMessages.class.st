@@ -18,6 +18,12 @@ MaFilteredMessages >> at: aCompiledMethod put: aMessageSet [
 ]
 
 { #category : 'accessing' }
+MaFilteredMessages >> bannedMessages [
+
+	^ bannedMessages 
+]
+
+{ #category : 'accessing' }
 MaFilteredMessages >> bannedMessages: aMessageSet [
 
 	bannedMessages := aMessageSet 
