@@ -14,7 +14,7 @@ RTDMethodVisitorTest >> analyzeMethodFromFixture: aSelector [
 	visitor analyzeMethod: ( self fixtureClass >> aSelector )
 ]
 
-{ #category : 'factory' }
+{ #category : 'accessing' }
 RTDMethodVisitorTest >> fixtureClass [
 
 	^ RTDVisitorFixture

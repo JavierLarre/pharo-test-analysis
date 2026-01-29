@@ -10,7 +10,7 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'utilities' }
+{ #category : 'accessing' }
 DTRTDTestCaseVisitorTest >> fixtureClass [
 
 	^ DTRTDFixture
