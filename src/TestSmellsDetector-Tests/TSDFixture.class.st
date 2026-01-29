@@ -1,6 +1,6 @@
 Class {
 	#name : 'TSDFixture',
-	#superclass : 'Object',
+	#superclass : 'TSDSuperclassFixture',
 	#instVars : [
 		'x'
 	],
@@ -51,6 +51,7 @@ TSDFixture >> testUsesInstanceVar [
 { #category : 'accessing' }
 TSDFixture >> x [
 
+	1 asFloat.
 	^ x
 ]
 
