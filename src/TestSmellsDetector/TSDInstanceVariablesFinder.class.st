@@ -1,14 +1,32 @@
+"
+I am an abstract visitor for finding variables in program nodes
+"
 Class {
 	#name : 'TSDInstanceVariablesFinder',
-	#superclass : 'TSDVariablesFinder',
+	#superclass : 'RTFSelfCallVisitorInterpreter',
+	#instVars : [
+		'foundVariables'
+	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
 }
 
-{ #category : 'visiting' }
-TSDInstanceVariablesFinder >> visitVariableNode: aVariableNode [
+{ #category : 'private' }
+TSDInstanceVariablesFinder >> analyze [
 
-	aVariableNode parent isAssignment 
-		ifFalse: [ self foundVariables add: aVariableNode name ].
-	super visitVariableNode: aVariableNode 
+	super analyze.
+	self visit: selfSentMethod parseTree
+]
+
+{ #category : 'accessing' }
+TSDInstanceVariablesFinder >> foundVariables [
+
+	^ foundVariables ifNil: [ foundVariables := Set new ]
+]
+
+{ #category : 'initialization' }
+TSDInstanceVariablesFinder >> initialize [ 
+
+	super initialize.
+	considerClassesThat := [ :class | class inheritsFrom: TestCase ]
 ]

@@ -3,27 +3,15 @@ A TSDAssignmentFinderTest is a test class for testing the behavior of TSDAssignm
 "
 Class {
 	#name : 'TSDAssignmentsFinderTest',
-	#superclass : 'TSDFixtureTest',
-	#instVars : [
-		'finder'
-	],
+	#superclass : 'TSDInstanceVariablesFinderTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }
 
 { #category : 'as yet unclassified' }
-TSDAssignmentsFinderTest >> fixtureClass [
+TSDAssignmentsFinderTest >> finderClass [
 
-	^ TSDFixture 
-]
-
-{ #category : 'running' }
-TSDAssignmentsFinderTest >> setUp [
-	super setUp.
-
-	finder := TSDAssignmentsFinder new
-		selfClass: self fixtureClass; 
-		yourself
+	^ TSDAssignInstancesFinder
 ]
 
 { #category : 'tests' }
@@ -41,10 +29,7 @@ TSDAssignmentsFinderTest >> testFindAssignmentVariable [
 { #category : 'tests' }
 TSDAssignmentsFinderTest >> testIgnoresNonInstanceVariables [
 
-	finder
-		visit: (self fixtureClass >> #testDoesNotUsesInstanceVar ) parseTree. 
-	
 	self 
-		assertCollection: finder foundVariables 
-		equals: Set new
+		visit: #testDoesNotUsesInstanceVar;
+		assertCollection: finder foundVariables equals: Set new
 ]

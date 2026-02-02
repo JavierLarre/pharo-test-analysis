@@ -1,3 +1,6 @@
+"
+I am a detector for test methods that does not use all instance variables set up in a setUp method from the same class
+"
 Class {
 	#name : 'TSDUselessSetupDetector',
 	#superclass : 'Object',
@@ -15,7 +18,7 @@ Class {
 { #category : 'accessing' }
 TSDUselessSetupDetector >> assignmentFinder [
 
-	^ assignmentsFinder ifNil: [ assignmentsFinder := TSDAssignmentsFinder new ]
+	^ assignmentsFinder ifNil: [ assignmentsFinder := TSDAssignInstancesFinder new ]
 ]
 
 { #category : 'accessing' }
@@ -31,7 +34,7 @@ TSDUselessSetupDetector >> doesUseSetUp [
 	^ (self setupVariables difference: self foundInstanceVariables) isEmpty
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TSDUselessSetupDetector >> foundInstanceVariables [
 
 	^ self instanceVariablesFinder
@@ -42,7 +45,7 @@ TSDUselessSetupDetector >> foundInstanceVariables [
 { #category : 'accessing' }
 TSDUselessSetupDetector >> instanceVariablesFinder [
 
-	^ instanceVariablesFinder ifNil: [ instanceVariablesFinder := TSDInstanceVariablesFinder new ]
+	^ instanceVariablesFinder ifNil: [ instanceVariablesFinder := TSDAccessInstancesFinder new ]
 ]
 
 { #category : 'accessing' }
@@ -89,7 +92,7 @@ TSDUselessSetupDetector >> setupSelector: aSelector [
 	^ setupSelector := aSelector
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TSDUselessSetupDetector >> setupVariables [
 
 	^ self assignmentFinder

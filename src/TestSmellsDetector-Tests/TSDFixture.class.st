@@ -40,7 +40,9 @@ TSDFixture >> testDoesNotUsesInstanceVar [
 { #category : 'tests' }
 TSDFixture >> testIsConnectedToInstanceVar [
 
-	self assert: self x = 0; testUsesInstanceVar 
+	self 
+		assert: self x = 0; 
+		testUsesInstanceVar 
 ]
 
 { #category : 'tests' }

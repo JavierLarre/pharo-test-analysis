@@ -5,8 +5,8 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
-{ #category : 'accessing' }
-TSDFixtureTest >> fixtureClass [ 
+{ #category : 'as yet unclassified' }
+TSDFixtureTest >> fixtureClass [
 	
 	^ TSDFixture 
 ]
