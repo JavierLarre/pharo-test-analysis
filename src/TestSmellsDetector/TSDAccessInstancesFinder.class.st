@@ -1,14 +1,12 @@
 Class {
 	#name : 'TSDAccessInstancesFinder',
-	#superclass : 'TSDInstanceVariablesFinder',
+	#superclass : 'TSDAssignInstancesFinder',
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
 }
 
-{ #category : 'visiting' }
-TSDAccessInstancesFinder >> visitVariableNode: aVariableNode [
+{ #category : 'testing' }
+TSDAccessInstancesFinder >> isValid: aVariableNode [
 
-	aVariableNode parent isAssignment not & aVariableNode isInstanceVariable  
-		ifTrue: [ self foundVariables add: aVariableNode name ].
-	super visitVariableNode: aVariableNode 
+	^ (super isValid: aVariableNode) not 
 ]

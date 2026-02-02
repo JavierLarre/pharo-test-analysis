@@ -1,3 +1,6 @@
+"
+I find instance variables that have been assigned a value
+"
 Class {
 	#name : 'TSDAssignInstancesFinder',
 	#superclass : 'TSDInstanceVariablesFinder',
@@ -5,10 +8,8 @@ Class {
 	#package : 'TestSmellsDetector'
 }
 
-{ #category : 'visiting' }
-TSDAssignInstancesFinder >> visitVariableNode: aVariableNode [
-
-	aVariableNode parent isAssignment & aVariableNode isInstanceVariable 
-		ifTrue: [ self foundVariables add: aVariableNode name ].
-	super visitVariableNode: aVariableNode 
+{ #category : 'testing' }
+TSDAssignInstancesFinder >> isValid: aVariableNode [
+	
+	^ aVariableNode parent isAssignment 
 ]

@@ -24,9 +24,16 @@ TSDInstanceVariablesFinder >> foundVariables [
 	^ foundVariables ifNil: [ foundVariables := Set new ]
 ]
 
-{ #category : 'initialization' }
-TSDInstanceVariablesFinder >> initialize [ 
+{ #category : 'testing' }
+TSDInstanceVariablesFinder >> isValid: aVariableNode [
 
-	super initialize.
-	considerClassesThat := [ :class | class inheritsFrom: TestCase ]
+	^ true
+]
+
+{ #category : 'visiting' }
+TSDInstanceVariablesFinder >> visitVariableNode: aVariableNode [
+
+	(aVariableNode isInstanceVariable and: [ self isValid: aVariableNode ] )
+		ifTrue: [ self foundVariables add: aVariableNode name ].
+	super visitVariableNode: aVariableNode 
 ]

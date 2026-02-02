@@ -7,18 +7,24 @@ Class {
 	#instVars : [
 		'selector',
 		'setupSelector',
-		'instanceVariablesFinder',
 		'selfClass',
-		'assignmentsFinder'
+		'assignsFinder',
+		'accessesFinder'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
 }
 
 { #category : 'accessing' }
-TSDUselessSetupDetector >> assignmentFinder [
+TSDUselessSetupDetector >> accessesFinder [
 
-	^ assignmentsFinder ifNil: [ assignmentsFinder := TSDAssignInstancesFinder new ]
+	^ accessesFinder ifNil: [ accessesFinder := TSDAccessInstancesFinder new ]
+]
+
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> assignsFinder [
+
+	^ assignsFinder ifNil: [ assignsFinder := TSDAssignInstancesFinder new ]
 ]
 
 { #category : 'testing' }
@@ -30,15 +36,9 @@ TSDUselessSetupDetector >> doesUseSetUp [
 { #category : 'accessing' }
 TSDUselessSetupDetector >> foundInstanceVariables [
 
-	^ self instanceVariablesFinder
-		  visit: self rootNode;
-		  foundVariables 
-]
-
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> instanceVariablesFinder [
-
-	^ instanceVariablesFinder ifNil: [ instanceVariablesFinder := TSDAccessInstancesFinder new ]
+	^ self 
+		variables: selector 
+		from: self accessesFinder 
 ]
 
 { #category : 'accessing' }
@@ -69,8 +69,8 @@ TSDUselessSetupDetector >> selfClass [
 TSDUselessSetupDetector >> selfClass: aClass [
 
 	selfClass := aClass.
-	self assignmentFinder selfClass: aClass.
-	self instanceVariablesFinder selfClass: aClass 
+	self assignsFinder selfClass: aClass.
+	self accessesFinder selfClass: aClass 
 ]
 
 { #category : 'accessing' }
@@ -88,7 +88,15 @@ TSDUselessSetupDetector >> setupSelector: aSelector [
 { #category : 'accessing' }
 TSDUselessSetupDetector >> setupVariables [
 
-	^ self assignmentFinder
-		  visit: (self lookupNode: self setUpSelector);
+	^ self 
+		variables: self setUpSelector 
+		from: self assignsFinder
+]
+
+{ #category : 'private' }
+TSDUselessSetupDetector >> variables: aSelector from: aFinder [
+
+	^ aFinder
+		  visit: (self lookupNode: aSelector);
 		  foundVariables 
 ]
