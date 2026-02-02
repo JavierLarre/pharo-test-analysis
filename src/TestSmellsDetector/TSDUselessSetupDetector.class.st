@@ -21,13 +21,6 @@ TSDUselessSetupDetector >> assignmentFinder [
 	^ assignmentsFinder ifNil: [ assignmentsFinder := TSDAssignInstancesFinder new ]
 ]
 
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> considerClassesThat: aBlock [
-
-	self instanceVariablesFinder considerClassesThat: aBlock.
-	self assignmentFinder considerClassesThat: aBlock 
-]
-
 { #category : 'testing' }
 TSDUselessSetupDetector >> doesUseSetUp [
 

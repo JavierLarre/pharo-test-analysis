@@ -23,14 +23,7 @@ RTDMethodVisitorTest >> fixtureClass [
 { #category : 'running' }
 RTDMethodVisitorTest >> setUp [
 	super setUp.
-	visitor := RTDMethodVisitor new.
-	self fixtureClass superclass: TestCase 
-]
-
-{ #category : 'running' }
-RTDMethodVisitorTest >> tearDown [ 
-	self fixtureClass superclass: Object.
-	super tearDown 
+	visitor := RTDMethodVisitor new
 ]
 
 { #category : 'tests' }

@@ -1,6 +1,6 @@
 Class {
 	#name : 'TSDInstanceVariablesFinderTest',
-	#superclass : 'TSDFixtureTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'finder'
 	],
@@ -8,9 +8,15 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TSDInstanceVariablesFinderTest >> finderClass [
 	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+TSDInstanceVariablesFinderTest >> fixtureClass [
+	
+	^ TSDFixture 
 ]
 
 { #category : 'running' }

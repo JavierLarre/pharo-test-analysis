@@ -1,6 +1,9 @@
+"
+This class hierarchy is used as data (a TestCase) for TestSmellsDetector test cases.
+"
 Class {
 	#name : 'TSDFixture',
-	#superclass : 'TSDSuperclassFixture',
+	#superclass : 'Object',
 	#instVars : [
 		'x',
 		'variableSetUpInMethod'

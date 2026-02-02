@@ -8,7 +8,7 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TSDAccessInstancesFinderTest >> finderClass [
 
 	^ TSDAccessInstancesFinder

@@ -31,7 +31,6 @@ RTDMethodVisitor >> analyzeMethod: aCompiledMethod [
 RTDMethodVisitor >> initialize [ 
 
 	super initialize.
-	considerClassesThat := [ :class | class inheritsFrom: TestCase ].
 	methodsSelfCalls := Dictionary new.
 	foundMethods := OrderedCollection new.
 ]
