@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : 'accessing' }
-TSDAccessInstancesFinderTest >> finderClass [
+TSDAccessInstancesFinderTest >> finder [
 
-	^ TSDAccessInstancesFinder
+	^ self finderClass accessings
 ]
 
 { #category : 'tests' }

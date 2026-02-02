@@ -18,13 +18,13 @@ Class {
 { #category : 'accessing' }
 TSDUselessSetupDetector >> accessesFinder [
 
-	^ accessesFinder ifNil: [ accessesFinder := TSDAccessInstancesFinder new ]
+	^ accessesFinder ifNil: [ accessesFinder := TSDInstanceVariablesFinder accessings ]
 ]
 
 { #category : 'accessing' }
 TSDUselessSetupDetector >> assignsFinder [
 
-	^ assignsFinder ifNil: [ assignsFinder := TSDAssignInstancesFinder new ]
+	^ assignsFinder ifNil: [ assignsFinder := TSDInstanceVariablesFinder assignments ]
 ]
 
 { #category : 'testing' }

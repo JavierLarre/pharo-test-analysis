@@ -9,8 +9,14 @@ Class {
 }
 
 { #category : 'accessing' }
+TSDInstanceVariablesFinderTest >> finder [
+	
+	^ self subclassResponsibility 
+]
+
+{ #category : 'accessing' }
 TSDInstanceVariablesFinderTest >> finderClass [
-	^ self subclassResponsibility
+	^ TSDInstanceVariablesFinder 
 ]
 
 { #category : 'accessing' }
@@ -23,7 +29,7 @@ TSDInstanceVariablesFinderTest >> fixtureClass [
 TSDInstanceVariablesFinderTest >> setUp [
 	
 	super setUp.
-	finder := self finderClass new
+	finder := self finder
 		selfClass: self fixtureClass;
 		yourself
 ]

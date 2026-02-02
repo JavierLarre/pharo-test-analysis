@@ -5,11 +5,55 @@ Class {
 	#name : 'TSDInstanceVariablesFinder',
 	#superclass : 'RTFSelfCallVisitorInterpreter',
 	#instVars : [
-		'foundVariables'
+		'foundVariables',
+		'addVariablesSuchThat'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
 }
+
+{ #category : 'instance creation' }
+TSDInstanceVariablesFinder class >> accessings [
+
+	^ self
+		addVariablesSuchThat: [ :aVariableNode | aVariableNode parent isAssignment not ]
+]
+
+{ #category : 'instance creation' }
+TSDInstanceVariablesFinder class >> addVariablesSuchThat: aBlock [
+
+	^ self new 
+		addVariablesSuchThat: aBlock;
+		yourself
+]
+
+{ #category : 'instance creation' }
+TSDInstanceVariablesFinder class >> assignments [
+
+	^ self
+		addVariablesSuchThat: [ :aVariableNode | aVariableNode parent isAssignment ]
+]
+
+{ #category : 'instance creation' }
+TSDInstanceVariablesFinder class >> selfClass: aClass addVariablesSuchThat: aBlock [
+
+	^ self new 
+		selfClass: aClass;
+		addVariablesSuchThat: aBlock;
+		yourself
+]
+
+{ #category : 'accessing' }
+TSDInstanceVariablesFinder >> addVariablesSuchThat [
+
+	^ addVariablesSuchThat ifNil: [ addVariablesSuchThat := [ true ] ]
+]
+
+{ #category : 'testing' }
+TSDInstanceVariablesFinder >> addVariablesSuchThat: aBlock [
+
+	addVariablesSuchThat := aBlock 
+]
 
 { #category : 'private' }
 TSDInstanceVariablesFinder >> analyze [
@@ -27,7 +71,7 @@ TSDInstanceVariablesFinder >> foundVariables [
 { #category : 'testing' }
 TSDInstanceVariablesFinder >> isValid: aVariableNode [
 
-	^ true
+	^ addVariablesSuchThat cull: aVariableNode 
 ]
 
 { #category : 'visiting' }
