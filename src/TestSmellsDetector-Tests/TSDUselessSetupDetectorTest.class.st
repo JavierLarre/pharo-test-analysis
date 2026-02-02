@@ -3,7 +3,7 @@ An UselessSetupTest is a test class for testing the behavior of UselessSetup
 "
 Class {
 	#name : 'TSDUselessSetupDetectorTest',
-	#superclass : 'TestCase',
+	#superclass : 'TSDFixtureTest',
 	#instVars : [
 		'detector'
 	],
@@ -18,27 +18,14 @@ TSDUselessSetupDetectorTest >> doesUseSetUp: aSelector [
 		doesUseSetUp 
 ]
 
-{ #category : 'accessing' }
-TSDUselessSetupDetectorTest >> fixtureClass [
-
-	^ TSDFixture
-]
-
 { #category : 'running' }
 TSDUselessSetupDetectorTest >> setUp [
+	
 	super setUp.
-	TSDSuperclassFixture superclass: TestCase.
 	detector := TSDUselessSetupDetector new
 		considerClassesThat: [ :class | class inheritsFrom: TestCase ];
 		selfClass: self fixtureClass;
 		yourself.
-]
-
-{ #category : 'running' }
-TSDUselessSetupDetectorTest >> tearDown [
-
-	TSDSuperclassFixture superclass: Object.
-	super tearDown 
 ]
 
 { #category : 'tests' }

@@ -2,7 +2,8 @@ Class {
 	#name : 'TSDFixture',
 	#superclass : 'TSDSuperclassFixture',
 	#instVars : [
-		'x'
+		'x',
+		'variableSetUpInMethod'
 	],
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
@@ -11,7 +12,14 @@ Class {
 { #category : 'running' }
 TSDFixture >> setUp [
 
-	x := 0
+	x := 0.
+	self setUpVariableInMethod 
+]
+
+{ #category : 'running' }
+TSDFixture >> setUpVariableInMethod [
+
+	variableSetUpInMethod := 'woah'
 ]
 
 { #category : 'tests' }
@@ -32,7 +40,7 @@ TSDFixture >> testDoesNotUsesInstanceVar [
 { #category : 'tests' }
 TSDFixture >> testIsConnectedToInstanceVar [
 
-	self assert: self x = 0
+	self assert: self x = 0; testUsesInstanceVar 
 ]
 
 { #category : 'tests' }
@@ -45,13 +53,14 @@ TSDFixture >> testOnlyAssigns [
 { #category : 'tests' }
 TSDFixture >> testUsesInstanceVar [
 
-	self assert: x = 0
+	self assert: x = 0;
+		assert: variableSetUpInMethod 
 ]
 
 { #category : 'accessing' }
 TSDFixture >> x [
 
-	1 asFloat.
+	1 asFloat. "hack for not being compiled into a primitive"
 	^ x
 ]
 

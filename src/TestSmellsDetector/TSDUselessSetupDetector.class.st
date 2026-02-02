@@ -1,69 +1,80 @@
 Class {
 	#name : 'TSDUselessSetupDetector',
-	#superclass : 'RTFSelfCallVisitorInterpreter',
+	#superclass : 'Object',
 	#instVars : [
-		'foundVariables',
-		'setupVariables',
-		'rootNode',
 		'selector',
-		'setupSelector'
+		'setupSelector',
+		'instanceVariablesFinder',
+		'selfClass',
+		'assignmentsFinder'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
 }
 
-{ #category : 'private' }
-TSDUselessSetupDetector >> analyze [
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> assignmentFinder [
 
-	super analyze.
-	selfSentMethod parseTree acceptVisitor: self
+	^ assignmentsFinder ifNil: [ assignmentsFinder := TSDAssignmentsFinder new ]
+]
+
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> considerClassesThat: aBlock [
+
+	self instanceVariablesFinder considerClassesThat: aBlock.
+	self assignmentFinder considerClassesThat: aBlock 
 ]
 
 { #category : 'testing' }
 TSDUselessSetupDetector >> doesUseSetUp [
 
-	self visit: self rootNode.
-	^ (self setupVariables difference: self foundVariables) isEmpty 
+	^ (self setupVariables difference: self foundInstanceVariables) isEmpty
 ]
 
-{ #category : 'private' }
-TSDUselessSetupDetector >> findVariablesOf: aMethodNode [
+{ #category : 'as yet unclassified' }
+TSDUselessSetupDetector >> foundInstanceVariables [
 
-	self foundVariables 
-		addAll: (self instanceVariablesOf: aMethodNode where: [ :aNode | aNode parent isAssignment not ] )
+	^ self instanceVariablesFinder
+		  visit: self rootNode;
+		  foundVariables 
 ]
 
 { #category : 'accessing' }
-TSDUselessSetupDetector >> foundVariables [
+TSDUselessSetupDetector >> instanceVariablesFinder [
 
-	^ foundVariables ifNil: [ foundVariables := OrderedCollection new ]
-]
-
-{ #category : 'helpers' }
-TSDUselessSetupDetector >> instanceVariablesOf: aNode where: aBlock [
-
-	^ aNode allChildren 
-		select: [ :aChildNode | 
-			aChildNode isInstanceVariable and: [ aBlock cull: aChildNode ] ]
-		thenCollect: #name
+	^ instanceVariablesFinder ifNil: [ instanceVariablesFinder := TSDInstanceVariablesFinder new ]
 ]
 
 { #category : 'accessing' }
 TSDUselessSetupDetector >> lookupNode: aSelector [
 
-	^ (selfClass lookupSelector: aSelector) parseTree
+	^ (self selfClass lookupSelector: aSelector) parseTree
 ]
 
 { #category : 'accessing' }
 TSDUselessSetupDetector >> rootNode [
 
-	^ rootNode ifNil: [ rootNode := self lookupNode: selector ]
+	^ self lookupNode: selector
 ]
 
 { #category : 'accessing' }
 TSDUselessSetupDetector >> selector: aSelector [
 
 	selector := aSelector 
+]
+
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> selfClass [
+
+	^ selfClass
+]
+
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> selfClass: aClass [
+
+	selfClass := aClass.
+	self assignmentFinder selfClass: aClass.
+	self instanceVariablesFinder selfClass: aClass 
 ]
 
 { #category : 'accessing' }
@@ -78,19 +89,10 @@ TSDUselessSetupDetector >> setupSelector: aSelector [
 	^ setupSelector := aSelector
 ]
 
-{ #category : 'accessing' }
+{ #category : 'as yet unclassified' }
 TSDUselessSetupDetector >> setupVariables [
 
-	^ setupVariables ifNil: [
-			  | setupNode |
-			  setupNode := self lookupNode: self setUpSelector.
-			  setupVariables := self instanceVariablesOf: setupNode where: [ :aNode | 
-				aNode parent isAssignment ] ]
-]
-
-{ #category : 'visiting' }
-TSDUselessSetupDetector >> visitMethodNode: aMethodNode [
-
-	self findVariablesOf: aMethodNode.
-	super visitMethodNode: aMethodNode
+	^ self assignmentFinder
+		  visit: (self lookupNode: self setUpSelector);
+		  foundVariables 
 ]
