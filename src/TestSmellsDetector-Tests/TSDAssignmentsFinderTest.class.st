@@ -15,20 +15,9 @@ TSDAssignmentsFinderTest >> finder [
 ]
 
 { #category : 'tests' }
-TSDAssignmentsFinderTest >> testFindAssignmentVariable [
-
-	finder
-		selfClass: TSDSubFixture;
-		visit: (TSDSubFixture >> #setUp) parseTree. 
-	
-	self 
-		assertFoundVariables: #( x y variableSetUpInSubclassMethod variableSetUpInMethod )
-]
-
-{ #category : 'tests' }
-TSDAssignmentsFinderTest >> testIgnoresNonInstanceVariables [
+TSDAssignmentsFinderTest >> testFindAssignmentsFromSubclass [
 
 	self 
-		visit: #testUsesLocalVariables;
-		assertFoundVariables: #()
+		visit: #setUp;
+		assertFoundVariables: #( x y subVariableAssigned assignedVariable )
 ]

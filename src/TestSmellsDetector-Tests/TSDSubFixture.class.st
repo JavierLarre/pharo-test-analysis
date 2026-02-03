@@ -3,24 +3,24 @@ Class {
 	#superclass : 'TSDFixture',
 	#instVars : [
 		'y',
-		'variableSetUpInSubclassMethod'
+		'subVariableAssigned'
 	],
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }
 
 { #category : 'running' }
+TSDSubFixture >> assignSubVariable: anObject [
+
+	subVariableAssigned := anObject 
+]
+
+{ #category : 'running' }
 TSDSubFixture >> setUp [
 
 	super setUp.
 	y := String new.
-	self setUpVariableInSubclassMethod: 'wao'
-]
-
-{ #category : 'running' }
-TSDSubFixture >> setUpVariableInSubclassMethod: anObject [
-
-	variableSetUpInSubclassMethod := anObject 
+	self assignSubVariable: 'wao'
 ]
 
 { #category : 'tests' }
@@ -54,13 +54,7 @@ TSDSubFixture >> testOnlyAssigns [
 TSDSubFixture >> testUsesInstanceVar [ 
 
 	super testUsesInstanceVar.
-	self assert: y = variableSetUpInSubclassMethod
-]
-
-{ #category : 'tests' }
-TSDSubFixture >> testUsesSomeInstanceVar [
-
-	super testUsesInstanceVar
+	self assert: y = subVariableAssigned
 ]
 
 { #category : 'accessing' }

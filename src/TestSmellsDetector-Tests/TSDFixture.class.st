@@ -1,28 +1,29 @@
 "
 This class hierarchy is used as data (a TestCase) for TestSmellsDetector test cases.
+Some methods may add seemingly useless statements that are needed for the compiler to not optimize small methods into primitives 
 "
 Class {
 	#name : 'TSDFixture',
 	#superclass : 'Object',
 	#instVars : [
 		'x',
-		'variableSetUpInMethod'
+		'assignedVariable'
 	],
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }
 
 { #category : 'running' }
-TSDFixture >> setUp [
+TSDFixture >> assignVariable [
 
-	x := 0.
-	self setUpVariableInMethod 
+	assignedVariable := 'woah'
 ]
 
 { #category : 'running' }
-TSDFixture >> setUpVariableInMethod [
+TSDFixture >> setUp [
 
-	variableSetUpInMethod := 'woah'
+	x := 0.
+	self assignVariable 
 ]
 
 { #category : 'tests' }
@@ -48,24 +49,30 @@ TSDFixture >> testOnlyAssigns [
 ]
 
 { #category : 'tests' }
+TSDFixture >> testUsesClasses [
+
+	TSDTooManyClassesDetector new
+]
+
+{ #category : 'tests' }
 TSDFixture >> testUsesInstanceVar [
 
 	self assert: x = 0;
-		assert: variableSetUpInMethod 
+		assert: assignedVariable 
 ]
 
 { #category : 'tests' }
 TSDFixture >> testUsesLocalVariables [
 
-	| y |
-	y := 1.
-	self assert: y = 1
+	| x |
+	x := 1.
+	self assert: x = 1
 ]
 
 { #category : 'accessing' }
 TSDFixture >> x [
 
-	1 asFloat. "hack for not being compiled into a primitive"
+	1 asFloat.
 	^ x
 ]
 

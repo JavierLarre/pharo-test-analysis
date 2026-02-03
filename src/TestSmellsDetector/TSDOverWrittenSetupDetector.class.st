@@ -1,3 +1,6 @@
+"
+I detect whether a method overwrites an instance variable set up in a setUp method
+"
 Class {
 	#name : 'TSDOverWrittenSetupDetector',
 	#superclass : 'TSDSetupDetector',

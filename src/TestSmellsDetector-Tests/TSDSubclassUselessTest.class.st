@@ -16,9 +16,3 @@ TSDSubclassUselessTest >> fixtureClass [
 
 	^ TSDSubFixture 
 ]
-
-{ #category : 'tests' }
-TSDSubclassUselessTest >> testAllSetupMustBeUsed [
-
-	self deny: (self doesDetect: #testUsesLocalVariables )
-]

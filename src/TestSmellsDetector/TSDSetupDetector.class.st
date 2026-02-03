@@ -1,3 +1,6 @@
+"
+I provide information about variables assigned in a setUp method
+"
 Class {
 	#name : 'TSDSetupDetector',
 	#superclass : 'Object',

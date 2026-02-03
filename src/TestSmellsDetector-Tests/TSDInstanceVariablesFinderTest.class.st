@@ -69,8 +69,8 @@ TSDInstanceVariablesFinderTest >> testUseTwice [
 	self 
 		visit: #x;
 		assertFoundVariables: #( x );
-		visit: #setUpVariableInMethod;
-		assertFoundVariables: #( x variableSetUpInMethod )
+		visit: #assignVariable;
+		assertFoundVariables: #( x assignedVariable )
 ]
 
 { #category : 'tests' }
