@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'tests' }
-RTDLatticeBuilder class >> testLattice [
+RTDLatticeBuilder class >> example [
 
 	^ self new
 		messages: (RTDMessages new 

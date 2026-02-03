@@ -1,0 +1,21 @@
+"
+A TSDOverWrittenSetupDetectorTest is a test class for testing the behavior of TSDOverWrittenSetupDetector
+"
+Class {
+	#name : 'TSDOverWrittenSetupDetectorTest',
+	#superclass : 'TSDSetupDetectorTest',
+	#category : 'TestSmellsDetector-Tests',
+	#package : 'TestSmellsDetector-Tests'
+}
+
+{ #category : 'accessing' }
+TSDOverWrittenSetupDetectorTest >> detectorClass [
+
+	^ TSDOverWrittenSetupDetector
+]
+
+{ #category : 'tests' }
+TSDOverWrittenSetupDetectorTest >> testDetectsOverWrite [
+
+	self assert: (self doesDetect: #testOnlyAssigns )
+]

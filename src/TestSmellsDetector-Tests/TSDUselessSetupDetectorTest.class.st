@@ -3,62 +3,43 @@ An UselessSetupTest is a test class for testing the behavior of UselessSetup
 "
 Class {
 	#name : 'TSDUselessSetupDetectorTest',
-	#superclass : 'TestCase',
-	#instVars : [
-		'detector'
-	],
+	#superclass : 'TSDSetupDetectorTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }
 
-{ #category : 'helpers' }
-TSDUselessSetupDetectorTest >> doesUseSetUp: aSelector [
-
-	^ detector selector: aSelector;
-		doesUseSetUp 
-]
-
 { #category : 'accessing' }
-TSDUselessSetupDetectorTest >> fixtureClass [
-	
-	^ TSDFixture 
-]
+TSDUselessSetupDetectorTest >> detectorClass [
 
-{ #category : 'running' }
-TSDUselessSetupDetectorTest >> setUp [
-	
-	super setUp.
-	detector := TSDUselessSetupDetector new
-		selfClass: self fixtureClass;
-		yourself.
+	^ TSDUselessSetupDetector
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testAssignsAreUseless [
 
-	self deny: (self doesUseSetUp: #testOnlyAssigns )
+	self deny: (self doesDetect: #testOnlyAssigns )
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testConnectedAssigns [
 
-	self deny: (self doesUseSetUp: #testConnectedToAssignation )
+	self deny: (self doesDetect: #testConnectedToAssignation )
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testDetectsConnected [
 
-	self assert: (self doesUseSetUp: #testIsConnectedToInstanceVar )
+	self assert: (self doesDetect: #testIsConnectedToInstanceVar )
 ]
 
 { #category : 'running' }
 TSDUselessSetupDetectorTest >> testDetectsUse [
 
-	self assert: (self doesUseSetUp: #testUsesInstanceVar) 
+	self assert: (self doesDetect: #testUsesInstanceVar) 
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testDetectsUseless [
 
-	self deny: (self doesUseSetUp: #testDoesNotUsesInstanceVar ) 
+	self deny: (self doesDetect: #testDoesNotUsesInstanceVar ) 
 ]

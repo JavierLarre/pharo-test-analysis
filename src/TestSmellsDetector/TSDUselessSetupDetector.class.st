@@ -3,12 +3,8 @@ I am a detector for test methods that does not use all instance variables set up
 "
 Class {
 	#name : 'TSDUselessSetupDetector',
-	#superclass : 'Object',
+	#superclass : 'TSDSetupDetector',
 	#instVars : [
-		'selector',
-		'setupSelector',
-		'selfClass',
-		'assignsFinder',
 		'accessesFinder'
 	],
 	#category : 'TestSmellsDetector',
@@ -27,6 +23,11 @@ TSDUselessSetupDetector >> assignsFinder [
 	^ assignsFinder ifNil: [ assignsFinder := TSDInstanceVariablesFinder assignments ]
 ]
 
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> detects [
+	^ self doesUseSetUp 
+]
+
 { #category : 'testing' }
 TSDUselessSetupDetector >> doesUseSetUp [
 
@@ -42,21 +43,9 @@ TSDUselessSetupDetector >> foundInstanceVariables [
 ]
 
 { #category : 'accessing' }
-TSDUselessSetupDetector >> lookupNode: aSelector [
-
-	^ (self selfClass lookupSelector: aSelector) parseTree
-]
-
-{ #category : 'accessing' }
 TSDUselessSetupDetector >> rootNode [
 
 	^ self lookupNode: selector
-]
-
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> selector: aSelector [
-
-	selector := aSelector 
 ]
 
 { #category : 'accessing' }

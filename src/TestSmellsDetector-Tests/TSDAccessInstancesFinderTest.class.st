@@ -19,5 +19,5 @@ TSDAccessInstancesFinderTest >> testIgnoresLocalVariables [
 
 	self
 		visit: #testDoesNotUsesInstanceVar;
-		assertCollection: finder foundVariables equals: Set new
+		assertFoundVariables: #()
 ]

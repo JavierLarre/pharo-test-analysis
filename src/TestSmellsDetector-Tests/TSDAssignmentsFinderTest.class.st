@@ -22,8 +22,7 @@ TSDAssignmentsFinderTest >> testFindAssignmentVariable [
 		visit: (TSDSubFixture >> #setUp) parseTree. 
 	
 	self 
-		assertCollection: finder foundVariables 
-		equals: { #x . #y . #variableSetUpInSubclassMethod . #variableSetUpInMethod } asSet
+		assertFoundVariables: #( x y variableSetUpInSubclassMethod variableSetUpInMethod )
 ]
 
 { #category : 'tests' }

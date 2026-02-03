@@ -8,10 +8,16 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
+{ #category : 'tests' }
+TSDInstanceVariablesFinderTest >> assertFoundVariables: aCollection [
+
+	self assertCollection: finder foundVariables equals: aCollection asSet 
+]
+
 { #category : 'accessing' }
 TSDInstanceVariablesFinderTest >> finder [
 	
-	^ self subclassResponsibility 
+	^ TSDInstanceVariablesFinder new
 ]
 
 { #category : 'accessing' }
@@ -32,6 +38,16 @@ TSDInstanceVariablesFinderTest >> setUp [
 	finder := self finder
 		selfClass: self fixtureClass;
 		yourself
+]
+
+{ #category : 'tests' }
+TSDInstanceVariablesFinderTest >> testEmptyFinder [
+
+	finder := TSDInstanceVariablesFinder selfClass: self fixtureClass.
+	
+	self 
+		visit: #x;
+		assertFoundVariables: #( x )
 ]
 
 { #category : 'tests' }

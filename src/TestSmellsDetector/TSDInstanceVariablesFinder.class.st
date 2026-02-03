@@ -34,6 +34,12 @@ TSDInstanceVariablesFinder class >> assignments [
 		addVariablesSuchThat: [ :aVariableNode | aVariableNode parent isAssignment ]
 ]
 
+{ #category : 'accessing' }
+TSDInstanceVariablesFinder class >> selfClass: aClass [
+
+	^ self new selfClass: aClass; yourself
+]
+
 { #category : 'instance creation' }
 TSDInstanceVariablesFinder class >> selfClass: aClass addVariablesSuchThat: aBlock [
 
@@ -71,7 +77,7 @@ TSDInstanceVariablesFinder >> foundVariables [
 { #category : 'testing' }
 TSDInstanceVariablesFinder >> isValid: aVariableNode [
 
-	^ addVariablesSuchThat cull: aVariableNode 
+	^ self addVariablesSuchThat cull: aVariableNode 
 ]
 
 { #category : 'visiting' }
