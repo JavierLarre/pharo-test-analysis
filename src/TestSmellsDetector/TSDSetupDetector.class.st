@@ -11,7 +11,13 @@ Class {
 	#package : 'TestSmellsDetector'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
+TSDSetupDetector >> assignsFinder [
+
+	^ assignsFinder ifNil: [ assignsFinder := TSDInstanceVariablesFinder assignments ]
+]
+
+{ #category : 'testing' }
 TSDSetupDetector >> detects [
 	^ self subclassResponsibility
 ]
@@ -22,8 +28,49 @@ TSDSetupDetector >> lookupNode: aSelector [
 	^ (self selfClass lookupSelector: aSelector) parseTree
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
+TSDSetupDetector >> rootNode [
+
+	^ self lookupNode: selector
+]
+
+{ #category : 'accessing' }
 TSDSetupDetector >> selector: aSelector [ 
 	
 	selector := aSelector 
+]
+
+{ #category : 'accessing' }
+TSDSetupDetector >> selfClass [
+
+	^ selfClass
+]
+
+{ #category : 'accessing' }
+TSDSetupDetector >> selfClass: aClass [ 
+
+	selfClass := aClass.
+	self assignsFinder selfClass: aClass 
+]
+
+{ #category : 'initialization' }
+TSDSetupDetector >> setUpSelector [
+
+	^ setupSelector ifNil: [ setupSelector := #setUp ]
+]
+
+{ #category : 'accessing' }
+TSDSetupDetector >> setupVariables [
+
+	^ self 
+		variables: self setUpSelector 
+		from: self assignsFinder
+]
+
+{ #category : 'private' }
+TSDSetupDetector >> variables: aSelector from: aFinder [
+
+	^ aFinder
+		  visit: (self lookupNode: aSelector);
+		  foundVariables 
 ]

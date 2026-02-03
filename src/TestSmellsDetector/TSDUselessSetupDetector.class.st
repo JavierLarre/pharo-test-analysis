@@ -17,13 +17,7 @@ TSDUselessSetupDetector >> accessesFinder [
 	^ accessesFinder ifNil: [ accessesFinder := TSDInstanceVariablesFinder accessings ]
 ]
 
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> assignsFinder [
-
-	^ assignsFinder ifNil: [ assignsFinder := TSDInstanceVariablesFinder assignments ]
-]
-
-{ #category : 'accessing' }
+{ #category : 'testing' }
 TSDUselessSetupDetector >> detects [
 	^ self doesUseSetUp 
 ]
@@ -43,49 +37,8 @@ TSDUselessSetupDetector >> foundInstanceVariables [
 ]
 
 { #category : 'accessing' }
-TSDUselessSetupDetector >> rootNode [
-
-	^ self lookupNode: selector
-]
-
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> selfClass [
-
-	^ selfClass
-]
-
-{ #category : 'accessing' }
 TSDUselessSetupDetector >> selfClass: aClass [
 
-	selfClass := aClass.
-	self assignsFinder selfClass: aClass.
+	super selfClass: aClass .
 	self accessesFinder selfClass: aClass 
-]
-
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> setUpSelector [
-
-	^ setupSelector ifNil: [ setupSelector := #setUp ]
-]
-
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> setupSelector: aSelector [
-
-	^ setupSelector := aSelector
-]
-
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> setupVariables [
-
-	^ self 
-		variables: self setUpSelector 
-		from: self assignsFinder
-]
-
-{ #category : 'private' }
-TSDUselessSetupDetector >> variables: aSelector from: aFinder [
-
-	^ aFinder
-		  visit: (self lookupNode: aSelector);
-		  foundVariables 
 ]

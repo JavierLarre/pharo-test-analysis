@@ -41,5 +41,5 @@ TSDUselessSetupDetectorTest >> testDetectsUse [
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testDetectsUseless [
 
-	self deny: (self doesDetect: #testDoesNotUsesInstanceVar ) 
+	self deny: (self doesDetect: #testUsesLocalVariables ) 
 ]

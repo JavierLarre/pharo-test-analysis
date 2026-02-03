@@ -33,14 +33,6 @@ TSDFixture >> testConnectedToAssignation [
 ]
 
 { #category : 'tests' }
-TSDFixture >> testDoesNotUsesInstanceVar [
-
-	| y |
-	y := 1.
-	self assert: y = 1
-]
-
-{ #category : 'tests' }
 TSDFixture >> testIsConnectedToInstanceVar [
 
 	self 
@@ -60,6 +52,14 @@ TSDFixture >> testUsesInstanceVar [
 
 	self assert: x = 0;
 		assert: variableSetUpInMethod 
+]
+
+{ #category : 'tests' }
+TSDFixture >> testUsesLocalVariables [
+
+	| y |
+	y := 1.
+	self assert: y = 1
 ]
 
 { #category : 'accessing' }

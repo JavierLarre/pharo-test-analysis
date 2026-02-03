@@ -29,6 +29,6 @@ TSDAssignmentsFinderTest >> testFindAssignmentVariable [
 TSDAssignmentsFinderTest >> testIgnoresNonInstanceVariables [
 
 	self 
-		visit: #testDoesNotUsesInstanceVar;
-		assertCollection: finder foundVariables equals: Set new
+		visit: #testUsesLocalVariables;
+		assertFoundVariables: #()
 ]

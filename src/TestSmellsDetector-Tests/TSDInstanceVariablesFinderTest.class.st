@@ -17,7 +17,7 @@ TSDInstanceVariablesFinderTest >> assertFoundVariables: aCollection [
 { #category : 'accessing' }
 TSDInstanceVariablesFinderTest >> finder [
 	
-	^ TSDInstanceVariablesFinder new
+	^ self finderClass new
 ]
 
 { #category : 'accessing' }
@@ -41,13 +41,36 @@ TSDInstanceVariablesFinderTest >> setUp [
 ]
 
 { #category : 'tests' }
-TSDInstanceVariablesFinderTest >> testEmptyFinder [
-
-	finder := TSDInstanceVariablesFinder selfClass: self fixtureClass.
+TSDInstanceVariablesFinderTest >> testDefaultFinder [
 	
 	self 
 		visit: #x;
 		assertFoundVariables: #( x )
+]
+
+{ #category : 'tests' }
+TSDInstanceVariablesFinderTest >> testEmptyFinder [
+	
+	self 
+		assertFoundVariables: #()
+]
+
+{ #category : 'tests' }
+TSDInstanceVariablesFinderTest >> testIgnoresLocalVariables [
+
+	self
+		visit: #testUsesLocalVariables;
+		assertFoundVariables: #()
+]
+
+{ #category : 'tests' }
+TSDInstanceVariablesFinderTest >> testUseTwice [
+	
+	self 
+		visit: #x;
+		assertFoundVariables: #( x );
+		visit: #setUpVariableInMethod;
+		assertFoundVariables: #( x variableSetUpInMethod )
 ]
 
 { #category : 'tests' }

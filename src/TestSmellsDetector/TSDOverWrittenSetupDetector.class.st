@@ -5,13 +5,7 @@ Class {
 	#package : 'TestSmellsDetector'
 }
 
-{ #category : 'accessing' }
-TSDOverWrittenSetupDetector >> assignsFinder [
-
-	^ assignsFinder ifNil: [ assignsFinder := TSDInstanceVariablesFinder assignments ]
-]
-
-{ #category : 'accessing' }
+{ #category : 'testing' }
 TSDOverWrittenSetupDetector >> detects [
 	^ self doesOverWritesSetUp 
 ]
@@ -22,42 +16,8 @@ TSDOverWrittenSetupDetector >> doesOverWritesSetUp [
 	^ self writtenVariables includesAny: self setupVariables 
 ]
 
-{ #category : 'accessing' }
-TSDOverWrittenSetupDetector >> selfClass [
+{ #category : 'api' }
+TSDOverWrittenSetupDetector >> writtenVariables [ 
 
-	^ selfClass
-]
-
-{ #category : 'accessing' }
-TSDOverWrittenSetupDetector >> selfClass: aClass [ 
-
-	selfClass := aClass.
-	self assignsFinder selfClass: aClass 
-]
-
-{ #category : 'initialization' }
-TSDOverWrittenSetupDetector >> setUpSelector [
-
-	^ setupSelector ifNil: [ setupSelector := #setUp ]
-]
-
-{ #category : 'accessing' }
-TSDOverWrittenSetupDetector >> setupVariables [
-
-	^ self 
-		variables: self setUpSelector 
-		from: self assignsFinder
-]
-
-{ #category : 'private' }
-TSDOverWrittenSetupDetector >> variables: aSelector from: aFinder [
-
-	^ aFinder
-		  visit: (self lookupNode: aSelector);
-		  foundVariables 
-]
-
-{ #category : 'accessing' }
-TSDOverWrittenSetupDetector >> writtenVariables [
-	^ { #x } asSet
+	^ self variables: selector from: self assignsFinder 
 ]
