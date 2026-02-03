@@ -14,6 +14,12 @@ TSDAssignmentsFinderTest >> finder [
 	^ self finderClass assignments 
 ]
 
+{ #category : 'accessing' }
+TSDAssignmentsFinderTest >> fixtureClass [
+
+	^ TSDSubFixture
+]
+
 { #category : 'tests' }
 TSDAssignmentsFinderTest >> testFindAssignmentsFromSubclass [
 

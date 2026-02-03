@@ -62,6 +62,12 @@ TSDSetupDetector >> setUpSelector [
 	^ setupSelector ifNil: [ setupSelector := #setUp ]
 ]
 
+{ #category : 'initialization' }
+TSDSetupDetector >> setUpSelector: aSelector [
+
+	^ setupSelector := aSelector 
+]
+
 { #category : 'accessing' }
 TSDSetupDetector >> setupVariables [
 
