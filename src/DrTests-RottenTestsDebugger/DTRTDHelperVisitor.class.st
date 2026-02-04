@@ -29,7 +29,7 @@ DTRTDHelperVisitor >> buildViewModel: aViewModel [
 DTRTDHelperVisitor >> initialize [ 
 	
 	super initialize.
-	methodVisitor helperSelectors: TAssertable selectors
+	methodVisitor helperSelectors: (TAssertable selectors union: { #assert: . #assert:description: } )
 ]
 
 { #category : 'factory' }

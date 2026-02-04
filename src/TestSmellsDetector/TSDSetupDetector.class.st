@@ -32,12 +32,6 @@ TSDSetupDetector >> lookupNode: aSelector [
 ]
 
 { #category : 'accessing' }
-TSDSetupDetector >> rootNode [
-
-	^ self lookupNode: selector
-]
-
-{ #category : 'accessing' }
 TSDSetupDetector >> selector: aSelector [ 
 	
 	selector := aSelector 

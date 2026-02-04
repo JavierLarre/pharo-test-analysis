@@ -10,6 +10,12 @@ Class {
 	#tag : 'Visitors'
 }
 
+{ #category : 'testing' }
+DTRTDTestCaseVisitorTest class >> shouldInheritSelectors [
+
+	^ true
+]
+
 { #category : 'accessing' }
 DTRTDTestCaseVisitorTest >> fixtureClass [
 

@@ -12,13 +12,16 @@ Class {
 { #category : 'tests' }
 DTRTDHelperVisitorTest >> testHelpersAreFound [
 
-	| helperVisitor testMethod |
-	helperVisitor := RTDHelperVisitor new
-		helperSelectors: {#assert:};
-		yourself.
-	testMethod := self fixtureClass >> #testMethod.
-	helperVisitor analyzeMethod: testMethod.
-	self assert: (helperVisitor helpers at: testMethod) isNotEmpty
+	self assertCollection: viewModel helpers first messages hasSameElements: { #helper }
+]
+
+{ #category : 'tests' }
+DTRTDHelperVisitorTest >> testSubclassHelpersAreFound [
+
+	visitor visit: (TestSuite new 
+		addTest: DTRTDFixture suite;
+		yourself).
+	self assertCollection: viewModel helpers hasSameElements: { DTRTDFixture >> #testMethod }
 ]
 
 { #category : 'factory' }

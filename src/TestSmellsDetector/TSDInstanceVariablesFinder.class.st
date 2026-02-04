@@ -35,21 +35,6 @@ TSDInstanceVariablesFinder class >> assignments [
 ]
 
 { #category : 'accessing' }
-TSDInstanceVariablesFinder class >> selfClass: aClass [
-
-	^ self new selfClass: aClass; yourself
-]
-
-{ #category : 'instance creation' }
-TSDInstanceVariablesFinder class >> selfClass: aClass addVariablesSuchThat: aBlock [
-
-	^ self new 
-		selfClass: aClass;
-		addVariablesSuchThat: aBlock;
-		yourself
-]
-
-{ #category : 'accessing' }
 TSDInstanceVariablesFinder >> addVariablesSuchThat [
 
 	^ addVariablesSuchThat ifNil: [ addVariablesSuchThat := [ true ] ]

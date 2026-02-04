@@ -70,9 +70,8 @@ DTRTDTestCaseVisitor >> printOn: aStream [
 	aStream 
 		<< ' visitor: ';
 		print: methodVisitor;
-		<< ', testCases: ';
-		nextPutAll: methodViewModels;
-		<< ')'
+		<< ', testCases: '.
+	methodViewModels do: [ :methodViewModel | aStream print: methodViewModel ]
 ]
 
 { #category : 'utilities' }
