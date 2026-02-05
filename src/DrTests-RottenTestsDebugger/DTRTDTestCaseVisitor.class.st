@@ -77,7 +77,8 @@ DTRTDTestCaseVisitor >> printOn: aStream [
 { #category : 'utilities' }
 DTRTDTestCaseVisitor >> testCaseMethod: aTestCase [
 
-	^ aTestCase class >> aTestCase selector
+	^ (aTestCase class lookupSelector: aTestCase selector )
+		ifNil: [ Error signal: 'test method not found' ]
 ]
 
 { #category : 'visiting' }

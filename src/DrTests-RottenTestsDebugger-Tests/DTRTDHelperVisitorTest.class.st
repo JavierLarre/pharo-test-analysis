@@ -12,16 +12,18 @@ Class {
 { #category : 'tests' }
 DTRTDHelperVisitorTest >> testHelpersAreFound [
 
-	self assertCollection: viewModel helpers first messages hasSameElements: { #helper }
+	
+	self
+		visitClass: self fixtureClass; 
+		assertCollection: viewModel helpers first messages hasSameElements: { #helper }
 ]
 
 { #category : 'tests' }
-DTRTDHelperVisitorTest >> testSubclassHelpersAreFound [
+DTRTDHelperVisitorTest >> testInheritedTestsAreFound [
 
-	visitor visit: (TestSuite new 
-		addTest: DTRTDFixture suite;
-		yourself).
-	self assertCollection: viewModel helpers hasSameElements: { DTRTDFixture >> #testMethod }
+	self 
+		visitClass: self subFixtureClass;
+		assertCollection: viewModel helpers first messages hasSameElements: { #helper . #subHelper }
 ]
 
 { #category : 'factory' }

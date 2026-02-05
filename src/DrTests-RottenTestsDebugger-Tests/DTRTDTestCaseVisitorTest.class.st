@@ -29,9 +29,12 @@ DTRTDTestCaseVisitorTest >> setUp [
 	self fixtureClass superclass: TestCase.
 	viewModel := DTRTDViewModel new.
 	visitor := self visitorClass new
-		visit: self fixtureClass suite;
-		buildViewModel: viewModel;
-		yourself.
+]
+
+{ #category : 'accessing' }
+DTRTDTestCaseVisitorTest >> subFixtureClass [ 
+
+	^ DTRTDSubFixture 
 ]
 
 { #category : 'running' }
@@ -39,6 +42,14 @@ DTRTDTestCaseVisitorTest >> tearDown [
 
 	self fixtureClass superclass: Object.
 	super tearDown
+]
+
+{ #category : 'visiting' }
+DTRTDTestCaseVisitorTest >> visitClass: aTestClass [
+
+	^ visitor 
+		visit: aTestClass suite;
+		buildViewModel: viewModel 
 ]
 
 { #category : 'factory' }
