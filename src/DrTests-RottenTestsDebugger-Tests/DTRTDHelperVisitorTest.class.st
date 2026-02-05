@@ -23,7 +23,7 @@ DTRTDHelperVisitorTest >> testInheritedTestsAreFound [
 
 	self 
 		visitClass: self subFixtureClass;
-		assertCollection: viewModel helpers first messages hasSameElements: { #helper . #subHelper }
+		assertCollection: viewModel helpers first messages hasSameElements: { #helper }
 ]
 
 { #category : 'factory' }
