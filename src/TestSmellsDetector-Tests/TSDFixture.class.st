@@ -34,6 +34,14 @@ TSDFixture >> testConnectedToAssignation [
 ]
 
 { #category : 'tests' }
+TSDFixture >> testDoesNotAssert [
+
+	| y |
+	y := OrderedCollection new.
+	^ y
+]
+
+{ #category : 'tests' }
 TSDFixture >> testIsConnectedToInstanceVar [
 
 	self 
