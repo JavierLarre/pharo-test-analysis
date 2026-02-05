@@ -14,13 +14,14 @@ Class {
 { #category : 'tests' }
 RTDLatticeBuilder class >> example [
 
-	^ self new
+	<script>
+	^ (self new
 		messages: (RTDMessages new 
 			at: (CompiledMethod new selector: #t1) put: { #x };
 			at: (CompiledMethod new selector: #t2) put: { #x . #y };
 			at: (CompiledMethod new selector: #t3) put: { #x . #y . #z };
 			yourself );
-		buildLattices 
+		buildLattices) inspect
 ]
 
 { #category : 'building' }
