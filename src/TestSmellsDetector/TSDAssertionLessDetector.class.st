@@ -21,7 +21,8 @@ TSDAssertionLessDetector >> analyzeMethod [
 { #category : 'accessing' }
 TSDAssertionLessDetector >> compiledMethod: aCompiledMethod [
 
-	compiledMethod := aCompiledMethod 
+	compiledMethod := aCompiledMethod.
+	self analyzeMethod 
 ]
 
 { #category : 'testing' }
@@ -48,7 +49,6 @@ TSDAssertionLessDetector >> isAssertionLess: aCompiledMethod [
 
 	^ self 
 		compiledMethod: aCompiledMethod;
-		analyzeMethod;
 		isAssertionLess
 ]
 

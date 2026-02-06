@@ -27,6 +27,12 @@ TSDFixture >> setUp [
 ]
 
 { #category : 'tests' }
+TSDFixture >> testConnectedToAssertion [
+
+	self testConnectedToAssignation 
+]
+
+{ #category : 'tests' }
 TSDFixture >> testConnectedToAssignation [
 
 	self x: 1.

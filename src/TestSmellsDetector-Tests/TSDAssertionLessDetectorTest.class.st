@@ -32,6 +32,12 @@ TSDAssertionLessDetectorTest >> testHasAssertion [
 ]
 
 { #category : 'tests' }
+TSDAssertionLessDetectorTest >> testHasConnectedAssertion [
+
+	self deny: (detector isAssertionLess: self fixtureClass >> #testConnectedToAssertion )
+]
+
+{ #category : 'tests' }
 TSDAssertionLessDetectorTest >> testIsAssertionLess [
 
 	self assert: (detector isAssertionLess: self fixtureClass >> #testDoesNotAssert )
