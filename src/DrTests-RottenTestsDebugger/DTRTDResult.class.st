@@ -20,6 +20,20 @@ DTRTDResult >> buildTreeForUI [
 ]
 
 { #category : 'accessing' }
+DTRTDResult >> buildTreeForUIAssertionLess [
+
+	<dtTestRTDResultTreeNamed: 'Tests with no assertions' order: 6>
+	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel messages 
+]
+
+{ #category : 'accessing' }
+DTRTDResult >> buildTreeForUIClassReferences [
+
+	<dtTestRTDResultTreeNamed: 'Tests that have too many references' order: 9>
+	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel messages 
+]
+
+{ #category : 'accessing' }
 DTRTDResult >> buildTreeForUIHelpers [
 
 	<dtTestRTDResultTreeNamed: 'Helpers of methods' order: 3>
@@ -30,6 +44,13 @@ DTRTDResult >> buildTreeForUIHelpers [
 DTRTDResult >> buildTreeForUIMessages [
 
 	<dtTestRTDResultTreeNamed: 'Messages of methods' order: 5>
+	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel messages 
+]
+
+{ #category : 'accessing' }
+DTRTDResult >> buildTreeForUIOverwrittenSetup [
+
+	<dtTestRTDResultTreeNamed: 'Tests that overwritten the setup' order: 7>
 	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel messages 
 ]
 
@@ -46,6 +67,13 @@ DTRTDResult >> buildTreeForUIShowAllMessages [
 	<dtTestRTDResultTreeNamed: 'All method messages' order: 4>
 	^ DTRTDNodeBuilder new treeNode
 		subResults: (DTRTDMessagesNodeBuilder new nodesFrom: viewModel messages)
+]
+
+{ #category : 'accessing' }
+DTRTDResult >> buildTreeForUIUselessSetup [
+
+	<dtTestRTDResultTreeNamed: 'Tests that does not use setup' order: 8>
+	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel messages 
 ]
 
 { #category : 'accessing' }

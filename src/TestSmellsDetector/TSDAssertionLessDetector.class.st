@@ -57,3 +57,9 @@ TSDAssertionLessDetector >> methodVisitor [
 
 	^ methodVisitor ifNil: [ methodVisitor := RTDHelperVisitor new ]
 ]
+
+{ #category : 'accessing' }
+TSDAssertionLessDetector >> methodVisitor: anObject [
+
+	methodVisitor := anObject
+]

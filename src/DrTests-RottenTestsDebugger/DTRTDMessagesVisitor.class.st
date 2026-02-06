@@ -20,7 +20,7 @@ DTRTDMessagesVisitor >> buildMethodViewModel: aTestCaseViewModel withTestCase: a
 { #category : 'building' }
 DTRTDMessagesVisitor >> buildViewModel: aViewModel [
 
-	aViewModel messages: self methodViewModels 
+	aViewModel messages: self methodViewModels
 ]
 
 { #category : 'comparing' }
