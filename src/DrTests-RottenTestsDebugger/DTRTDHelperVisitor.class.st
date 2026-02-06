@@ -14,7 +14,7 @@ DTRTDHelperVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTest
 
 	| compiledMethods |
 	super buildMethodViewModel: aMethodViewModel withTestCase: aTestCase.
-	compiledMethods := methodVisitor helpers at: (self testCaseMethod: aTestCase).
+	compiledMethods := self methodVisitor helpers at: (self testCaseMethod: aTestCase).
 	aMethodViewModel
 		messages: (compiledMethods collect: #selector)
 ]
@@ -22,14 +22,14 @@ DTRTDHelperVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTest
 { #category : 'building' }
 DTRTDHelperVisitor >> buildViewModel: aViewModel [
 
-	aViewModel helpers: (self filterEmptyMessages: methodViewModels )
+	aViewModel helpers: (self filterEmptyMessages: self methodViewModels )
 ]
 
 { #category : 'initialization' }
 DTRTDHelperVisitor >> initialize [ 
 	
 	super initialize.
-	methodVisitor helperSelectors: (TAssertable selectors union: { #assert: . #assert:description: } )
+	self methodVisitor helperSelectors: (TAssertable selectors union: { #assert: . #assert:description: } )
 ]
 
 { #category : 'factory' }

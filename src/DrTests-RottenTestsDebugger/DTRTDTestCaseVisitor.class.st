@@ -31,14 +31,6 @@ DTRTDTestCaseVisitor >> filterEmptyMessages: aMethodViewModelCollection [
 	^ aMethodViewModelCollection reject: [ :aMethodViewModel | aMethodViewModel messages isEmpty ]
 ]
 
-{ #category : 'initialization' }
-DTRTDTestCaseVisitor >> initialize [
-
-	super initialize.
-	methodVisitor := self methodVisitorClass new.
-	methodViewModels := OrderedCollection new.
-]
-
 { #category : 'factory' }
 DTRTDTestCaseVisitor >> methodViewModelClass [
 
@@ -46,9 +38,21 @@ DTRTDTestCaseVisitor >> methodViewModelClass [
 ]
 
 { #category : 'accessing' }
+DTRTDTestCaseVisitor >> methodViewModels [
+
+	^ methodViewModels ifNil: [ methodViewModels := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
+DTRTDTestCaseVisitor >> methodViewModels: anObject [
+
+	methodViewModels := anObject
+]
+
+{ #category : 'accessing' }
 DTRTDTestCaseVisitor >> methodVisitor [
 
-	^ methodVisitor
+	^ methodVisitor ifNil: [ methodVisitor := self methodVisitorClass new ]
 ]
 
 { #category : 'accessing' }
@@ -69,9 +73,9 @@ DTRTDTestCaseVisitor >> printOn: aStream [
 	super printOn: aStream.
 	aStream 
 		<< ' visitor: ';
-		print: methodVisitor;
+		print: self methodVisitor;
 		<< ', testCases: '.
-	methodViewModels do: [ :methodViewModel | aStream print: methodViewModel ]
+	self methodViewModels do: [ :methodViewModel | aStream print: methodViewModel ]
 ]
 
 { #category : 'utilities' }
@@ -85,8 +89,8 @@ DTRTDTestCaseVisitor >> testCaseMethod: aTestCase [
 DTRTDTestCaseVisitor >> visitTestCase: aTestCase [
 
 	| testCaseViewModel |
-	methodVisitor analyzeMethod: (self testCaseMethod: aTestCase).
+	self methodVisitor analyzeMethod: (self testCaseMethod: aTestCase).
 	testCaseViewModel := self methodViewModelClass new.
 	self buildMethodViewModel: testCaseViewModel withTestCase: aTestCase.
-	methodViewModels add: testCaseViewModel
+	self methodViewModels add: testCaseViewModel
 ]

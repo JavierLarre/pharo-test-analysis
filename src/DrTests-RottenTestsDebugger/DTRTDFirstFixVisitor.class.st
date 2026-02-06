@@ -25,7 +25,7 @@ DTRTDFirstFixVisitor >> buildTestCasesFrom: compiledMethods [
 			(self priority: methodBefore ) > (self priority: methodAfter ) ] )
 		collect: [ :compiledMethod | 
 			DTRTDMethodViewModel new 
-				messages: (methodVisitor messages at: compiledMethod); 
+				messages: (self methodVisitor messages at: compiledMethod); 
 				compiledMethod: compiledMethod;
 				yourself  ]
 ]
@@ -33,7 +33,7 @@ DTRTDFirstFixVisitor >> buildTestCasesFrom: compiledMethods [
 { #category : 'building' }
 DTRTDFirstFixVisitor >> buildViewModel: aViewModel [
 
-	aViewModel priorities: methodViewModels 
+	aViewModel priorities: self methodViewModels 
 ]
 
 { #category : 'factory' }
@@ -45,7 +45,7 @@ DTRTDFirstFixVisitor >> methodViewModelClass [
 { #category : 'private' }
 DTRTDFirstFixVisitor >> methodsThatInclude: aCompiledMethod [
 
-	^ methodVisitor messages methodsThatInclude: aCompiledMethod
+	^ self methodVisitor messages methodsThatInclude: aCompiledMethod
 ]
 
 { #category : 'private' }
@@ -58,7 +58,7 @@ DTRTDFirstFixVisitor >> priority: aCompiledMethod [
 DTRTDFirstFixVisitor >> visitTestSuite: aTestSuite [
 
 	super visitTestSuite: aTestSuite.
-	methodViewModels
+	self methodViewModels
 		do: [ :methodViewModel | self addPrioritiesTo: methodViewModel ];
 		sort: [ :methodBefore :methodAfter |
 			(self priority: methodBefore compiledMethod) > (self priority: methodAfter compiledMethod ) ]

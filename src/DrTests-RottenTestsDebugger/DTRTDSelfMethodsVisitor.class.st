@@ -14,7 +14,7 @@ DTRTDSelfMethodsVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: 
 
 	| testCaseSelfCalls |
 	super buildMethodViewModel: aMethodViewModel withTestCase: aTestCase.
-	testCaseSelfCalls := methodVisitor methodsSelfCalls at: (self testCaseMethod: aTestCase).
+	testCaseSelfCalls := self methodVisitor methodsSelfCalls at: (self testCaseMethod: aTestCase).
 
 	aMethodViewModel 
 		messages: (testCaseSelfCalls collect: #selector) 
@@ -23,7 +23,7 @@ DTRTDSelfMethodsVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: 
 { #category : 'building' }
 DTRTDSelfMethodsVisitor >> buildViewModel: aViewModel [
 
-	aViewModel selfSentMethods: (self filterEmptyMessages: methodViewModels )
+	aViewModel selfSentMethods: (self filterEmptyMessages: self methodViewModels )
 ]
 
 { #category : 'factory' }

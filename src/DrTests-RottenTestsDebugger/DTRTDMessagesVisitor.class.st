@@ -14,23 +14,23 @@ DTRTDMessagesVisitor >> buildMethodViewModel: aTestCaseViewModel withTestCase: a
 
 	super buildMethodViewModel: aTestCaseViewModel withTestCase: aTestCase.
 	aTestCaseViewModel 
-		messages: (methodVisitor messages at: (self testCaseMethod: aTestCase) )
+		messages: (self methodVisitor messages at: (self testCaseMethod: aTestCase) )
 ]
 
 { #category : 'building' }
 DTRTDMessagesVisitor >> buildViewModel: aViewModel [
 
-	aViewModel messages: methodViewModels 
+	aViewModel messages: self methodViewModels 
 ]
 
 { #category : 'comparing' }
 DTRTDMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
 
-	(methodVisitor messages 
+	(self methodVisitor messages 
 		does: testCaseMessages1 compiledMethod 
 		includesSubMethod: testCaseMessages2 compiledMethod)
 			ifTrue: [ ^ false ].
-	(methodVisitor messages 
+	(self methodVisitor messages 
 		does: testCaseMessages2 compiledMethod 
 		includesSubMethod: testCaseMessages1 compiledMethod)
 			ifTrue: [ ^ true ].
@@ -42,14 +42,14 @@ DTRTDMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCas
 DTRTDMessagesVisitor >> initialize [
 
 	super initialize.
-	methodVisitor 
+	self methodVisitor 
 		messages: (MaFilteredMessages new 
 			bannedMessages: (TAssertable selectors union: { #new } ) asSet;
 			yourself).
-	methodViewModels := SortedCollection new
+	self methodViewModels: (SortedCollection new
 		sort: [ :testCaseMessages1 :testCaseMessages2 |
 			self compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 ];
-		yourself
+		yourself)
 ]
 
 { #category : 'factory' }
