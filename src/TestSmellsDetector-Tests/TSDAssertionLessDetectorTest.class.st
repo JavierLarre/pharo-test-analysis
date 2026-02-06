@@ -11,7 +11,7 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TSDAssertionLessDetectorTest >> fixtureClass [
 
 	^ TSDFixture
@@ -22,6 +22,13 @@ TSDAssertionLessDetectorTest >> setUp [
 	super setUp.
 
 	detector := TSDAssertionLessDetector new.
+	detector methodVisitor helperSelectors: #( assert: )
+]
+
+{ #category : 'tests' }
+TSDAssertionLessDetectorTest >> testHasAssertion [
+
+	self deny: (detector isAssertionLess: self fixtureClass >> #testUsesInstanceVar )
 ]
 
 { #category : 'tests' }

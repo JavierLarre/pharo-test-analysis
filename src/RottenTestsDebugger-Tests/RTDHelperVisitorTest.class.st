@@ -17,7 +17,7 @@ RTDHelperVisitorTest >> setUp [
 		yourself
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 RTDHelperVisitorTest >> testEmpty [
 
 	self 
@@ -30,7 +30,7 @@ RTDHelperVisitorTest >> testIncludesHelper [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor helpers at: RTDVisitorFixture >> #testHelper ) 
+		assertCollection: (visitor helpers at: self fixtureClass >> #testHelper ) 
 		hasSameElements: { 
 		self fixtureClass >> #helper . 
 		self fixtureClass >> #guardedHelper } 
