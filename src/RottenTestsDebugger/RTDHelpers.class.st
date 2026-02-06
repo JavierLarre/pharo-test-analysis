@@ -35,3 +35,10 @@ RTDHelpers >> isEmpty [
 	
 	^ methodHelpers isEmpty 
 ]
+
+{ #category : 'printing' }
+RTDHelpers >> printOn: aStream [
+
+	super printOn: aStream.
+	methodHelpers printElementsOn: aStream 
+]

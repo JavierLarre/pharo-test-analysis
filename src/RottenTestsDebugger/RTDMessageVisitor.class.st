@@ -11,18 +11,10 @@ Class {
 	#package : 'RottenTestsDebugger'
 }
 
-{ #category : 'initialization' }
-RTDMessageVisitor >> initialize [ 
-
-	super initialize.
-	
-	messages := RTDMessages new.
-]
-
 { #category : 'accessing' }
 RTDMessageVisitor >> messages [
 	
-	^ messages
+	^ messages ifNil: [ messages := RTDMessages new ]
 ]
 
 { #category : 'accessing' }
@@ -34,7 +26,7 @@ RTDMessageVisitor >> messages: aMessages [
 { #category : 'visiting' }
 RTDMessageVisitor >> visitCompiledMethod: aCompiledMethod [
 	
-	messages 
+	self messages 
 		at: aCompiledMethod 
 		put: (aCompiledMethod parseTree allMessageNodes collect: [ :messageNode | 
 			messageNode selector ]) asSet .

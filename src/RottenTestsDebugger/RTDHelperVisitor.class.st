@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : 'accessing' }
+RTDHelperVisitor >> helperSelectors [
+
+	^ helperSelectors ifNil: [ helperSelectors := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
 RTDHelperVisitor >> helperSelectors: anObject [
 
 	helperSelectors := anObject
@@ -35,7 +41,7 @@ RTDHelperVisitor >> initialize [
 RTDHelperVisitor >> selectMethodHelpers: aCompiledMethod [
 
 	^ (methodsSelfCalls at: aCompiledMethod) select: [ :methodSelfCall |
-		  messages is: methodSelfCall connectedToAny: helperSelectors ]
+		  messages is: methodSelfCall connectedToAny: self helperSelectors ]
 ]
 
 { #category : 'visiting' }
