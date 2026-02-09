@@ -8,6 +8,12 @@ Class {
 	#package : 'RottenTestsDebugger-Tests'
 }
 
+{ #category : 'testing' }
+RTDVisitorTest class >> isAbstract [ 
+
+	^ self = RTDVisitorTest 
+]
+
 { #category : 'utilities' }
 RTDVisitorTest >> analyzeMethodFromFixture: aSelector [
 	
@@ -18,6 +24,11 @@ RTDVisitorTest >> analyzeMethodFromFixture: aSelector [
 RTDVisitorTest >> fixtureClass [
 
 	^ RTDVisitorFixture 
+]
+
+{ #category : 'tests' }
+RTDVisitorTest >> testEmpty [
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
