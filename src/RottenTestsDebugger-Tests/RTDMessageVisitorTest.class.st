@@ -1,6 +1,6 @@
 Class {
 	#name : 'RTDMessageVisitorTest',
-	#superclass : 'RTDMethodVisitorTest',
+	#superclass : 'RTDVisitorTest',
 	#category : 'RottenTestsDebugger-Tests',
 	#package : 'RottenTestsDebugger-Tests'
 }

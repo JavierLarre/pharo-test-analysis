@@ -1,24 +1,9 @@
 Class {
 	#name : 'RTDMethodVisitorTest',
-	#superclass : 'TestCase',
-	#instVars : [
-		'visitor'
-	],
+	#superclass : 'RTDVisitorTest',
 	#category : 'RottenTestsDebugger-Tests',
 	#package : 'RottenTestsDebugger-Tests'
 }
-
-{ #category : 'utilities' }
-RTDMethodVisitorTest >> analyzeMethodFromFixture: aSelector [
-	
-	self visitor analyzeMethod: ( self fixtureClass >> aSelector )
-]
-
-{ #category : 'accessing' }
-RTDMethodVisitorTest >> fixtureClass [
-
-	^ RTDVisitorFixture
-]
 
 { #category : 'tests' }
 RTDMethodVisitorTest >> testAnalyzeTwice [
@@ -137,14 +122,7 @@ RTDMethodVisitorTest >> testVisitsSelfCalls [
 ]
 
 { #category : 'accessing' }
-RTDMethodVisitorTest >> visitor [
-
-	^ visitor ifNil: [ visitor := self visitorClass new 
-		selfClass: self fixtureClass; yourself ]
-]
-
-{ #category : 'accessing' }
-RTDMethodVisitorTest >> visitorClass [
+RTDMethodVisitorTest >> visitorClass [ 
 
 	^ RTDMethodVisitor 
 ]
