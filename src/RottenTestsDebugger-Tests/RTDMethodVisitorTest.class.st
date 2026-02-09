@@ -67,6 +67,17 @@ RTDMethodVisitorTest >> testFindsMessagesSentToSelf [
 ]
 
 { #category : 'tests' }
+RTDMethodVisitorTest >> testHasGraphCalls [
+	
+	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple.
+	
+	self 
+		assertCollection: (self visitor methodsSelfCalls at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple) 
+		hasSameElements: { 
+			AIGraphMatchingAlgorithmTest >> #testMaximumCardinalityIsAtMostPerfectForGraph: }
+]
+
+{ #category : 'tests' }
 RTDMethodVisitorTest >> testHasMethodSelfCalls [
 	
 	self analyzeMethodFromFixture: #testHelper.
@@ -77,6 +88,17 @@ RTDMethodVisitorTest >> testHasMethodSelfCalls [
 			self fixtureClass >> #helper . 
 			self fixtureClass >> #guardedHelper . 
 			self fixtureClass >> #notAHelper }
+]
+
+{ #category : 'tests' }
+RTDMethodVisitorTest >> testHasRepeatedSelfCalls [
+	
+	self analyzeMethodFromFixture: #testRepeatedHelper.
+	
+	self 
+		assertCollection: (self visitor methodsSelfCalls at: self fixtureClass >> #testRepeatedHelper) 
+		hasSameElements: { 
+			self fixtureClass >> #helper }
 ]
 
 { #category : 'tests' }

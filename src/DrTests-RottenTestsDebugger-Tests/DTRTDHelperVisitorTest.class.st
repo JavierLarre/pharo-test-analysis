@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'tests' }
+DTRTDHelperVisitorTest >> testGraphHelpersAreFound [
+
+	
+	self
+		visitClass: AIGraphMatchingAlgorithmTest; 
+		assertCollection: (viewModel helpers collect: #compiledMethod) 
+		includesAll: { AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple }
+]
+
+{ #category : 'tests' }
 DTRTDHelperVisitorTest >> testHelpersAreFound [
 
 	

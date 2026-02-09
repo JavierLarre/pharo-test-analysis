@@ -38,6 +38,15 @@ RTDHelperVisitorTest >> testIncludesHelperFromOtherSelfCalls [
 ]
 
 { #category : 'tests' }
+RTDHelperVisitorTest >> testIncludesHelperGraph [
+	
+	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple.
+	
+	self 
+		denyEmpty: (self visitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple ) 
+]
+
+{ #category : 'tests' }
 RTDHelperVisitorTest >> testIncludesHelperTwice [
 	
 	self 

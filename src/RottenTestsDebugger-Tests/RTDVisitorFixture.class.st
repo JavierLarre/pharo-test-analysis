@@ -160,3 +160,15 @@ RTDVisitorFixture >> testNotHelperIsGuarded [
 	self helper.
 	self notAHelper 	
 ]
+
+{ #category : 'as yet unclassified' }
+RTDVisitorFixture >> testRepeatedHelper [
+	
+	self 
+		helper;
+		helper;
+		helper;
+		helper;
+		helper;
+		helper
+]
