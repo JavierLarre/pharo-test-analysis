@@ -22,6 +22,20 @@ DTRTDFixture >> helper [
 ]
 
 { #category : 'tests' }
+DTRTDFixture >> testAssertionLess [
+
+	^ self emptyMethod 
+]
+
+{ #category : 'tests' }
+DTRTDFixture >> testHelper [
+
+	self 
+		helper;
+		emptyMethod 
+]
+
+{ #category : 'tests' }
 DTRTDFixture >> testMethod [
 
 	self 
