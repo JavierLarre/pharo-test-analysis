@@ -38,6 +38,16 @@ DTRTDAssertionLessVisitorTest >> testConnectedAssertionIsIgnored [
 ]
 
 { #category : 'tests' }
+DTRTDAssertionLessVisitorTest >> testConnectedAssertionIsIgnoredGraph [
+
+	self
+		deny: (visitor detector isAssertionLess: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple) ;
+		visitClass: AIGraphMatchingAlgorithmTest; 
+		denyCollection: (viewModel assertionlessTests collect: #compiledMethod) 
+			includesAny: { AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple }
+]
+
+{ #category : 'tests' }
 DTRTDAssertionLessVisitorTest >> testDetectorIgnoresAssertion [
 
 	self

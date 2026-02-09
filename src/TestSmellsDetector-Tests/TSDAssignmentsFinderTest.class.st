@@ -11,7 +11,9 @@ Class {
 { #category : 'accessing' }
 TSDAssignmentsFinderTest >> finder [
 
-	^ self finderClass assignments 
+	^ finder ifNil: [ 
+		finder := self finderClass assignments
+			selfClass: self fixtureClass; yourself ]
 ]
 
 { #category : 'accessing' }

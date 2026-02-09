@@ -11,13 +11,15 @@ Class {
 { #category : 'tests' }
 TSDInstanceVariablesFinderTest >> assertFoundVariables: aCollection [
 
-	self assertCollection: finder foundVariables equals: aCollection asSet 
+	self assertCollection: self finder foundVariables equals: aCollection asSet 
 ]
 
 { #category : 'accessing' }
 TSDInstanceVariablesFinderTest >> finder [
 	
-	^ self finderClass new
+	^ finder ifNil: [ 
+		finder := self finderClass new
+			selfClass: self fixtureClass; yourself ]
 ]
 
 { #category : 'accessing' }
@@ -29,15 +31,6 @@ TSDInstanceVariablesFinderTest >> finderClass [
 TSDInstanceVariablesFinderTest >> fixtureClass [
 	
 	^ TSDFixture 
-]
-
-{ #category : 'running' }
-TSDInstanceVariablesFinderTest >> setUp [
-	
-	super setUp.
-	finder := self finder
-		selfClass: self fixtureClass;
-		yourself
 ]
 
 { #category : 'tests' }
@@ -76,6 +69,6 @@ TSDInstanceVariablesFinderTest >> testUseTwice [
 { #category : 'tests' }
 TSDInstanceVariablesFinderTest >> visit: aSelector [
 
-	finder
+	self finder
 		visit: (self fixtureClass >> aSelector ) parseTree. 
 ]

@@ -11,6 +11,12 @@ Class {
 }
 
 { #category : 'testing' }
+DTRTDTestCaseVisitorTest class >> isAbstract [ 
+
+	^ self = DTRTDTestCaseVisitorTest 
+]
+
+{ #category : 'testing' }
 DTRTDTestCaseVisitorTest class >> shouldInheritSelectors [
 
 	^ true
