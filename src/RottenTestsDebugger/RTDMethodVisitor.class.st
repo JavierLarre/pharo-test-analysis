@@ -17,7 +17,7 @@ RTDMethodVisitor >> analyze [
 
 	super analyze.
 	foundMethods add: selfSentMethod.
-	self visitCompiledMethod: selfSentMethod 
+	self visit: selfSentMethod parseTree
 ]
 
 { #category : 'api' }
@@ -51,11 +51,17 @@ RTDMethodVisitor >> postCopy [
 { #category : 'visiting' }
 RTDMethodVisitor >> visitCompiledMethod: aCompiledMethod [
 
-	| oldMethods |
-	oldMethods := foundMethods .
+	self visitMethodNode: aCompiledMethod parseTree
+]
+
+{ #category : 'visiting' }
+RTDMethodVisitor >> visitMethodNode: aMethodNode [
+
+	| oldMethods result |
+	oldMethods := foundMethods.
 	foundMethods := OrderedCollection new.
-	self visitMethodNode: aCompiledMethod parseTree. 
-	methodsSelfCalls at: aCompiledMethod put: foundMethods .
-	oldMethods addAll: foundMethods .
-	foundMethods := oldMethods 
+	result := super visitMethodNode: aMethodNode.
+	methodsSelfCalls at: aMethodNode compiledMethod ifAbsentPut: foundMethods.
+	foundMethods := oldMethods, foundMethods. 
+	^ result
 ]

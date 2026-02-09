@@ -45,8 +45,8 @@ RTDHelperVisitor >> selectMethodHelpers: aCompiledMethod [
 ]
 
 { #category : 'visiting' }
-RTDHelperVisitor >> visitCompiledMethod: aCompiledMethod [
+RTDHelperVisitor >> visitMethodNode: aMethodNode [
 	
-	super visitCompiledMethod: aCompiledMethod.
-	helpers at: aCompiledMethod put: (self selectMethodHelpers: aCompiledMethod) 
+	super visitMethodNode: aMethodNode.
+	helpers at: aMethodNode compiledMethod put: (self selectMethodHelpers: aMethodNode compiledMethod) 
 ]
