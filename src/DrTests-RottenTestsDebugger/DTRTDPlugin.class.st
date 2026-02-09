@@ -32,11 +32,7 @@ DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
 	| viewModel |
 	viewModel := DTRTDViewModel new.
-	{
-		DTRTDHelperVisitor.
-		DTRTDMessagesVisitor.
-		DTRTDSelfMethodsVisitor.
-		DTRTDFirstFixVisitor } do: [ :visitorClass |
+	self testVisitors do: [ :visitorClass |
 			visitorClass new
 				visit: aTestSuite;
 				buildViewModel: viewModel ].
@@ -80,4 +76,15 @@ DTRTDPlugin >> startButtonHelp [
 { #category : 'api' }
 DTRTDPlugin >> startButtonLabel [
 	^ 'Analyze tests selected.' translated
+]
+
+{ #category : 'accessing' }
+DTRTDPlugin >> testVisitors [
+
+	^ {
+		  DTRTDHelperVisitor.
+		  DTRTDMessagesVisitor.
+		  DTRTDSelfMethodsVisitor.
+		  DTRTDFirstFixVisitor.
+		  DTRTDAssertionLessVisitor }
 ]

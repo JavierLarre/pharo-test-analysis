@@ -23,7 +23,7 @@ DTRTDResult >> buildTreeForUI [
 DTRTDResult >> buildTreeForUIAssertionLess [
 
 	<dtTestRTDResultTreeNamed: 'Tests with no assertions' order: 6>
-	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel messages 
+	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel assertionlessTests 
 ]
 
 { #category : 'accessing' }

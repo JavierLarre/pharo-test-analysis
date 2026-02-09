@@ -52,3 +52,11 @@ RTDMessageVisitorTest >> testVisitsAreEqual [
 		assert: visitor messages 
 		equals: newVisitor messages
 ]
+
+{ #category : 'tests' }
+RTDMessageVisitorTest >> testVisitsHelper [
+
+	self 
+		analyzeMethodFromFixture: #testHelper;
+		assertCollection: visitor messages methods includesAny: { self fixtureClass >> #helper }
+]

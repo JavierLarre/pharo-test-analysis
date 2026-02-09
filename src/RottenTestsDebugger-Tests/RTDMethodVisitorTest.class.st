@@ -24,6 +24,27 @@ RTDMethodVisitorTest >> fixtureClass [
 RTDMethodVisitorTest >> setUp [
 	super setUp.
 	visitor := RTDMethodVisitor new
+		selfClass: self fixtureClass;
+		yourself
+]
+
+{ #category : 'tests' }
+RTDMethodVisitorTest >> testAnalyzeTwice [
+	
+	self 
+		analyzeMethodFromFixture: #testHelper; 
+		assertCollection: (visitor methodsSelfCalls at: self fixtureClass >> #testHelper) 
+			hasSameElements: { 
+				self fixtureClass >> #helper . 
+				self fixtureClass >> #guardedHelper . 
+				self fixtureClass >> #notAHelper };
+				
+		analyzeMethodFromFixture: #testHelper; 
+		assertCollection: (visitor methodsSelfCalls at: self fixtureClass >> #testHelper) 
+			hasSameElements: { 
+				self fixtureClass >> #helper . 
+				self fixtureClass >> #guardedHelper . 
+				self fixtureClass >> #notAHelper }
 ]
 
 { #category : 'tests' }
@@ -120,5 +141,5 @@ RTDMethodVisitorTest >> testVisitsSelfCalls [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assert: (visitor methodsSelfCalls includesKey: RTDVisitorFixture >> #helper)
+		assert: (visitor methodsSelfCalls includesKey: self fixtureClass >> #helper)
 ]

@@ -29,20 +29,26 @@ DTRTDAssertionLessVisitor >> buildViewModel: aViewModel [
 { #category : 'accessing' }
 DTRTDAssertionLessVisitor >> detector [
 
-	^ detector ifNil: [ detector := TSDAssertionLessDetector new ]
+	^ detector ifNil: [ 
+		detector := TSDAssertionLessDetector new 
+			methodVisitor: self methodVisitor; 
+			yourself ]
 ]
 
 { #category : 'utilities' }
 DTRTDAssertionLessVisitor >> filterEmptyMessages: aMethodViewModelCollection [
 
-	^ (super filterEmptyMessages: aMethodViewModelCollection) select: [ :aMethodViewModel | detector isAssertionLess: aMethodViewModel compiledMethod ]
+	^ (super filterEmptyMessages: aMethodViewModelCollection) select: [ :aMethodViewModel | 
+		self detector isAssertionLess: aMethodViewModel compiledMethod ]
 ]
 
-{ #category : 'initialization' }
-DTRTDAssertionLessVisitor >> initialize [
+{ #category : 'accessing' }
+DTRTDAssertionLessVisitor >> methodVisitor [
 
-	super initialize.
-	self detector methodVisitor: self methodVisitor
+	^ methodVisitor ifNil: [ 
+			methodVisitor := super methodVisitor
+				helperSelectors: (TAssertable selectors union: { #assert:. #assert:description: });
+				yourself ]
 ]
 
 { #category : 'factory' }

@@ -25,11 +25,13 @@ DTRTDHelperVisitor >> buildViewModel: aViewModel [
 	aViewModel helpers: (self filterEmptyMessages: self methodViewModels )
 ]
 
-{ #category : 'initialization' }
-DTRTDHelperVisitor >> initialize [ 
-	
-	super initialize.
-	self methodVisitor helperSelectors: (TAssertable selectors union: { #assert: . #assert:description: } )
+{ #category : 'accessing' }
+DTRTDHelperVisitor >> methodVisitor [
+
+	^ methodVisitor ifNil: [ 
+			methodVisitor := super methodVisitor
+				helperSelectors: (TAssertable selectors union: { #assert:. #assert:description: });
+				yourself ]
 ]
 
 { #category : 'factory' }
