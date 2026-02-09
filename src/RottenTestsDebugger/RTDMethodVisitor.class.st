@@ -23,35 +23,29 @@ RTDMethodVisitor >> analyze [
 { #category : 'api' }
 RTDMethodVisitor >> analyzeMethod: aCompiledMethod [
 
-	selfClass := aCompiledMethod methodClass.
-	self visitCompiledMethod: aCompiledMethod 
+	self 
+		selfClass: aCompiledMethod methodClass;
+	 	visit: aCompiledMethod parseTree
 ]
 
 { #category : 'initialization' }
 RTDMethodVisitor >> initialize [ 
 
 	super initialize.
-	methodsSelfCalls := Dictionary new.
 	foundMethods := OrderedCollection new.
 ]
 
 { #category : 'accessing' }
 RTDMethodVisitor >> methodsSelfCalls [
 
-	^ methodsSelfCalls
+	^ methodsSelfCalls ifNil: [ methodsSelfCalls := Dictionary new ]
 ]
 
 { #category : 'copying' }
 RTDMethodVisitor >> postCopy [ 
 	
-	methodsSelfCalls := methodsSelfCalls copy.
+	methodsSelfCalls := self methodsSelfCalls copy.
 	^ self
-]
-
-{ #category : 'visiting' }
-RTDMethodVisitor >> visitCompiledMethod: aCompiledMethod [
-
-	self visitMethodNode: aCompiledMethod parseTree
 ]
 
 { #category : 'visiting' }
@@ -61,7 +55,7 @@ RTDMethodVisitor >> visitMethodNode: aMethodNode [
 	oldMethods := foundMethods.
 	foundMethods := OrderedCollection new.
 	result := super visitMethodNode: aMethodNode.
-	methodsSelfCalls at: aMethodNode compiledMethod ifAbsentPut: foundMethods.
+	self methodsSelfCalls at: aMethodNode compiledMethod ifAbsentPut: foundMethods.
 	foundMethods := oldMethods, foundMethods. 
 	^ result
 ]

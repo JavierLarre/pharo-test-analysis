@@ -27,20 +27,13 @@ RTDHelperVisitor >> helperSelectors: anObject [
 { #category : 'accessing' }
 RTDHelperVisitor >> helpers [ 
 	
-	^ helpers 
-]
-
-{ #category : 'initialization' }
-RTDHelperVisitor >> initialize [ 
-
-	super initialize.
-	helpers := RTDHelpers new.
+	^ helpers ifNil: [ helpers := RTDHelpers new ]
 ]
 
 { #category : 'private' }
 RTDHelperVisitor >> selectMethodHelpers: aCompiledMethod [
 
-	^ (methodsSelfCalls at: aCompiledMethod) select: [ :methodSelfCall |
+	^ (self methodsSelfCalls at: aCompiledMethod) select: [ :methodSelfCall |
 		  messages is: methodSelfCall connectedToAny: self helperSelectors ]
 ]
 
@@ -48,5 +41,5 @@ RTDHelperVisitor >> selectMethodHelpers: aCompiledMethod [
 RTDHelperVisitor >> visitMethodNode: aMethodNode [
 	
 	super visitMethodNode: aMethodNode.
-	helpers at: aMethodNode compiledMethod put: (self selectMethodHelpers: aMethodNode compiledMethod) 
+	self helpers at: aMethodNode compiledMethod put: (self selectMethodHelpers: aMethodNode compiledMethod) 
 ]

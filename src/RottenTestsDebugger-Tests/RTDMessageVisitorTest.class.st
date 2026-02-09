@@ -5,18 +5,11 @@ Class {
 	#package : 'RottenTestsDebugger-Tests'
 }
 
-{ #category : 'running' }
-RTDMessageVisitorTest >> setUp [ 
-
-	super setUp.
-	visitor := RTDMessageVisitor new
-]
-
 { #category : 'tests' }
 RTDMessageVisitorTest >> testEmpty [ 
 
 	self
-		assertEmpty: visitor messages
+		assertEmpty: self visitor messages
 ]
 
 { #category : 'tests' }
@@ -25,7 +18,7 @@ RTDMessageVisitorTest >> testIncludesMessages [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor messages at: RTDVisitorFixture >> #testHelper)
+		assertCollection: (self visitor messages at: RTDVisitorFixture >> #testHelper)
 		includesAll: { #helper . #foo . #notAHelper . #guardedHelper }
 ]
 
@@ -35,7 +28,7 @@ RTDMessageVisitorTest >> testMessagesEqualsSet [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor messages at: RTDVisitorFixture >> #testHelper)
+		assertCollection: (self visitor messages at: RTDVisitorFixture >> #testHelper)
 		equals: { #helper . #foo . #ifTrue: . #notAHelper . #guardedHelper } asSet
 ]
 
@@ -49,7 +42,7 @@ RTDMessageVisitorTest >> testVisitsAreEqual [
 		yourself.
 	
 	self 
-		assert: visitor messages 
+		assert: self visitor messages 
 		equals: newVisitor messages
 ]
 
@@ -58,5 +51,11 @@ RTDMessageVisitorTest >> testVisitsHelper [
 
 	self 
 		analyzeMethodFromFixture: #testHelper;
-		assertCollection: visitor messages methods includesAny: { self fixtureClass >> #helper }
+		assertCollection: self visitor messages methods includesAny: { self fixtureClass >> #helper }
+]
+
+{ #category : 'accessing' }
+RTDMessageVisitorTest >> visitorClass [ 
+
+	^ RTDMessageVisitor 
 ]

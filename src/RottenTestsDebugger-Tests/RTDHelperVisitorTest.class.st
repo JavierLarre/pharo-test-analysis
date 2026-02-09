@@ -8,20 +8,11 @@ Class {
 	#package : 'RottenTestsDebugger-Tests'
 }
 
-{ #category : 'running' }
-RTDHelperVisitorTest >> setUp [
-	super setUp.
-
-	visitor := RTDHelperVisitor new
-		helperSelectors: #( assert: );
-		yourself
-]
-
 { #category : 'tests' }
 RTDHelperVisitorTest >> testEmpty [
 
 	self 
-		assertEmpty: visitor helpers
+		assertEmpty: self visitor helpers
 ]
 
 { #category : 'tests' }
@@ -30,7 +21,7 @@ RTDHelperVisitorTest >> testIncludesHelper [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (visitor helpers at: self fixtureClass >> #testHelper ) 
+		assertCollection: (self visitor helpers at: self fixtureClass >> #testHelper ) 
 		hasSameElements: { 
 		self fixtureClass >> #helper . 
 		self fixtureClass >> #guardedHelper } 
@@ -42,7 +33,7 @@ RTDHelperVisitorTest >> testIncludesHelperFromOtherSelfCalls [
 	self analyzeMethodFromFixture: #testNested.
 	
 	self 
-		assertCollection: (visitor helpers at: self fixtureClass >> #nestedHelper ) 
+		assertCollection: (self visitor helpers at: self fixtureClass >> #nestedHelper ) 
 		hasSameElements: { self fixtureClass >> #helper } 
 ]
 
@@ -52,14 +43,27 @@ RTDHelperVisitorTest >> testIncludesHelperTwice [
 	self 
 		analyzeMethodFromFixture: #testHelper;
 		
-		assertCollection: (visitor helpers at: self fixtureClass >> #testHelper ) 
+		assertCollection: (self visitor helpers at: self fixtureClass >> #testHelper ) 
 		hasSameElements: { 
 		self fixtureClass >> #helper . 
 		self fixtureClass >> #guardedHelper };
 		
 		analyzeMethodFromFixture: #testHelper;
-		assertCollection: (visitor helpers at: self fixtureClass >> #testHelper ) 
+		assertCollection: (self visitor helpers at: self fixtureClass >> #testHelper ) 
 		hasSameElements: { 
 		self fixtureClass >> #helper . 
 		self fixtureClass >> #guardedHelper }
+]
+
+{ #category : 'accessing' }
+RTDHelperVisitorTest >> visitor [
+
+	^ visitor ifNil: [ super visitor  
+		helperSelectors: #( assert: ); yourself ]
+]
+
+{ #category : 'accessing' }
+RTDHelperVisitorTest >> visitorClass [
+
+	^ RTDHelperVisitor 
 ]

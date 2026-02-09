@@ -28,8 +28,7 @@ RTDMessageVisitor >> visitMethodNode: aMethodNode [
 	
 	self messages 
 		at: aMethodNode compiledMethod 
-		put: (aMethodNode allMessageNodes collect: [ :messageNode | 
-			messageNode selector ]) asSet.
+		put: (aMethodNode allMessageNodes collect: #selector) asSet.
 
 	super visitMethodNode: aMethodNode
 ]
