@@ -61,5 +61,5 @@ DTRTDAssertionLessVisitorTest >> testHelperIsIgnored [
 { #category : 'factory' }
 DTRTDAssertionLessVisitorTest >> visitorClass [
 
-	^ DTRTDAssertionLessVisitor 
+	^ DTTSDAssertionLessVisitor 
 ]

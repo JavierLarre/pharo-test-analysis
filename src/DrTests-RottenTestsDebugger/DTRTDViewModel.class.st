@@ -8,25 +8,12 @@ Class {
 		'messages',
 		'helpers',
 		'selfSentMethods',
-		'priorities',
-		'assertionlessTests'
+		'priorities'
 	],
 	#category : 'DrTests-RottenTestsDebugger-DTOs',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'DTOs'
 }
-
-{ #category : 'accessing' }
-DTRTDViewModel >> assertionlessTests [
-
-	^ assertionlessTests
-]
-
-{ #category : 'accessing' }
-DTRTDViewModel >> assertionlessTests: anObject [
-
-	assertionlessTests := anObject
-]
 
 { #category : 'accessing' }
 DTRTDViewModel >> helpers [

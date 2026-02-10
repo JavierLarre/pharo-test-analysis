@@ -12,7 +12,7 @@ Class {
 { #category : 'api - accessing' }
 DTRTDPlugin class >> pluginName [ 
 
-	^ 'Method Message Analyzer'
+	^ 'Rotten Tests Debugger'
 ]
 
 { #category : 'api - accessing' }
@@ -31,7 +31,7 @@ DTRTDPlugin class >> weight [
 DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
 	| viewModel |
-	viewModel := DTRTDViewModel new.
+	viewModel := self viewModelClass new.
 	self testVisitors do: [ :visitorClass |
 			visitorClass new
 				visit: aTestSuite;
@@ -86,5 +86,11 @@ DTRTDPlugin >> testVisitors [
 		  DTRTDMessagesVisitor.
 		  DTRTDSelfMethodsVisitor.
 		  DTRTDFirstFixVisitor.
-		  DTRTDAssertionLessVisitor }
+		  DTTSDAssertionLessVisitor }
+]
+
+{ #category : 'as yet unclassified' }
+DTRTDPlugin >> viewModelClass [
+
+	^ DTRTDViewModel
 ]

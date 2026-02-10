@@ -2,18 +2,18 @@
 I analyze test cases using `TSDAssertionLessDetector` and build the viewmodel with the results found
 "
 Class {
-	#name : 'DTRTDAssertionLessVisitor',
+	#name : 'DTTSDAssertionLessVisitor',
 	#superclass : 'DTRTDTestCaseVisitor',
 	#instVars : [
 		'detector'
 	],
-	#category : 'DrTests-RottenTestsDebugger-Visitors',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-TestSmellsDetector-Visitors',
+	#package : 'DrTests-TestSmellsDetector',
 	#tag : 'Visitors'
 }
 
 { #category : 'building' }
-DTRTDAssertionLessVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
+DTTSDAssertionLessVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
 
 	super buildMethodViewModel: aMethodViewModel withTestCase: aTestCase.
 	aMethodViewModel 
@@ -21,13 +21,13 @@ DTRTDAssertionLessVisitor >> buildMethodViewModel: aMethodViewModel withTestCase
 ]
 
 { #category : 'building' }
-DTRTDAssertionLessVisitor >> buildViewModel: aViewModel [
+DTTSDAssertionLessVisitor >> buildViewModel: aViewModel [
 
 	aViewModel assertionlessTests: (self filterEmptyMessages: self methodViewModels )
 ]
 
 { #category : 'accessing' }
-DTRTDAssertionLessVisitor >> detector [
+DTTSDAssertionLessVisitor >> detector [
 
 	^ detector ifNil: [ 
 		detector := TSDAssertionLessDetector new 
@@ -36,14 +36,14 @@ DTRTDAssertionLessVisitor >> detector [
 ]
 
 { #category : 'utilities' }
-DTRTDAssertionLessVisitor >> filterEmptyMessages: aMethodViewModelCollection [
+DTTSDAssertionLessVisitor >> filterEmptyMessages: aMethodViewModelCollection [
 
 	^ (super filterEmptyMessages: aMethodViewModelCollection) select: [ :aMethodViewModel | 
 		self detector isAssertionLess: aMethodViewModel compiledMethod ]
 ]
 
 { #category : 'accessing' }
-DTRTDAssertionLessVisitor >> methodVisitor [
+DTTSDAssertionLessVisitor >> methodVisitor [
 
 	^ methodVisitor ifNil: [ 
 			methodVisitor := super methodVisitor
@@ -52,7 +52,7 @@ DTRTDAssertionLessVisitor >> methodVisitor [
 ]
 
 { #category : 'factory' }
-DTRTDAssertionLessVisitor >> methodVisitorClass [
+DTTSDAssertionLessVisitor >> methodVisitorClass [
 
 	^ RTDHelperVisitor 
 ]
