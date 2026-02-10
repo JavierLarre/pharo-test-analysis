@@ -6,19 +6,12 @@ Class {
 }
 
 { #category : 'tests' }
-RTDMessageVisitorTest >> testEmpty [ 
-
-	self
-		assertEmpty: self visitor messages
-]
-
-{ #category : 'tests' }
 RTDMessageVisitorTest >> testIncludesMessages [
 	
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (self visitor messages at: RTDVisitorFixture >> #testHelper)
+		assertCollection: (self visitor messages at: self fixtureClass >> #testHelper)
 		includesAll: { #helper . #foo . #notAHelper . #guardedHelper }
 ]
 
@@ -28,7 +21,7 @@ RTDMessageVisitorTest >> testMessagesEqualsSet [
 	self analyzeMethodFromFixture: #testHelper.
 	
 	self 
-		assertCollection: (self visitor messages at: RTDVisitorFixture >> #testHelper)
+		assertCollection: (self visitor messages at: self fixtureClass >> #testHelper)
 		equals: { #helper . #foo . #ifTrue: . #notAHelper . #guardedHelper } asSet
 ]
 
@@ -51,11 +44,18 @@ RTDMessageVisitorTest >> testVisitsHelper [
 
 	self 
 		analyzeMethodFromFixture: #testHelper;
-		assertCollection: self visitor messages methods includesAny: { self fixtureClass >> #helper }
+		assertCollection: self visitor messages methods 
+		hasSameElements: (self fixtureMethodsFrom: #( helper notAHelper testHelper guardedHelper ) )
 ]
 
 { #category : 'accessing' }
 RTDMessageVisitorTest >> visitorClass [ 
 
 	^ RTDMessageVisitor 
+]
+
+{ #category : 'accessing' }
+RTDMessageVisitorTest >> visitorMethods [
+
+	^ self visitor messages
 ]

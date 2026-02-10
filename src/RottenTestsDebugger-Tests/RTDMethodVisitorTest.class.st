@@ -10,18 +10,10 @@ RTDMethodVisitorTest >> testAnalyzeTwice [
 	
 	self 
 		analyzeMethodFromFixture: #testHelper; 
-		assertCollection: (self visitor methodsSelfCalls at: self fixtureClass >> #testHelper) 
-			hasSameElements: { 
-				self fixtureClass >> #helper . 
-				self fixtureClass >> #guardedHelper . 
-				self fixtureClass >> #notAHelper };
+		assertAt: #testHelper hasMethods: { #helper. #guardedHelper. #notAHelper };
 				
 		analyzeMethodFromFixture: #testHelper; 
-		assertCollection: (self visitor methodsSelfCalls at: self fixtureClass >> #testHelper) 
-			hasSameElements: { 
-				self fixtureClass >> #helper . 
-				self fixtureClass >> #guardedHelper . 
-				self fixtureClass >> #notAHelper }
+		assertAt: #testHelper hasMethods: { #helper. #guardedHelper. #notAHelper }
 ]
 
 { #category : 'tests' }
@@ -37,78 +29,60 @@ RTDMethodVisitorTest >> testCopy [
 ]
 
 { #category : 'tests' }
-RTDMethodVisitorTest >> testEmpty [
-	
-	self 
-		assertEmpty: self visitor methodsSelfCalls
-]
-
-{ #category : 'tests' }
 RTDMethodVisitorTest >> testEmptyMethods [
 	
 	self 
 		analyzeMethodFromFixture: #testEmpty;
 		denyCollection: self visitor methodsSelfCalls keys includesAny: { self fixtureClass >> #emptyMethod };
-		assertEmpty: (self visitor methodsSelfCalls at: self fixtureClass >> #noMessages );
+		assertEmpty: (self methodsAt: #noMessages );
 		
 		analyzeMethodFromFixture: #emptyMethod;
 		assert: (self visitor methodsSelfCalls includesKey: self fixtureClass >> #emptyMethod );
-		assertEmpty: (self visitor methodsSelfCalls at: self fixtureClass >> #emptyMethod )
+		assertEmpty: (self methodsAt: #emptyMethod )
 ]
 
 { #category : 'tests' }
 RTDMethodVisitorTest >> testFindsMessagesSentToSelf [
-	
+
 	self analyzeMethodFromFixture: #testHelper.
-	
-	self 
-		assertCollection: (self visitor methodsSelfCalls at: self fixtureClass >> #testHelper)
-		includesAll: { self fixtureClass >> #helper }
+
+	self assertCollection: (self methodsAt: #testHelper) includesAll: { (self fixtureClass >> #helper) }
 ]
 
 { #category : 'tests' }
-RTDMethodVisitorTest >> testHasGraphCalls [
-	
-	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple.
-	
-	self 
-		assertCollection: (self visitor methodsSelfCalls at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple) 
-		hasSameElements: { 
-			AIGraphMatchingAlgorithmTest >> #testMaximumCardinalityIsAtMostPerfectForGraph: }
+RTDMethodVisitorTest >> testHasCorrectCalls [
+
+	self analyzeMethodFromFixture: #testBigHelper.
+
+	self
+		assertAt: #testBigHelper hasMethods: { #bigHelper };
+		assertAt: #bigHelper hasMethods: { 
+			#helper0 . #helper1 . #noMessages . #helper2 . #guardedHelper . #notAHelper }
 ]
 
 { #category : 'tests' }
 RTDMethodVisitorTest >> testHasMethodSelfCalls [
-	
+
 	self analyzeMethodFromFixture: #testHelper.
-	
-	self 
-		assertCollection: (self visitor methodsSelfCalls at: self fixtureClass >> #testHelper) 
-		hasSameElements: { 
-			self fixtureClass >> #helper . 
-			self fixtureClass >> #guardedHelper . 
-			self fixtureClass >> #notAHelper }
+	self assertAt: #testHelper hasMethods: { #helper . #guardedHelper . #notAHelper }
 ]
 
 { #category : 'tests' }
 RTDMethodVisitorTest >> testHasRepeatedSelfCalls [
-	
+
 	self analyzeMethodFromFixture: #testRepeatedHelper.
-	
-	self 
-		assertCollection: (self visitor methodsSelfCalls at: self fixtureClass >> #testRepeatedHelper) 
-		hasSameElements: { 
-			self fixtureClass >> #helper }
+
+	self assertAt: #testRepeatedHelper hasMethods: { #helper }
 ]
 
 { #category : 'tests' }
-RTDMethodVisitorTest >> testIncludesCallOnArguments [ 
-	
-	self analyzeMethodFromFixture: #testHelperOnArguments .
-	
+RTDMethodVisitorTest >> testIncludesCallOnArguments [
+
+	self analyzeMethodFromFixture: #testHelperOnArguments.
+
 	self 
-		assertCollection: (self visitor methodsSelfCalls at: self fixtureClass >> #testHelperOnArguments)
-		includesAll: { self fixtureClass >> #helper } 
+		assertCollection: (self methodsAt: #testHelperOnArguments) 
+		includesAll: (self fixtureMethodsFrom: { #helper })
 ]
 
 { #category : 'tests' }
@@ -117,7 +91,7 @@ RTDMethodVisitorTest >> testVisitCycle [
 	self 
 		analyzeMethodFromFixture: #testCycle;
 		assertCollection: self visitor selfSentMethods 
-		hasSameElements: { self fixtureClass >> #cycle1 . self fixtureClass >> #cycle2 }
+		hasSameElements: (self fixtureMethodsFrom: { #cycle1 . #cycle2 })
 ]
 
 { #category : 'tests' }
@@ -147,4 +121,10 @@ RTDMethodVisitorTest >> testVisitsSelfCalls [
 RTDMethodVisitorTest >> visitorClass [ 
 
 	^ RTDMethodVisitor 
+]
+
+{ #category : 'accessing' }
+RTDMethodVisitorTest >> visitorMethods [ 
+	
+	^ self visitor methodsSelfCalls 
 ]

@@ -28,6 +28,9 @@ RTDVisitorFixture >> bigHelper [
 	
 	self helper0;
 		helper1;
+		emptyMethod;
+		noMessages;
+		notAHelper ;
 		helper2.
 	false ifTrue: [ self guardedHelper ]
 ]

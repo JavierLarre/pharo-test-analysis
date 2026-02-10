@@ -9,59 +9,29 @@ Class {
 }
 
 { #category : 'tests' }
-RTDHelperVisitorTest >> testEmpty [
+RTDHelperVisitorTest >> testIncludesHelper [
 
-	self 
-		assertEmpty: self visitor helpers
-]
-
-{ #category : 'tests' }
-RTDHelperVisitorTest >> testIncludesHelper [ 
-	
 	self analyzeMethodFromFixture: #testHelper.
-	
-	self 
-		assertCollection: (self visitor helpers at: self fixtureClass >> #testHelper ) 
-		hasSameElements: { 
-		self fixtureClass >> #helper . 
-		self fixtureClass >> #guardedHelper } 
+	self assertAt: #testHelper hasMethods: {
+			#helper.
+			#guardedHelper }
 ]
 
 { #category : 'tests' }
 RTDHelperVisitorTest >> testIncludesHelperFromOtherSelfCalls [
-	
-	self analyzeMethodFromFixture: #testNested.
-	
-	self 
-		assertCollection: (self visitor helpers at: self fixtureClass >> #nestedHelper ) 
-		hasSameElements: { self fixtureClass >> #helper } 
-]
 
-{ #category : 'tests' }
-RTDHelperVisitorTest >> testIncludesHelperGraph [
-	
-	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple.
-	
-	self 
-		denyEmpty: (self visitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple ) 
+	self analyzeMethodFromFixture: #testNested.
+	self assertAt: #nestedHelper hasMethods: { #helper }
 ]
 
 { #category : 'tests' }
 RTDHelperVisitorTest >> testIncludesHelperTwice [
-	
-	self 
+
+	self
 		analyzeMethodFromFixture: #testHelper;
-		
-		assertCollection: (self visitor helpers at: self fixtureClass >> #testHelper ) 
-		hasSameElements: { 
-		self fixtureClass >> #helper . 
-		self fixtureClass >> #guardedHelper };
-		
+		assertAt: #testHelper hasMethods: { #helper. #guardedHelper };
 		analyzeMethodFromFixture: #testHelper;
-		assertCollection: (self visitor helpers at: self fixtureClass >> #testHelper ) 
-		hasSameElements: { 
-		self fixtureClass >> #helper . 
-		self fixtureClass >> #guardedHelper }
+		assertAt: #testHelper hasMethods: { #helper. #guardedHelper }
 ]
 
 { #category : 'accessing' }
@@ -75,4 +45,10 @@ RTDHelperVisitorTest >> visitor [
 RTDHelperVisitorTest >> visitorClass [
 
 	^ RTDHelperVisitor 
+]
+
+{ #category : 'accessing' }
+RTDHelperVisitorTest >> visitorMethods [ 
+
+	^ self visitor helpers 
 ]
