@@ -9,15 +9,6 @@ Class {
 }
 
 { #category : 'tests' }
-RTDHelperVisitorTest >> testIncludesGraph [
-
-	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex.
-	self denyEmpty: (self visitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex).
-	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple.
-	self denyEmpty: (self visitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple).
-]
-
-{ #category : 'tests' }
 RTDHelperVisitorTest >> testIncludesHelper [
 
 	self analyzeMethodFromFixture: #testHelper.

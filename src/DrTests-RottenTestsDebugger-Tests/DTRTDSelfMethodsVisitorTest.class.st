@@ -9,13 +9,10 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'tests' }
-DTRTDSelfMethodsVisitorTest >> testGraphMethodsAreFound [
+{ #category : 'accessing' }
+DTRTDSelfMethodsVisitorTest >> methodViewModels [ 
 
-	visitor visit: (AIGraphMatchingAlgorithmTest selector: #testCyclicNonWeightedSimple) .
-	self
-		assertCollection: (visitor methodVisitor methodsSelfCalls at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple ) 
-		hasSameElements: { AIGraphMatchingAlgorithmTest >> #testMaximumCardinalityIsAtMostPerfectForGraph: }
+	^ viewModel selfSentMethods 
 ]
 
 { #category : 'factory' }

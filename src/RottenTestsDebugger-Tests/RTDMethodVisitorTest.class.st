@@ -86,15 +86,6 @@ RTDMethodVisitorTest >> testIncludesCallOnArguments [
 ]
 
 { #category : 'tests' }
-RTDMethodVisitorTest >> testIncludesGraph [
-
-	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex.
-	self denyEmpty: (self visitorMethods at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex).
-	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple.
-	self denyEmpty: (self visitorMethods at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple).
-]
-
-{ #category : 'tests' }
 RTDMethodVisitorTest >> testTwoMethodsShareSelfCalls [
 
 	

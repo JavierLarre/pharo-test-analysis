@@ -9,17 +9,10 @@ Class {
 	#tag : 'Visitors'
 }
 
-{ #category : 'tests' }
-DTRTDHelperVisitorTest >> testGraphHelpersAreFound [
+{ #category : 'accessing' }
+DTRTDHelperVisitorTest >> methodViewModels [ 
 
-	visitor visit: (AIGraphMatchingAlgorithmTest selector: #testCyclicNonWeightedComplex). 
-	
-	self 
-		denyEmpty: (visitor methodVisitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex).
-	visitor visit: (AIGraphMatchingAlgorithmTest selector: #testCyclicNonWeightedSimple). 
-	
-	self 
-		denyEmpty: (visitor methodVisitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple).
+	^ viewModel helpers 
 ]
 
 { #category : 'tests' }
@@ -37,6 +30,16 @@ DTRTDHelperVisitorTest >> testInheritedTestsAreFound [
 	self 
 		visitClass: self subFixtureClass;
 		assertCollection: viewModel helpers first messages hasSameElements: { #helper }
+]
+
+{ #category : 'tests' }
+DTRTDHelperVisitorTest >> testSharedHelpersAreFound [
+
+	self visitClass: self fixtureClass . 
+	
+	self 
+		denyEmpty: (self methodModelFrom: self fixtureClass >> #testMethod) messages;
+		denyEmpty: (self methodModelFrom: self fixtureClass >> #testHelper) messages.
 ]
 
 { #category : 'factory' }

@@ -28,6 +28,18 @@ DTRTDTestCaseVisitorTest >> fixtureClass [
 	^ DTRTDFixture
 ]
 
+{ #category : 'accessing' }
+DTRTDTestCaseVisitorTest >> methodModelFrom: aCompiledMethod [
+
+	^ self methodViewModels detect: [ :methodViewModel | methodViewModel compiledMethod = aCompiledMethod ] 
+]
+
+{ #category : 'accessing' }
+DTRTDTestCaseVisitorTest >> methodViewModels [ 
+
+	^ self subclassResponsibility 
+]
+
 { #category : 'running' }
 DTRTDTestCaseVisitorTest >> setUp [
 	super setUp.

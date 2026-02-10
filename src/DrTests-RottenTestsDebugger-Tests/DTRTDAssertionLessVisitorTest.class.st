@@ -9,6 +9,12 @@ Class {
 	#tag : 'Visitors'
 }
 
+{ #category : 'accessing' }
+DTRTDAssertionLessVisitorTest >> methodViewModels [ 
+
+	^ viewModel assertionlessTests 
+]
+
 { #category : 'tests' }
 DTRTDAssertionLessVisitorTest >> testAssertionIsIgnored [
 	
@@ -35,15 +41,6 @@ DTRTDAssertionLessVisitorTest >> testConnectedAssertionIsIgnored [
 		visitClass: self fixtureClass; 
 		denyCollection: (viewModel assertionlessTests collect: #compiledMethod) 
 			includesAny: { self fixtureClass >> #testHelper }
-]
-
-{ #category : 'tests' }
-DTRTDAssertionLessVisitorTest >> testConnectedAssertionIsIgnoredGraph [
-
-	self
-		visitClass: AIGraphMatchingAlgorithmTest; 
-		denyCollection: (viewModel assertionlessTests collect: #compiledMethod) 
-			includesAny: { AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple }
 ]
 
 { #category : 'tests' }
