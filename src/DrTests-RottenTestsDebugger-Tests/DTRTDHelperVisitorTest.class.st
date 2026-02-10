@@ -12,11 +12,14 @@ Class {
 { #category : 'tests' }
 DTRTDHelperVisitorTest >> testGraphHelpersAreFound [
 
+	visitor visit: (AIGraphMatchingAlgorithmTest selector: #testCyclicNonWeightedComplex). 
 	
-	self
-		visitClass: AIGraphMatchingAlgorithmTest; 
-		assertCollection: (viewModel helpers collect: #compiledMethod) 
-		includesAll: { AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple }
+	self 
+		denyEmpty: (visitor methodVisitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex).
+	visitor visit: (AIGraphMatchingAlgorithmTest selector: #testCyclicNonWeightedSimple). 
+	
+	self 
+		denyEmpty: (visitor methodVisitor helpers at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple).
 ]
 
 { #category : 'tests' }

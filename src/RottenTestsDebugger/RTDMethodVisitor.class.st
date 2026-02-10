@@ -23,6 +23,7 @@ RTDMethodVisitor >> analyze [
 { #category : 'api' }
 RTDMethodVisitor >> analyzeMethod: aCompiledMethod [
 
+	selfSentMethods := OrderedCollection new.
 	self 
 		selfClass: aCompiledMethod methodClass;
 	 	visit: aCompiledMethod parseTree

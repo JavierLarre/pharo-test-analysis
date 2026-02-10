@@ -64,7 +64,7 @@ RTDMethodVisitorTest >> testHasCorrectCalls [
 RTDMethodVisitorTest >> testHasMethodSelfCalls [
 
 	self analyzeMethodFromFixture: #testHelper.
-	self assertAt: #testHelper hasMethods: { #helper . #guardedHelper . #notAHelper }
+	self assertAt: #testHelper hasMethods: #( helper guardedHelper notAHelper )
 ]
 
 { #category : 'tests' }
@@ -83,6 +83,26 @@ RTDMethodVisitorTest >> testIncludesCallOnArguments [
 	self 
 		assertCollection: (self methodsAt: #testHelperOnArguments) 
 		includesAll: (self fixtureMethodsFrom: { #helper })
+]
+
+{ #category : 'tests' }
+RTDMethodVisitorTest >> testIncludesGraph [
+
+	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex.
+	self denyEmpty: (self visitorMethods at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedComplex).
+	self visitor analyzeMethod: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple.
+	self denyEmpty: (self visitorMethods at: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple).
+]
+
+{ #category : 'tests' }
+RTDMethodVisitorTest >> testTwoMethodsShareSelfCalls [
+
+	
+	self 
+		analyzeMethodFromFixture: #testHelper;
+		analyzeMethodFromFixture: #nestedHelper;
+		assertAt: #testHelper hasMethods: #( helper guardedHelper notAHelper );
+		assertAt: #nestedHelper hasMethods: #( helper )
 ]
 
 { #category : 'tests' }

@@ -51,3 +51,9 @@ TSDAssertionLessDetectorTest >> testIsAssertionLess [
 
 	self assert: (detector isAssertionLess: self fixtureClass >> #testDoesNotAssert )
 ]
+
+{ #category : 'tests' }
+TSDAssertionLessDetectorTest >> testIsAssertionLessGraph [
+
+	self deny: (detector isAssertionLess: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple ).
+]
