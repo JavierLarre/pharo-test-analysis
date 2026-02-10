@@ -56,6 +56,6 @@ RTDMethodVisitor >> visitMethodNode: aMethodNode [
 	foundMethods := OrderedCollection new.
 	result := super visitMethodNode: aMethodNode.
 	self methodsSelfCalls at: aMethodNode compiledMethod ifAbsentPut: foundMethods.
-	foundMethods := oldMethods, foundMethods. 
+	foundMethods := oldMethods. 
 	^ result
 ]
