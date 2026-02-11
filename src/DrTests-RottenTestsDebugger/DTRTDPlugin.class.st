@@ -85,8 +85,7 @@ DTRTDPlugin >> testVisitors [
 		  DTRTDHelperVisitor.
 		  DTRTDMessagesVisitor.
 		  DTRTDSelfMethodsVisitor.
-		  DTRTDFirstFixVisitor.
-		  DTTSDAssertionLessVisitor }
+		  DTRTDFirstFixVisitor }
 ]
 
 { #category : 'as yet unclassified' }

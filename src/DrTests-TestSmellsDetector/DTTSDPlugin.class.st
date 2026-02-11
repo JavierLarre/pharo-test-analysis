@@ -1,6 +1,6 @@
 Class {
 	#name : 'DTTSDPlugin',
-	#superclass : 'DTRTDPlugin',
+	#superclass : 'DrTestsPlugin',
 	#category : 'DrTests-TestSmellsDetector-Presenters',
 	#package : 'DrTests-TestSmellsDetector',
 	#tag : 'Presenters'
@@ -36,6 +36,27 @@ DTTSDPlugin >> pragmaForResultTrees [
 ]
 
 { #category : 'api' }
+DTTSDPlugin >> resultButtonHelp [
+	
+	^ 'Browse the test selected in the results list.' translated
+]
+
+{ #category : 'api' }
+DTTSDPlugin >> runForConfiguration: aDTpluginConfiguration [
+	
+	| detector |
+	detector := TSDAssertionLessDetector new 
+			methodVisitor: (RTDHelperVisitor new
+				helperSelectors: (TAssertable selectors union: { #assert:. #assert:description: });
+				yourself); 
+			yourself.
+	^ self pluginResultClass new
+		assertionlessTests: (aDTpluginConfiguration asTestSuite tests select: [ :aTestCase | 
+			detector isAssertionLess: (self testCaseMethod: aTestCase ) ] );
+		yourself
+]
+
+{ #category : 'api' }
 DTTSDPlugin >> startButtonHelp [ 
 
 	^ 'Detect smells' translated 
@@ -47,14 +68,9 @@ DTTSDPlugin >> startButtonLabel [
 	^ 'Detect smells in tests selected.' translated 
 ]
 
-{ #category : 'api' }
-DTTSDPlugin >> testVisitors [ 
+{ #category : 'tests' }
+DTTSDPlugin >> testCaseMethod: aTestCase [
 
-	^ { DTTSDAssertionLessVisitor }
-]
-
-{ #category : 'as yet unclassified' }
-DTTSDPlugin >> viewModelClass [ 
-
-	^ DTTSDViewModel 
+	^ (aTestCase class lookupSelector: aTestCase selector )
+		ifNil: [ Error signal: 'test method not found' ]
 ]

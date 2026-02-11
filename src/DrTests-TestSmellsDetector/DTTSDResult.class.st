@@ -2,7 +2,7 @@ Class {
 	#name : 'DTTSDResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'viewModel'
+		'assertionlessTests'
 	],
 	#category : 'DrTests-TestSmellsDetector-Presenters',
 	#package : 'DrTests-TestSmellsDetector',
@@ -10,14 +10,21 @@ Class {
 }
 
 { #category : 'accessing' }
-DTTSDResult >> buildTreeForUI [ 
-	
-	<dtTestTSDResultTreeNamed: 'Tests without assertions' order: 1>
-	^ DTRTDMessagesNodeBuilder new nodeGroupedByClasses: viewModel assertionlessTests 
+DTTSDResult >> assertionlessTests: anObject [
+
+	assertionlessTests := anObject
 ]
 
 { #category : 'accessing' }
-DTTSDResult >> viewModel: anObject [
+DTTSDResult >> buildTreeForUI [ 
+	
+	<dtTestTSDResultTreeNamed: 'Tests without assertions' order: 1>
+	^ self treeNode subResults: (assertionlessTests collect: [ :assertionlessTest | 
+		assertionlessTest asResultForDrTest ])  
+]
 
-	viewModel := anObject
+{ #category : 'factory' }
+DTTSDResult >> treeNode [ 
+
+	^ DTTreeNode new
 ]
