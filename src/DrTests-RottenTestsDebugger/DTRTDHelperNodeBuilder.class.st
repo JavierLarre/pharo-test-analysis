@@ -13,5 +13,5 @@ Class {
 DTRTDHelperNodeBuilder >> buildNode: aTreeNode from: aMethodViewModel [
 
 	aTreeNode subResults do: [ :messageNode | 
-		messageNode browseMethod: aMethodViewModel compiledMethod methodClass >> messageNode message ]
+		messageNode browseMethod: (aMethodViewModel compiledMethod methodClass lookupSelector: messageNode message) ]
 ]

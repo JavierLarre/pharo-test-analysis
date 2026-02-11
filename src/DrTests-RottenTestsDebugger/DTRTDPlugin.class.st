@@ -30,12 +30,12 @@ DTRTDPlugin class >> weight [
 { #category : 'building' }
 DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
-	| viewModel |
+	| viewModel visitors |
 	viewModel := self viewModelClass new.
-	self testVisitors do: [ :visitorClass |
-			visitorClass new
-				visit: aTestSuite;
-				buildViewModel: viewModel ].
+	visitors := self testVisitors collect: #new.
+	aTestSuite tests do: [ :aTestCase |
+				visitors do: [ :visitor | visitor visitTestCase: aTestCase ] ].
+	visitors do: [ :visitor | visitor visitTestSuite: aTestSuite; buildViewModel: viewModel ].
 	^ viewModel
 ]
 
@@ -88,7 +88,7 @@ DTRTDPlugin >> testVisitors [
 		  DTRTDFirstFixVisitor }
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DTRTDPlugin >> viewModelClass [
 
 	^ DTRTDViewModel
