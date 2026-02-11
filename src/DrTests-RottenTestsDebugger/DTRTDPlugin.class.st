@@ -30,12 +30,12 @@ DTRTDPlugin class >> weight [
 { #category : 'building' }
 DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
-	| viewModel visitors |
+	| viewModel testVisitor |
 	viewModel := self viewModelClass new.
-	visitors := self testVisitors collect: #new.
-	aTestSuite tests do: [ :aTestCase |
-				visitors do: [ :visitor | visitor visitTestCase: aTestCase ] ].
-	visitors do: [ :visitor | visitor visitTestSuite: aTestSuite; buildViewModel: viewModel ].
+	testVisitor := DTRTDMultipleTestCaseVisitor withClasses: self testVisitors.
+	aTestSuite tests do: [ :aTestCase | 
+		testVisitor visitTestCase: aTestCase ].
+	testVisitor buildViewModel: viewModel.
 	^ viewModel
 ]
 

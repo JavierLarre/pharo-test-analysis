@@ -30,7 +30,7 @@ DTRTDHelperVisitor >> methodVisitor [
 
 	^ methodVisitor ifNil: [ 
 			methodVisitor := super methodVisitor
-				helperSelectors: (TAssertable selectors union: { #assert:. #assert:description: });
+				useAssertableSelectors;
 				yourself ]
 ]
 

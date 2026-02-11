@@ -42,10 +42,8 @@ DTRTDMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCas
 DTRTDMessagesVisitor >> initialize [
 
 	super initialize.
-	self methodVisitor 
-		messages: (MaFilteredMessages new 
-			bannedMessages: (TAssertable selectors union: { #new } ) asSet;
-			yourself).
+	self methodVisitor messages: RTDFilteredMessages withAssertableSelectors.
+	self methodVisitor messages bannedMessages add: #new.
 	self methodViewModels: (SortedCollection new
 		sort: [ :testCaseMessages1 :testCaseMessages2 |
 			self compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 ];

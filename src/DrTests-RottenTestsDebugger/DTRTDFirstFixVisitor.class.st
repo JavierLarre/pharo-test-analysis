@@ -33,6 +33,8 @@ DTRTDFirstFixVisitor >> buildTestCasesFrom: compiledMethods [
 { #category : 'building' }
 DTRTDFirstFixVisitor >> buildViewModel: aViewModel [
 
+	self methodViewModels
+		do: [ :methodViewModel | self addPrioritiesTo: methodViewModel ].
 	aViewModel priorities: self methodViewModels 
 ]
 
@@ -40,6 +42,15 @@ DTRTDFirstFixVisitor >> buildViewModel: aViewModel [
 DTRTDFirstFixVisitor >> methodViewModelClass [
 
 	^ DTRTDPrioritiesViewModel 
+]
+
+{ #category : 'accessing' }
+DTRTDFirstFixVisitor >> methodViewModels [
+
+	^ methodViewModels ifNil: [ methodViewModels := SortedCollection new
+		sort: [ :methodBefore :methodAfter |
+			(self priority: methodBefore compiledMethod) > (self priority: methodAfter compiledMethod ) ];
+		yourself ]
 ]
 
 { #category : 'private' }
@@ -52,14 +63,4 @@ DTRTDFirstFixVisitor >> methodsThatInclude: aCompiledMethod [
 DTRTDFirstFixVisitor >> priority: aCompiledMethod [
 
 	^ (self methodsThatInclude: aCompiledMethod) size
-]
-
-{ #category : 'visiting' }
-DTRTDFirstFixVisitor >> visitTestSuite: aTestSuite [
-
-	super visitTestSuite: aTestSuite.
-	self methodViewModels
-		do: [ :methodViewModel | self addPrioritiesTo: methodViewModel ];
-		sort: [ :methodBefore :methodAfter |
-			(self priority: methodBefore compiledMethod) > (self priority: methodAfter compiledMethod ) ]
 ]

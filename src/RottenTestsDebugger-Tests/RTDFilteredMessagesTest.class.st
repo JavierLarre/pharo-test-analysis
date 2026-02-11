@@ -12,7 +12,7 @@ Class {
 RTDFilteredMessagesTest >> setUp [
 	super setUp.
 
-	messages := MaFilteredMessages new
+	messages := RTDFilteredMessages new
 		bannedMessages: { #assert: } asSet;
 		yourself
 ]

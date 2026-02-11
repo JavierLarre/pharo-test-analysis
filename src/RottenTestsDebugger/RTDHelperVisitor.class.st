@@ -12,6 +12,12 @@ Class {
 	#package : 'RottenTestsDebugger'
 }
 
+{ #category : 'instance creation' }
+RTDHelperVisitor class >> withAssertableSelectors [ 
+
+	^ self new useAssertableSelectors; yourself
+]
+
 { #category : 'accessing' }
 RTDHelperVisitor >> helperSelectors [
 
@@ -35,6 +41,12 @@ RTDHelperVisitor >> selectMethodHelpers: aCompiledMethod [
 
 	^ (self methodsSelfCalls at: aCompiledMethod) select: [ :methodSelfCall |
 		  messages is: methodSelfCall connectedToAny: self helperSelectors ]
+]
+
+{ #category : 'api' }
+RTDHelperVisitor >> useAssertableSelectors [
+
+	self helperSelectors: (TAssertable selectors union: #( assert: assert:description: ) ) 
 ]
 
 { #category : 'visiting' }

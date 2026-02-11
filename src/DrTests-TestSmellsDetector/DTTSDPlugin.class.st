@@ -30,9 +30,7 @@ DTTSDPlugin class >> weight [
 DTTSDPlugin >> detector [
 
 	^ detector ifNil: [ detector := TSDAssertionLessDetector new
-		  methodVisitor: (RTDHelperVisitor new
-				   helperSelectors: (TAssertable selectors union: { #assert:. #assert:description: });
-				   yourself);
+		  methodVisitor: RTDHelperVisitor withAssertableSelectors;
 		  yourself ]
 ]
 

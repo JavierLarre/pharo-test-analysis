@@ -3,7 +3,7 @@ I am an abstract visitor of test cases. I provide a hook for building the view m
 "
 Class {
 	#name : 'DTRTDTestCaseVisitor',
-	#superclass : 'SUnitVisitor',
+	#superclass : 'Object',
 	#instVars : [
 		'methodVisitor',
 		'methodViewModels'
@@ -12,6 +12,12 @@ Class {
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'Visitors'
 }
+
+{ #category : 'testing' }
+DTRTDTestCaseVisitor class >> isAbstract [ 
+
+	^ self = DTRTDTestCaseVisitor 
+]
 
 { #category : 'building' }
 DTRTDTestCaseVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
