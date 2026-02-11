@@ -1,6 +1,9 @@
 Class {
 	#name : 'DTTSDPlugin',
 	#superclass : 'DrTestsPlugin',
+	#instVars : [
+		'detector'
+	],
 	#category : 'DrTests-TestSmellsDetector-Presenters',
 	#package : 'DrTests-TestSmellsDetector',
 	#tag : 'Presenters'
@@ -23,10 +26,14 @@ DTTSDPlugin class >> weight [
 	^11
 ]
 
-{ #category : 'api' }
-DTTSDPlugin >> pluginName [ 
+{ #category : 'accessing' }
+DTTSDPlugin >> detector [
 
-	^ 'Test Smell Detector'
+	^ detector ifNil: [ detector := TSDAssertionLessDetector new
+		  methodVisitor: (RTDHelperVisitor new
+				   helperSelectors: (TAssertable selectors union: { #assert:. #assert:description: });
+				   yourself);
+		  yourself ]
 ]
 
 { #category : 'accessing' }
@@ -43,17 +50,11 @@ DTTSDPlugin >> resultButtonHelp [
 
 { #category : 'api' }
 DTTSDPlugin >> runForConfiguration: aDTpluginConfiguration [
-	
-	| detector |
-	detector := TSDAssertionLessDetector new 
-			methodVisitor: (RTDHelperVisitor new
-				helperSelectors: (TAssertable selectors union: { #assert:. #assert:description: });
-				yourself); 
-			yourself.
+
 	^ self pluginResultClass new
-		assertionlessTests: (aDTpluginConfiguration asTestSuite tests select: [ :aTestCase | 
-			detector isAssertionLess: (self testCaseMethod: aTestCase ) ] );
-		yourself
+		  assertionlessTests: (aDTpluginConfiguration asTestSuite tests select: [ :aTestCase | 
+				self detector isAssertionLess: (self testCaseMethod: aTestCase) ]);
+		  yourself 
 ]
 
 { #category : 'api' }

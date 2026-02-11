@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'accessing' }
+DTTSDResult >> assertionlessTests [
+
+	^ assertionlessTests ifNil: [ assertionlessTests := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
 DTTSDResult >> assertionlessTests: anObject [
 
 	assertionlessTests := anObject
@@ -19,7 +25,7 @@ DTTSDResult >> assertionlessTests: anObject [
 DTTSDResult >> buildTreeForUI [ 
 	
 	<dtTestTSDResultTreeNamed: 'Tests without assertions' order: 1>
-	^ self treeNode subResults: (assertionlessTests collect: [ :assertionlessTest | 
+	^ self treeNode subResults: (self assertionlessTests collect: [ :assertionlessTest | 
 		assertionlessTest asResultForDrTest ])  
 ]
 
