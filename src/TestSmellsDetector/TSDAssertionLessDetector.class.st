@@ -3,10 +3,9 @@ I detect whether tests do not contain assertions
 "
 Class {
 	#name : 'TSDAssertionLessDetector',
-	#superclass : 'Object',
+	#superclass : 'TSDDetector',
 	#instVars : [
-		'methodVisitor',
-		'compiledMethod'
+		'methodVisitor'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
@@ -15,41 +14,38 @@ Class {
 { #category : 'private' }
 TSDAssertionLessDetector >> analyzeMethod [
 
-	self methodVisitor analyzeMethod: compiledMethod 
+	self methodVisitor analyzeMethod: self compiledMethod 
 ]
 
 { #category : 'accessing' }
-TSDAssertionLessDetector >> compiledMethod: aCompiledMethod [
+TSDAssertionLessDetector >> compiledMethod [
 
-	compiledMethod := aCompiledMethod.
-	self analyzeMethod 
+	^ self selfClass lookupSelector: self selector
+]
+
+{ #category : 'testing' }
+TSDAssertionLessDetector >> detects [
+	^ self isAssertionLess 
 ]
 
 { #category : 'testing' }
 TSDAssertionLessDetector >> hasNoAssertionSelectors [
 
 	^ self methodVisitor helperSelectors allSatisfy: [ :aHelperSelector | 
-				(self methodVisitor messages does: compiledMethod includesMessage: aHelperSelector) not ]
+				(self methodVisitor messages does: self compiledMethod includesMessage: aHelperSelector) not ]
 ]
 
 { #category : 'testing' }
 TSDAssertionLessDetector >> hasNohelpers [
 
-	^ (self methodVisitor helpers at: compiledMethod) isEmpty 
+	^ (self methodVisitor helpers at: self compiledMethod) isEmpty 
 ]
 
 { #category : 'testing' }
 TSDAssertionLessDetector >> isAssertionLess [
 
+	self analyzeMethod .
 	^ self hasNoAssertionSelectors and: [ self hasNohelpers ]
-]
-
-{ #category : 'testing' }
-TSDAssertionLessDetector >> isAssertionLess: aCompiledMethod [
-
-	^ self 
-		compiledMethod: aCompiledMethod;
-		isAssertionLess
 ]
 
 { #category : 'accessing' }

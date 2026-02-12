@@ -3,16 +3,20 @@ I provide information about variables assigned in a setUp method
 "
 Class {
 	#name : 'TSDSetupDetector',
-	#superclass : 'Object',
+	#superclass : 'TSDDetector',
 	#instVars : [
-		'selector',
-		'selfClass',
 		'setupSelector',
 		'assignsFinder'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
 }
+
+{ #category : 'testing' }
+TSDSetupDetector class >> isAbstract [ 
+
+	^ self = TSDSetupDetector 
+]
 
 { #category : 'accessing' }
 TSDSetupDetector >> assignsFinder [
@@ -32,21 +36,9 @@ TSDSetupDetector >> lookupNode: aSelector [
 ]
 
 { #category : 'accessing' }
-TSDSetupDetector >> selector: aSelector [ 
-	
-	selector := aSelector 
-]
-
-{ #category : 'accessing' }
-TSDSetupDetector >> selfClass [
-
-	^ selfClass
-]
-
-{ #category : 'accessing' }
 TSDSetupDetector >> selfClass: aClass [ 
 
-	selfClass := aClass.
+	super selfClass: aClass .
 	self assignsFinder selfClass: aClass 
 ]
 
@@ -67,11 +59,11 @@ TSDSetupDetector >> setupVariables [
 
 	^ self 
 		variables: self setUpSelector 
-		from: self assignsFinder
+		with: self assignsFinder
 ]
 
 { #category : 'private' }
-TSDSetupDetector >> variables: aSelector from: aFinder [
+TSDSetupDetector >> variables: aSelector with: aFinder [
 
 	^ aFinder
 		  visit: (self lookupNode: aSelector);

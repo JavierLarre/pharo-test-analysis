@@ -32,8 +32,8 @@ TSDUselessSetupDetector >> doesUseSetUp [
 TSDUselessSetupDetector >> foundInstanceVariables [
 
 	^ self 
-		variables: selector 
-		from: self accessesFinder 
+		variables: self selector 
+		with: self accessesFinder 
 ]
 
 { #category : 'accessing' }

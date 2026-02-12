@@ -20,7 +20,7 @@ TSDTooManyClassesDetector >> classReferences [
 { #category : 'api' }
 TSDTooManyClassesDetector >> referencesCount [
 
-	^ classReferences size
+	^ self classReferences size
 ]
 
 { #category : 'visiting' }

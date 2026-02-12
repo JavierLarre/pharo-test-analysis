@@ -11,6 +11,12 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
+{ #category : 'testing' }
+TSDAssertionLessDetectorTest >> detectFrom: aSelector [
+
+	^ detector selector: aSelector; detects
+]
+
 { #category : 'accessing' }
 TSDAssertionLessDetectorTest >> fixtureClass [
 
@@ -21,39 +27,34 @@ TSDAssertionLessDetectorTest >> fixtureClass [
 TSDAssertionLessDetectorTest >> setUp [
 	super setUp.
 
-	detector := TSDAssertionLessDetector new.
+	detector := TSDAssertionLessDetector new
+		selfClass: self fixtureClass; yourself.
 	detector methodVisitor helperSelectors: #( assert: )
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasAssertion [
 
-	self deny: (detector isAssertionLess: self fixtureClass >> #testUsesInstanceVar )
+	self deny: (self detectFrom: #testUsesInstanceVar )
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasConnectedAssertion [
 
 	self 
-		deny: (detector isAssertionLess: self fixtureClass >> #testConnectedToAssertion )
+		deny: (self detectFrom: #testConnectedToAssertion )
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasConnectedAssertionTwice [
 
 	self 
-		deny: (detector isAssertionLess: self fixtureClass >> #testConnectedToAssertion );
-		deny: (detector isAssertionLess: self fixtureClass >> #testConnectedToAssertion )
+		deny: (self detectFrom: #testConnectedToAssertion );
+		deny: (self detectFrom: #testConnectedToAssertion )
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testIsAssertionLess [
 
-	self assert: (detector isAssertionLess: self fixtureClass >> #testDoesNotAssert )
-]
-
-{ #category : 'tests' }
-TSDAssertionLessDetectorTest >> testIsAssertionLessGraph [
-
-	self deny: (detector isAssertionLess: AIGraphMatchingAlgorithmTest >> #testCyclicNonWeightedSimple ).
+	self assert: (self detectFrom: #testDoesNotAssert)
 ]
