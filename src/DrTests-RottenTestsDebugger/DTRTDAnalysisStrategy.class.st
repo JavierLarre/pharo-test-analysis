@@ -3,7 +3,7 @@ I am an abstract visitor of test cases. I provide a hook for building the view m
 "
 Class {
 	#name : 'DTRTDAnalysisStrategy',
-	#superclass : 'DTRTDTestCaseAnalyzer',
+	#superclass : 'Object',
 	#instVars : [
 		'methodVisitor',
 		'methodViewModels'
@@ -23,7 +23,7 @@ DTRTDAnalysisStrategy class >> isAbstract [
 DTRTDAnalysisStrategy >> analyzeTestCase: aTestCase [
 
 	| testCaseViewModel |
-	self methodVisitor analyzeMethod: (self testCaseMethod: aTestCase).
+	self methodVisitor analyzeMethod: aTestCase compiledMethod.
 	testCaseViewModel := self methodViewModelClass new.
 	self buildMethodViewModel: testCaseViewModel withTestCase: aTestCase.
 	self methodViewModels add: testCaseViewModel

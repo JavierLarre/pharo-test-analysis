@@ -5,7 +5,6 @@ Class {
 	#name : 'DTRTDTestCaseAnalyzer',
 	#superclass : 'Object',
 	#instVars : [
-		'methodDatas',
 		'analysisStrategy'
 	],
 	#category : 'DrTests-RottenTestsDebugger-Visitors',
@@ -35,10 +34,4 @@ DTRTDTestCaseAnalyzer >> analyzeTestCase: aTestCase [
 DTRTDTestCaseAnalyzer >> buildViewModel: viewModel [
 
 	self analysisStrategy buildViewModel: viewModel 
-]
-
-{ #category : 'accessing' }
-DTRTDTestCaseAnalyzer >> methodDatas [
-
-	^ methodDatas ifNil: [ methodDatas := OrderedCollection new ]
 ]
