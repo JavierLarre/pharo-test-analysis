@@ -3,7 +3,7 @@ I provide a method for building a `DTRTDTestCaseMessages` with the messages of `
 "
 Class {
 	#name : 'DTRTDMessagesVisitor',
-	#superclass : 'DTRTDTestCaseVisitor',
+	#superclass : 'DTRTDAnalysisStrategy',
 	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'Visitors'

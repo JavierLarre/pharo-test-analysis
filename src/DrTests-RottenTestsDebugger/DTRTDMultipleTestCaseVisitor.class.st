@@ -3,7 +3,7 @@ I work as a proxy/decorator for multiple classes of `DTRTDTestCaseVisitor`
 "
 Class {
 	#name : 'DTRTDMultipleTestCaseVisitor',
-	#superclass : 'DTRTDTestCaseVisitor',
+	#superclass : 'DTRTDAnalysisStrategy',
 	#instVars : [
 		'visitorClasses'
 	],
@@ -16,6 +16,12 @@ Class {
 DTRTDMultipleTestCaseVisitor class >> withClasses: aClassCollection [
 
 	^ self new visitorClasses: aClassCollection; yourself 
+]
+
+{ #category : 'visiting' }
+DTRTDMultipleTestCaseVisitor >> analyzeTestCase: aTestCase [
+
+	^ self methodVisitorsDo: [ :visitor | visitor analyzeTestCase: aTestCase ]
 ]
 
 { #category : 'building' }
@@ -48,23 +54,6 @@ DTRTDMultipleTestCaseVisitor >> methodVisitorClass [
 DTRTDMultipleTestCaseVisitor >> methodVisitorsDo: aBlock [
 
 	self methodVisitor do: aBlock 
-]
-
-{ #category : 'printing' }
-DTRTDMultipleTestCaseVisitor >> printOn: aStream [
-
-	super printOn: aStream.
-	aStream 
-		<< ' visitor: ';
-		nextPutAll: self methodVisitor;
-		<< ', testCases: '.
-	self methodViewModels do: [ :methodViewModel | aStream print: methodViewModel ]
-]
-
-{ #category : 'visiting' }
-DTRTDMultipleTestCaseVisitor >> visitTestCase: aTestCase [
-
-	^ self methodVisitorsDo: [ :visitor | visitor visitTestCase: aTestCase ]
 ]
 
 { #category : 'accessing' }

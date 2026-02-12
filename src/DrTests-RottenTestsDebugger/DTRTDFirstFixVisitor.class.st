@@ -24,7 +24,7 @@ DTRTDFirstFixVisitor >> buildTestCasesFrom: compiledMethods [
 		sorted: [ :methodBefore :methodAfter |
 			(self priority: methodBefore ) > (self priority: methodAfter ) ] )
 		collect: [ :compiledMethod | 
-			DTRTDMethodViewModel new 
+			DTRTDMethodData new 
 				messages: (self methodVisitor messages at: compiledMethod); 
 				compiledMethod: compiledMethod;
 				yourself  ]
@@ -41,7 +41,7 @@ DTRTDFirstFixVisitor >> buildViewModel: aViewModel [
 { #category : 'factory' }
 DTRTDFirstFixVisitor >> methodViewModelClass [
 
-	^ DTRTDPrioritiesViewModel 
+	^ DTRTDTestCaseData 
 ]
 
 { #category : 'accessing' }
