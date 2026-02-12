@@ -30,6 +30,12 @@ DTTSDPlugin class >> weight [
 ]
 
 { #category : 'accessing' }
+DTTSDPlugin >> builder [
+
+	^ DTTSDMultipleResultBuilder builders: { DTTSDAssertionlessBuilder . DTTSDOverwrittenSetupBuilder }
+]
+
+{ #category : 'accessing' }
 DTTSDPlugin >> detector [
 
 	^ detector ifNil: [ detector := TSDAssertionLessDetector new
@@ -52,10 +58,10 @@ DTTSDPlugin >> resultButtonHelp [
 { #category : 'api' }
 DTTSDPlugin >> runForConfiguration: aDTpluginConfiguration [
 
-	^ self pluginResultClass new
-		  assertionlessTests: (aDTpluginConfiguration asTestSuite tests select: [ :aTestCase | 
-				self detector detect: aTestCase selector from: aTestCase class ]);
-		  yourself 
+	| result |
+	result := self pluginResultClass new.
+	self builder buildResult: result withTests: aDTpluginConfiguration asTestSuite tests.
+	^ result
 ]
 
 { #category : 'api' }

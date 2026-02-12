@@ -1,0 +1,34 @@
+Class {
+	#name : 'DTTSDMultipleResultBuilder',
+	#superclass : 'DTTSDResultBuilder',
+	#instVars : [
+		'builders'
+	],
+	#category : 'DrTests-TestSmellsDetector-Builders',
+	#package : 'DrTests-TestSmellsDetector',
+	#tag : 'Builders'
+}
+
+{ #category : 'accessing' }
+DTTSDMultipleResultBuilder class >> builders: aCollection [
+	
+	^ self new builders: (aCollection collect: #new); yourself
+]
+
+{ #category : 'execution' }
+DTTSDMultipleResultBuilder >> buildResult: aResult withTests: testCases [
+
+	^ self builders do: [ :aBuilder | aBuilder buildResult: aResult withTests: testCases ]
+]
+
+{ #category : 'accessing' }
+DTTSDMultipleResultBuilder >> builders [
+
+	^ builders ifNil: [ builders := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
+DTTSDMultipleResultBuilder >> builders: anObject [
+
+	builders := anObject
+]
