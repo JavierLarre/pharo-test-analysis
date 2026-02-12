@@ -1,6 +1,6 @@
 Class {
-	#name : 'TSDSubFixture',
-	#superclass : 'TSDFixture',
+	#name : 'TSDSubFakeTests',
+	#superclass : 'TSDFakeTests',
 	#instVars : [
 		'y',
 		'subVariableAssigned'
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : 'running' }
-TSDSubFixture >> assignSubVariable: anObject [
+TSDSubFakeTests >> assignSubVariable: anObject [
 
 	subVariableAssigned := anObject 
 ]
 
 { #category : 'running' }
-TSDSubFixture >> setUp [
+TSDSubFakeTests >> setUp [
 
 	super setUp.
 	y := String new.
@@ -24,47 +24,47 @@ TSDSubFixture >> setUp [
 ]
 
 { #category : 'tests' }
-TSDSubFixture >> testAssignsSomeInstanceVar [
+TSDSubFakeTests >> testAssignsSomeInstanceVar [
 
 	super testOnlyAssigns 
 ]
 
 { #category : 'tests' }
-TSDSubFixture >> testConnectedToAssignation [
+TSDSubFakeTests >> testConnectedToAssignation [
 
 	super testConnectedToAssignation.
 	self y: 'a'.
 ]
 
 { #category : 'tests' }
-TSDSubFixture >> testIsConnectedToInstanceVar [
+TSDSubFakeTests >> testIsConnectedToInstanceVar [
 
 	super testIsConnectedToInstanceVar.
 	self assert: self y
 ]
 
 { #category : 'tests' }
-TSDSubFixture >> testOnlyAssigns [
+TSDSubFakeTests >> testOnlyAssigns [
 
 	super testOnlyAssigns.
 	y := 'woa'
 ]
 
 { #category : 'tests' }
-TSDSubFixture >> testUsesInstanceVar [ 
+TSDSubFakeTests >> testUsesInstanceVar [ 
 
 	super testUsesInstanceVar.
 	self assert: y = subVariableAssigned
 ]
 
 { #category : 'accessing' }
-TSDSubFixture >> y [
+TSDSubFakeTests >> y [
 
 	^ y
 ]
 
 { #category : 'accessing' }
-TSDSubFixture >> y: anObject [
+TSDSubFakeTests >> y: anObject [
 
 	y := anObject
 ]

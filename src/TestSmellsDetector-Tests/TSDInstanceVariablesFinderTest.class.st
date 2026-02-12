@@ -30,7 +30,7 @@ TSDInstanceVariablesFinderTest >> finderClass [
 { #category : 'accessing' }
 TSDInstanceVariablesFinderTest >> fixtureClass [
 	
-	^ TSDFixture 
+	^ TSDFakeTests 
 ]
 
 { #category : 'tests' }

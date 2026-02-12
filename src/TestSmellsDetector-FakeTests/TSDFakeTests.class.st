@@ -3,44 +3,50 @@ This class hierarchy is used as data (a TestCase) for TestSmellsDetector test ca
 Some methods may add seemingly useless statements that are needed for the compiler to not optimize small methods into primitives 
 "
 Class {
-	#name : 'TSDFixture',
-	#superclass : 'Object',
+	#name : 'TSDFakeTests',
+	#superclass : 'TestCase',
 	#instVars : [
 		'x',
 		'assignedVariable'
 	],
-	#category : 'TestSmellsDetector-Tests',
-	#package : 'TestSmellsDetector-Tests'
+	#category : 'TestSmellsDetector-FakeTests',
+	#package : 'TestSmellsDetector-FakeTests'
 }
 
+{ #category : 'asserting' }
+TSDFakeTests >> assert: aBlock description: aStringOrBlock [
+
+	^ super assert: true description: aStringOrBlock 
+]
+
 { #category : 'running' }
-TSDFixture >> assignVariable [
+TSDFakeTests >> assignVariable [
 
 	assignedVariable := 'woah'
 ]
 
 { #category : 'running' }
-TSDFixture >> setUp [
+TSDFakeTests >> setUp [
 
 	x := 0.
 	self assignVariable 
 ]
 
 { #category : 'tests' }
-TSDFixture >> testConnectedToAssertion [
+TSDFakeTests >> testConnectedToAssertion [
 
 	self testConnectedToAssignation 
 ]
 
 { #category : 'tests' }
-TSDFixture >> testConnectedToAssignation [
+TSDFakeTests >> testConnectedToAssignation [
 
 	self x: 1.
 	self assert: 1 = 1
 ]
 
 { #category : 'tests' }
-TSDFixture >> testDoesNotAssert [
+TSDFakeTests >> testDoesNotAssert [
 
 	| y |
 	y := OrderedCollection new.
@@ -48,7 +54,7 @@ TSDFixture >> testDoesNotAssert [
 ]
 
 { #category : 'tests' }
-TSDFixture >> testIsConnectedToInstanceVar [
+TSDFakeTests >> testIsConnectedToInstanceVar [
 
 	self 
 		assert: self x = 0; 
@@ -56,27 +62,27 @@ TSDFixture >> testIsConnectedToInstanceVar [
 ]
 
 { #category : 'tests' }
-TSDFixture >> testOnlyAssigns [
+TSDFakeTests >> testOnlyAssigns [
 
 	x := 1.
 	self assert: 1 = 1
 ]
 
 { #category : 'tests' }
-TSDFixture >> testUsesClasses [
+TSDFakeTests >> testUsesClasses [
 
 	TSDTooManyClassesDetector new
 ]
 
 { #category : 'tests' }
-TSDFixture >> testUsesInstanceVar [
+TSDFakeTests >> testUsesInstanceVar [
 
 	self assert: x = 0;
 		assert: assignedVariable 
 ]
 
 { #category : 'tests' }
-TSDFixture >> testUsesLocalVariables [
+TSDFakeTests >> testUsesLocalVariables [
 
 	| x |
 	x := 1.
@@ -84,14 +90,14 @@ TSDFixture >> testUsesLocalVariables [
 ]
 
 { #category : 'accessing' }
-TSDFixture >> x [
+TSDFakeTests >> x [
 
 	1 asFloat.
 	^ x
 ]
 
 { #category : 'accessing' }
-TSDFixture >> x: anObject [
+TSDFakeTests >> x: anObject [
 
 	x := anObject
 ]

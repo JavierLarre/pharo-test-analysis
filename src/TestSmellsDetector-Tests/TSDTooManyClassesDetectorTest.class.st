@@ -21,7 +21,7 @@ TSDTooManyClassesDetectorTest >> setUp [
 { #category : 'tests' }
 TSDTooManyClassesDetectorTest >> testDetectsClasses [
 
-	detector visit: (TSDFixture >> #testUsesClasses) parseTree.
+	detector visit: (TSDFakeTests >> #testUsesClasses) parseTree.
 	self 
 		assertCollection: detector classReferences equals: { #TSDTooManyClassesDetector } asSet;
 		assert: detector referencesCount equals: 1

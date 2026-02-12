@@ -54,7 +54,7 @@ DTTSDPlugin >> runForConfiguration: aDTpluginConfiguration [
 
 	^ self pluginResultClass new
 		  assertionlessTests: (aDTpluginConfiguration asTestSuite tests select: [ :aTestCase | 
-				self detector isAssertionLess: aTestCase compiledMethod ]);
+				self detector detect: aTestCase selector from: aTestCase class ]);
 		  yourself 
 ]
 

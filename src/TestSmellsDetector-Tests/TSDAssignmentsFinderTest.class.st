@@ -19,7 +19,7 @@ TSDAssignmentsFinderTest >> finder [
 { #category : 'accessing' }
 TSDAssignmentsFinderTest >> fixtureClass [
 
-	^ TSDSubFixture
+	^ TSDSubFakeTests
 ]
 
 { #category : 'tests' }

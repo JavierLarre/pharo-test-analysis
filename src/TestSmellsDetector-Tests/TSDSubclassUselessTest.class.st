@@ -14,5 +14,5 @@ TSDSubclassUselessTest class >> shouldInheritSelectors [
 { #category : 'accessing' }
 TSDSubclassUselessTest >> fixtureClass [ 
 
-	^ TSDSubFixture 
+	^ TSDSubFakeTests 
 ]

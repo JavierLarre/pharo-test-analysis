@@ -8,6 +8,12 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
+{ #category : 'testing' }
+TSDSetupDetectorTest class >> isAbstract [ 
+
+	^ self = TSDSetupDetectorTest 
+]
+
 { #category : 'accessing' }
 TSDSetupDetectorTest >> detectorClass [
 	^ self subclassResponsibility
@@ -23,7 +29,7 @@ TSDSetupDetectorTest >> doesDetect: aSelector [
 { #category : 'running' }
 TSDSetupDetectorTest >> fixtureClass [
 
-	^ TSDFixture 
+	^ TSDFakeTests 
 ]
 
 { #category : 'running' }

@@ -20,7 +20,7 @@ TSDAssertionLessDetectorTest >> detectFrom: aSelector [
 { #category : 'accessing' }
 TSDAssertionLessDetectorTest >> fixtureClass [
 
-	^ TSDFixture
+	^ TSDFakeTests
 ]
 
 { #category : 'running' }
