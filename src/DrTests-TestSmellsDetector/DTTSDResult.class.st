@@ -1,3 +1,6 @@
+"
+I store the detected smells resulting from the plugin
+"
 Class {
 	#name : 'DTTSDResult',
 	#superclass : 'DTPluginResult',

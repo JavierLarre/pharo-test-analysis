@@ -1,3 +1,6 @@
+"
+I am the plugin implementing smell detectors for DrTest
+"
 Class {
 	#name : 'DTTSDPlugin',
 	#superclass : 'DrTestsPlugin',
