@@ -15,6 +15,14 @@ TSDSetupDetectorTest class >> isAbstract [
 ]
 
 { #category : 'accessing' }
+TSDSetupDetectorTest >> detector [ 
+
+	^ detector ifNil: [ detector := self detectorClass new
+		            selfClass: self fixtureClass;
+		            yourself ]
+]
+
+{ #category : 'accessing' }
 TSDSetupDetectorTest >> detectorClass [
 	^ self subclassResponsibility
 ]
@@ -22,7 +30,7 @@ TSDSetupDetectorTest >> detectorClass [
 { #category : 'helpers' }
 TSDSetupDetectorTest >> doesDetect: aSelector [
 
-	^ detector selector: aSelector;
+	^ self detector selector: aSelector;
 		detects
 ]
 
@@ -30,13 +38,4 @@ TSDSetupDetectorTest >> doesDetect: aSelector [
 TSDSetupDetectorTest >> fixtureClass [
 
 	^ TSDFakeTests 
-]
-
-{ #category : 'running' }
-TSDSetupDetectorTest >> setUp [
-
-	super setUp.
-	detector := self detectorClass new
-		            selfClass: self fixtureClass;
-		            yourself
 ]

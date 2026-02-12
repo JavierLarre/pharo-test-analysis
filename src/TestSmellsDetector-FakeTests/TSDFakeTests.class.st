@@ -71,7 +71,7 @@ TSDFakeTests >> testOnlyAssigns [
 { #category : 'tests' }
 TSDFakeTests >> testUsesClasses [
 
-	TSDTooManyClassesDetector new
+	TSDClassReferencesVisitor new
 ]
 
 { #category : 'tests' }
@@ -87,6 +87,14 @@ TSDFakeTests >> testUsesLocalVariables [
 	| x |
 	x := 1.
 	self assert: x = 1
+]
+
+{ #category : 'tests' }
+TSDFakeTests >> testUsesTooManyClasses [
+
+	TSDClassReferencesVisitor new.
+	TSDFakeTests.
+	TSDSubFakeTests 
 ]
 
 { #category : 'accessing' }

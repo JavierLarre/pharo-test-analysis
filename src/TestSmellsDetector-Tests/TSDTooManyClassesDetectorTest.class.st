@@ -3,26 +3,19 @@ A TSDTooManyClassesDetectorTest is a test class for testing the behavior of TSDT
 "
 Class {
 	#name : 'TSDTooManyClassesDetectorTest',
-	#superclass : 'TestCase',
-	#instVars : [
-		'detector'
-	],
+	#superclass : 'TSDSetupDetectorTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }
 
-{ #category : 'running' }
-TSDTooManyClassesDetectorTest >> setUp [
-	super setUp.
+{ #category : 'accessing' }
+TSDTooManyClassesDetectorTest >> detectorClass [ 
 
-	detector := TSDTooManyClassesDetector new
+	^ TSDTooManyClassesDetector 
 ]
 
 { #category : 'tests' }
-TSDTooManyClassesDetectorTest >> testDetectsClasses [
+TSDTooManyClassesDetectorTest >> testDetects [
 
-	detector visit: (TSDFakeTests >> #testUsesClasses) parseTree.
-	self 
-		assertCollection: detector classReferences equals: { #TSDTooManyClassesDetector } asSet;
-		assert: detector referencesCount equals: 1
+	self assert: (self doesDetect: #testUsesTooManyClasses )
 ]

@@ -3,30 +3,23 @@ I detect whether a test references a classes more than three times
 "
 Class {
 	#name : 'TSDTooManyClassesDetector',
-	#superclass : 'RTFSelfCallVisitorInterpreter',
+	#superclass : 'TSDDetector',
 	#instVars : [
-		'classReferences'
+		'referenceVisitor'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
 }
 
-{ #category : 'visiting' }
-TSDTooManyClassesDetector >> classReferences [
+{ #category : 'testing' }
+TSDTooManyClassesDetector >> detects [
 
-	^ classReferences ifNil: [ classReferences := Set new ]
+	self referenceVisitor visit: (self selfClass lookupSelector: self selector) parseTree.
+	^ self referenceVisitor referencesCount >= 3
 ]
 
-{ #category : 'api' }
-TSDTooManyClassesDetector >> referencesCount [
+{ #category : 'accessing' }
+TSDTooManyClassesDetector >> referenceVisitor [
 
-	^ self classReferences size
-]
-
-{ #category : 'visiting' }
-TSDTooManyClassesDetector >> visitVariableNode: aVariableNode [
-
-	aVariableNode isGlobalVariable 
-		ifTrue: [ self classReferences add: aVariableNode name ].
-	super visitVariableNode: aVariableNode 
+	^ referenceVisitor ifNil: [ referenceVisitor := TSDClassReferencesVisitor new ]
 ]

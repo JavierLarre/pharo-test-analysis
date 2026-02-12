@@ -5,8 +5,8 @@ Class {
 		'y',
 		'subVariableAssigned'
 	],
-	#category : 'TestSmellsDetector-Tests',
-	#package : 'TestSmellsDetector-Tests'
+	#category : 'TestSmellsDetector-FakeTests',
+	#package : 'TestSmellsDetector-FakeTests'
 }
 
 { #category : 'running' }

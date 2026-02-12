@@ -3,58 +3,48 @@ A TSDAssertionLessDetectorTest is a test class for testing the behavior of TSDAs
 "
 Class {
 	#name : 'TSDAssertionLessDetectorTest',
-	#superclass : 'TestCase',
-	#instVars : [
-		'detector'
-	],
+	#superclass : 'TSDSetupDetectorTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }
 
-{ #category : 'testing' }
-TSDAssertionLessDetectorTest >> detectFrom: aSelector [
+{ #category : 'accessing' }
+TSDAssertionLessDetectorTest >> detector [ 
 
-	^ detector selector: aSelector; detects
+	^ detector ifNil: [ detector := super detector.
+		detector methodVisitor helperSelectors: #( assert: ).
+		^detector ]
 ]
 
 { #category : 'accessing' }
-TSDAssertionLessDetectorTest >> fixtureClass [
+TSDAssertionLessDetectorTest >> detectorClass [ 
 
-	^ TSDFakeTests
-]
-
-{ #category : 'running' }
-TSDAssertionLessDetectorTest >> setUp [
-	super setUp.
-
-	detector := TSDAssertionLessDetector new
-		selfClass: self fixtureClass; yourself.
-	detector methodVisitor helperSelectors: #( assert: )
+	^ TSDAssertionLessDetector 
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasAssertion [
 
-	self deny: (self detectFrom: #testUsesInstanceVar )
+	self deny: (self doesDetect: #testUsesInstanceVar )
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasConnectedAssertion [
 
 	self 
-		deny: (self detectFrom: #testConnectedToAssertion )
+		deny: (self doesDetect: #testConnectedToAssertion )
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasConnectedAssertionTwice [
 
 	self 
-		deny: (self detectFrom: #testConnectedToAssertion );
-		deny: (self detectFrom: #testConnectedToAssertion )
+		deny: (self doesDetect: #testConnectedToAssertion );
+		deny: (self doesDetect: #testConnectedToAssertion )
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testIsAssertionLess [
 
-	self assert: (self detectFrom: #testDoesNotAssert)
+	self assert: (self doesDetect: #testDoesNotAssert)
 ]
