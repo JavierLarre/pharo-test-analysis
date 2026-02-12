@@ -14,7 +14,7 @@ DTRTDHelperVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: aTest
 
 	| compiledMethods |
 	super buildMethodViewModel: aMethodViewModel withTestCase: aTestCase.
-	compiledMethods := self methodVisitor helpers at: (self testCaseMethod: aTestCase).
+	compiledMethods := self methodVisitor helpers at: aTestCase compiledMethod.
 	aMethodViewModel
 		messages: (compiledMethods collect: #selector)
 ]

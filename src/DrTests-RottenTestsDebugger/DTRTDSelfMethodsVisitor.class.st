@@ -14,7 +14,7 @@ DTRTDSelfMethodsVisitor >> buildMethodViewModel: aMethodViewModel withTestCase: 
 
 	| testCaseSelfCalls |
 	super buildMethodViewModel: aMethodViewModel withTestCase: aTestCase.
-	testCaseSelfCalls := self methodVisitor methodsSelfCalls at: (self testCaseMethod: aTestCase).
+	testCaseSelfCalls := self methodVisitor methodsSelfCalls at: aTestCase compiledMethod.
 
 	aMethodViewModel 
 		messages: (testCaseSelfCalls collect: #selector) 

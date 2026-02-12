@@ -14,7 +14,7 @@ DTRTDMessagesVisitor >> buildMethodViewModel: aTestCaseViewModel withTestCase: a
 
 	super buildMethodViewModel: aTestCaseViewModel withTestCase: aTestCase.
 	aTestCaseViewModel 
-		messages: (self methodVisitor messages at: (self testCaseMethod: aTestCase) )
+		messages: (self methodVisitor messages at: aTestCase compiledMethod )
 ]
 
 { #category : 'building' }

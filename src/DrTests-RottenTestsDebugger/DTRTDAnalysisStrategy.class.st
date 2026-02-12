@@ -33,7 +33,7 @@ DTRTDAnalysisStrategy >> analyzeTestCase: aTestCase [
 DTRTDAnalysisStrategy >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
 
 	aMethodViewModel
-		compiledMethod: (self testCaseMethod: aTestCase )
+		compiledMethod: aTestCase compiledMethod
 ]
 
 { #category : 'building' }
@@ -81,11 +81,4 @@ DTRTDAnalysisStrategy >> methodVisitor: anObject [
 DTRTDAnalysisStrategy >> methodVisitorClass [
 
 	^ self subclassResponsibility 
-]
-
-{ #category : 'utilities' }
-DTRTDAnalysisStrategy >> testCaseMethod: aTestCase [
-
-	^ (aTestCase class lookupSelector: aTestCase selector )
-		ifNil: [ Error signal: 'test method not found' ]
 ]
