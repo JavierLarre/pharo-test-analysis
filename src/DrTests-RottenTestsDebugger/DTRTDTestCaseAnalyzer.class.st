@@ -1,37 +1,90 @@
 "
-I analyze test case with the given strategy and build the method data accordingly
+I am an abstract visitor of test cases. I provide a hook for building the view model
 "
 Class {
 	#name : 'DTRTDTestCaseAnalyzer',
 	#superclass : 'Object',
 	#instVars : [
-		'analysisStrategy'
+		'methodVisitor',
+		'methodViewModels'
 	],
 	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'Visitors'
 }
 
-{ #category : 'accessing' }
-DTRTDTestCaseAnalyzer >> analysisStrategy [
+{ #category : 'testing' }
+DTRTDTestCaseAnalyzer class >> isAbstract [ 
 
-	^ analysisStrategy ifNil: [ Error signal: 'strategy not given' ] 
+	^ self = DTRTDTestCaseAnalyzer 
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseAnalyzer >> analysisStrategy: anObject [
+DTRTDTestCaseAnalyzer class >> methodVisitor: aMethodVisitor [
 
-	analysisStrategy := anObject
+	^ self new methodVisitor: aMethodVisitor; yourself
 ]
 
 { #category : 'visiting' }
 DTRTDTestCaseAnalyzer >> analyzeTestCase: aTestCase [
 
-	self analysisStrategy analyzeTestCase: aTestCase.
+	| testCaseViewModel |
+	testCaseViewModel := self methodViewModelClass new.
+	self methodVisitor analyzeMethod: aTestCase compiledMethod.
+	self buildMethodViewModel: testCaseViewModel withTestCase: aTestCase.
+	self methodViewModels add: testCaseViewModel
 ]
 
 { #category : 'building' }
-DTRTDTestCaseAnalyzer >> buildViewModel: viewModel [
+DTRTDTestCaseAnalyzer >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
 
-	self analysisStrategy buildViewModel: viewModel 
+	aMethodViewModel
+		compiledMethod: aTestCase compiledMethod
+]
+
+{ #category : 'building' }
+DTRTDTestCaseAnalyzer >> buildViewModel: aViewModel [
+	"hook for setting variables into the model"
+]
+
+{ #category : 'utilities' }
+DTRTDTestCaseAnalyzer >> filterEmptyMessages: aMethodViewModelCollection [
+
+	^ aMethodViewModelCollection reject: [ :aMethodViewModel | aMethodViewModel messages isEmpty ]
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseAnalyzer >> methodViewModelClass [
+
+	^ DTRTDMethodData
+]
+
+{ #category : 'accessing' }
+DTRTDTestCaseAnalyzer >> methodViewModels [
+
+	^ methodViewModels ifNil: [ methodViewModels := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
+DTRTDTestCaseAnalyzer >> methodViewModels: anObject [
+
+	methodViewModels := anObject
+]
+
+{ #category : 'accessing' }
+DTRTDTestCaseAnalyzer >> methodVisitor [
+
+	^ methodVisitor ifNil: [ methodVisitor := self methodVisitorClass new ]
+]
+
+{ #category : 'accessing' }
+DTRTDTestCaseAnalyzer >> methodVisitor: anObject [
+
+	methodVisitor := anObject
+]
+
+{ #category : 'factory' }
+DTRTDTestCaseAnalyzer >> methodVisitorClass [
+
+	^ self subclassResponsibility 
 ]

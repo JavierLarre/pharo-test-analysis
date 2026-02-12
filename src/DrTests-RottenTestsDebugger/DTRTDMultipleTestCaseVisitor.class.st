@@ -3,7 +3,7 @@ I work as a proxy/decorator for multiple classes of `DTRTDTestCaseVisitor`
 "
 Class {
 	#name : 'DTRTDMultipleTestCaseVisitor',
-	#superclass : 'DTRTDAnalysisStrategy',
+	#superclass : 'DTRTDTestCaseAnalyzer',
 	#instVars : [
 		'visitorClasses'
 	],

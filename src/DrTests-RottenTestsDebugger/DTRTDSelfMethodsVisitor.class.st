@@ -3,7 +3,7 @@ I analyze test cases using `MaMethodVisitor` and build the view model with the m
 "
 Class {
 	#name : 'DTRTDSelfMethodsVisitor',
-	#superclass : 'DTRTDAnalysisStrategy',
+	#superclass : 'DTRTDTestCaseAnalyzer',
 	#category : 'DrTests-RottenTestsDebugger-Visitors',
 	#package : 'DrTests-RottenTestsDebugger',
 	#tag : 'Visitors'

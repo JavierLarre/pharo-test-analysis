@@ -32,9 +32,7 @@ DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
 	| viewModel testVisitor |
 	viewModel := self viewModelClass new.
-	testVisitor := DTRTDTestCaseAnalyzer new 
-		analysisStrategy: (DTRTDMultipleTestCaseVisitor withClasses: self testVisitors);
-		yourself.
+	testVisitor := DTRTDMultipleTestCaseVisitor withClasses: self testVisitors.
 	aTestSuite tests do: [ :aTestCase | 
 		testVisitor analyzeTestCase: aTestCase ].
 	testVisitor buildViewModel: viewModel.
