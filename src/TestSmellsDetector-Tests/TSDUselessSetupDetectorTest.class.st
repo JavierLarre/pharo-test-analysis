@@ -3,7 +3,7 @@ An UselessSetupTest is a test class for testing the behavior of UselessSetup
 "
 Class {
 	#name : 'TSDUselessSetupDetectorTest',
-	#superclass : 'TSDSetupDetectorTest',
+	#superclass : 'TSDDetectorTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }

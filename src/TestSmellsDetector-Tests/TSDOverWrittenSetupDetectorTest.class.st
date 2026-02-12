@@ -3,7 +3,7 @@ A TSDOverWrittenSetupDetectorTest is a test class for testing the behavior of TS
 "
 Class {
 	#name : 'TSDOverWrittenSetupDetectorTest',
-	#superclass : 'TSDSetupDetectorTest',
+	#superclass : 'TSDDetectorTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }

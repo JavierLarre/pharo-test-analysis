@@ -3,7 +3,7 @@ A TSDAssertionLessDetectorTest is a test class for testing the behavior of TSDAs
 "
 Class {
 	#name : 'TSDAssertionLessDetectorTest',
-	#superclass : 'TSDSetupDetectorTest',
+	#superclass : 'TSDDetectorTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }

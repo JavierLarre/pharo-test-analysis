@@ -1,5 +1,5 @@
 Class {
-	#name : 'TSDSetupDetectorTest',
+	#name : 'TSDDetectorTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'detector'
@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : 'testing' }
-TSDSetupDetectorTest class >> isAbstract [ 
+TSDDetectorTest class >> isAbstract [ 
 
-	^ self = TSDSetupDetectorTest 
+	^ self = TSDDetectorTest 
 ]
 
 { #category : 'accessing' }
-TSDSetupDetectorTest >> detector [ 
+TSDDetectorTest >> detector [ 
 
 	^ detector ifNil: [ detector := self detectorClass new
 		            selfClass: self fixtureClass;
@@ -23,19 +23,19 @@ TSDSetupDetectorTest >> detector [
 ]
 
 { #category : 'accessing' }
-TSDSetupDetectorTest >> detectorClass [
+TSDDetectorTest >> detectorClass [
 	^ self subclassResponsibility
 ]
 
 { #category : 'helpers' }
-TSDSetupDetectorTest >> doesDetect: aSelector [
+TSDDetectorTest >> doesDetect: aSelector [
 
 	^ self detector selector: aSelector;
 		detects
 ]
 
 { #category : 'running' }
-TSDSetupDetectorTest >> fixtureClass [
+TSDDetectorTest >> fixtureClass [
 
 	^ TSDFakeTests 
 ]

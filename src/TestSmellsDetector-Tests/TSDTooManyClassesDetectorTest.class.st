@@ -3,7 +3,7 @@ A TSDTooManyClassesDetectorTest is a test class for testing the behavior of TSDT
 "
 Class {
 	#name : 'TSDTooManyClassesDetectorTest',
-	#superclass : 'TSDSetupDetectorTest',
+	#superclass : 'TSDDetectorTest',
 	#category : 'TestSmellsDetector-Tests',
 	#package : 'TestSmellsDetector-Tests'
 }
