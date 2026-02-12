@@ -17,12 +17,6 @@ TSDAssertionLessDetector >> analyzeMethod [
 	self methodVisitor analyzeMethod: self compiledMethod 
 ]
 
-{ #category : 'accessing' }
-TSDAssertionLessDetector >> compiledMethod [
-
-	^ self selfClass lookupSelector: self selector
-]
-
 { #category : 'testing' }
 TSDAssertionLessDetector >> detects [
 	^ self isAssertionLess 

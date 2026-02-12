@@ -14,7 +14,7 @@ Class {
 { #category : 'testing' }
 TSDTooManyClassesDetector >> detects [
 
-	self referenceVisitor visit: (self selfClass lookupSelector: self selector) parseTree.
+	self referenceVisitor visit: self compiledMethod parseTree.
 	^ self referenceVisitor referencesCount >= 3
 ]
 

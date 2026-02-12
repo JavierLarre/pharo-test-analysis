@@ -18,6 +18,12 @@ TSDDetector class >> isAbstract [
 	^ self = TSDDetector 
 ]
 
+{ #category : 'accessing' }
+TSDDetector >> compiledMethod [
+
+	^ self lookupMethod: self selector
+]
+
 { #category : 'api' }
 TSDDetector >> detect: aSelector from: aClass [
 
@@ -30,6 +36,12 @@ TSDDetector >> detect: aSelector from: aClass [
 { #category : 'testing' }
 TSDDetector >> detects [
 	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+TSDDetector >> lookupMethod: aSelector [
+
+	^ self selfClass lookupSelector: aSelector 
 ]
 
 { #category : 'accessing' }

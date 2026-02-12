@@ -32,7 +32,7 @@ TSDSetupDetector >> detects [
 { #category : 'accessing' }
 TSDSetupDetector >> lookupNode: aSelector [
 
-	^ (self selfClass lookupSelector: aSelector) parseTree
+	^ (self lookupMethod: aSelector) parseTree
 ]
 
 { #category : 'accessing' }
