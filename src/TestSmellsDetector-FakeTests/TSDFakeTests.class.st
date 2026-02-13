@@ -90,6 +90,15 @@ TSDFakeTests >> testUsesLocalVariables [
 ]
 
 { #category : 'tests' }
+TSDFakeTests >> testUsesTheSameClass [
+
+	TSDFakeTests new.
+	TSDFakeTests new.
+	TSDFakeTests new.
+	TSDFakeTests new.
+]
+
+{ #category : 'tests' }
 TSDFakeTests >> testUsesTooManyClasses [
 
 	TSDClassReferencesVisitor new.
