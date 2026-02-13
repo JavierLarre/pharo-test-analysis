@@ -6,7 +6,9 @@ Class {
 	#superclass : 'DTPluginResult',
 	#instVars : [
 		'assertionlessTests',
-		'overwrittenSetupTests'
+		'overwrittenSetupTests',
+		'manyClassReferencesTests',
+		'uselessSetupTests'
 	],
 	#category : 'DrTests-TestSmellsDetector-Presenters',
 	#package : 'DrTests-TestSmellsDetector',
@@ -33,16 +35,42 @@ DTTSDResult >> buildTreeForUI [
 ]
 
 { #category : 'accessing' }
+DTTSDResult >> buildTreeForUIManyClassReferences [
+
+	<dtTestTSDResultTreeNamed: 'Tests references classes too many times' order: 3>
+	^ self buildTreeFrom: self manyClassReferencesTests 
+]
+
+{ #category : 'accessing' }
 DTTSDResult >> buildTreeForUIOverwrittenSetup [
 	
 	<dtTestTSDResultTreeNamed: 'Tests that overwrite setup' order: 2>
 	^ self buildTreeFrom: self overwrittenSetupTests 
 ]
 
+{ #category : 'accessing' }
+DTTSDResult >> buildTreeForUIUselessSetup [ 
+
+	<dtTestTSDResultTreeNamed: 'Tests not fully using their set up' order: 4>
+	^ self buildTreeFrom: self uselessSetupTests 
+]
+
 { #category : 'private' }
 DTTSDResult >> buildTreeFrom: testCases [
 
 	^ self treeNode subResults: (testCases collect: #asResultForDrTest )
+]
+
+{ #category : 'accessing' }
+DTTSDResult >> manyClassReferencesTests [
+
+	^ manyClassReferencesTests
+]
+
+{ #category : 'accessing' }
+DTTSDResult >> manyClassReferencesTests: anObject [
+
+	manyClassReferencesTests := anObject
 ]
 
 { #category : 'accessing' }
@@ -61,4 +89,16 @@ DTTSDResult >> overwrittenSetupTests: anObject [
 DTTSDResult >> treeNode [ 
 
 	^ DTTreeNode new
+]
+
+{ #category : 'accessing' }
+DTTSDResult >> uselessSetupTests [
+
+	^ uselessSetupTests
+]
+
+{ #category : 'accessing' }
+DTTSDResult >> uselessSetupTests: anObject [
+
+	uselessSetupTests := anObject
 ]

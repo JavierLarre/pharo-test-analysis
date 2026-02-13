@@ -32,15 +32,11 @@ DTTSDPlugin class >> weight [
 { #category : 'accessing' }
 DTTSDPlugin >> builder [
 
-	^ DTTSDMultipleResultBuilder builders: { DTTSDAssertionlessBuilder . DTTSDOverwrittenSetupBuilder }
-]
-
-{ #category : 'accessing' }
-DTTSDPlugin >> detector [
-
-	^ detector ifNil: [ detector := TSDAssertionLessDetector new
-		  methodVisitor: RTDHelperVisitor withAssertableSelectors;
-		  yourself ]
+	^ DTTSDMultipleResultBuilder builders: {
+			  DTTSDDetectorBuilder assertionless.
+			  DTTSDDetectorBuilder overwrittenSetup.
+			  DTTSDDetectorBuilder classReferences.
+			  DTTSDDetectorBuilder uselessSetup }
 ]
 
 { #category : 'accessing' }
@@ -74,11 +70,4 @@ DTTSDPlugin >> startButtonHelp [
 DTTSDPlugin >> startButtonLabel [ 
 
 	^ 'Detect smells in tests selected.' translated 
-]
-
-{ #category : 'tests' }
-DTTSDPlugin >> testCaseMethod: aTestCase [
-
-	^ (aTestCase class lookupSelector: aTestCase selector )
-		ifNil: [ Error signal: 'test method not found' ]
 ]

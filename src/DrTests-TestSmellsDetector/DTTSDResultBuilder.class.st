@@ -1,3 +1,6 @@
+"
+I define the interface for building a result with a test collection
+"
 Class {
 	#name : 'DTTSDResultBuilder',
 	#superclass : 'Object',

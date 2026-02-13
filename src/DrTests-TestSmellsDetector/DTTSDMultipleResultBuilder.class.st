@@ -1,3 +1,6 @@
+"
+I am a composite of result builders
+"
 Class {
 	#name : 'DTTSDMultipleResultBuilder',
 	#superclass : 'DTTSDResultBuilder',
@@ -12,7 +15,7 @@ Class {
 { #category : 'accessing' }
 DTTSDMultipleResultBuilder class >> builders: aCollection [
 	
-	^ self new builders: (aCollection collect: #new); yourself
+	^ self new builders: aCollection ; yourself
 ]
 
 { #category : 'execution' }
