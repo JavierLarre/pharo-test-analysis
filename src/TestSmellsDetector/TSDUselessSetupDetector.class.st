@@ -14,12 +14,15 @@ Class {
 { #category : 'accessing' }
 TSDUselessSetupDetector >> accessesFinder [
 
-	^ accessesFinder ifNil: [ accessesFinder := TSDInstanceVariablesFinder accessings ]
+	^ accessesFinder ifNil: [ accessesFinder := TSDInstanceVariablesFinder accessings
+			selfClass: self selfClass; yourself ]
 ]
 
 { #category : 'testing' }
 TSDUselessSetupDetector >> detects [
-	^ self doesUseSetUp 
+
+	accessesFinder := nil.
+	^ self doesUseSetUp not
 ]
 
 { #category : 'testing' }
@@ -34,11 +37,4 @@ TSDUselessSetupDetector >> foundInstanceVariables [
 	^ self 
 		variables: self selector 
 		with: self accessesFinder 
-]
-
-{ #category : 'accessing' }
-TSDUselessSetupDetector >> selfClass: aClass [
-
-	super selfClass: aClass .
-	self accessesFinder selfClass: aClass 
 ]

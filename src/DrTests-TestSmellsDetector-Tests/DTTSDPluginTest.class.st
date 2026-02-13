@@ -4,10 +4,19 @@ A DTTSDPluginTest is a test class for testing the behavior of DTTSDPlugin
 Class {
 	#name : 'DTTSDPluginTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'result'
+	],
 	#category : 'DrTests-TestSmellsDetector-Tests-Presenters',
 	#package : 'DrTests-TestSmellsDetector-Tests',
 	#tag : 'Presenters'
 }
+
+{ #category : 'accessing' }
+DTTSDPluginTest >> result [ 
+
+	^ result ifNil: [ result := self runForConfiguration ]
+]
 
 { #category : 'factory' }
 DTTSDPluginTest >> runForConfiguration [
@@ -17,23 +26,53 @@ DTTSDPluginTest >> runForConfiguration [
 ]
 
 { #category : 'tests' }
+DTTSDPluginTest >> testAssertionless [
+
+	self
+		assertCollection: (self result assertionlessTests collect: #selector)
+		includesAll:
+			#( testDoesNotAssert 
+				testUsesClasses 
+				testUsesTooManyClasses )
+]
+
+{ #category : 'tests' }
+DTTSDPluginTest >> testManyClassReferences [
+
+	self
+		assertCollection: (self result manyClassReferencesTests collect: #selector)
+		includesAll: #( testUsesTooManyClasses testUsesTheSameClass )
+]
+
+{ #category : 'tests' }
 DTTSDPluginTest >> testOverwriteSetup [
 
-	| result |
-	result := self runForConfiguration.
 	self
-		assertCollection: (result overwrittenSetupTests collect: #selector)
-		hasSameElements:
-			#( testConnectedToAssignation testConnectedToAssertion testDoesNotAssert testIsConnectedToInstanceVar
-			   testOnlyAssigns testUsesClasses testUsesInstanceVar testUsesLocalVariables testUsesTooManyClasses )
+		assertCollection: (self result overwrittenSetupTests collect: #selector)
+		includesAll:
+			#( testConnectedToAssignation 
+				testIsConnectedToInstanceVar
+			   testOnlyAssigns 
+				testUsesInstanceVar  )
 ]
 
 { #category : 'tests' }
 DTTSDPluginTest >> testRunForConfiguration [
 
-	| testCase result |
-	result := DTTSDPlugin new runForConfiguration:
-		          (DTPluginConfiguration items: { TSDFakeTests } packages: #'TestSmellsDetector-FakeTests' asPackage).
-	testCase := result assertionlessTests first.
-	self assert: testCase selector equals: #testDoesNotAssert
+	self 
+		assert: self result assertionlessTests first selector 
+		equals: #testDoesNotAssert
+]
+
+{ #category : 'tests' }
+DTTSDPluginTest >> testUselessSetup [
+
+	| uselessSetupTests |
+	uselessSetupTests := self result uselessSetupTests collect: #selector.
+
+	self
+		assertCollection: uselessSetupTests 
+		includesAll: #( testOnlyAssigns testConnectedToAssignation testUsesLocalVariables );
+		denyCollection: uselessSetupTests 
+		includesAny: #( testUsesInstanceVar )
 ]

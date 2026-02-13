@@ -5,7 +5,7 @@ Class {
 	#name : 'TSDTooManyClassesDetector',
 	#superclass : 'TSDDetector',
 	#instVars : [
-		'referenceVisitor'
+		'visitor'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
@@ -14,12 +14,26 @@ Class {
 { #category : 'testing' }
 TSDTooManyClassesDetector >> detects [
 
+	self resetVisitor.
 	self referenceVisitor visit: self compiledMethod parseTree.
-	^ self referenceVisitor referencesCount >= 3
+	^ self referenceVisitor referencesCount >= self ocurrenceThreshold or: [
+		  self referenceVisitor anyClassIsReferencedMoreThan: self ocurrenceThreshold ]
+]
+
+{ #category : 'accessing' }
+TSDTooManyClassesDetector >> ocurrenceThreshold [
+
+	^ 3
 ]
 
 { #category : 'accessing' }
 TSDTooManyClassesDetector >> referenceVisitor [
 
-	^ referenceVisitor ifNil: [ referenceVisitor := TSDClassReferencesVisitor new ]
+	^ visitor ifNil: [ visitor := TSDClassReferencesVisitor new selfClass: self selfClass; yourself ]
+]
+
+{ #category : 'private' }
+TSDTooManyClassesDetector >> resetVisitor [
+
+	visitor := nil "forces the getter to build a fresh visitor"
 ]
