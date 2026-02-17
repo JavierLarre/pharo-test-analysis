@@ -6,7 +6,8 @@ Class {
 	#superclass : 'RTFSelfCallVisitorInterpreter',
 	#instVars : [
 		'foundVariables',
-		'addVariablesSuchThat'
+		'addVariablesSuchThat',
+		'methodVariables'
 	],
 	#category : 'TestSmellsDetector',
 	#package : 'TestSmellsDetector'
@@ -54,6 +55,18 @@ TSDInstanceVariablesFinder >> analyze [
 ]
 
 { #category : 'accessing' }
+TSDInstanceVariablesFinder >> at: aSelector [
+
+	| method |
+	method := self selfClass lookupSelector: aSelector.
+
+	^ self methodVariables at: aSelector at: self selfClass 
+		ifAbsentPut: [ self reset;
+		  visitSelector: aSelector;
+		  foundVariables ]
+]
+
+{ #category : 'accessing' }
 TSDInstanceVariablesFinder >> foundVariables [
 
 	^ foundVariables ifNil: [ foundVariables := Set new ]
@@ -63,6 +76,25 @@ TSDInstanceVariablesFinder >> foundVariables [
 TSDInstanceVariablesFinder >> isValid: aVariableNode [
 
 	^ self addVariablesSuchThat cull: aVariableNode 
+]
+
+{ #category : 'accessing' }
+TSDInstanceVariablesFinder >> methodVariables [
+
+	^ methodVariables ifNil: [ methodVariables := Dictionary new ]
+]
+
+{ #category : 'api' }
+TSDInstanceVariablesFinder >> reset [
+
+	foundVariables := nil.
+	^ super reset
+]
+
+{ #category : 'visiting' }
+TSDInstanceVariablesFinder >> visitSelector: aSelector [
+
+	^ self visit: (self selfClass lookupSelector: aSelector ) parseTree
 ]
 
 { #category : 'visiting' }

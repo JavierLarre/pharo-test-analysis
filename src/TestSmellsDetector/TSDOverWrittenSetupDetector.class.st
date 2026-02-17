@@ -20,7 +20,7 @@ TSDOverWrittenSetupDetector >> doesOverWritesSetUp [
 ]
 
 { #category : 'api' }
-TSDOverWrittenSetupDetector >> writtenVariables [ 
+TSDOverWrittenSetupDetector >> writtenVariables [
 
-	^ self variables: self selector with: self assignsFinder 
+	^ self assignsFinder at: self selector
 ]

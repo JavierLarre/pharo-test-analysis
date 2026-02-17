@@ -57,15 +57,5 @@ TSDSetupDetector >> setUpSelector: aSelector [
 { #category : 'accessing' }
 TSDSetupDetector >> setupVariables [
 
-	^ self 
-		variables: self setUpSelector 
-		with: self assignsFinder
-]
-
-{ #category : 'private' }
-TSDSetupDetector >> variables: aSelector with: aFinder [
-
-	^ aFinder
-		  visit: (self lookupNode: aSelector);
-		  foundVariables 
+	^ self assignsFinder at: self setUpSelector
 ]

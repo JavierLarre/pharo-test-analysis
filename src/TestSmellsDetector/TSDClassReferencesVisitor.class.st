@@ -35,6 +35,13 @@ TSDClassReferencesVisitor >> referencesOf: aClass [
 	^ self classReferences occurrencesOf: aClass 
 ]
 
+{ #category : 'api' }
+TSDClassReferencesVisitor >> reset [ 
+
+	classReferences := nil.
+	^ super reset
+]
+
 { #category : 'visiting' }
 TSDClassReferencesVisitor >> visitVariableNode: aVariableNode [
 

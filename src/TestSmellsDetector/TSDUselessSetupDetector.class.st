@@ -21,7 +21,7 @@ TSDUselessSetupDetector >> accessesFinder [
 { #category : 'testing' }
 TSDUselessSetupDetector >> detects [
 
-	accessesFinder := nil.
+	self accessesFinder reset.
 	^ self doesUseSetUp not
 ]
 
@@ -34,7 +34,5 @@ TSDUselessSetupDetector >> doesUseSetUp [
 { #category : 'accessing' }
 TSDUselessSetupDetector >> foundInstanceVariables [
 
-	^ self 
-		variables: self selector 
-		with: self accessesFinder 
+	^ self accessesFinder at: self selector
 ]
