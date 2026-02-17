@@ -68,3 +68,13 @@ TSDInstanceVariablesFinderTest >> testUseTwice [
 	self finder visitSelector: #assignVariable.
 	self assertFoundVariables: #( x assignedVariable )
 ]
+
+{ #category : 'tests' }
+TSDInstanceVariablesFinderTest >> testVisitsAreCached [
+
+	self 
+		assertMethod: #x hasVariables: { #x };
+		assertEmpty: (self finder at: #testUsesLocalVariables );
+		assertMethod: #x hasVariables: { #x };
+		assertFoundVariables: { }
+]
