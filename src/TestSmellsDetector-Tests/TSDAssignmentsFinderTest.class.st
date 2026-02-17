@@ -8,6 +8,12 @@ Class {
 	#package : 'TestSmellsDetector-Tests'
 }
 
+{ #category : 'testing' }
+TSDAssignmentsFinderTest class >> shouldInheritSelectors [ 
+
+	^ false
+]
+
 { #category : 'accessing' }
 TSDAssignmentsFinderTest >> finder [
 
@@ -25,7 +31,5 @@ TSDAssignmentsFinderTest >> fixtureClass [
 { #category : 'tests' }
 TSDAssignmentsFinderTest >> testFindAssignmentsFromSubclass [
 
-	self 
-		visit: #setUp;
-		assertFoundVariables: #( x y subVariableAssigned assignedVariable )
+	self assertMethod: #setUp hasVariables: #( x y subVariableAssigned assignedVariable )
 ]

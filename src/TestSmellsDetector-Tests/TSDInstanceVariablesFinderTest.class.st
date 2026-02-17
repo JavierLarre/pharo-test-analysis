@@ -14,6 +14,14 @@ TSDInstanceVariablesFinderTest >> assertFoundVariables: aCollection [
 	self assertCollection: self finder foundVariables equals: aCollection asSet 
 ]
 
+{ #category : 'asserting' }
+TSDInstanceVariablesFinderTest >> assertMethod: aSelector hasVariables: aCollection [
+
+	self 
+		assertCollection: (self finder at: aSelector ) 
+		equals: aCollection asSet
+]
+
 { #category : 'accessing' }
 TSDInstanceVariablesFinderTest >> finder [
 	
@@ -36,9 +44,7 @@ TSDInstanceVariablesFinderTest >> fixtureClass [
 { #category : 'tests' }
 TSDInstanceVariablesFinderTest >> testDefaultFinder [
 	
-	self 
-		visit: #x;
-		assertFoundVariables: #( x )
+	self assertMethod: #x hasVariables: #( x )
 ]
 
 { #category : 'tests' }
@@ -51,24 +57,14 @@ TSDInstanceVariablesFinderTest >> testEmptyFinder [
 { #category : 'tests' }
 TSDInstanceVariablesFinderTest >> testIgnoresLocalVariables [
 
-	self
-		visit: #testUsesLocalVariables;
-		assertFoundVariables: #()
+	self assertMethod: #testUsesLocalVariables hasVariables: #()
 ]
 
 { #category : 'tests' }
 TSDInstanceVariablesFinderTest >> testUseTwice [
 	
-	self 
-		visit: #x;
-		assertFoundVariables: #( x );
-		visit: #assignVariable;
-		assertFoundVariables: #( x assignedVariable )
-]
-
-{ #category : 'tests' }
-TSDInstanceVariablesFinderTest >> visit: aSelector [
-
-	self finder
-		visit: (self fixtureClass >> aSelector ) parseTree. 
+	self finder visitSelector: #x.
+	self assertFoundVariables: #( x ).
+	self finder visitSelector: #assignVariable.
+	self assertFoundVariables: #( x assignedVariable )
 ]
