@@ -9,8 +9,9 @@ Class {
 		'addVariablesSuchThat',
 		'methodVariables'
 	],
-	#category : 'TestSmellsDetector',
-	#package : 'TestSmellsDetector'
+	#category : 'TestSmellsDetector-Visitors',
+	#package : 'TestSmellsDetector',
+	#tag : 'Visitors'
 }
 
 { #category : 'instance creation' }

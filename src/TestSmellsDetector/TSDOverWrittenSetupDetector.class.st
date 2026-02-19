@@ -4,8 +4,9 @@ I detect whether a method overwrites an instance variable set up in a setUp meth
 Class {
 	#name : 'TSDOverWrittenSetupDetector',
 	#superclass : 'TSDSetupDetector',
-	#category : 'TestSmellsDetector',
-	#package : 'TestSmellsDetector'
+	#category : 'TestSmellsDetector-Detectors',
+	#package : 'TestSmellsDetector',
+	#tag : 'Detectors'
 }
 
 { #category : 'testing' }

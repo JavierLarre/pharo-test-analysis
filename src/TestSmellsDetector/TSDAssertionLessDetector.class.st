@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'methodVisitor'
 	],
-	#category : 'TestSmellsDetector',
-	#package : 'TestSmellsDetector'
+	#category : 'TestSmellsDetector-Detectors',
+	#package : 'TestSmellsDetector',
+	#tag : 'Detectors'
 }
 
 { #category : 'private' }

@@ -8,8 +8,9 @@ Class {
 		'setupSelector',
 		'assignsFinder'
 	],
-	#category : 'TestSmellsDetector',
-	#package : 'TestSmellsDetector'
+	#category : 'TestSmellsDetector-Detectors',
+	#package : 'TestSmellsDetector',
+	#tag : 'Detectors'
 }
 
 { #category : 'testing' }

@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'classReferences'
 	],
-	#category : 'TestSmellsDetector',
-	#package : 'TestSmellsDetector'
+	#category : 'TestSmellsDetector-Visitors',
+	#package : 'TestSmellsDetector',
+	#tag : 'Visitors'
 }
 
 { #category : 'api' }
