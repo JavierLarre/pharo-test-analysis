@@ -19,6 +19,12 @@ TSDDetector class >> isAbstract [
 ]
 
 { #category : 'accessing' }
+TSDDetector class >> selfClass: aClass [
+
+	^ self new selfClass: aClass; yourself
+]
+
+{ #category : 'accessing' }
 TSDDetector >> compiledMethod [
 
 	^ self lookupMethod: self selector
@@ -28,9 +34,15 @@ TSDDetector >> compiledMethod [
 TSDDetector >> detect: aSelector from: aClass [
 
 	^ self 
-		selector: aSelector;
 		selfClass: aClass;
-		detects
+		detectSelector: aSelector 
+]
+
+{ #category : 'api' }
+TSDDetector >> detectSelector: aSelector [
+	
+	"assumes the self class was already given"
+	^ self selector: aSelector; detects
 ]
 
 { #category : 'testing' }
