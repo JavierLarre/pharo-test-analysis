@@ -5,7 +5,7 @@ Class {
 	#name : 'DTTSDPluginTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'result'
+		'testData'
 	],
 	#category : 'DrTests-TestSmellsDetector-Tests-Presenters',
 	#package : 'DrTests-TestSmellsDetector-Tests',
@@ -13,9 +13,9 @@ Class {
 }
 
 { #category : 'accessing' }
-DTTSDPluginTest >> result [ 
+DTTSDPluginTest >> data [ 
 
-	^ result ifNil: [ result := self runForConfiguration ]
+	^ testData ifNil: [ testData := self runForConfiguration testData ]
 ]
 
 { #category : 'factory' }
@@ -29,7 +29,7 @@ DTTSDPluginTest >> runForConfiguration [
 DTTSDPluginTest >> testAssertionless [
 
 	self
-		assertCollection: (self result assertionlessTests collect: #selector)
+		assertCollection: (self data assertionlessTests collect: #selector)
 		includesAll:
 			#( testDoesNotAssert 
 				testUsesClasses 
@@ -40,7 +40,7 @@ DTTSDPluginTest >> testAssertionless [
 DTTSDPluginTest >> testManyClassReferences [
 
 	self
-		assertCollection: (self result manyClassReferencesTests collect: #selector)
+		assertCollection: (self data manyClassReferencesTests collect: #selector)
 		includesAll: #( testUsesTooManyClasses testUsesTheSameClass )
 ]
 
@@ -48,19 +48,17 @@ DTTSDPluginTest >> testManyClassReferences [
 DTTSDPluginTest >> testOverwriteSetup [
 
 	self
-		assertCollection: (self result overwrittenSetupTests collect: #selector)
+		assertCollection: (self data overwrittenSetupTests collect: #selector)
 		includesAll:
 			#( testConnectedToAssignation 
-				testIsConnectedToInstanceVar
-			   testOnlyAssigns 
-				testUsesInstanceVar  )
+			   testOnlyAssigns   )
 ]
 
 { #category : 'tests' }
 DTTSDPluginTest >> testRunForConfiguration [
 
 	self 
-		assert: self result assertionlessTests first selector 
+		assert: self data assertionlessTests first selector 
 		equals: #testDoesNotAssert
 ]
 
@@ -68,7 +66,7 @@ DTTSDPluginTest >> testRunForConfiguration [
 DTTSDPluginTest >> testUselessSetup [
 
 	| uselessSetupTests |
-	uselessSetupTests := self result uselessSetupTests collect: #selector.
+	uselessSetupTests := self data uselessSetupTests collect: #selector.
 
 	self
 		assertCollection: uselessSetupTests 

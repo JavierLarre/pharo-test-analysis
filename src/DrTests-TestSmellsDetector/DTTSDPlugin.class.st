@@ -55,9 +55,9 @@ DTTSDPlugin >> resultButtonHelp [
 DTTSDPlugin >> runForConfiguration: aDTpluginConfiguration [
 
 	| result |
-	result := self pluginResultClass new.
-	self builder buildResult: result withTests: aDTpluginConfiguration asTestSuite tests.
-	^ result
+	result := DTTSDTestData new.
+	self builder buildData: result withTests: aDTpluginConfiguration asTestSuite tests.
+	^ self pluginResultClass new testData: result; yourself
 ]
 
 { #category : 'api' }

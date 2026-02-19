@@ -6,7 +6,8 @@ Class {
 	#superclass : 'DTTSDResultBuilder',
 	#instVars : [
 		'detector',
-		'resultTestsSelector'
+		'resultTestsSelector',
+		'setDataBlock'
 	],
 	#category : 'DrTests-TestSmellsDetector-Builders',
 	#package : 'DrTests-TestSmellsDetector',
@@ -20,13 +21,15 @@ DTTSDDetectorBuilder class >> assertionless [
 		detector: (TSDAssertionLessDetector new
 		  		methodVisitor: RTDHelperVisitor withAssertableSelectors;
 		  		yourself)
-		resultTestsSelector: #assertionlessTests:
+		setDataBlock: [ :aTestData :tests | aTestData assertionlessTests: tests ]
 ]
 
 { #category : 'visiting' }
 DTTSDDetectorBuilder class >> classReferences [ 
 
-	^ self detector: TSDTooManyClassesDetector new resultTestsSelector: #manyClassReferencesTests: 
+	^ self 
+		detector: TSDTooManyClassesDetector new 
+		setDataBlock: [ :aTestData :tests | aTestData manyClassReferencesTests: tests ] 
 ]
 
 { #category : 'instance creation' }
@@ -38,16 +41,35 @@ DTTSDDetectorBuilder class >> detector: aDetector resultTestsSelector: aSelector
 		yourself
 ]
 
+{ #category : 'instance creation' }
+DTTSDDetectorBuilder class >> detector: aDetector setDataBlock: aBlock [
+
+	^ self new
+		detector: aDetector;
+		setDataBlock: aBlock;
+		yourself
+]
+
 { #category : 'accessing' }
 DTTSDDetectorBuilder class >> overwrittenSetup [ 
 
-	^ self detector: TSDOverWrittenSetupDetector new resultTestsSelector: #overwrittenSetupTests:
+	^ self 
+		detector: TSDOverWrittenSetupDetector new 
+		setDataBlock: [ :aTestData :tests | aTestData overwrittenSetupTests: tests ]
 ]
 
 { #category : 'accessing' }
 DTTSDDetectorBuilder class >> uselessSetup [
 
-	^ self detector: TSDUselessSetupDetector new resultTestsSelector: #uselessSetupTests:
+	^ self 
+		detector: TSDUselessSetupDetector new 
+		setDataBlock: [ :aTestData :tests | aTestData uselessSetupTests: tests ]
+]
+
+{ #category : 'execution' }
+DTTSDDetectorBuilder >> buildData: aTestData withTests: testCases [
+
+	^ self setDataBlock value: aTestData value: (self detectedTestCases: testCases )
 ]
 
 { #category : 'execution' }
@@ -84,4 +106,16 @@ DTTSDDetectorBuilder >> resultTestsSelector [
 DTTSDDetectorBuilder >> resultTestsSelector: anObject [
 
 	resultTestsSelector := anObject
+]
+
+{ #category : 'accessing' }
+DTTSDDetectorBuilder >> setDataBlock [
+
+	^ setDataBlock
+]
+
+{ #category : 'accessing' }
+DTTSDDetectorBuilder >> setDataBlock: anObject [
+
+	setDataBlock := anObject
 ]

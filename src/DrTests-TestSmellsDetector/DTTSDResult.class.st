@@ -1,5 +1,5 @@
 "
-I store the detected smells resulting from the plugin
+I build DrTest trees from the tests stored in `DTTSDTestData`
 "
 Class {
 	#name : 'DTTSDResult',
@@ -8,7 +8,8 @@ Class {
 		'assertionlessTests',
 		'overwrittenSetupTests',
 		'manyClassReferencesTests',
-		'uselessSetupTests'
+		'uselessSetupTests',
+		'testData'
 	],
 	#category : 'DrTests-TestSmellsDetector-Presenters',
 	#package : 'DrTests-TestSmellsDetector',
@@ -31,28 +32,28 @@ DTTSDResult >> assertionlessTests: anObject [
 DTTSDResult >> buildTreeForUI [ 
 	
 	<dtTestTSDResultTreeNamed: 'Tests without assertions' order: 1>
-	^ self buildTreeFrom: self assertionlessTests 
+	^ self buildTreeFrom: self testData assertionlessTests 
 ]
 
 { #category : 'accessing' }
 DTTSDResult >> buildTreeForUIManyClassReferences [
 
 	<dtTestTSDResultTreeNamed: 'Tests references classes too many times' order: 3>
-	^ self buildTreeFrom: self manyClassReferencesTests 
+	^ self buildTreeFrom: self testData manyClassReferencesTests 
 ]
 
 { #category : 'accessing' }
 DTTSDResult >> buildTreeForUIOverwrittenSetup [
 	
 	<dtTestTSDResultTreeNamed: 'Tests that overwrite setup' order: 2>
-	^ self buildTreeFrom: self overwrittenSetupTests 
+	^ self buildTreeFrom: self testData overwrittenSetupTests 
 ]
 
 { #category : 'accessing' }
 DTTSDResult >> buildTreeForUIUselessSetup [ 
 
 	<dtTestTSDResultTreeNamed: 'Tests not fully using their set up' order: 4>
-	^ self buildTreeFrom: self uselessSetupTests 
+	^ self buildTreeFrom: self testData uselessSetupTests 
 ]
 
 { #category : 'private' }
@@ -83,6 +84,18 @@ DTTSDResult >> overwrittenSetupTests [
 DTTSDResult >> overwrittenSetupTests: anObject [
 
 	overwrittenSetupTests := anObject
+]
+
+{ #category : 'accessing' }
+DTTSDResult >> testData [
+
+	^ testData
+]
+
+{ #category : 'accessing' }
+DTTSDResult >> testData: anObject [
+
+	testData := anObject
 ]
 
 { #category : 'factory' }
