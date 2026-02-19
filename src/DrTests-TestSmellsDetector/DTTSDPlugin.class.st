@@ -9,6 +9,13 @@ Class {
 	#tag : 'Presenters'
 }
 
+{ #category : 'instance creation' }
+DTTSDPlugin class >> open [
+	<script>
+	
+	^ (DrTests newApplication: StPharoApplication current) currentPlugin: self new ; open; yourself
+]
+
 { #category : 'api - accessing' }
 DTTSDPlugin class >> pluginName [ 
 
