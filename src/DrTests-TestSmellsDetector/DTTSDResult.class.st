@@ -5,10 +5,6 @@ Class {
 	#name : 'DTTSDResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'assertionlessTests',
-		'overwrittenSetupTests',
-		'manyClassReferencesTests',
-		'uselessSetupTests',
 		'testData'
 	],
 	#category : 'DrTests-TestSmellsDetector-Presenters',
@@ -16,16 +12,10 @@ Class {
 	#tag : 'Presenters'
 }
 
-{ #category : 'accessing' }
-DTTSDResult >> assertionlessTests [
+{ #category : 'instance creation' }
+DTTSDResult class >> testData: aTestData [
 
-	^ assertionlessTests ifNil: [ assertionlessTests := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
-DTTSDResult >> assertionlessTests: anObject [
-
-	assertionlessTests := anObject
+	^ self new testData: aTestData; yourself
 ]
 
 { #category : 'accessing' }
@@ -63,30 +53,6 @@ DTTSDResult >> buildTreeFrom: testCases [
 ]
 
 { #category : 'accessing' }
-DTTSDResult >> manyClassReferencesTests [
-
-	^ manyClassReferencesTests
-]
-
-{ #category : 'accessing' }
-DTTSDResult >> manyClassReferencesTests: anObject [
-
-	manyClassReferencesTests := anObject
-]
-
-{ #category : 'accessing' }
-DTTSDResult >> overwrittenSetupTests [
-
-	^ overwrittenSetupTests
-]
-
-{ #category : 'accessing' }
-DTTSDResult >> overwrittenSetupTests: anObject [
-
-	overwrittenSetupTests := anObject
-]
-
-{ #category : 'accessing' }
 DTTSDResult >> testData [
 
 	^ testData
@@ -102,16 +68,4 @@ DTTSDResult >> testData: anObject [
 DTTSDResult >> treeNode [ 
 
 	^ DTTreeNode new
-]
-
-{ #category : 'accessing' }
-DTTSDResult >> uselessSetupTests [
-
-	^ uselessSetupTests
-]
-
-{ #category : 'accessing' }
-DTTSDResult >> uselessSetupTests: anObject [
-
-	uselessSetupTests := anObject
 ]

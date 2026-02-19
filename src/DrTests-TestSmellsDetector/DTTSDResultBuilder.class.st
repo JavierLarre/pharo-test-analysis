@@ -15,8 +15,7 @@ DTTSDResultBuilder class >> isAbstract [
 	^ self = DTTSDResultBuilder 
 ]
 
-{ #category : 'execution' }
-DTTSDResultBuilder >> buildResult: aResult withTests: testCases [
-
-	^ self subclassResponsibility 
+{ #category : 'building' }
+DTTSDResultBuilder >> buildData: aTestData withTests: testCases [ 
+	^ self subclassResponsibility
 ]

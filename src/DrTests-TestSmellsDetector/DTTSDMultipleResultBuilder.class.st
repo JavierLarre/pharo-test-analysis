@@ -24,12 +24,6 @@ DTTSDMultipleResultBuilder >> buildData: aTestData withTests: testCases [
 	^ self builders do: [ :aBuilder | aBuilder buildData: aTestData withTests: testCases ]
 ]
 
-{ #category : 'execution' }
-DTTSDMultipleResultBuilder >> buildResult: aResult withTests: testCases [
-
-	^ self builders do: [ :aBuilder | aBuilder buildResult: aResult withTests: testCases ]
-]
-
 { #category : 'accessing' }
 DTTSDMultipleResultBuilder >> builders [
 

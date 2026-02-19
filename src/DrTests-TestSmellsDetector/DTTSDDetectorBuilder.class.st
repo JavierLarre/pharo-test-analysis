@@ -6,7 +6,6 @@ Class {
 	#superclass : 'DTTSDResultBuilder',
 	#instVars : [
 		'detector',
-		'resultTestsSelector',
 		'setDataBlock'
 	],
 	#category : 'DrTests-TestSmellsDetector-Builders',
@@ -30,15 +29,6 @@ DTTSDDetectorBuilder class >> classReferences [
 	^ self 
 		detector: TSDTooManyClassesDetector new 
 		setDataBlock: [ :aTestData :tests | aTestData manyClassReferencesTests: tests ] 
-]
-
-{ #category : 'instance creation' }
-DTTSDDetectorBuilder class >> detector: aDetector resultTestsSelector: aSelector [
-
-	^ self new
-		detector: aDetector;
-		resultTestsSelector: aSelector;
-		yourself
 ]
 
 { #category : 'instance creation' }
@@ -72,18 +62,6 @@ DTTSDDetectorBuilder >> buildData: aTestData withTests: testCases [
 	^ self setDataBlock value: aTestData value: (self detectedTestCases: testCases )
 ]
 
-{ #category : 'execution' }
-DTTSDDetectorBuilder >> buildResult: aResult withTests: testCases [
-
-	^ aResult perform: self resultTestsSelector with: (self detectedTestCases: testCases)
-]
-
-{ #category : 'enumerating' }
-DTTSDDetectorBuilder >> detectedTestCases: testCases [
-
-	^ testCases select: [ :aTestCase | self detector detect: aTestCase selector from: aTestCase class ]
-]
-
 { #category : 'accessing' }
 DTTSDDetectorBuilder >> detector [
 
@@ -94,18 +72,6 @@ DTTSDDetectorBuilder >> detector [
 DTTSDDetectorBuilder >> detector: anObject [
 
 	detector := anObject
-]
-
-{ #category : 'accessing' }
-DTTSDDetectorBuilder >> resultTestsSelector [
-
-	^ resultTestsSelector ifNil: [ Error signal: 'Selector not set' ]
-]
-
-{ #category : 'accessing' }
-DTTSDDetectorBuilder >> resultTestsSelector: anObject [
-
-	resultTestsSelector := anObject
 ]
 
 { #category : 'accessing' }

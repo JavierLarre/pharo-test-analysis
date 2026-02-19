@@ -4,9 +4,6 @@ I am the plugin implementing smell detectors for DrTest
 Class {
 	#name : 'DTTSDPlugin',
 	#superclass : 'DrTestsPlugin',
-	#instVars : [
-		'detector'
-	],
 	#category : 'DrTests-TestSmellsDetector-Presenters',
 	#package : 'DrTests-TestSmellsDetector',
 	#tag : 'Presenters'
@@ -54,10 +51,10 @@ DTTSDPlugin >> resultButtonHelp [
 { #category : 'api' }
 DTTSDPlugin >> runForConfiguration: aDTpluginConfiguration [
 
-	| result |
-	result := DTTSDTestData new.
-	self builder buildData: result withTests: aDTpluginConfiguration asTestSuite tests.
-	^ self pluginResultClass new testData: result; yourself
+	| testData |
+	testData := DTTSDTestData new.
+	self builder buildData: testData withTests: aDTpluginConfiguration asTestSuite tests.
+	^ self pluginResultClass testData: testData
 ]
 
 { #category : 'api' }
