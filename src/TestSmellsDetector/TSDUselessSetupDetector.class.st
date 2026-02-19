@@ -29,6 +29,8 @@ TSDUselessSetupDetector >> detects [
 { #category : 'testing' }
 TSDUselessSetupDetector >> doesUseSetUp [
 
+	"A method uses it's setup variables only if 
+	the setup variables are a subset of the accessed variables in the method"
 	^ (self setupVariables difference: self foundInstanceVariables) isEmpty
 ]
 
