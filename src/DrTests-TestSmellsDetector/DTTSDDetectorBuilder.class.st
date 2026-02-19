@@ -59,7 +59,7 @@ DTTSDDetectorBuilder class >> uselessSetup [
 { #category : 'execution' }
 DTTSDDetectorBuilder >> buildData: aTestData withTests: testCases [
 
-	^ self setDataBlock value: aTestData value: (self detectedTestCases: testCases )
+	^ self setDataBlock value: aTestData value: (self detector detectedTestCases: testCases )
 ]
 
 { #category : 'accessing' }

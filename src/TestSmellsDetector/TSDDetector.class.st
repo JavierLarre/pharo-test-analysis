@@ -46,6 +46,12 @@ TSDDetector >> detectSelector: aSelector [
 	^ self selector: aSelector; detects
 ]
 
+{ #category : 'enumerating' }
+TSDDetector >> detectedTestCases: aTestCaseCollection [
+
+	^ aTestCaseCollection select: [ :aTestCase | self detect: aTestCase selector from: aTestCase class ]
+]
+
 { #category : 'testing' }
 TSDDetector >> detects [
 	^ self subclassResponsibility
