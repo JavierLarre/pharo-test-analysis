@@ -17,21 +17,12 @@ TSDDetectorTest class >> isAbstract [
 { #category : 'accessing' }
 TSDDetectorTest >> detector [ 
 
-	^ detector ifNil: [ detector := self detectorClass new
-		            selfClass: self fixtureClass;
-		            yourself ]
+	^ detector ifNil: [ detector := self detectorClass selfClass: self fixtureClass ]
 ]
 
 { #category : 'accessing' }
 TSDDetectorTest >> detectorClass [
 	^ self subclassResponsibility
-]
-
-{ #category : 'helpers' }
-TSDDetectorTest >> doesDetect: aSelector [
-
-	^ self detector selector: aSelector;
-		detects
 ]
 
 { #category : 'running' }

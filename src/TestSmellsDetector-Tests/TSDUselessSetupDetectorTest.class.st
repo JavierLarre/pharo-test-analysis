@@ -17,37 +17,37 @@ TSDUselessSetupDetectorTest >> detectorClass [
 { #category : 'running' }
 TSDUselessSetupDetectorTest >> testAllVariablesAreUsed [
 
-	self deny: (self doesDetect: #testUsesInstanceVar) 
+	self deny: (self detector detectSelector: #testUsesInstanceVar)
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testAssignsAreUseless [
 
-	self assert: (self doesDetect: #testOnlyAssigns )
+	self assert: (self detector detectSelector: #testOnlyAssigns)
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testConnectedAssigns [
 
-	self assert: (self doesDetect: #testConnectedToAssignation )
+	self assert: (self detector detectSelector: #testConnectedToAssignation)
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testConnectedToUsedVariables [
 
-	self deny: (self doesDetect: #testIsConnectedToInstanceVar )
+	self deny: (self detector detectSelector: #testIsConnectedToInstanceVar)
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testDetectsUseless [
 
-	self assert: (self doesDetect: #testUsesLocalVariables ) 
+	self assert: (self detector detectSelector: #testUsesLocalVariables)
 ]
 
 { #category : 'tests' }
 TSDUselessSetupDetectorTest >> testMultipleDetections [
 
-	self 
-		deny: (self doesDetect: #testUsesInstanceVar );
-		assert: (self doesDetect: #testUsesLocalVariables )
+	self
+		deny: (self detector detectSelector: #testUsesInstanceVar);
+		assert: (self detector detectSelector: #testUsesLocalVariables)
 ]

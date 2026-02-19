@@ -17,5 +17,5 @@ TSDOverWrittenSetupDetectorTest >> detectorClass [
 { #category : 'tests' }
 TSDOverWrittenSetupDetectorTest >> testDetectsOverWrite [
 
-	self assert: (self doesDetect: #testOnlyAssigns )
+	self assert: (self detector detectSelector: #testOnlyAssigns)
 ]

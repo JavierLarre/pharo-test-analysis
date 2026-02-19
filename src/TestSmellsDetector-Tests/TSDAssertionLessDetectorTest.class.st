@@ -25,26 +25,25 @@ TSDAssertionLessDetectorTest >> detectorClass [
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasAssertion [
 
-	self deny: (self doesDetect: #testUsesInstanceVar )
+	self deny: (self detector detectSelector: #testUsesInstanceVar)
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasConnectedAssertion [
 
-	self 
-		deny: (self doesDetect: #testConnectedToAssertion )
+	self deny: (self detector detectSelector: #testConnectedToAssertion)
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testHasConnectedAssertionTwice [
 
-	self 
-		deny: (self doesDetect: #testConnectedToAssertion );
-		deny: (self doesDetect: #testConnectedToAssertion )
+	self
+		deny: (self detector detectSelector: #testConnectedToAssertion);
+		deny: (self detector detectSelector: #testConnectedToAssertion)
 ]
 
 { #category : 'tests' }
 TSDAssertionLessDetectorTest >> testIsAssertionLess [
 
-	self assert: (self doesDetect: #testDoesNotAssert)
+	self assert: (self detector detectSelector: #testDoesNotAssert)
 ]

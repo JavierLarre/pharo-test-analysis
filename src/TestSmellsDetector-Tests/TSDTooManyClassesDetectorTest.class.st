@@ -17,28 +17,28 @@ TSDTooManyClassesDetectorTest >> detectorClass [
 { #category : 'tests' }
 TSDTooManyClassesDetectorTest >> testDetects [
 
-	self assert: (self doesDetect: #testUsesTooManyClasses )
+	self assert: (self detector detectSelector: #testUsesTooManyClasses)
 ]
 
 { #category : 'tests' }
 TSDTooManyClassesDetectorTest >> testDetectsThenDenies [
 
-	self 
-		assert: (self doesDetect: #testUsesTooManyClasses);
-		deny: (self doesDetect: #testConnectedToAssertion)
+	self
+		assert: (self detector detectSelector: #testUsesTooManyClasses);
+		deny: (self detector detectSelector: #testConnectedToAssertion)
 ]
 
 { #category : 'tests' }
 TSDTooManyClassesDetectorTest >> testDetectsUsesOfTheSameClass [
 
-	self assert: (self doesDetect: #testUsesTheSameClass)
+	self assert: (self detector detectSelector: #testUsesTheSameClass)
 ]
 
 { #category : 'tests' }
 TSDTooManyClassesDetectorTest >> testRemembersDetect [
 
 	self
-		assert: (self doesDetect: #testUsesTooManyClasses);
-		deny: (self doesDetect: #testConnectedToAssertion);
-		assert: (self doesDetect: #testUsesTooManyClasses)
+		assert: (self detector detectSelector: #testUsesTooManyClasses);
+		deny: (self detector detectSelector: #testConnectedToAssertion);
+		assert: (self detector detectSelector: #testUsesTooManyClasses)
 ]
