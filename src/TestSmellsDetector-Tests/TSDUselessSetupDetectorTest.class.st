@@ -39,6 +39,13 @@ TSDUselessSetupDetectorTest >> testConnectedToUsedVariables [
 ]
 
 { #category : 'tests' }
+TSDUselessSetupDetectorTest >> testDetectsDifferentClasses [
+
+	self detector detectSelector: #testUsesLocalVariables .
+	self assert: (self detector detect: #y: from: TSDSubFakeTests )
+]
+
+{ #category : 'tests' }
 TSDUselessSetupDetectorTest >> testDetectsUseless [
 
 	self assert: (self detector detectSelector: #testUsesLocalVariables)

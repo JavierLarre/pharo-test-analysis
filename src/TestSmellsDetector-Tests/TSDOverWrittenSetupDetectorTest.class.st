@@ -15,6 +15,13 @@ TSDOverWrittenSetupDetectorTest >> detectorClass [
 ]
 
 { #category : 'tests' }
+TSDOverWrittenSetupDetectorTest >> testDetectsDifferentClasses [
+
+	self detector detectSelector: #testOnlyAssigns.
+	self assert: (self detector detect: #y: from: TSDSubFakeTests )
+]
+
+{ #category : 'tests' }
 TSDOverWrittenSetupDetectorTest >> testDetectsOverWrite [
 
 	self assert: (self detector detectSelector: #testOnlyAssigns)

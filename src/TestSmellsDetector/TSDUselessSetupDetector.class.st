@@ -39,3 +39,10 @@ TSDUselessSetupDetector >> foundInstanceVariables [
 
 	^ self accessesFinder at: self selector
 ]
+
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> selfClass: aClass [
+
+	super selfClass: aClass.
+	self accessesFinder selfClass: aClass 
+]
