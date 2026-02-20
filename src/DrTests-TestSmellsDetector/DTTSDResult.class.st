@@ -5,7 +5,7 @@ Class {
 	#name : 'DTTSDResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'testData'
+		'detectedTests'
 	],
 	#category : 'DrTests-TestSmellsDetector-Presenters',
 	#package : 'DrTests-TestSmellsDetector',
@@ -22,28 +22,28 @@ DTTSDResult class >> testData: aTestData [
 DTTSDResult >> buildTreeForUI [ 
 	
 	<dtTestTSDResultTreeNamed: 'Tests without assertions' order: 1>
-	^ self buildTreeFrom: self testData assertionlessTests 
+	^ self buildTreeFrom: self detectedTests assertionlessTests 
 ]
 
 { #category : 'accessing' }
 DTTSDResult >> buildTreeForUIManyClassReferences [
 
 	<dtTestTSDResultTreeNamed: 'Tests references classes too many times' order: 3>
-	^ self buildTreeFrom: self testData manyClassReferencesTests 
+	^ self buildTreeFrom: self detectedTests manyClassReferencesTests 
 ]
 
 { #category : 'accessing' }
 DTTSDResult >> buildTreeForUIOverwrittenSetup [
 	
 	<dtTestTSDResultTreeNamed: 'Tests that overwrite setup' order: 2>
-	^ self buildTreeFrom: self testData overwrittenSetupTests 
+	^ self buildTreeFrom: self detectedTests overwrittenSetupTests 
 ]
 
 { #category : 'accessing' }
 DTTSDResult >> buildTreeForUIUselessSetup [ 
 
 	<dtTestTSDResultTreeNamed: 'Tests not fully using their set up' order: 4>
-	^ self buildTreeFrom: self testData uselessSetupTests 
+	^ self buildTreeFrom: self detectedTests uselessSetupTests 
 ]
 
 { #category : 'private' }
@@ -53,15 +53,15 @@ DTTSDResult >> buildTreeFrom: testCases [
 ]
 
 { #category : 'accessing' }
-DTTSDResult >> testData [
+DTTSDResult >> detectedTests [
 
-	^ testData
+	^ detectedTests
 ]
 
 { #category : 'accessing' }
-DTTSDResult >> testData: anObject [
+DTTSDResult >> detectedTests: anObject [
 
-	testData := anObject
+	detectedTests := anObject
 ]
 
 { #category : 'factory' }
