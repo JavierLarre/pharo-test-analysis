@@ -15,7 +15,7 @@ Class {
 { #category : 'accessing' }
 DTTSDPluginTest >> data [ 
 
-	^ testData ifNil: [ testData := self runForConfiguration testData ]
+	^ testData ifNil: [ testData := self runForConfiguration detectedTests ]
 ]
 
 { #category : 'factory' }
@@ -52,6 +52,15 @@ DTTSDPluginTest >> testOverwriteSetup [
 		includesAll:
 			#( testConnectedToAssignation 
 			   testOnlyAssigns   )
+]
+
+{ #category : 'tests' }
+DTTSDPluginTest >> testOverwriteSetupVariables [
+
+	self
+		assertCollection: (self data overwrittenSetupTests detect: [ :aTestData | 
+			aTestData selector = #testOnlyAssigns ]) overwrittenVariables
+		hasSameElements: #( x )
 ]
 
 { #category : 'tests' }
