@@ -13,9 +13,9 @@ Class {
 }
 
 { #category : 'instance creation' }
-DTTSDResult class >> testData: aTestData [
+DTTSDResult class >> detectedTests: aTestData [
 
-	^ self new testData: aTestData; yourself
+	^ self new detectedTests: aTestData; yourself
 ]
 
 { #category : 'accessing' }
