@@ -2,7 +2,7 @@
 I detect whether a method overwrites an instance variable set up in a setUp method
 "
 Class {
-	#name : 'TSDOverWrittenSetupDetector',
+	#name : 'TSDOverwrittenSetupDetector',
 	#superclass : 'TSDSetupDetector',
 	#category : 'TestSmellsDetector-Detectors',
 	#package : 'TestSmellsDetector',
@@ -10,18 +10,18 @@ Class {
 }
 
 { #category : 'testing' }
-TSDOverWrittenSetupDetector >> detects [
+TSDOverwrittenSetupDetector >> detects [
 	^ self doesOverWritesSetUp 
 ]
 
 { #category : 'testing' }
-TSDOverWrittenSetupDetector >> doesOverWritesSetUp [
+TSDOverwrittenSetupDetector >> doesOverWritesSetUp [
 
 	^ self writtenVariables includesAny: self setupVariables 
 ]
 
 { #category : 'api' }
-TSDOverWrittenSetupDetector >> writtenVariables [
+TSDOverwrittenSetupDetector >> writtenVariables [
 
 	^ self assignsFinder at: self selector
 ]

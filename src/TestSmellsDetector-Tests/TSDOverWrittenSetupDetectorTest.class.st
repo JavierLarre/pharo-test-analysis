@@ -11,7 +11,7 @@ Class {
 { #category : 'accessing' }
 TSDOverWrittenSetupDetectorTest >> detectorClass [
 
-	^ TSDOverWrittenSetupDetector
+	^ TSDOverwrittenSetupDetector
 ]
 
 { #category : 'tests' }
