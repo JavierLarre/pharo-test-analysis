@@ -9,6 +9,17 @@ Class {
 	#tag : 'Detectors'
 }
 
+{ #category : 'visiting' }
+TSDOverwrittenSetupDetector >> analyzeTestCase: aTestCase [
+
+	self detect: aTestCase selector from: aTestCase class.
+	^ TSDResult new 
+		selector: self selector;
+		testClass: self selfClass;
+		overwrittenVariables: (self writtenVariables intersection: self setupVariables);
+		yourself
+]
+
 { #category : 'testing' }
 TSDOverwrittenSetupDetector >> detects [
 	^ self doesOverWritesSetUp 
