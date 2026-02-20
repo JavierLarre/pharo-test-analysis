@@ -58,10 +58,10 @@ DTTSDPlugin >> resultButtonHelp [
 { #category : 'api' }
 DTTSDPlugin >> runForConfiguration: aDTpluginConfiguration [
 
-	| testData |
-	testData := DTTSDTestData new.
-	self builder buildData: testData withTests: aDTpluginConfiguration asTestSuite tests.
-	^ self pluginResultClass testData: testData
+	| detections |
+	detections := DTTSDDetectedTests new.
+	self builder buildData: detections withTests: aDTpluginConfiguration asTestSuite tests.
+	^ self pluginResultClass detectedTests: detections
 ]
 
 { #category : 'api' }
