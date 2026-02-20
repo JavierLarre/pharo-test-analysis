@@ -2,7 +2,7 @@
 I store the detected smells resulting from the plugin
 "
 Class {
-	#name : 'DTTSDTestData',
+	#name : 'DTTSDDetectedTests',
 	#superclass : 'Object',
 	#instVars : [
 		'assertionlessTests',
@@ -16,49 +16,49 @@ Class {
 }
 
 { #category : 'accessing' }
-DTTSDTestData >> assertionlessTests [
+DTTSDDetectedTests >> assertionlessTests [
 
 	^ assertionlessTests
 ]
 
 { #category : 'accessing' }
-DTTSDTestData >> assertionlessTests: anObject [
+DTTSDDetectedTests >> assertionlessTests: anObject [
 
 	assertionlessTests := anObject
 ]
 
 { #category : 'accessing' }
-DTTSDTestData >> manyClassReferencesTests [
+DTTSDDetectedTests >> manyClassReferencesTests [
 
 	^ manyClassReferencesTests
 ]
 
 { #category : 'accessing' }
-DTTSDTestData >> manyClassReferencesTests: anObject [
+DTTSDDetectedTests >> manyClassReferencesTests: anObject [
 
 	manyClassReferencesTests := anObject
 ]
 
 { #category : 'accessing' }
-DTTSDTestData >> overwrittenSetupTests [
+DTTSDDetectedTests >> overwrittenSetupTests [
 
 	^ overwrittenSetupTests
 ]
 
 { #category : 'accessing' }
-DTTSDTestData >> overwrittenSetupTests: anObject [
+DTTSDDetectedTests >> overwrittenSetupTests: anObject [
 
 	overwrittenSetupTests := anObject
 ]
 
 { #category : 'accessing' }
-DTTSDTestData >> uselessSetupTests [
+DTTSDDetectedTests >> uselessSetupTests [
 
 	^ uselessSetupTests
 ]
 
 { #category : 'accessing' }
-DTTSDTestData >> uselessSetupTests: anObject [
+DTTSDDetectedTests >> uselessSetupTests: anObject [
 
 	uselessSetupTests := anObject
 ]
