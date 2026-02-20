@@ -5,8 +5,9 @@ Class {
 	#name : 'TSDResult',
 	#superclass : 'Object',
 	#instVars : [
-		'analyzedClass',
-		'selector'
+		'testClass',
+		'selector',
+		'overwrittenVariables'
 	],
 	#category : 'TestSmellsDetector-Results',
 	#package : 'TestSmellsDetector',
@@ -14,15 +15,15 @@ Class {
 }
 
 { #category : 'accessing' }
-TSDResult >> analyzedClass [
+TSDResult >> overwrittenVariables [
 
-	^ analyzedClass
+	^ overwrittenVariables
 ]
 
 { #category : 'accessing' }
-TSDResult >> analyzedClass: anObject [
+TSDResult >> overwrittenVariables: anObject [
 
-	analyzedClass := anObject
+	overwrittenVariables := anObject
 ]
 
 { #category : 'accessing' }
@@ -35,4 +36,16 @@ TSDResult >> selector [
 TSDResult >> selector: anObject [
 
 	selector := anObject
+]
+
+{ #category : 'accessing' }
+TSDResult >> testClass [
+
+	^ testClass 
+]
+
+{ #category : 'accessing' }
+TSDResult >> testClass: anObject [
+
+	testClass := anObject
 ]
