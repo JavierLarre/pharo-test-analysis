@@ -3,7 +3,7 @@ I detect whether a test references a classes more than three times
 "
 Class {
 	#name : 'TSDTooManyClassesDetector',
-	#superclass : 'TSDDetector',
+	#superclass : 'TSDSmellDetector',
 	#instVars : [
 		'visitor'
 	],

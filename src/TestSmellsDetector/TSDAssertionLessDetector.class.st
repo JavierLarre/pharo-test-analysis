@@ -3,7 +3,7 @@ I detect whether tests do not contain assertions
 "
 Class {
 	#name : 'TSDAssertionLessDetector',
-	#superclass : 'TSDDetector',
+	#superclass : 'TSDSmellDetector',
 	#instVars : [
 		'methodVisitor'
 	],

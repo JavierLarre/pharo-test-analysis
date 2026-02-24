@@ -2,7 +2,7 @@
 I am an interface for detectors in this package
 "
 Class {
-	#name : 'TSDDetector',
+	#name : 'TSDSmellDetector',
 	#superclass : 'Object',
 	#instVars : [
 		'selector',
@@ -14,19 +14,19 @@ Class {
 }
 
 { #category : 'testing' }
-TSDDetector class >> isAbstract [ 
+TSDSmellDetector class >> isAbstract [ 
 	
-	^ self = TSDDetector 
+	^ self = TSDSmellDetector 
 ]
 
 { #category : 'accessing' }
-TSDDetector class >> selfClass: aClass [
+TSDSmellDetector class >> selfClass: aClass [
 
 	^ self new selfClass: aClass; yourself
 ]
 
 { #category : 'api' }
-TSDDetector >> buildResult: aResult [
+TSDSmellDetector >> buildResult: aResult [
 
 	"assumes the parameters are given"
 	self detects.
@@ -36,13 +36,13 @@ TSDDetector >> buildResult: aResult [
 ]
 
 { #category : 'accessing' }
-TSDDetector >> compiledMethod [
+TSDSmellDetector >> compiledMethod [
 
 	^ self lookupMethod: self selector
 ]
 
 { #category : 'api' }
-TSDDetector >> detect: aSelector from: aClass [
+TSDSmellDetector >> detect: aSelector from: aClass [
 
 	^ self 
 		selfClass: aClass;
@@ -50,34 +50,34 @@ TSDDetector >> detect: aSelector from: aClass [
 ]
 
 { #category : 'api' }
-TSDDetector >> detectSelector: aSelector [
+TSDSmellDetector >> detectSelector: aSelector [
 	
 	"assumes the self class was already given"
 	^ self selector: aSelector; detects
 ]
 
 { #category : 'enumerating' }
-TSDDetector >> detectedTestCases: aTestCaseCollection [
+TSDSmellDetector >> detectedTestCases: aTestCaseCollection [
 
 	^ aTestCaseCollection select: [ :aTestCase | self detect: aTestCase selector from: aTestCase class ]
 ]
 
 { #category : 'testing' }
-TSDDetector >> detects [
+TSDSmellDetector >> detects [
 	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-TSDDetector >> lookupMethod: aSelector [
+TSDSmellDetector >> lookupMethod: aSelector [
 
 	^ self selfClass lookupSelector: aSelector 
 ]
 
 { #category : 'accessing' }
-TSDDetector >> result [
+TSDSmellDetector >> result [
 
 	| result |
-	result := TSDSmellResult new.
+	result := self smellResultClass new.
 
 	self buildResult: result.
 	
@@ -85,25 +85,31 @@ TSDDetector >> result [
 ]
 
 { #category : 'accessing' }
-TSDDetector >> selector [
+TSDSmellDetector >> selector [
 
 	^ selector
 ]
 
 { #category : 'accessing' }
-TSDDetector >> selector: anObject [
+TSDSmellDetector >> selector: anObject [
 
 	selector := anObject
 ]
 
 { #category : 'accessing' }
-TSDDetector >> selfClass [
+TSDSmellDetector >> selfClass [
 
 	^ selfClass
 ]
 
 { #category : 'accessing' }
-TSDDetector >> selfClass: anObject [
+TSDSmellDetector >> selfClass: anObject [
 
 	selfClass := anObject
+]
+
+{ #category : 'accessing' }
+TSDSmellDetector >> smellResultClass [
+
+	^ TSDSmellResult
 ]

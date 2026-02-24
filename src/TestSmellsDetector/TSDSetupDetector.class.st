@@ -3,7 +3,7 @@ I provide information about variables assigned in a setUp method
 "
 Class {
 	#name : 'TSDSetupDetector',
-	#superclass : 'TSDDetector',
+	#superclass : 'TSDSmellDetector',
 	#instVars : [
 		'setupSelector',
 		'assignsFinder'
