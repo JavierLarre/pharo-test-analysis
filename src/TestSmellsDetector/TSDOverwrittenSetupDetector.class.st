@@ -9,15 +9,10 @@ Class {
 	#tag : 'Detectors'
 }
 
-{ #category : 'visiting' }
-TSDOverwrittenSetupDetector >> analyzeTestCase: aTestCase [
+{ #category : 'api' }
+TSDOverwrittenSetupDetector >> buildResult: aResult [
 
-	self detect: aTestCase selector from: aTestCase class.
-	^ TSDResult new 
-		selector: self selector;
-		testClass: self selfClass;
-		overwrittenVariables: (self writtenVariables intersection: self setupVariables);
-		yourself
+	aResult overwrittenVariables: (self writtenVariables intersection: self setupVariables )
 ]
 
 { #category : 'testing' }

@@ -2,12 +2,11 @@
 I am a DTO that contains the result of a detection
 "
 Class {
-	#name : 'TSDResult',
+	#name : 'TSDSmellResult',
 	#superclass : 'Object',
 	#instVars : [
 		'testClass',
-		'selector',
-		'overwrittenVariables'
+		'selector'
 	],
 	#category : 'TestSmellsDetector-Results',
 	#package : 'TestSmellsDetector',
@@ -15,37 +14,25 @@ Class {
 }
 
 { #category : 'accessing' }
-TSDResult >> overwrittenVariables [
-
-	^ overwrittenVariables
-]
-
-{ #category : 'accessing' }
-TSDResult >> overwrittenVariables: anObject [
-
-	overwrittenVariables := anObject
-]
-
-{ #category : 'accessing' }
-TSDResult >> selector [
+TSDSmellResult >> selector [
 
 	^ selector
 ]
 
 { #category : 'accessing' }
-TSDResult >> selector: anObject [
+TSDSmellResult >> selector: anObject [
 
 	selector := anObject
 ]
 
 { #category : 'accessing' }
-TSDResult >> testClass [
+TSDSmellResult >> testClass [
 
 	^ testClass 
 ]
 
 { #category : 'accessing' }
-TSDResult >> testClass: anObject [
+TSDSmellResult >> testClass: anObject [
 
 	testClass := anObject
 ]

@@ -25,6 +25,16 @@ TSDDetector class >> selfClass: aClass [
 	^ self new selfClass: aClass; yourself
 ]
 
+{ #category : 'api' }
+TSDDetector >> buildResult: aResult [
+
+	"assumes the parameters are given"
+	self detects.
+	aResult 
+		selector: self selector;
+		testClass: self selfClass
+]
+
 { #category : 'accessing' }
 TSDDetector >> compiledMethod [
 
@@ -61,6 +71,17 @@ TSDDetector >> detects [
 TSDDetector >> lookupMethod: aSelector [
 
 	^ self selfClass lookupSelector: aSelector 
+]
+
+{ #category : 'accessing' }
+TSDDetector >> result [
+
+	| result |
+	result := TSDSmellResult new.
+
+	self buildResult: result.
+	
+	^ result
 ]
 
 { #category : 'accessing' }
