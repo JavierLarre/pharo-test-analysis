@@ -18,6 +18,13 @@ TSDAssertionLessDetector >> analyzeMethod [
 	self methodVisitor analyzeMethod: self compiledMethod 
 ]
 
+{ #category : 'api' }
+TSDAssertionLessDetector >> buildResult: aResult [
+
+	super buildResult: aResult.
+	aResult isAssertionLess: self isAssertionLess 
+]
+
 { #category : 'testing' }
 TSDAssertionLessDetector >> detects [
 	^ self isAssertionLess 

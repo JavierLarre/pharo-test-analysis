@@ -25,6 +25,13 @@ TSDSetupDetector >> assignsFinder [
 	^ assignsFinder ifNil: [ assignsFinder := TSDInstanceVariablesFinder assignments ]
 ]
 
+{ #category : 'api' }
+TSDSetupDetector >> buildResult: aResult [
+
+	super buildResult: aResult.
+	aResult setupVariables: self setupVariables 
+]
+
 { #category : 'testing' }
 TSDSetupDetector >> detects [
 	^ self subclassResponsibility

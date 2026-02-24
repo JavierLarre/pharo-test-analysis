@@ -12,6 +12,15 @@ Class {
 	#tag : 'Detectors'
 }
 
+{ #category : 'api' }
+TSDTooManyClassesDetector >> buildResult: aResult [
+
+	super buildResult: aResult.
+	aResult 
+		detectedClasses: self referenceVisitor classReferences;
+		doesReferenceManyClasses: self detects 
+]
+
 { #category : 'testing' }
 TSDTooManyClassesDetector >> detects [
 

@@ -19,6 +19,13 @@ TSDUselessSetupDetector >> accessesFinder [
 			selfClass: self selfClass; yourself ]
 ]
 
+{ #category : 'api' }
+TSDUselessSetupDetector >> buildResult: aResult [
+
+	super buildResult: aResult.
+	aResult usedSetupVariables: (self foundInstanceVariables intersection: self setupVariables)
+]
+
 { #category : 'testing' }
 TSDUselessSetupDetector >> detects [
 
