@@ -24,5 +24,8 @@ DTTSDResultTest >> result [
 { #category : 'tests' }
 DTTSDResultTest >> testBuildTreeForUIOverwrittenSetup [
 
-	self assert: (self result subResults first content selector) equals: #testConnectedToAssertion
+	self 
+		assertCollection: (self result subResults collect: [ :aDTTreeNode | 
+			aDTTreeNode name selector ]) 
+		hasSameElements: #( testConnectedToAssertion testConnectedToAssignation testOnlyAssigns )  
 ]

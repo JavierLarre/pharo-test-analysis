@@ -9,6 +9,23 @@ Class {
 	#tag : 'Detectors'
 }
 
+{ #category : 'accessing' }
+TSDOverwrittenSetupDetector >> asDrTestResult [ 
+
+	| node |
+	node := super asDrTestResult.
+	node subResults addAll: { 
+		DTTreeNode new 
+			name: 'Written Variables'; 
+			subResults: (DTRTDMessageNode toNodes: self writtenVariables );
+			yourself .
+		DTTreeNode new 
+			name: 'Overwritten Variables';
+			subResults: (DTRTDMessageNode toNodes: (self writtenVariables intersection: self setupVariables));
+			yourself }. 
+	^ node
+]
+
 { #category : 'api' }
 TSDOverwrittenSetupDetector >> buildResult: aResult [
 

@@ -22,9 +22,35 @@ Class {
 }
 
 { #category : 'converting' }
+TSDSmellResult >> asDrTestResult [
+
+	^ DTTreeNode
+		name: (self testClass selector: self selector)
+		subResults: { 
+		DTTreeNode new 
+			name: 'Written Variables'; 
+			subResults: (DTRTDMessageNode toNodes: self setupVariables );
+			yourself .
+		DTTreeNode new 
+			name: 'Overwritten Variables';
+			subResults: (DTRTDMessageNode toNodes: (self overwrittenVariables ));
+			yourself }
+]
+
+{ #category : 'converting' }
 TSDSmellResult >> asResultForDrTest [ 
 
-	^ DTTreeLeafNode content: (self testClass selector: self selector)
+	^ DTTreeNode
+		name: (self testClass selector: self selector) printString
+		subResults: { 
+		DTTreeNode new 
+			name: 'Written Variables'; 
+			subResults: (DTRTDMessageNode toNodes: self setupVariables );
+			yourself .
+		DTTreeNode new 
+			name: 'Overwritten Variables';
+			subResults: (DTRTDMessageNode toNodes: (self overwrittenVariables ));
+			yourself }
 ]
 
 { #category : 'accessing' }

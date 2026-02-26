@@ -25,6 +25,14 @@ TSDSmellDetector class >> selfClass: aClass [
 	^ self new selfClass: aClass; yourself
 ]
 
+{ #category : 'accessing' }
+TSDSmellDetector >> asDrTestResult [
+
+	self detects.
+	^ DTTreeNode empty 
+		name: (self selfClass selector: self selector)
+]
+
 { #category : 'api' }
 TSDSmellDetector >> buildResult: aResult [
 
