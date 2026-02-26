@@ -12,6 +12,7 @@ Class {
 { #category : 'api' }
 TSDOverwrittenSetupDetector >> buildResult: aResult [
 
+	super buildResult: aResult.
 	aResult overwrittenVariables: (self writtenVariables intersection: self setupVariables )
 ]
 
