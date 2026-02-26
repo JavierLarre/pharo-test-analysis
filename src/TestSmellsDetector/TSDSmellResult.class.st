@@ -21,6 +21,12 @@ Class {
 	#tag : 'Results'
 }
 
+{ #category : 'converting' }
+TSDSmellResult >> asResultForDrTest [ 
+
+	^ DTTreeLeafNode content: (self testClass selector: self selector)
+]
+
 { #category : 'accessing' }
 TSDSmellResult >> detectedClasses [
 

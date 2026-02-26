@@ -46,9 +46,11 @@ DTTSDDetectorBuilder class >> overwrittenSetup [
 	| detector |
 	detector := TSDOverwrittenSetupDetector new.
 
-	^ self detector: detector setDataBlock: [ :aTestData :tests |
+	^ self 
+		detector: detector 
+		setDataBlock: [ :aTestData :tests |
 		  aTestData overwrittenSetupTests: (tests collect: [ :aTestCase | 
-			detector analyzeTestCase: aTestCase ]) ]
+			detector selector: aTestCase selector; selfClass: aTestCase class; result ]) ]
 ]
 
 { #category : 'accessing' }
