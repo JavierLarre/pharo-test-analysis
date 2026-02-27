@@ -23,7 +23,9 @@ TSDUselessSetupDetector >> accessesFinder [
 TSDUselessSetupDetector >> buildResult: aResult [
 
 	super buildResult: aResult.
-	aResult usedSetupVariables: (self foundInstanceVariables intersection: self setupVariables)
+	aResult 
+		usedSetupVariables: (self foundInstanceVariables intersection: self setupVariables);
+		doesUseSetupVariables: self doesUseSetUp 
 ]
 
 { #category : 'testing' }
@@ -52,4 +54,10 @@ TSDUselessSetupDetector >> selfClass: aClass [
 
 	super selfClass: aClass.
 	self accessesFinder selfClass: aClass 
+]
+
+{ #category : 'accessing' }
+TSDUselessSetupDetector >> smellResultClass [ 
+
+	^ TSDUselessSetupResult 
 ]

@@ -61,3 +61,9 @@ TSDAssertionLessDetector >> methodVisitor: anObject [
 
 	methodVisitor := anObject
 ]
+
+{ #category : 'accessing' }
+TSDAssertionLessDetector >> smellResultClass [ 
+
+	^ TSDAssertionLessResult 
+]

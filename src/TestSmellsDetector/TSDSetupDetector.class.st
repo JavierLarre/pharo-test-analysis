@@ -67,3 +67,9 @@ TSDSetupDetector >> setupVariables [
 
 	^ self assignsFinder at: self setUpSelector
 ]
+
+{ #category : 'accessing' }
+TSDSetupDetector >> smellResultClass [ 
+
+	^ TSDSetupResult 
+]

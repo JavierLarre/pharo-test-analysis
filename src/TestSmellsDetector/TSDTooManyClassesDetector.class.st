@@ -47,3 +47,9 @@ TSDTooManyClassesDetector >> resetVisitor [
 
 	visitor := nil "forces the getter to build a fresh visitor"
 ]
+
+{ #category : 'accessing' }
+TSDTooManyClassesDetector >> smellResultClass [ 
+
+	^ TSDTooManyClassesResult 
+]

@@ -9,28 +9,14 @@ Class {
 	#tag : 'Detectors'
 }
 
-{ #category : 'accessing' }
-TSDOverwrittenSetupDetector >> asDrTestResult [ 
-
-	| node |
-	node := super asDrTestResult.
-	node subResults addAll: { 
-		DTTreeNode new 
-			name: 'Written Variables'; 
-			subResults: (DTRTDMessageNode toNodes: self writtenVariables );
-			yourself .
-		DTTreeNode new 
-			name: 'Overwritten Variables';
-			subResults: (DTRTDMessageNode toNodes: (self writtenVariables intersection: self setupVariables));
-			yourself }. 
-	^ node
-]
-
 { #category : 'api' }
 TSDOverwrittenSetupDetector >> buildResult: aResult [
 
 	super buildResult: aResult.
-	aResult overwrittenVariables: (self writtenVariables intersection: self setupVariables )
+	aResult 
+		overwrittenVariables: (self writtenVariables intersection: self setupVariables);
+		doesOverwritesSetup: self doesOverWritesSetUp;
+		writtenVariables: self writtenVariables
 ]
 
 { #category : 'testing' }
@@ -42,6 +28,12 @@ TSDOverwrittenSetupDetector >> detects [
 TSDOverwrittenSetupDetector >> doesOverWritesSetUp [
 
 	^ self writtenVariables includesAny: self setupVariables 
+]
+
+{ #category : 'accessing' }
+TSDOverwrittenSetupDetector >> smellResultClass [ 
+
+	^ TSDOverwrittenSetupResult 
 ]
 
 { #category : 'api' }
