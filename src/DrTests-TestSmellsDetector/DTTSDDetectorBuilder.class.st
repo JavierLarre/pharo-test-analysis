@@ -49,8 +49,7 @@ DTTSDDetectorBuilder class >> overwrittenSetup [
 	^ self 
 		detector: detector 
 		setDataBlock: [ :aTestData :tests |
-		  aTestData overwrittenSetupTests: (tests collect: [ :aTestCase | 
-			detector selector: aTestCase selector; selfClass: aTestCase class; result ]) ]
+		  aTestData overwrittenSetupTests: tests ]
 ]
 
 { #category : 'accessing' }
@@ -61,10 +60,10 @@ DTTSDDetectorBuilder class >> uselessSetup [
 		setDataBlock: [ :aTestData :tests | aTestData uselessSetupTests: tests ]
 ]
 
-{ #category : 'execution' }
+{ #category : 'building' }
 DTTSDDetectorBuilder >> buildData: aTestData withTests: testCases [
 
-	^ self setDataBlock value: aTestData value: (self detector detectedTestCases: testCases )
+	^ self setDataBlock value: aTestData value: (self detector resultsFrom: testCases )
 ]
 
 { #category : 'accessing' }
