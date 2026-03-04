@@ -9,14 +9,27 @@ Class {
 	#tag : 'Results'
 }
 
+{ #category : 'comparing' }
+TSDAssertionLessResult >> <= aSmellResult [
+
+	^ self isAssertionLess = aSmellResult isAssertionLess 
+		ifTrue: [ super <= aSmellResult ] 
+		ifFalse: [ self isAssertionLess ] 
+]
+
 { #category : 'converting' }
 TSDAssertionLessResult >> asResultForDrTest [
 
-	| node |
-	node := super asResultForDrTest.
-	node name: (String streamContents: [ :stream | 
-		stream << node name; << ': '; << (self isAssertionLess ifTrue: [ 'is assertionless' ] ifFalse: [ 'has assertions' ]) ]) .
-	^ node
+	^ DTRTDMessageNode new
+		message: (String streamContents: [ :stream |
+			stream 
+				print: (self testClass selector: self selector);
+				<< ': ';
+				<< (self isAssertionLess 
+					ifTrue: [ 'is assertionless' ]
+					ifFalse: [ 'has assertions' ]) ]);
+		browseMethod: (self testClass lookupSelector: self selector);
+		yourself
 ]
 
 { #category : 'accessing' }

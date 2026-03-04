@@ -13,13 +13,22 @@ Class {
 	#tag : 'Results'
 }
 
+{ #category : 'comparing' }
+TSDSmellResult >> <= aSmellResult [
+
+	^ self testClass = aSmellResult testClass 
+		ifTrue: [ self selector <= aSmellResult selector ] 
+		ifFalse: [ self testClass name < aSmellResult testClass name ]
+]
+
 { #category : 'converting' }
 TSDSmellResult >> asResultForDrTest [
 
 	^ DTTreeNode new
-		  name: (self testClass selector: self selector) printString;
-		  subResults: OrderedCollection new;
-		  yourself
+		name: (self testClass selector: self selector) printString;
+		subResults: OrderedCollection new;
+		browseBlock: [ (self testClass selector: self selector) drTestsBrowse ]; 
+		yourself
 ]
 
 { #category : 'accessing' }

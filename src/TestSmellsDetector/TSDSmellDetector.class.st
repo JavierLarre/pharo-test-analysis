@@ -81,8 +81,11 @@ TSDSmellDetector >> result [
 { #category : 'api' }
 TSDSmellDetector >> resultsFrom: aTestCollection [
 
-	^ aTestCollection collect: [ :aTestCase | 
-		self selector: aTestCase selector; selfClass: aTestCase class; result ]
+	^ (aTestCollection collect: [ :aTestCase |
+			  self
+				  selector: aTestCase selector;
+				  selfClass: aTestCase class;
+				  result ]) asSortedCollection 
 ]
 
 { #category : 'accessing' }
