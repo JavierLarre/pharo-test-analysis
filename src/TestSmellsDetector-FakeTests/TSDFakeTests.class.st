@@ -47,7 +47,7 @@ TSDFakeTests >> testConnectedToAssignation [
 
 { #category : 'tests' }
 TSDFakeTests >> testDoesNotAssert [
-
+	"does nonsense instead"
 	| y |
 	y := OrderedCollection new.
 	^ y
