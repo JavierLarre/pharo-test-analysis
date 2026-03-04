@@ -29,12 +29,14 @@ RTDLatticeBuilder >> buildEdges [
 
 	| nodes addedNodes |
 	addedNodes := Set new.
-	nodes := self messages methods sorted: [ :methodBefore :methodAfter | 
-		(self importanceOf: methodBefore) < (self importanceOf: methodAfter) ].
+	nodes := self messages methods sorted: [ :methodBefore :methodAfter |
+		         (self importanceOf: methodBefore) < (self importanceOf: methodAfter) ].
 	^ Array streamContents: [ :stream |
-		nodes do: [ :method |
-			(self nextNodeLayerOf: method ) do: [ :subMethod | 
-				stream nextPut: { method selector. subMethod selector } ] ] ]	
+			  nodes do: [ :method |
+					  (self nextNodeLayerOf: method) do: [ :subMethod |
+							  stream nextPut: {
+									  subMethod selector.
+									  method selector } ] ] ]
 ]
 
 { #category : 'building' }
