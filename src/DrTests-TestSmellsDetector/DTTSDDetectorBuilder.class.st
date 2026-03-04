@@ -16,19 +16,19 @@ Class {
 { #category : 'accessing' }
 DTTSDDetectorBuilder class >> assertionless [
 
-	^ self 
-		detector: (TSDAssertionLessDetector new
-		  		methodVisitor: RTDHelperVisitor withAssertableSelectors;
-		  		yourself)
-		setDataBlock: [ :aTestData :tests | aTestData assertionlessTests: tests ]
+	^ self
+		  detector: (TSDAssertionLessDetector new
+				   methodVisitor: RTDHelperVisitor withAssertableSelectors;
+				   yourself)
+		  setDataBlock: [ :aTestData :tests | 
+			aTestData assertionlessTests: (tests select: #isAssertionLess ) ]
 ]
 
 { #category : 'visiting' }
-DTTSDDetectorBuilder class >> classReferences [ 
+DTTSDDetectorBuilder class >> classReferences [
 
-	^ self 
-		detector: TSDTooManyClassesDetector new 
-		setDataBlock: [ :aTestData :tests | aTestData manyClassReferencesTests: tests ] 
+	^ self detector: TSDTooManyClassesDetector new setDataBlock: [ :aTestData :tests | 
+		aTestData manyClassReferencesTests: (tests select: #doesReferenceManyClasses ) ]
 ]
 
 { #category : 'instance creation' }
@@ -46,18 +46,17 @@ DTTSDDetectorBuilder class >> overwrittenSetup [
 	| detector |
 	detector := TSDOverwrittenSetupDetector new.
 
-	^ self 
-		detector: detector 
-		setDataBlock: [ :aTestData :tests |
-		  aTestData overwrittenSetupTests: tests ]
+	^ self detector: detector setDataBlock: [ :aTestData :tests | 
+		aTestData overwrittenSetupTests: (tests select: #doesOverwritesSetup ) ]
 ]
 
 { #category : 'accessing' }
 DTTSDDetectorBuilder class >> uselessSetup [
 
-	^ self 
-		detector: TSDUselessSetupDetector new 
-		setDataBlock: [ :aTestData :tests | aTestData uselessSetupTests: tests ]
+	^ self
+		  detector: TSDUselessSetupDetector new
+		  setDataBlock: [ :aTestData :tests |
+		  aTestData uselessSetupTests: (tests reject: #doesUseSetupVariables  ) ]
 ]
 
 { #category : 'building' }
