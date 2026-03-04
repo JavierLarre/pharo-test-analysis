@@ -18,7 +18,7 @@ TSDTooManyClassesDetector >> buildResult: aResult [
 	super buildResult: aResult.
 	aResult 
 		detectedClasses: self referenceVisitor classReferences;
-		doesReferenceManyClasses: self detects 
+		doesReferenceManyClasses: self doesReferenceManyClasses 
 ]
 
 { #category : 'testing' }
@@ -26,6 +26,12 @@ TSDTooManyClassesDetector >> detects [
 
 	self resetVisitor.
 	self referenceVisitor visit: self compiledMethod parseTree.
+	^ self doesReferenceManyClasses
+]
+
+{ #category : 'testing' }
+TSDTooManyClassesDetector >> doesReferenceManyClasses [
+
 	^ self referenceVisitor referencesCount >= self ocurrenceThreshold or: [
 		  self referenceVisitor anyClassIsReferencedMoreThan: self ocurrenceThreshold ]
 ]
