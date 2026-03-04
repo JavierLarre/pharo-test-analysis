@@ -31,7 +31,7 @@ DTRTDPlugin class >> weight [
 DTRTDPlugin >> buildViewModelFrom: aTestSuite [
 
 	| viewModel testVisitor |
-	viewModel := self viewModelClass new.
+	viewModel := DTRTDViewModel new.
 	testVisitor := DTRTDFirstFixVisitor new.
 	aTestSuite tests do: [ :aTestCase | testVisitor analyzeTestCase: aTestCase ].
 	testVisitor buildViewModel: viewModel.
@@ -75,20 +75,4 @@ DTRTDPlugin >> startButtonHelp [
 { #category : 'api' }
 DTRTDPlugin >> startButtonLabel [
 	^ 'Analyze tests selected.' translated
-]
-
-{ #category : 'accessing' }
-DTRTDPlugin >> testVisitors [
-
-	^ {
-		  DTRTDHelperVisitor.
-		  DTRTDMessagesVisitor.
-		  DTRTDSelfMethodsVisitor.
-		  DTRTDFirstFixVisitor }
-]
-
-{ #category : 'accessing' }
-DTRTDPlugin >> viewModelClass [
-
-	^ DTRTDViewModel
 ]
