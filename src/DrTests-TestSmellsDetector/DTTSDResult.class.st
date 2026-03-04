@@ -19,10 +19,29 @@ DTTSDResult class >> detectedTests: aTestData [
 ]
 
 { #category : 'accessing' }
-DTTSDResult >> buildTreeForUI [ 
-	
-	<dtTestTSDResultTreeNamed: 'Tests without assertions' order: 1>
-	^ self buildTreeFrom: self detectedTests assertionlessTests 
+DTTSDResult >> buildTreeForUI [
+
+	<dtTestTSDResultTreeNamed: 'All Smells Found' order: 1>
+	^ self treeNode subResults: {
+			  (self buildTreeForUIAssertionless
+				   name: 'Tests with no assertions';
+				   yourself).
+			  (self buildTreeForUIOverwrittenSetup
+				   name: 'Tests that overwrite setup variables';
+				   yourself).
+			  (self buildTreeForUIUselessSetup
+				   name: 'Tests not fully using their set up';
+				   yourself).
+			  (self buildTreeForUIManyClassReferences
+				   name: 'Tests references classes too many times';
+				   yourself) }
+]
+
+{ #category : 'accessing' }
+DTTSDResult >> buildTreeForUIAssertionless [
+
+	<dtTestTSDResultTreeNamed: 'Tests without assertions' order: 5>
+	^ self buildTreeFrom: self detectedTests assertionlessTests
 ]
 
 { #category : 'accessing' }
@@ -65,7 +84,9 @@ DTTSDResult >> detectedTests: anObject [
 ]
 
 { #category : 'factory' }
-DTTSDResult >> treeNode [ 
+DTTSDResult >> treeNode [
 
 	^ DTTreeNode new
+		  subResultsAggregator: [ :subResults | subResults size ];
+		  yourself
 ]
