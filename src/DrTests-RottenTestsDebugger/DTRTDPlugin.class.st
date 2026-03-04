@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'api - accessing' }
-DTRTDPlugin class >> pluginName [ 
+DTRTDPlugin class >> pluginName [
 
-	^ 'Rotten Tests Debugger'
+	^ 'First-to-fix tests'
 ]
 
 { #category : 'api - accessing' }
