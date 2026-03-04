@@ -56,12 +56,6 @@ TSDSmellDetector >> detectSelector: aSelector [
 	^ self selector: aSelector; detects
 ]
 
-{ #category : 'enumerating' }
-TSDSmellDetector >> detectedTestCases: aTestCaseCollection [
-
-	^ aTestCaseCollection select: [ :aTestCase | self detect: aTestCase selector from: aTestCase class ]
-]
-
 { #category : 'testing' }
 TSDSmellDetector >> detects [
 	^ self subclassResponsibility
