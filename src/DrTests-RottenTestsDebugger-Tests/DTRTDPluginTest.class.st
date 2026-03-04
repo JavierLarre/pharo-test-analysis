@@ -14,20 +14,31 @@ Class {
 
 { #category : 'running' }
 DTRTDPluginTest >> setUp [
+
 	super setUp.
 
-	plugin := DTRTDPlugin new
+	plugin := DTRTDPlugin new.
+	
+	DTRTDFirstFixFakeTest superclass: TestCase 
+]
+
+{ #category : 'running' }
+DTRTDPluginTest >> tearDown [
+
+	DTRTDFirstFixFakeTest superclass: Object.
+	super tearDown
 ]
 
 { #category : 'tests' }
 DTRTDPluginTest >> testRunForConfiguration [
 
-	| result |
-	result := (plugin runForConfiguration: (DTPluginConfiguration
-		items: { DTRTDFirstFixFakeTest }
-		packages: #'DrTests-RottenTestsDebugger-FakeTests' asPackage)) buildTreeForUI subResults first.
-	
-	self 
+	| result configuration |
+	configuration := DTPluginConfiguration 
+		items: { DTRTDFirstFixFakeTest } 
+		packages: #'DrTests-RottenTestsDebugger-Tests' asPackage.
+	result := (plugin runForConfiguration: configuration) buildTreeForUI subResults first.
+
+	self
 		assert: result name equals: DTRTDFirstFixFakeTest name;
 		assert: result subResults first name equals: 'testFirst'
 ]
