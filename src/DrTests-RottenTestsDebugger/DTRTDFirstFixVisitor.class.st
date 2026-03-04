@@ -33,9 +33,10 @@ DTRTDFirstFixVisitor >> buildTestCasesFrom: compiledMethods [
 { #category : 'building' }
 DTRTDFirstFixVisitor >> buildViewModel: aViewModel [
 
-	self methodViewModels
-		do: [ :methodViewModel | self addPrioritiesTo: methodViewModel ].
-	aViewModel priorities: self methodViewModels 
+	self methodViewModels do: [ :methodViewModel | self addPrioritiesTo: methodViewModel ].
+	aViewModel priorities: self methodViewModels.
+	aViewModel priorities sort: [ :aPriority :aLowerPriority | 
+		aPriority lowerPriorityMethods size >= aLowerPriority lowerPriorityMethods size ]
 ]
 
 { #category : 'factory' }
