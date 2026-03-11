@@ -18,15 +18,6 @@ DTRTDPluginTest >> setUp [
 	super setUp.
 
 	plugin := DTRTDPlugin new.
-	
-	DTRTDFirstFixFakeTest superclass: TestCase 
-]
-
-{ #category : 'running' }
-DTRTDPluginTest >> tearDown [
-
-	DTRTDFirstFixFakeTest superclass: Object.
-	super tearDown
 ]
 
 { #category : 'tests' }

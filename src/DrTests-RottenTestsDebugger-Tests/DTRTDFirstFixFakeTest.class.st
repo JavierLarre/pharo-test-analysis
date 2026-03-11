@@ -3,7 +3,7 @@ I am a fake test class for storing methods used as test data
 "
 Class {
 	#name : 'DTRTDFirstFixFakeTest',
-	#superclass : 'Object',
+	#superclass : 'TestCase',
 	#instVars : [
 		'x'
 	],
@@ -11,6 +11,12 @@ Class {
 	#package : 'DrTests-RottenTestsDebugger-Tests',
 	#tag : 'fixture'
 }
+
+{ #category : 'running' }
+DTRTDFirstFixFakeTest >> setUp [
+	super setUp.
+	self skip
+]
 
 { #category : 'tests' }
 DTRTDFirstFixFakeTest >> testFirst [
