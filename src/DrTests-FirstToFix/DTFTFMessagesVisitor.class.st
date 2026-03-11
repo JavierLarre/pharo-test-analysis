@@ -2,15 +2,15 @@
 I provide a method for building a `DTRTDTestCaseMessages` with the messages of `MaMessageVisitor`
 "
 Class {
-	#name : 'DTRTDMessagesVisitor',
-	#superclass : 'DTRTDTestCaseAnalyzer',
-	#category : 'DrTests-RottenTestsDebugger-Visitors',
-	#package : 'DrTests-RottenTestsDebugger',
+	#name : 'DTFTFMessagesVisitor',
+	#superclass : 'DTFTFTestCaseAnalyzer',
+	#category : 'DrTests-FirstToFix-Visitors',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'Visitors'
 }
 
 { #category : 'building' }
-DTRTDMessagesVisitor >> buildMethodViewModel: aTestCaseViewModel withTestCase: aTestCase [
+DTFTFMessagesVisitor >> buildMethodViewModel: aTestCaseViewModel withTestCase: aTestCase [
 
 	super buildMethodViewModel: aTestCaseViewModel withTestCase: aTestCase.
 	aTestCaseViewModel 
@@ -18,13 +18,13 @@ DTRTDMessagesVisitor >> buildMethodViewModel: aTestCaseViewModel withTestCase: a
 ]
 
 { #category : 'building' }
-DTRTDMessagesVisitor >> buildViewModel: aViewModel [
+DTFTFMessagesVisitor >> buildViewModel: aViewModel [
 
 	aViewModel messages: self methodViewModels
 ]
 
 { #category : 'comparing' }
-DTRTDMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
+DTFTFMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCaseMessages2 [
 
 	(self methodVisitor messages 
 		does: testCaseMessages1 compiledMethod 
@@ -39,7 +39,7 @@ DTRTDMessagesVisitor >> compareTestCaseMessages: testCaseMessages1 with: testCas
 ]
 
 { #category : 'initialization' }
-DTRTDMessagesVisitor >> initialize [
+DTFTFMessagesVisitor >> initialize [
 
 	super initialize.
 	self methodVisitor messages: RTDFilteredMessages withAssertableSelectors.
@@ -51,7 +51,7 @@ DTRTDMessagesVisitor >> initialize [
 ]
 
 { #category : 'factory' }
-DTRTDMessagesVisitor >> methodVisitorClass [
+DTFTFMessagesVisitor >> methodVisitorClass [
 
 	^ RTDMessageVisitor
 ]

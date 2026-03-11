@@ -2,7 +2,7 @@
 I store the messages and the compiled method of a test case
 "
 Class {
-	#name : 'DTRTDMethodData',
+	#name : 'DTFTFMethodData',
 	#superclass : 'Object',
 	#instVars : [
 		'messages',
@@ -10,13 +10,13 @@ Class {
 		'helpers',
 		'selfSentMethods'
 	],
-	#category : 'DrTests-RottenTestsDebugger-DTOs',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-DTOs',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'DTOs'
 }
 
 { #category : 'comparing' }
-DTRTDMethodData >> <= aTestCaseMessages [
+DTFTFMethodData >> <= aTestCaseMessages [
 	
 	self messages size = aTestCaseMessages messages size
 		ifFalse: [ ^ self messages size < aTestCaseMessages messages size ] .
@@ -24,43 +24,43 @@ DTRTDMethodData >> <= aTestCaseMessages [
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> compiledMethod [
+DTFTFMethodData >> compiledMethod [
 
 	^ compiledMethod
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> compiledMethod: aCompiledMethod [
+DTFTFMethodData >> compiledMethod: aCompiledMethod [
 
 	compiledMethod := aCompiledMethod 
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> helpers [
+DTFTFMethodData >> helpers [
 
 	^ helpers
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> helpers: anObject [
+DTFTFMethodData >> helpers: anObject [
 
 	helpers := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> messages [
+DTFTFMethodData >> messages [
 
 	^ messages ifNil: [ messages := #() ]
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> messages: anObject [
+DTFTFMethodData >> messages: anObject [
 
 	messages := anObject
 ]
 
 { #category : 'printing' }
-DTRTDMethodData >> printOn: aStream [
+DTFTFMethodData >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream 
@@ -70,13 +70,13 @@ DTRTDMethodData >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> selfSentMethods [
+DTFTFMethodData >> selfSentMethods [
 
 	^ selfSentMethods
 ]
 
 { #category : 'accessing' }
-DTRTDMethodData >> selfSentMethods: anObject [
+DTFTFMethodData >> selfSentMethods: anObject [
 
 	selfSentMethods := anObject
 ]

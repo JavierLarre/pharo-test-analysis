@@ -16,8 +16,8 @@ TSDTooManyClassesResult >> asResultForDrTest [
 	| node |
 	node := super asResultForDrTest.
 	node subResults addAll: { 
-		DTTreeNode name: 'Detected classes' subResults: (DTRTDMessageNode toNodes: self detectedClasses ).
-		DTRTDMessageNode new message: ('References too many classes: ', self doesReferenceManyClasses printString); yourself 
+		DTTreeNode name: 'Detected classes' subResults: (DTFTFMessageNode toNodes: self detectedClasses ).
+		DTFTFMessageNode new message: ('References too many classes: ', self doesReferenceManyClasses printString); yourself 
 	 } .
 	^ node
 ]

@@ -2,7 +2,7 @@
 I store the analisys result wrapped for DrTest
 "
 Class {
-	#name : 'DTRTDViewModel',
+	#name : 'DTFTFViewModel',
 	#superclass : 'Object',
 	#instVars : [
 		'messages',
@@ -10,55 +10,55 @@ Class {
 		'selfSentMethods',
 		'priorities'
 	],
-	#category : 'DrTests-RottenTestsDebugger-DTOs',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-DTOs',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'DTOs'
 }
 
 { #category : 'accessing' }
-DTRTDViewModel >> helpers [
+DTFTFViewModel >> helpers [
 
 	^ helpers
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> helpers: anObject [
+DTFTFViewModel >> helpers: anObject [
 
 	helpers := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> messages [
+DTFTFViewModel >> messages [
 
 	^ messages
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> messages: anObject [
+DTFTFViewModel >> messages: anObject [
 
 	messages := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> priorities [
+DTFTFViewModel >> priorities [
 
 	^ priorities
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> priorities: anObject [
+DTFTFViewModel >> priorities: anObject [
 
 	priorities := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> selfSentMethods [
+DTFTFViewModel >> selfSentMethods [
 
 	^ selfSentMethods 
 ]
 
 { #category : 'accessing' }
-DTRTDViewModel >> selfSentMethods: anObject [
+DTFTFViewModel >> selfSentMethods: anObject [
 
 	selfSentMethods := anObject 
 ]

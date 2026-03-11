@@ -2,29 +2,29 @@
 I provide builder methods and hooks to build `DTTreeNode`s from test cases
 "
 Class {
-	#name : 'DTRTDNodeBuilder',
+	#name : 'DTFTFNodeBuilder',
 	#superclass : 'Object',
-	#category : 'DrTests-RottenTestsDebugger-Builders',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-Builders',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'Builders'
 }
 
 { #category : 'hooks' }
-DTRTDNodeBuilder >> buildNode: aTreeNode from: aMethodViewModel [
+DTFTFNodeBuilder >> buildNode: aTreeNode from: aMethodViewModel [
 ]
 
 { #category : 'utilities' }
-DTRTDNodeBuilder >> groupedTestCasesByClass: methodViewModels [
+DTFTFNodeBuilder >> groupedTestCasesByClass: methodViewModels [
 
 	^ methodViewModels groupedBy: [ :methodViewModel | methodViewModel compiledMethod methodClass ]
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodeFrom: aMethodViewModel [
+DTFTFNodeBuilder >> nodeFrom: aMethodViewModel [
 
 	| treeNode |
 	treeNode := self treeNode
-		            subResults: (DTRTDMessageNode toNodes: aMethodViewModel messages);
+		            subResults: (DTFTFMessageNode toNodes: aMethodViewModel messages);
 		            name: aMethodViewModel compiledMethod selector;
 						browseBlock: [ aMethodViewModel compiledMethod drTestsBrowse ];
 		            yourself.
@@ -33,7 +33,7 @@ DTRTDNodeBuilder >> nodeFrom: aMethodViewModel [
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodeGroupedByClasses: methodViewModels [
+DTFTFNodeBuilder >> nodeGroupedByClasses: methodViewModels [
 
 	^ self treeNode
 		subResults: (self nodesByClass: methodViewModels );
@@ -41,7 +41,7 @@ DTRTDNodeBuilder >> nodeGroupedByClasses: methodViewModels [
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodesByClass: methodViewModels [
+DTFTFNodeBuilder >> nodesByClass: methodViewModels [
 
 	^ (self groupedTestCasesByClass: methodViewModels ) associations collect: [ :assoc | 
 			self treeNode
@@ -50,14 +50,14 @@ DTRTDNodeBuilder >> nodesByClass: methodViewModels [
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> nodesFrom: methodViewModels [
+DTFTFNodeBuilder >> nodesFrom: methodViewModels [
 
 	^ methodViewModels collect: [ :testCaseViewModel |
 			self nodeFrom: testCaseViewModel ]
 ]
 
 { #category : 'factory' }
-DTRTDNodeBuilder >> treeNode [
+DTFTFNodeBuilder >> treeNode [
 
 	^ DTTreeNode new
 		subResultsAggregator: [ :subResults | subResults size ];

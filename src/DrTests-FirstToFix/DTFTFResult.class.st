@@ -2,25 +2,25 @@
 I route the logic for displaying different analysis options
 "
 Class {
-	#name : 'DTRTDResult',
+	#name : 'DTFTFResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
 		'viewModel'
 	],
-	#category : 'DrTests-RottenTestsDebugger-Presenters',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-Presenters',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'Presenters'
 }
 
 { #category : 'accessing' }
-DTRTDResult >> buildTreeForUI [
+DTFTFResult >> buildTreeForUI [
 
 	<dtTestRTDResultTreeNamed: 'First to fix tests' order: 1>
-	^ DTRTDFirstFixBuilder new nodeGroupedByClasses: viewModel priorities
+	^ DTFTFFirstFixBuilder new nodeGroupedByClasses: viewModel priorities
 ]
 
 { #category : 'accessing' }
-DTRTDResult >> viewModel: aViewModel [
+DTFTFResult >> viewModel: aViewModel [
 
 	viewModel := aViewModel 
 ]

@@ -2,15 +2,15 @@
 I override `DTRTDNodeBuilder>>#nodeFrom:` to build the most important methods of each test case
 "
 Class {
-	#name : 'DTRTDFirstFixBuilder',
-	#superclass : 'DTRTDMessagesNodeBuilder',
-	#category : 'DrTests-RottenTestsDebugger-Builders',
-	#package : 'DrTests-RottenTestsDebugger',
+	#name : 'DTFTFFirstFixBuilder',
+	#superclass : 'DTFTFMessagesNodeBuilder',
+	#category : 'DrTests-FirstToFix-Builders',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'Builders'
 }
 
 { #category : 'factory' }
-DTRTDFirstFixBuilder >> nodeFrom: aMethodViewModel [
+DTFTFFirstFixBuilder >> nodeFrom: aMethodViewModel [
 
 	^ (super nodeFrom: aMethodViewModel)
 		subResults: {

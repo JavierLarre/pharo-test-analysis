@@ -15,7 +15,7 @@ TSDSetupResult >> asResultForDrTest [
 	| node |
 	node := super asResultForDrTest.
 
-	node subResults addAll: { (DTTreeNode name: 'Setup Variables' subResults: (DTRTDMessageNode toNodes: self setupVariables)) }.
+	node subResults addAll: { (DTTreeNode name: 'Setup Variables' subResults: (DTFTFMessageNode toNodes: self setupVariables)) }.
 
 	^ node
 ]

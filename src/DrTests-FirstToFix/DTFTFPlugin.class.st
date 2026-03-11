@@ -2,60 +2,60 @@
 I am plugin implementing MethodMessageAnalyzer in DrTests
 "
 Class {
-	#name : 'DTRTDPlugin',
+	#name : 'DTFTFPlugin',
 	#superclass : 'DrTestsPlugin',
-	#category : 'DrTests-RottenTestsDebugger-Presenters',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-Presenters',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'Presenters'
 }
 
 { #category : 'api - accessing' }
-DTRTDPlugin class >> pluginName [
+DTFTFPlugin class >> pluginName [
 
 	^ 'First-to-fix tests'
 ]
 
 { #category : 'api - accessing' }
-DTRTDPlugin class >> pluginResultClass [ 
+DTFTFPlugin class >> pluginResultClass [ 
 	
-	^ DTRTDResult 
+	^ DTFTFResult 
 ]
 
 { #category : 'api - accessing' }
-DTRTDPlugin class >> weight [
+DTFTFPlugin class >> weight [
 
 	^ 10
 ]
 
 { #category : 'building' }
-DTRTDPlugin >> buildViewModelFrom: aTestSuite [
+DTFTFPlugin >> buildViewModelFrom: aTestSuite [
 
 	| viewModel testVisitor |
-	viewModel := DTRTDViewModel new.
-	testVisitor := DTRTDFirstFixVisitor new.
+	viewModel := DTFTFViewModel new.
+	testVisitor := DTFTFFirstFixVisitor new.
 	aTestSuite tests do: [ :aTestCase | testVisitor analyzeTestCase: aTestCase ].
 	testVisitor buildViewModel: viewModel.
 	^ viewModel
 ]
 
 { #category : 'accessing' }
-DTRTDPlugin >> firstListLabel [
+DTFTFPlugin >> firstListLabel [
 	^ 'Packages'
 ]
 
 { #category : 'accessing' }
-DTRTDPlugin >> pragmaForResultTrees [
+DTFTFPlugin >> pragmaForResultTrees [
 	"Returns the selector of the pragma to gather result trees."
-	^ 'dtTestRTDResultTreeNamed:order:'
+	^ 'dtTestFTFResultTreeNamed:order:'
 ]
 
 { #category : 'api' }
-DTRTDPlugin >> resultButtonHelp [
+DTFTFPlugin >> resultButtonHelp [
 	^ 'Browse the test selected in the results list.' translated
 ]
 
 { #category : 'api' }
-DTRTDPlugin >> runForConfiguration: aDTPluginConfiguration [
+DTFTFPlugin >> runForConfiguration: aDTPluginConfiguration [
 
 	^ self pluginResultClass new 
 		viewModel: (self buildViewModelFrom: aDTPluginConfiguration asTestSuite);
@@ -63,16 +63,16 @@ DTRTDPlugin >> runForConfiguration: aDTPluginConfiguration [
 ]
 
 { #category : 'accessing' }
-DTRTDPlugin >> secondListLabel [
+DTFTFPlugin >> secondListLabel [
 	^ 'Tests Cases'
 ]
 
 { #category : 'api' }
-DTRTDPlugin >> startButtonHelp [
-	^ 'Analyze Tests' translated
+DTFTFPlugin >> startButtonHelp [
+	^ 'Sort Tests' translated
 ]
 
 { #category : 'api' }
-DTRTDPlugin >> startButtonLabel [
-	^ 'Analyze tests selected.' translated
+DTFTFPlugin >> startButtonLabel [
+	^ 'Sort tests selected.' translated
 ]

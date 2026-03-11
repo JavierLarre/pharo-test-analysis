@@ -16,8 +16,8 @@ TSDUselessSetupResult >> asResultForDrTest [
 	| node |
 	node := super asResultForDrTest.
 	node subResults addAll: { 
-		DTTreeNode name: 'Used setup variables' subResults: (DTRTDMessageNode toNodes: self usedSetupVariables).
-		DTRTDMessageNode new message: ('Does use setup variables: ', self doesUseSetupVariables printString); yourself
+		DTTreeNode name: 'Used setup variables' subResults: (DTFTFMessageNode toNodes: self usedSetupVariables).
+		DTFTFMessageNode new message: ('Does use setup variables: ', self doesUseSetupVariables printString); yourself
 	 } .
 	^ node
 ]

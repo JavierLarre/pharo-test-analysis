@@ -18,9 +18,9 @@ TSDOverwrittenSetupResult >> asResultForDrTest [
 	node := super asResultForDrTest.
 
 	node subResults addAll: {
-			(DTTreeNode name: 'Written Variables' subResults: (DTRTDMessageNode toNodes: self writtenVariables)).
-			(DTTreeNode name: 'Overwritten Variables' subResults: (DTRTDMessageNode toNodes: self overwrittenVariables)).
-			(DTRTDMessageNode new
+			(DTTreeNode name: 'Written Variables' subResults: (DTFTFMessageNode toNodes: self writtenVariables)).
+			(DTTreeNode name: 'Overwritten Variables' subResults: (DTFTFMessageNode toNodes: self overwrittenVariables)).
+			(DTFTFMessageNode new
 				 message: (String streamContents: [ :stream |
 								  stream
 									  << 'Overwrites setup: ';

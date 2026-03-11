@@ -2,31 +2,31 @@
 I am an abstract visitor of test cases. I provide a hook for building the view model
 "
 Class {
-	#name : 'DTRTDTestCaseAnalyzer',
+	#name : 'DTFTFTestCaseAnalyzer',
 	#superclass : 'Object',
 	#instVars : [
 		'methodVisitor',
 		'methodViewModels'
 	],
-	#category : 'DrTests-RottenTestsDebugger-Visitors',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-Visitors',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'Visitors'
 }
 
 { #category : 'testing' }
-DTRTDTestCaseAnalyzer class >> isAbstract [ 
+DTFTFTestCaseAnalyzer class >> isAbstract [ 
 
-	^ self = DTRTDTestCaseAnalyzer 
+	^ self = DTFTFTestCaseAnalyzer 
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseAnalyzer class >> methodVisitor: aMethodVisitor [
+DTFTFTestCaseAnalyzer class >> methodVisitor: aMethodVisitor [
 
 	^ self new methodVisitor: aMethodVisitor; yourself
 ]
 
 { #category : 'visiting' }
-DTRTDTestCaseAnalyzer >> analyzeTestCase: aTestCase [
+DTFTFTestCaseAnalyzer >> analyzeTestCase: aTestCase [
 
 	| testCaseViewModel |
 	testCaseViewModel := self methodViewModelClass new.
@@ -36,55 +36,55 @@ DTRTDTestCaseAnalyzer >> analyzeTestCase: aTestCase [
 ]
 
 { #category : 'building' }
-DTRTDTestCaseAnalyzer >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
+DTFTFTestCaseAnalyzer >> buildMethodViewModel: aMethodViewModel withTestCase: aTestCase [
 
 	aMethodViewModel
 		compiledMethod: aTestCase compiledMethod
 ]
 
 { #category : 'building' }
-DTRTDTestCaseAnalyzer >> buildViewModel: aViewModel [
+DTFTFTestCaseAnalyzer >> buildViewModel: aViewModel [
 	"hook for setting variables into the model"
 ]
 
 { #category : 'utilities' }
-DTRTDTestCaseAnalyzer >> filterEmptyMessages: aMethodViewModelCollection [
+DTFTFTestCaseAnalyzer >> filterEmptyMessages: aMethodViewModelCollection [
 
 	^ aMethodViewModelCollection reject: [ :aMethodViewModel | aMethodViewModel messages isEmpty ]
 ]
 
 { #category : 'factory' }
-DTRTDTestCaseAnalyzer >> methodViewModelClass [
+DTFTFTestCaseAnalyzer >> methodViewModelClass [
 
-	^ DTRTDMethodData
+	^ DTFTFMethodData
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseAnalyzer >> methodViewModels [
+DTFTFTestCaseAnalyzer >> methodViewModels [
 
 	^ methodViewModels ifNil: [ methodViewModels := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseAnalyzer >> methodViewModels: anObject [
+DTFTFTestCaseAnalyzer >> methodViewModels: anObject [
 
 	methodViewModels := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseAnalyzer >> methodVisitor [
+DTFTFTestCaseAnalyzer >> methodVisitor [
 
 	^ methodVisitor ifNil: [ methodVisitor := self methodVisitorClass new ]
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseAnalyzer >> methodVisitor: anObject [
+DTFTFTestCaseAnalyzer >> methodVisitor: anObject [
 
 	methodVisitor := anObject
 ]
 
 { #category : 'factory' }
-DTRTDTestCaseAnalyzer >> methodVisitorClass [
+DTFTFTestCaseAnalyzer >> methodVisitorClass [
 
 	^ self subclassResponsibility 
 ]

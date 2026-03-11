@@ -2,55 +2,55 @@
 I am a leaf node for DrTest that shows a message selector
 "
 Class {
-	#name : 'DTRTDMessageNode',
+	#name : 'DTFTFMessageNode',
 	#superclass : 'DTTreeLeafNode',
 	#instVars : [
 		'message',
 		'browseMethod'
 	],
-	#category : 'DrTests-RottenTestsDebugger-Builders',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-Builders',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'Builders'
 }
 
 { #category : 'instance creation' }
-DTRTDMessageNode class >> toNodes: messages [
+DTFTFMessageNode class >> toNodes: messages [
 
 	^ (messages collect: [ :message | self new message: message; yourself ]) asOrderedCollection 
 ]
 
 { #category : 'accessing' }
-DTRTDMessageNode >> browseMethod: anObject [
+DTFTFMessageNode >> browseMethod: anObject [
 
 	browseMethod := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDMessageNode >> content [
+DTFTFMessageNode >> content [
 
 	^ self
 ]
 
 { #category : 'actions' }
-DTRTDMessageNode >> drTestsBrowse [ 
+DTFTFMessageNode >> drTestsBrowse [ 
 	
 	^ browseMethod drTestsBrowse
 ]
 
 { #category : 'accessing' }
-DTRTDMessageNode >> drTestsName [ 
+DTFTFMessageNode >> drTestsName [ 
 	
 	^ message
 ]
 
 { #category : 'accessing' }
-DTRTDMessageNode >> message [
+DTFTFMessageNode >> message [
 
 	^ message
 ]
 
 { #category : 'accessing' }
-DTRTDMessageNode >> message: anObject [
+DTFTFMessageNode >> message: anObject [
 
 	message := anObject
 ]

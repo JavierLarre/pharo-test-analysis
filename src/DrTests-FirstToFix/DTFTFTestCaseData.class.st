@@ -2,37 +2,37 @@
 I add fields to `DTRTDTestCaseMessages` for storing both lower and higher priority test cases 
 "
 Class {
-	#name : 'DTRTDTestCaseData',
-	#superclass : 'DTRTDMethodData',
+	#name : 'DTFTFTestCaseData',
+	#superclass : 'DTFTFMethodData',
 	#instVars : [
 		'lowerPriorityMethods',
 		'testCase'
 	],
-	#category : 'DrTests-RottenTestsDebugger-DTOs',
-	#package : 'DrTests-RottenTestsDebugger',
+	#category : 'DrTests-FirstToFix-DTOs',
+	#package : 'DrTests-FirstToFix',
 	#tag : 'DTOs'
 }
 
 { #category : 'accessing' }
-DTRTDTestCaseData >> lowerPriorityMethods [
+DTFTFTestCaseData >> lowerPriorityMethods [
 
 	^ lowerPriorityMethods
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseData >> lowerPriorityMethods: anObject [
+DTFTFTestCaseData >> lowerPriorityMethods: anObject [
 
 	lowerPriorityMethods := anObject
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseData >> testCase [
+DTFTFTestCaseData >> testCase [
 
 	^ testCase
 ]
 
 { #category : 'accessing' }
-DTRTDTestCaseData >> testCase: anObject [
+DTFTFTestCaseData >> testCase: anObject [
 
 	testCase := anObject
 ]

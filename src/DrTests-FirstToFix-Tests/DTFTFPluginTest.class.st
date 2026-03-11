@@ -2,34 +2,34 @@
 A DTRTDPluginTest is a test class for testing the behavior of DTRTDPlugin
 "
 Class {
-	#name : 'DTRTDPluginTest',
+	#name : 'DTFTFPluginTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'plugin'
 	],
-	#category : 'DrTests-RottenTestsDebugger-Tests-Presenters',
-	#package : 'DrTests-RottenTestsDebugger-Tests',
+	#category : 'DrTests-FirstToFix-Tests-Presenters',
+	#package : 'DrTests-FirstToFix-Tests',
 	#tag : 'Presenters'
 }
 
 { #category : 'running' }
-DTRTDPluginTest >> setUp [
+DTFTFPluginTest >> setUp [
 
 	super setUp.
 
-	plugin := DTRTDPlugin new.
+	plugin := DTFTFPlugin new.
 ]
 
 { #category : 'tests' }
-DTRTDPluginTest >> testRunForConfiguration [
+DTFTFPluginTest >> testRunForConfiguration [
 
 	| result configuration |
 	configuration := DTPluginConfiguration 
-		items: { DTRTDFirstFixFakeTest } 
+		items: { DTFTFFakeTest } 
 		packages: #'DrTests-RottenTestsDebugger-Tests' asPackage.
 	result := (plugin runForConfiguration: configuration) buildTreeForUI subResults first.
 
 	self
-		assert: result name equals: DTRTDFirstFixFakeTest name;
+		assert: result name equals: DTFTFFakeTest name;
 		assert: result subResults first name equals: 'testFirst'
 ]

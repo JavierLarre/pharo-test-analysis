@@ -2,36 +2,36 @@
 I am a fake test class for storing methods used as test data
 "
 Class {
-	#name : 'DTRTDFirstFixFakeTest',
+	#name : 'DTFTFFakeTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'x'
 	],
-	#category : 'DrTests-RottenTestsDebugger-Tests-fixture',
-	#package : 'DrTests-RottenTestsDebugger-Tests',
+	#category : 'DrTests-FirstToFix-Tests-fixture',
+	#package : 'DrTests-FirstToFix-Tests',
 	#tag : 'fixture'
 }
 
 { #category : 'running' }
-DTRTDFirstFixFakeTest >> setUp [
+DTFTFFakeTest >> setUp [
 	super setUp.
 	self skip
 ]
 
 { #category : 'tests' }
-DTRTDFirstFixFakeTest >> testFirst [
+DTFTFFakeTest >> testFirst [
 
 	x x
 ]
 
 { #category : 'tests' }
-DTRTDFirstFixFakeTest >> testSecond [
+DTFTFFakeTest >> testSecond [
 
 	x x y
 ]
 
 { #category : 'tests' }
-DTRTDFirstFixFakeTest >> testThird [
+DTFTFFakeTest >> testThird [
 
 	x x y z
 ]

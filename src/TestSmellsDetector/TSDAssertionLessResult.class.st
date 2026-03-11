@@ -20,7 +20,7 @@ TSDAssertionLessResult >> <= aSmellResult [
 { #category : 'converting' }
 TSDAssertionLessResult >> asResultForDrTest [
 
-	^ DTRTDMessageNode new
+	^ DTFTFMessageNode new
 		message: (String streamContents: [ :stream |
 			stream 
 				print: (self testClass selector: self selector);
