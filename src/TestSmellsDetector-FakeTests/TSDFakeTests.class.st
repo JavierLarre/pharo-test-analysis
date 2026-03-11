@@ -28,6 +28,8 @@ TSDFakeTests >> assignVariable [
 { #category : 'running' }
 TSDFakeTests >> setUp [
 
+	super setUp.
+	self skip.
 	x := 0.
 	self assignVariable 
 ]
