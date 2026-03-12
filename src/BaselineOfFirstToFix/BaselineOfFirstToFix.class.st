@@ -1,12 +1,12 @@
 Class {
-	#name : 'BaselineOfRottenSmellsDebugger',
+	#name : 'BaselineOfFirstToFix',
 	#superclass : 'BaselineOf',
-	#category : 'BaselineOfRottenSmellsDebugger',
-	#package : 'BaselineOfRottenSmellsDebugger'
+	#category : 'BaselineOfFirstToFix',
+	#package : 'BaselineOfFirstToFix'
 }
 
 { #category : 'baselines' }
-BaselineOfRottenSmellsDebugger >> baseline: spec [
+BaselineOfFirstToFix >> baseline: spec [
 	<baseline>
 	
 	spec
@@ -16,8 +16,8 @@ BaselineOfRottenSmellsDebugger >> baseline: spec [
 			spec
 				package: 'RottenTestsDebugger';
 				package: 'RottenTestsDebugger-Tests' with: [ spec requires: #('RottenTestsDebugger') ];
-				package: 'DrTests-RottenTestsDebugger' with: [ spec requires: #('RottenTestsDebugger') ];
-				package: 'DrTests-RottenTestsDebugger-Tests' with: [ spec requires: #('DrTests-RottenTestsDebugger') ];
+				package: 'DrTests-FirstToFix' with: [ spec requires: #('RottenTestsDebugger') ];
+				package: 'DrTests-FirstToFix-Tests' with: [ spec requires: #('DrTests-FirstToFix') ];
 				
 				package: 'TestSmellsDetector';
 				package: 'TestSmellsDetector-FakeTests';
@@ -28,8 +28,8 @@ BaselineOfRottenSmellsDebugger >> baseline: spec [
 			"Groups"
 			spec
 				group: 'Core' with: #('RottenTestsDebugger' 'TestSmellsDetector');
-				group: 'Tests' with: #('RottenTestsDebugger-Tests' 'TestSmellsDetector-Tests');
-				group: 'Plugins' with: #('DrTests-RottenTestsDebugger' 'DrTests-TestSmellsDetector' 'DrTests-RottenTestsDebugger-Tests' 'TestSmellsDetector-Tests');
-				group: 'default' with: #('Core' 'Plugins');
+				group: 'Tests' with: #('FirstToFix-Tests' 'TestSmellsDetector-Tests');
+				group: 'Plugins' with: #('DrTests-FirstToFix' 'DrTests-TestSmellsDetector' 'DrTests-FirstToFix-Tests' 'TestSmellsDetector-Tests');
+				group: 'default' with: #('Core' 'Plugins' 'Tests');
 				group: 'All' with: #('Core' 'Tests' 'Plugins')
 ]
