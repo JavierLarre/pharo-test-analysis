@@ -3,10 +3,12 @@ I find and store self calls that are connected to asserting selectors
 "
 Class {
 	#name : 'RTDHelperVisitor',
-	#superclass : 'RTDMessageVisitor',
+	#superclass : 'Object',
 	#instVars : [
 		'helpers',
-		'helperSelectors'
+		'helperSelectors',
+		'messageVisitor',
+		'methodVisitor'
 	],
 	#category : 'RottenTestsDebugger',
 	#package : 'RottenTestsDebugger'
@@ -18,10 +20,25 @@ RTDHelperVisitor class >> withAssertableSelectors [
 	^ self new useAssertableSelectors; yourself
 ]
 
+{ #category : 'api' }
+RTDHelperVisitor >> analyzeMethod: aCompiledMethod [
+
+	methodVisitor analyzeMethod: aCompiledMethod.
+	messageVisitor analyzeMethod: aCompiledMethod.
+	self collectHelpers 
+]
+
+{ #category : 'as yet unclassified' }
+RTDHelperVisitor >> collectHelpers [ 
+
+	methodVisitor selfSentMethods do: [ :aCompiledMethod | 
+		self helpers at: aCompiledMethod put: (self selectMethodHelpers: aCompiledMethod)  ]
+]
+
 { #category : 'accessing' }
 RTDHelperVisitor >> helperSelectors [
 
-	^ helperSelectors ifNil: [ helperSelectors := OrderedCollection new ]
+	^ helperSelectors
 ]
 
 { #category : 'accessing' }
@@ -33,14 +50,24 @@ RTDHelperVisitor >> helperSelectors: anObject [
 { #category : 'accessing' }
 RTDHelperVisitor >> helpers [ 
 	
-	^ helpers ifNil: [ helpers := RTDHelpers new ]
+	^ helpers 
+]
+
+{ #category : 'initialization' }
+RTDHelperVisitor >> initialize [ 
+
+	super initialize.
+	messageVisitor := RTDMessageVisitor new.
+	methodVisitor := RTDMethodVisitor new.
+	helperSelectors := OrderedCollection new.
+	helpers := RTDHelpers new
 ]
 
 { #category : 'private' }
 RTDHelperVisitor >> selectMethodHelpers: aCompiledMethod [
 
-	^ (self methodsSelfCalls at: aCompiledMethod) select: [ :methodSelfCall |
-		  messages is: methodSelfCall connectedToAny: self helperSelectors ]
+	^ (methodVisitor methodsSelfCalls at: aCompiledMethod) select: [ :methodSelfCall |
+		  messageVisitor messages is: methodSelfCall connectedToAny: self helperSelectors ]
 ]
 
 { #category : 'api' }

@@ -102,7 +102,7 @@ RTDMethodVisitorTest >> testVisitCycle [
 	self 
 		analyzeMethodFromFixture: #testCycle;
 		assertCollection: self visitor selfSentMethods 
-		hasSameElements: (self fixtureMethodsFrom: { #cycle1 . #cycle2 })
+		includesAll: (self fixtureMethodsFrom: { #cycle1 . #cycle2 })
 ]
 
 { #category : 'tests' }

@@ -55,8 +55,7 @@ RTDVisitorTest >> testEmpty [
 { #category : 'accessing' }
 RTDVisitorTest >> visitor [
 
-	^ visitor ifNil: [ visitor := self visitorClass new 
-		selfClass: self fixtureClass; yourself ]
+	^ visitor ifNil: [ visitor := self visitorClass new ]
 ]
 
 { #category : 'accessing' }

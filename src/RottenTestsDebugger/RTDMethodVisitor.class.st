@@ -23,10 +23,11 @@ RTDMethodVisitor >> analyze [
 { #category : 'api' }
 RTDMethodVisitor >> analyzeMethod: aCompiledMethod [
 
-	self 
-		reset;
+	selfSentMethods removeAll.
+	self
 		selfClass: aCompiledMethod methodClass;
-	 	visit: aCompiledMethod parseTree
+	 	visit: aCompiledMethod parseTree.
+	selfSentMethods add: aCompiledMethod 
 ]
 
 { #category : 'initialization' }
@@ -34,6 +35,7 @@ RTDMethodVisitor >> initialize [
 
 	super initialize.
 	foundMethods := OrderedCollection new.
+	considerClassesThat := [ :class | class inheritsFrom: Object ]
 ]
 
 { #category : 'accessing' }
